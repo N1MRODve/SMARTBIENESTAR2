@@ -43,6 +43,7 @@
           Próximas Sesiones
         </h2>
         <DataTable
+          title="Próximas Sesiones"
           :columns="[
             {
               key: 'titulo',
@@ -73,6 +74,7 @@
           Desafíos Activos
         </h2>
         <DataTable
+          title="Desafíos Activos"
           :columns="[
             {
               key: 'titulo',
@@ -103,6 +105,7 @@
           Últimos Logros
         </h2>
         <DataTable
+          title="Últimos Logros"
           :columns="[
             {
               key: 'titulo',

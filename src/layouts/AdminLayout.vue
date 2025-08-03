@@ -110,7 +110,7 @@
 
       <!-- Contenido de la página -->
       <main class="flex-1 overflow-y-auto">
-        <router-view />
+        <slot />
       </main>
     </div>
   </div>
@@ -119,7 +119,7 @@
 <script>
 import { ref, computed, onMounted } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
-import { useAuthStore } from '@/stores/auth'
+import { useAuthStore } from '@/stores/auth.store'
 import { useAdminStore } from '@/stores/admin'
 
 export default {
@@ -256,4 +256,3 @@ export default {
   }
 }
 </script>
-            '

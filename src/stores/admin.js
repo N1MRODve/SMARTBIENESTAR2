@@ -1,6 +1,7 @@
 // src/stores/admin.js
 import { defineStore } from 'pinia'
-import { supabase } from '@/services/supabase'
+import { supabase } from '@/services/supabase' // <-- Ruta corregida
+import { useAuthStore } from './auth.store'; // Asegúrate de que esta línea esté al principio del archivo
 
 export const useAdminStore = defineStore('admin', {
   state: () => ({
@@ -28,13 +29,17 @@ export const useAdminStore = defineStore('admin', {
     // Encuestas de la empresa
     encuestas: [],
     encuestasLoading: false,
+    encuestasError: null,
     
     // Actividad reciente
     actividadReciente: [],
     
     // Estados de carga
     loading: false,
-    error: null
+    error: null,
+
+    // ID de la empresa del usuario actual
+    empresaId: null
   }),
 
   getters: {
@@ -281,48 +286,19 @@ export const useAdminStore = defineStore('admin', {
 
     // Cargar encuestas de la empresa
     async loadEncuestas(empresaId) {
+      this.encuestasLoading = true
+      this.encuestasError = null
       try {
-        this.encuestasLoading = true
-        this.error = null
-
         const { data, error } = await supabase
           .from('encuestas')
-          .select(`
-            *,
-            participantes_encuesta (count),
-            respuestas_encuesta (count)
-          `)
+          .select('*')
           .eq('empresa_id', empresaId)
           .order('fecha_creacion', { ascending: false })
-
         if (error) throw error
-
-        // Procesar encuestas para incluir estadísticas
-        this.encuestas = await Promise.all(
-          (data || []).map(async (encuesta) => {
-            const { count: participantes } = await supabase
-              .from('participantes_encuesta')
-              .select('*', { count: 'exact', head: true })
-              .eq('encuesta_id', encuesta.id)
-
-            const { count: respuestas } = await supabase
-              .from('participantes_encuesta')
-              .select('*', { count: 'exact', head: true })
-              .eq('encuesta_id', encuesta.id)
-              .eq('estado', 'completada')
-
-            return {
-              ...encuesta,
-              participantes_count: participantes || 0,
-              respuestas_count: respuestas || 0,
-              porcentaje_completado: participantes > 0 ? ((respuestas || 0) / participantes) * 100 : 0
-            }
-          })
-        )
-
-      } catch (error) {
-        console.error('Error cargando encuestas:', error)
-        this.error = error.message
+        this.encuestas = data || []
+      } catch (err) {
+        this.encuestasError = err.message || 'Error cargando encuestas'
+        this.encuestas = []
       } finally {
         this.encuestasLoading = false
       }
@@ -380,35 +356,52 @@ export const useAdminStore = defineStore('admin', {
     },
 
     // Crear nueva encuesta
-    async crearEncuesta(empresaId, encuestaData) {
+    async crearEncuesta(encuestaData) {
+      const authStore = useAuthStore();
+      const idDeLaEmpresa = authStore.user?.empresa_id;
+
+      if (!idDeLaEmpresa) {
+        console.error("BLOQUEO: No se encontró empresa_id en el authStore. El usuario podría no estar autenticado correctamente.");
+        throw new Error("Error crítico: El ID de la empresa no está disponible.");
+      }
+
+      // Corrige el formato de fechas para Supabase (ISO completo)
+      function toIsoDatetime(val) {
+        // Si ya tiene segundos, no modifica
+        if (!val) return null;
+        return val.length === 16 ? val + ':00' : val;
+      }
+
       try {
-        this.loading = true
-        this.error = null
+        const encuestaParaInsertar = {
+          empresa_id: idDeLaEmpresa,
+          titulo: encuestaData.titulo,
+          descripcion: encuestaData.descripcion,
+          fecha_inicio: toIsoDatetime(encuestaData.fecha_inicio),
+          fecha_fin: toIsoDatetime(encuestaData.fecha_fin),
+          anonima: encuestaData.anonima ?? false,
+          categoria: encuestaData.categoria ?? null,
+          estado: 'borrador',
+          activo: true
+        };
 
         const { data, error } = await supabase
           .from('encuestas')
-          .insert([{
-            ...encuestaData,
-            empresa_id: empresaId,
-            estado: 'borrador',
-            activo: true
-          }])
+          .insert([encuestaParaInsertar])
           .select()
-          .single()
+          .single();
 
-        if (error) throw error
+        if (error) {
+          throw error;
+        }
 
-        // Recargar encuestas
-        await this.loadEncuestas(empresaId)
+        // Aquí iría la lógica para guardar las preguntas, usando data.id
+        
+        return data;
 
-        return data
-
-      } catch (error) {
-        console.error('Error creando encuesta:', error)
-        this.error = error.message
-        throw error
-      } finally {
-        this.loading = false
+      } catch (err) {
+        console.error('Error creando encuesta:', err);
+        throw err;
       }
     },
 
@@ -550,6 +543,28 @@ export const useAdminStore = defineStore('admin', {
         puntos_promedio: 0
       }
       this.error = null
-    }
+    },
+
+    // Cargar usuario actual y establecer empresaId
+    async cargarUsuarioActual() {
+      // Supón que obtienes el usuario desde Supabase
+      const { data: usuario } = await supabase.auth.getUser()
+      if (usuario && usuario.empresa_id) {
+        this.empresaId = usuario.empresa_id
+      } else {
+        this.empresaId = null
+      }
+    },
+
+    // Acción para inicializar el adminStore con el ID de empresa del usuario autenticado
+    async init() {
+      const authStore = useAuthStore();
+      // Espera a que el authStore esté inicializado
+      if (!authStore.isInitialized) {
+        await authStore.tryInitializeAuth();
+      }
+      // Asigna el ID de empresa del usuario autenticado al estado local
+      this.empresaId = authStore.empresaId;
+    },
   }
 })

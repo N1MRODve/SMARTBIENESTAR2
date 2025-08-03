@@ -42,6 +42,7 @@
           Próximas Sesiones
         </h2>
         <DataTable
+          title="Próximas Sesiones"
           :columns="[
             { key: 'titulo', header: 'Sesión' },
             {
@@ -68,6 +69,7 @@
           Últimas Calificaciones
         </h2>
         <DataTable
+          title="Últimas Calificaciones"
           :columns="[
             {
               key: 'sesion',
@@ -100,6 +102,7 @@
           Sesiones Personalizadas Pendientes
         </h2>
         <DataTable
+          title="Sesiones Personalizadas Pendientes"
           :columns="[
             { key: 'titulo', header: 'Título' },
             { key: 'tipo_sesion', header: 'Tipo' },

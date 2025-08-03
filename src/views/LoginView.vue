@@ -6,7 +6,6 @@
           <div class="flex justify-center mb-6">
             <ActivitySquare class="h-16 w-16 text-primary" />
           </div>
-          
           <h1 class="text-3xl font-bold text-gray-900 mb-2">
             SMART<span class="text-primary">Bienestar</span>
           </h1>
@@ -87,12 +86,18 @@ const email = ref('');
 const password = ref('');
 const loading = ref(false);
 
-const handleSubmit = async () => {
+async function handleSubmit() {
   try {
     loading.value = true;
     const redirectPath = await authStore.login(email.value, password.value);
-    
-    router.push(redirectPath);
+    // Redirige según el rol
+    const redirectMap = {
+      superadmin: '/superadmin/dashboard',
+      administrador: '/admin/dashboard',
+      empleado: '/empleado/dashboard',
+      colaborador: '/colaborador/dashboard'
+    }
+    router.push(redirectMap[authStore.userRole] || '/admin/dashboard')
     toast.add({
       severity: 'success',
       summary: '¡Bienvenido!',
@@ -103,7 +108,7 @@ const handleSubmit = async () => {
     toast.add({
       severity: 'error',
       summary: 'Error',
-      detail: 'Credenciales incorrectas. Por favor intenta de nuevo.',
+      detail: err.message || 'Credenciales incorrectas. Por favor intenta de nuevo.',
       life: 5000
     });
   } finally {

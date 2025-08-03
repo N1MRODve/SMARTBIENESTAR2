@@ -44,6 +44,7 @@
           Empresas Recientes
         </h2>
         <DataTable
+          title="Empresas Recientes"
           :columns="[
             { key: 'nombre', header: 'Nombre' },
             { key: 'dominio_email', header: 'Dominio' },
@@ -57,8 +58,8 @@
             }
           ]"
           :data="empresasRecientes"
-          searchable={false}
-          pagination={false}
+          :searchable="false"
+          :pagination="false"
         />
       </div>
 
@@ -68,6 +69,7 @@
           Colaboradores Pendientes
         </h2>
         <DataTable
+          title="Colaboradores Pendientes"
           :columns="[
             {
               key: 'nombre',
@@ -82,8 +84,8 @@
             { key: 'especialidad', header: 'Especialidad' }
           ]"
           :data="colaboradoresPendientes"
-          searchable={false}
-          pagination={false}
+          :searchable="false"
+          :pagination="false"
         />
       </div>
     </div>

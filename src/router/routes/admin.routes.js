@@ -49,6 +49,16 @@ const adminRoutes = [
       roles: ['administrador'],
       title: 'Gestión de Servicios'
     }
+  },
+  {
+    path: '/admin/encuestas',
+    name: 'AdminEncuestas',
+    component: () => import('@/views/admin/EncuestasView.vue'),
+    meta: { 
+      requiresAuth: true, 
+      roles: ['administrador'],
+      title: 'Gestión de Encuestas'
+    }
   }
 ]
 

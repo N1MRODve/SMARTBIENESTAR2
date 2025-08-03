@@ -10,12 +10,15 @@
 <script setup>
 import { onMounted } from 'vue';
 import { useAuthStore } from './stores/auth.store';
+import { useAdminStore } from './stores/admin.js';
 import Toast from 'primevue/toast';
 
 const authStore = useAuthStore();
+const adminStore = useAdminStore();
 
 onMounted(async () => {
-  await authStore.initialize();
+  await authStore.tryInitializeAuth();
+  await adminStore.init();
 });
 </script>
 

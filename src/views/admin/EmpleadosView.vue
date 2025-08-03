@@ -23,6 +23,7 @@
 
     <!-- Data Table -->
     <DataTable
+      title="Lista de Empleados"
       :columns="columns"
       :data="empleados"
       :loading="loading"
