@@ -13,16 +13,15 @@ export const useAuthStore = defineStore('auth', () => {
   const initialize = async () => {
     try {
       const { data: { session } } = await supabase.auth.getSession();
-      
       if (session?.user) {
         const { data: userData, error: userError } = await supabase
           .from('usuarios')
           .select('*')
           .eq('id', session.user.id)
           .maybeSingle();
-          
+
         if (userError) throw userError;
-        
+
         if (!userData) {
           await supabase.auth.signOut();
           user.value = null;
@@ -30,10 +29,12 @@ export const useAuthStore = defineStore('auth', () => {
         }
 
         user.value = { ...session.user, ...userData };
+      } else {
+        user.value = null;
       }
     } catch (err) {
       console.error('Error initializing auth:', err);
-      error.value = err.message;
+      error.value = err.message || 'Error desconocido';
       await supabase.auth.signOut();
       user.value = null;
     } finally {
@@ -52,6 +53,7 @@ export const useAuthStore = defineStore('auth', () => {
       });
 
       if (authError) throw authError;
+      if (!data?.user) throw new Error('No se pudo obtener el usuario');
 
       const { data: userData, error: userError } = await supabase
         .from('usuarios')
@@ -60,10 +62,7 @@ export const useAuthStore = defineStore('auth', () => {
         .maybeSingle();
 
       if (userError) throw userError;
-      
-      if (!userData) {
-        throw new Error('Usuario no encontrado');
-      }
+      if (!userData) throw new Error('Usuario no encontrado');
 
       user.value = { ...data.user, ...userData };
 
@@ -81,7 +80,7 @@ export const useAuthStore = defineStore('auth', () => {
           throw new Error('Tipo de usuario no válido');
       }
     } catch (err) {
-      error.value = err.message;
+      error.value = err.message || 'Error desconocido';
       throw err;
     } finally {
       loading.value = false;
@@ -94,7 +93,7 @@ export const useAuthStore = defineStore('auth', () => {
       user.value = null;
     } catch (err) {
       console.error('Error logging out:', err);
-      error.value = err.message;
+      error.value = err.message || 'Error desconocido';
       throw err;
     }
   };
