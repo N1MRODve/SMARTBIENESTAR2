@@ -1,7 +1,7 @@
 // src/router/routes/admin.routes.js
 import { useAuthStore } from '@/stores/auth.store'
 
-const adminRoutes = [
+export const adminRoutes = [
   // Ruta de login para admin
   {
     path: '/admin/login',
@@ -41,6 +41,12 @@ const adminRoutes = [
     }
   },
   {
+    path: '/admin/empleados/:id',
+    name: 'EmpleadoDetailView',
+    component: () => import('@/views/admin/EmpleadoDetailView.vue'),
+    meta: { requiresAuth: true }
+  },
+  {
     path: '/admin/servicios',
     name: 'AdminServicios',
     component: () => import('@/views/admin/ServiciosView.vue'),
@@ -52,13 +58,15 @@ const adminRoutes = [
   },
   {
     path: '/admin/encuestas',
-    name: 'AdminEncuestas',
+    name: 'EncuestasView', // <-- Añadido para navegación por nombre
     component: () => import('@/views/admin/EncuestasView.vue'),
-    meta: { 
-      requiresAuth: true, 
-      roles: ['administrador'],
-      title: 'Gestión de Encuestas'
-    }
+    meta: { requiresAuth: true }
+  },
+  {
+    path: '/admin/encuestas/plantillas',
+    name: 'PlantillasEncuestaView',
+    component: () => import('@/views/admin/PlantillasEncuestaView.vue'),
+    meta: { requiresAuth: true }
   }
 ]
 
@@ -79,4 +87,4 @@ const adminGuard = (to, from, next) => {
   next()
 }
 
-export { adminRoutes, adminGuard }
+export { adminGuard }

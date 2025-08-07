@@ -1,70 +1,53 @@
 ```vue
 <template>
   <button
-    :class="[
-      'inline-flex items-center justify-center font-medium rounded-lg transition-colors',
-      'focus:outline-none focus:ring-2 focus:ring-offset-2',
-      variants[variant],
-      sizes[size],
-      fullWidth ? 'w-full' : '',
-      loading ? 'opacity-80 cursor-not-allowed' : '',
-      className
-    ]"
-    :disabled="loading || disabled"
+    :class="buttonClasses"
     v-bind="$attrs"
+    :aria-label="ariaLabel"
   >
-    <template v-if="loading">
-      <Loader2 class="w-4 h-4 mr-2 animate-spin" />
-      <span>Cargando...</span>
-    </template>
-    <template v-else>
-      <slot />
-    </template>
+    <span v-if="icon" class="mr-2 flex items-center">
+      <component
+        :is="icon"
+        :class="iconClasses"
+        class="w-5 h-5"
+        aria-hidden="true"
+      />
+    </span>
+    <slot />
   </button>
 </template>
 
 <script setup>
-import { Loader2 } from 'lucide-vue-next';
+import { computed } from 'vue'
 
 const props = defineProps({
-  variant: {
-    type: String,
-    default: 'primary',
-    validator: (value) => ['primary', 'secondary', 'outline'].includes(value)
-  },
-  size: {
-    type: String,
-    default: 'md',
-    validator: (value) => ['sm', 'md', 'lg'].includes(value)
-  },
-  fullWidth: {
-    type: Boolean,
-    default: false
-  },
-  loading: {
-    type: Boolean,
-    default: false
-  },
-  disabled: {
-    type: Boolean,
-    default: false
-  },
-  className: {
-    type: String,
-    default: ''
+  variant: { type: String, default: 'primary' },
+  icon: { type: [Object, Function, String], default: null },
+  ariaLabel: { type: String, default: '' }
+})
+
+const buttonClasses = computed(() => {
+  switch (props.variant) {
+    case 'primary':
+      return 'bg-blue-700 text-white hover:bg-blue-800 focus:ring-2 focus:ring-blue-400 px-4 py-2 rounded-lg flex items-center transition font-semibold shadow-md focus:outline-none'
+    case 'secondary':
+      return 'bg-gray-100 text-gray-800 hover:bg-gray-200 focus:ring-2 focus:ring-gray-400 px-4 py-2 rounded-lg flex items-center transition font-semibold shadow-md focus:outline-none'
+    case 'outline':
+      return 'border border-blue-700 text-blue-700 bg-white hover:bg-blue-50 focus:ring-2 focus:ring-blue-400 px-4 py-2 rounded-lg flex items-center transition font-semibold shadow-md focus:outline-none'
+    default:
+      return 'px-4 py-2 rounded-lg flex items-center transition font-semibold focus:outline-none'
   }
-});
+})
 
-const variants = {
-  primary: 'bg-primary text-white hover:bg-primary-dark focus:ring-primary',
-  secondary: 'bg-secondary text-white hover:bg-secondary/90 focus:ring-secondary',
-  outline: 'border border-gray-300 text-gray-700 hover:bg-gray-50 focus:ring-primary'
-};
-
-const sizes = {
-  sm: 'px-3 py-1.5 text-sm',
-  md: 'px-4 py-2',
-  lg: 'px-6 py-3 text-lg'
-};
+const iconClasses = computed(() => {
+  if (props.variant === 'primary') {
+    return 'text-white'
+  }
+  if (props.variant === 'outline') {
+    return 'text-blue-700'
+  }
+  // secondary y otros
+  return 'text-gray-800'
+})
 </script>
 ```

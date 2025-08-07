@@ -1,198 +1,165 @@
 <template>
-  <div class="space-y-8">
-    <!-- Menú de navegación -->
-    <nav class="bg-white shadow rounded-xl mb-6 px-6 py-4 flex items-center justify-between">
-      <div class="flex items-center gap-6">
-        <router-link
-          to="/admin/dashboard"
-          class="text-primary font-semibold hover:underline"
-          active-class="underline"
-        >
-          Dashboard
-        </router-link>
-        <router-link
-          to="/admin/empleados"
-          class="text-gray-700 hover:text-primary"
-          active-class="text-primary font-semibold underline"
-        >
-          Empleados
-        </router-link>
-        <router-link
-          to="/admin/servicios"
-          class="text-gray-700 hover:text-primary"
-          active-class="text-primary font-semibold underline"
-        >
-          Servicios
-        </router-link>
-        <router-link
-          to="/admin/clases"
-          class="text-gray-700 hover:text-primary"
-          active-class="text-primary font-semibold underline"
-        >
-          Clases
-        </router-link>
-        <router-link
-          to="/admin/encuestas"
-          class="text-gray-700 hover:text-primary"
-          active-class="text-primary font-semibold underline"
-        >
-          Encuestas
-        </router-link>
-        <router-link
-          to="/admin/ranking"
-          class="text-gray-700 hover:text-primary"
-          active-class="text-primary font-semibold underline"
-        >
-          Ranking
-        </router-link>
+  <AdminLayout>
+    <section class="p-8 max-w-7xl mx-auto">
+      <!-- Encabezado -->
+      <header class="mb-10">
+        <h1 class="text-3xl font-bold text-gray-900 mb-2">Panel de Administración</h1>
+        <p class="text-gray-600 text-base mb-6">
+          Bienvenido, aquí puedes gestionar encuestas, empleados y visualizar la actividad de tu empresa.
+        </p>
+      </header>
+
+      <!-- KPIs -->
+      <div class="mb-8">
+        <div v-if="loading" class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-6">
+          <div v-for="i in 4" :key="i" class="bg-gray-100 border rounded-lg shadow-md p-6 animate-pulse h-32 flex flex-col justify-center">
+            <div class="h-6 bg-gray-300 rounded w-2/3 mb-4"></div>
+            <div class="h-10 bg-gray-300 rounded w-1/2"></div>
+          </div>
+        </div>
+        <div v-else class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-6">
+          <StatsCard
+            title="Usuarios conectados"
+            :value="stats.usuariosConectados ?? 0"
+            icon="Users"
+            trend="up"
+            kpi
+          />
+          <StatsCard
+            title="Clases reservadas"
+            :value="stats.clasesReservadas ?? 0"
+            icon="Calendar"
+            trend="neutral"
+            kpi
+          />
+          <StatsCard
+            title="Encuestas enviadas"
+            :value="stats.encuestasEnviadas ?? 0"
+            icon="ClipboardList"
+            trend="neutral"
+            kpi
+          />
+          <StatsCard
+            title="Empleados activos"
+            :value="stats.empleadosActivos ?? 0"
+            icon="UserCheck"
+            trend="up"
+            kpi
+          />
+        </div>
       </div>
-      <div>
-        <button @click="logout" class="text-sm text-red-600 hover:underline">
-          Cerrar sesión
-        </button>
+
+      <!-- Cuadrícula principal asimétrica -->
+      <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+        <!-- Card de gráfico: ocupa 2 columnas en lg -->
+        <div :class="['bg-white border border-gray-200 rounded-lg shadow-md p-6 h-full', 'lg:col-span-2']">
+          <h2 class="text-lg font-semibold mb-4">Participación por Departamento</h2>
+          <div v-if="loading" class="h-64 bg-gray-100 rounded animate-pulse"></div>
+          <ChartCard v-else :chartData="departamentoChartData" class="h-full" />
+        </div>
+        <!-- Card de actividad reciente: ocupa 1 columna en lg -->
+        <div :class="['bg-white border border-gray-200 rounded-lg shadow-md p-6 h-full', 'lg:col-span-1']">
+          <h2 class="text-lg font-semibold mb-4">Actividad Reciente</h2>
+          <div v-if="loading">
+            <ul class="space-y-4">
+              <li v-for="i in 5" :key="i" class="h-12 bg-gray-100 rounded animate-pulse"></li>
+            </ul>
+          </div>
+          <ActividadReciente v-else :actividades="actividadReciente" class="h-full" />
+        </div>
       </div>
-    </nav>
 
-    <!-- Header -->
-    <div>
-      <h1 class="text-2xl font-bold text-gray-900">Panel de Administración</h1>
-      <p class="mt-1 text-sm text-gray-500">
-        Bienvenido, aquí puedes gestionar encuestas y ver la actividad de tu empresa.
-      </p>
-    </div>
+      <!-- Ranking de empleados -->
+      <div class="bg-white border border-gray-200 rounded-lg shadow-md p-6 mt-8">
+        <h2 class="text-lg font-semibold text-gray-900 mb-4">
+          Ranking de empleados más activos
+        </h2>
+        <DataTable
+          title="Ranking de empleados más activos"
+          :columns="[
+            { key: 'nombre', header: 'Empleado' },
+            { key: 'clases', header: 'Clases Reservadas' },
+            { key: 'conexiones', header: 'Conexiones' }
+          ]"
+          :data="rankingEmpleados"
+          :searchable="false"
+          :pagination="false"
+        />
+      </div>
 
-    <!-- Estadísticas -->
-    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-      <StatsCard
-        title="Usuarios conectados"
-        :value="stats.usuariosConectados"
-        icon="Users"
-        trend="up"
-      />
-      <StatsCard
-        title="Clases reservadas"
-        :value="stats.clasesReservadas"
-        icon="Calendar"
-        trend="neutral"
-      />
-      <StatsCard
-        title="Encuestas enviadas"
-        :value="stats.encuestasEnviadas"
-        icon="ClipboardList"
-        trend="neutral"
-      />
-    </div>
-
-    <!-- Ranking de empleados -->
-    <div>
-      <h2 class="text-lg font-semibold text-gray-900 mb-4">
-        Ranking de empleados más activos
-      </h2>
-      <DataTable
-        title="Ranking de empleados más activos"
-        :columns="[
-          { key: 'nombre', header: 'Empleado' },
-          { key: 'clases', header: 'Clases Reservadas' },
-          { key: 'conexiones', header: 'Conexiones' }
-        ]"
-        :data="rankingEmpleados"
-        :searchable="false"
-        :pagination="false"
-      />
-    </div>
-
-    <!-- Crear y enviar encuesta -->
-    <div class="mt-8">
-      <h2 class="text-lg font-semibold text-gray-900 mb-4">
-        Crear y enviar encuesta
-      </h2>
-      <button
-        class="bg-primary text-white px-4 py-2 rounded hover:bg-primary-dark"
-        @click="crearEncuesta"
-      >
-        Crear nueva encuesta
-      </button>
-    </div>
-  </div>
+      <!-- Card de acciones rápidas -->
+      <div class="bg-white border border-gray-200 rounded-lg shadow-md p-6 mt-8 flex flex-col md:flex-row gap-4 items-center justify-between">
+        <div>
+          <h2 class="text-lg font-semibold text-gray-900 mb-2">Acciones rápidas</h2>
+          <p class="text-sm text-gray-500 mb-4">Accede rápidamente a las funciones más usadas.</p>
+        </div>
+        <div class="flex gap-3">
+          <button
+            class="bg-primary text-white px-4 py-2 rounded hover:bg-primary-dark transition"
+            @click="crearEncuesta"
+          >
+            Crear nueva encuesta
+          </button>
+          <button
+            class="bg-secondary text-white px-4 py-2 rounded hover:bg-secondary-dark transition"
+            @click="añadirEmpleado"
+          >
+            Añadir empleado
+          </button>
+        </div>
+      </div>
+    </section>
+  </AdminLayout>
 </template>
 
 <script setup>
-import { ref, onMounted } from 'vue';
-import { useRouter } from 'vue-router';
-import { useAuthStore } from '@/stores/auth.store';
-import { supabase } from '../../services/supabase';
-import StatsCard from '../../components/common/StatsCard.vue';
-import DataTable from '../../components/common/DataTable.vue';
+import { computed, onMounted } from 'vue'
+import { useRouter } from 'vue-router'
+import { useAdminStore } from '@/stores/admin'
+import { useAuthStore } from '@/stores/auth.store'
+import StatsCard from '@/components/common/StatsCard.vue'
+import DataTable from '@/components/common/DataTable.vue'
+import ChartCard from '@/components/admin/ChartCard.vue'
+import ActividadReciente from '@/components/admin/ActividadReciente.vue'
+import AdminLayout from '@/layouts/AdminLayout.vue'
 
-const router = useRouter();
-const authStore = useAuthStore();
+const router = useRouter()
+const adminStore = useAdminStore()
+const authStore = useAuthStore()
 
-const stats = ref({
-  usuariosConectados: 0,
-  clasesReservadas: 0,
-  encuestasEnviadas: 0
-});
+const loading = computed(() => adminStore.dashboardLoading)
+const stats = computed(() => adminStore.dashboardStats)
+const rankingEmpleados = computed(() => adminStore.rankingEmpleados)
+const actividadReciente = computed(() => adminStore.actividadReciente)
+const departamentos = computed(() => adminStore.estadisticasPorDepartamento)
 
-const rankingEmpleados = ref([]);
+const departamentoChartData = computed(() => ({
+  labels: departamentos.value.map(d => d.nombre),
+  datasets: [
+    {
+      label: 'Empleados',
+      data: departamentos.value.map(d => d.total),
+      backgroundColor: '#3b82f6'
+    },
+    {
+      label: 'Activos (%)',
+      data: departamentos.value.map(d => d.porcentaje_activos),
+      backgroundColor: '#10b981'
+    }
+  ]
+}))
 
-const loadDashboardData = async () => {
-  try {
-    // Suponiendo que tienes el id de la empresa en el usuario autenticado
-    const empresaId = authStore.user?.empresa_id;
+function crearEncuesta() {
+  router.push('/admin/encuestas/crear')
+}
 
-    // Usuarios conectados de la empresa (ejemplo: usuarios con última conexión hoy)
-    const { count: usuariosConectados } = await supabase
-      .from('usuarios')
-      .select('*', { count: 'exact', head: true })
-      .eq('empresa_id', empresaId)
-      .gte('ultima_conexion', new Date().toISOString().split('T')[0]);
-
-    // Total de clases reservadas por empleados de la empresa
-    const { count: clasesReservadas } = await supabase
-      .from('reservas')
-      .select('*', { count: 'exact', head: true })
-      .eq('empresa_id', empresaId);
-
-    // Total de encuestas enviadas por el admin de la empresa
-    const { count: encuestasEnviadas } = await supabase
-      .from('encuestas')
-      .select('*', { count: 'exact', head: true })
-      .eq('empresa_id', empresaId);
-
-    // Ranking de empleados más activos (ejemplo: por cantidad de clases reservadas)
-    const { data: ranking } = await supabase
-      .from('usuarios')
-      .select('id, nombre, apellido, reservas(count), conexiones')
-      .eq('empresa_id', empresaId)
-      .order('reservas.count', { ascending: false })
-      .limit(10);
-
-    rankingEmpleados.value = (ranking || []).map(e => ({
-      nombre: `${e.nombre} ${e.apellido}`,
-      clases: e.reservas?.count || 0,
-      conexiones: e.conexiones || 0
-    }));
-
-    stats.value = {
-      usuariosConectados: usuariosConectados || 0,
-      clasesReservadas: clasesReservadas || 0,
-      encuestasEnviadas: encuestasEnviadas || 0
-    };
-  } catch (error) {
-    console.error('Error loading dashboard data:', error);
-  }
-};
-
-const crearEncuesta = () => {
-  router.push('/admin/encuestas/crear');
-};
-
-const logout = async () => {
-  await authStore.logout();
-  router.push('/login');
-};
+function añadirEmpleado() {
+  router.push('/admin/empleados')
+}
 
 onMounted(() => {
-  loadDashboardData();
-});
+  if (authStore.user?.empresa_id) {
+    adminStore.loadAdminDashboardData(authStore.user.empresa_id)
+  }
+})
 </script>

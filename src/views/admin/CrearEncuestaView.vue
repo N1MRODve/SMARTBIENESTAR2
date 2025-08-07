@@ -1,261 +1,241 @@
 <template>
-  <section class="p-6 max-w-3xl mx-auto">
-    <header class="mb-6">
-      <h1 class="text-2xl font-bold text-gray-900">Crear Encuesta</h1>
-      <p class="text-sm text-gray-500">Define los detalles y preguntas de tu encuesta.</p>
-    </header>
-
-    <form @submit.prevent="guardarEncuesta" aria-label="Formulario de encuesta">
-      <!-- 1. Detalles Generales -->
-      <section class="mb-8">
-        <h2 class="text-lg font-semibold mb-4">1. Detalles Generales</h2>
-        <div class="mb-4">
-          <label for="titulo" class="block font-medium mb-1">Título</label>
-          <input
-            id="titulo"
-            v-model="encuesta.titulo"
-            type="text"
-            class="w-full border rounded px-2 py-1"
-            required
-            autocomplete="off"
-          />
-        </div>
-        <div class="mb-4">
-          <label for="descripcion" class="block font-medium mb-1">Descripción</label>
-          <textarea
-            id="descripcion"
-            v-model="encuesta.descripcion"
-            class="w-full border rounded px-2 py-1"
-            rows="2"
-            required
-          ></textarea>
-        </div>
-        <!-- INICIO DEL NUEVO CÓDIGO -->
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+  <AdminLayout>
+    <section class="max-w-3xl mx-auto p-8">
+      <h1 class="text-2xl font-bold mb-8">
+        {{ adminStore.encuestaParaEditar ? 'Editar Encuesta' : 'Crear Nueva Encuesta' }}
+      </h1>
+      <form @submit.prevent="guardarEncuesta" class="space-y-8">
+        <!-- Detalles generales -->
+        <div class="bg-white rounded-lg shadow p-6 space-y-4">
           <div>
-            <label for="fecha_inicio" class="block font-medium mb-1">Fecha de Inicio</label>
+            <label class="block font-semibold mb-1">Título <span class="text-red-500">*</span></label>
             <input
-              id="fecha_inicio"
-              v-model="encuesta.fecha_inicio"
-              type="datetime-local"
-              class="w-full border rounded px-2 py-1"
-              required
-            />
-          </div>
-          <div>
-            <label for="fecha_fin" class="block font-medium mb-1">Fecha de Fin</label>
-            <input
-              id="fecha_fin"
-              v-model="encuesta.fecha_fin"
-              type="datetime-local"
-              class="w-full border rounded px-2 py-1"
-              required
-            />
-          </div>
-        </div>
-        <!-- FIN DEL NUEVO CÓDIGO -->
-      </section>
-
-      <!-- 2. Preguntas -->
-      <section>
-        <h2 class="text-lg font-semibold mb-4">2. Preguntas</h2>
-        <div v-for="(pregunta, idx) in encuesta.preguntas" :key="idx" class="mb-6 border rounded p-4 bg-gray-50">
-          <div class="flex items-center gap-2 mb-2">
-            <span class="font-bold text-primary">Pregunta {{ idx + 1 }}</span>
-            <Button
-              type="button"
-              size="sm"
-              variant="danger"
-              @click="eliminarPregunta(idx)"
-              aria-label="Eliminar pregunta"
-              v-if="encuesta.preguntas.length > 1"
-            >
-              Eliminar
-            </Button>
-          </div>
-          <div class="mb-2">
-            <label :for="`pregunta-texto-${idx}`" class="block text-sm font-medium mb-1">Texto de la pregunta</label>
-            <input
-              :id="`pregunta-texto-${idx}`"
-              v-model="pregunta.texto"
+              v-model="encuesta.titulo"
               type="text"
-              class="w-full border rounded px-2 py-1"
               required
+              class="w-full border rounded px-3 py-2"
+              placeholder="Título de la encuesta"
             />
           </div>
-          <div class="mb-2">
-            <label :for="`pregunta-tipo-${idx}`" class="block text-sm font-medium mb-1">Tipo de pregunta</label>
-            <select
-              :id="`pregunta-tipo-${idx}`"
-              v-model="pregunta.tipo_pregunta"
-              class="w-full border rounded px-2 py-1"
-              required
-            >
-              <option value="escala">Escala</option>
-              <option value="texto_abierto">Texto abierto</option>
-              <option value="seleccion_unica">Selección única</option>
-            </select>
+          <div>
+            <label class="block font-semibold mb-1">Descripción</label>
+            <textarea
+              v-model="encuesta.descripcion"
+              rows="3"
+              class="w-full border rounded px-3 py-2"
+              placeholder="Descripción de la encuesta"
+            ></textarea>
           </div>
-          <!-- Opciones para selección única -->
-          <div v-if="pregunta.tipo_pregunta === 'seleccion_unica'" class="mb-2">
-            <label class="block text-xs font-semibold mb-1">Opciones:</label>
-            <div v-for="(opcion, oidx) in pregunta.opciones" :key="oidx" class="flex items-center gap-2 mb-1">
+          <div class="flex gap-4">
+            <div class="flex-1">
+              <label class="block font-semibold mb-1">Fecha de inicio</label>
               <input
-                v-model="pregunta.opciones[oidx]"
-                type="text"
-                class="border rounded px-2 py-1 flex-1"
-                :placeholder="`Opción ${oidx + 1}`"
-                required
+                v-model="encuesta.fecha_inicio"
+                type="datetime-local"
+                class="w-full border rounded px-3 py-2"
               />
-              <Button
+            </div>
+            <div class="flex-1">
+              <label class="block font-semibold mb-1">Fecha de fin</label>
+              <input
+                v-model="encuesta.fecha_fin"
+                type="datetime-local"
+                class="w-full border rounded px-3 py-2"
+              />
+            </div>
+          </div>
+        </div>
+
+        <!-- Sección de preguntas -->
+        <div>
+          <div class="flex justify-between items-center mb-4">
+            <h2 class="text-lg font-semibold">Preguntas</h2>
+            <button
+              type="button"
+              @click="agregarPregunta"
+              class="bg-primary text-white px-4 py-2 rounded hover:bg-primary-dark transition"
+            >
+              + Agregar Pregunta
+            </button>
+          </div>
+          <div v-if="encuesta.preguntas.length === 0" class="text-gray-500 mb-4">
+            No hay preguntas agregadas.
+          </div>
+          <div v-for="(pregunta, index) in encuesta.preguntas" :key="index" class="bg-white rounded-lg shadow p-6 mb-6">
+            <div class="flex justify-between items-center mb-2">
+              <span class="font-semibold">Pregunta {{ index + 1 }}</span>
+              <button
                 type="button"
-                size="xs"
-                variant="danger"
-                @click="eliminarOpcion(idx, oidx)"
-                aria-label="Eliminar opción"
-                v-if="pregunta.opciones.length > 1"
+                @click="eliminarPregunta(index)"
+                class="text-red-500 hover:underline text-sm"
               >
                 Eliminar
-              </Button>
+              </button>
             </div>
-            <Button
-              type="button"
-              size="xs"
-              variant="primary"
-              @click="agregarOpcion(idx)"
-              class="mt-1"
-              aria-label="Agregar opción"
-            >
-              + Agregar opción
-            </Button>
+            <div class="mb-4">
+              <label class="block font-semibold mb-1">Texto de la pregunta</label>
+              <input
+                v-model="pregunta.texto"
+                type="text"
+                class="w-full border rounded px-3 py-2"
+                placeholder="Escribe la pregunta"
+              />
+            </div>
+            <div class="mb-4">
+              <label class="block font-semibold mb-1">Tipo de pregunta</label>
+              <select
+                v-model="pregunta.tipo"
+                @change="cambiarTipoPregunta(index, pregunta.tipo)"
+                class="w-full border rounded px-3 py-2"
+              >
+                <option value="Escala">Escala</option>
+                <option value="Texto Abierto">Texto Abierto</option>
+                <option value="Selección Única">Selección Única</option>
+              </select>
+            </div>
+            <!-- Opciones para Selección Única -->
+            <div v-if="pregunta.tipo === 'Selección Única'" class="mb-4">
+              <label class="block font-semibold mb-2">Opciones de respuesta</label>
+              <div v-for="(opcion, opcionIdx) in pregunta.opciones" :key="opcionIdx" class="flex items-center gap-2 mb-2">
+                <input
+                  v-model="pregunta.opciones[opcionIdx]"
+                  type="text"
+                  class="flex-1 border rounded px-3 py-2"
+                  placeholder="Opción de respuesta"
+                />
+                <button
+                  type="button"
+                  @click="eliminarOpcion(index, opcionIdx)"
+                  class="text-red-500 hover:underline text-sm"
+                >
+                  Eliminar
+                </button>
+              </div>
+              <button
+                type="button"
+                @click="agregarOpcion(index)"
+                class="bg-secondary text-white px-3 py-1 rounded hover:bg-secondary-dark transition"
+              >
+                + Agregar Opción
+              </button>
+            </div>
           </div>
         </div>
-        <Button
-          type="button"
-          variant="primary"
-          @click="agregarPregunta"
-          aria-label="Agregar pregunta"
-        >
-          + Agregar pregunta
-        </Button>
-      </section>
 
-      <!-- Mensaje de error -->
-      <div v-if="error" class="text-red-500 text-sm mt-4">{{ error }}</div>
-
-      <!-- Botón de guardar -->
-      <div class="flex justify-end mt-8">
-        <Button
-          type="submit"
-          :loading="guardando"
-          :disabled="guardando"
-          icon="save"
-        >
-          Guardar Encuesta
-        </Button>
-      </div>
-    </form>
-  </section>
+        <!-- Botones de acción -->
+        <div class="flex gap-4 justify-end">
+          <button
+            type="button"
+            @click="guardarEncuesta"
+            class="bg-gray-200 text-gray-700 px-6 py-2 rounded hover:bg-gray-300 transition"
+          >
+            Guardar como Borrador
+          </button>
+          <button
+            type="submit"
+            class="bg-primary text-white px-6 py-2 rounded hover:bg-primary-dark transition"
+          >
+            Guardar y Enviar
+          </button>
+        </div>
+      </form>
+    </section>
+  </AdminLayout>
 </template>
 
 <script setup>
-import { ref, onMounted } from 'vue'
-import { useRouter } from 'vue-router'
+import { ref, onMounted, onUnmounted } from 'vue'
 import { useAdminStore } from '@/stores/admin'
-import Button from '@/components/common/Button.vue'
+import AdminLayout from '@/layouts/AdminLayout.vue'
+import { useRouter } from 'vue-router'
 import { useToast } from '@/composables/useToast'
 
 const router = useRouter()
 const adminStore = useAdminStore()
 const toast = useToast()
-
 const guardando = ref(false)
-const error = ref('')
 
 const encuesta = ref({
   titulo: '',
   descripcion: '',
   fecha_inicio: '',
   fecha_fin: '',
-  preguntas: [
-    {
-      texto: '',
-      tipo_pregunta: 'escala',
-      opciones: []
-    }
-  ]
+  preguntas: []
 })
 
 onMounted(() => {
-  if (adminStore.plantillaParaEditar) {
-    // Precarga desde plantilla
-    encuesta.value.titulo = adminStore.plantillaParaEditar.nombre
-    encuesta.value.descripcion = ''
-    encuesta.value.preguntas = adminStore.plantillaParaEditar.preguntas
-      ? JSON.parse(JSON.stringify(adminStore.plantillaParaEditar.preguntas))
-      : [
-          {
-            texto: '',
-            tipo_pregunta: 'escala',
-            opciones: []
-          }
-        ]
-    adminStore.clearPlantillaParaEditar()
+  if (adminStore.encuestaParaEditar) {
+    const e = adminStore.encuestaParaEditar
+    encuesta.value = {
+      id: e.id,
+      titulo: e.titulo,
+      descripcion: e.descripcion,
+      fecha_inicio: e.fecha_inicio,
+      fecha_fin: e.fecha_fin,
+      preguntas: e.preguntas ? JSON.parse(JSON.stringify(e.preguntas)) : []
+    }
   }
+})
+
+onUnmounted(() => {
+  adminStore.clearEncuestaParaEditar()
 })
 
 function agregarPregunta() {
   encuesta.value.preguntas.push({
     texto: '',
-    tipo_pregunta: 'escala',
+    tipo: 'Escala',
     opciones: []
   })
 }
 
-function eliminarPregunta(idx) {
-  encuesta.value.preguntas.splice(idx, 1)
+function eliminarPregunta(index) {
+  encuesta.value.preguntas.splice(index, 1)
 }
 
-function agregarOpcion(pregIdx) {
-  encuesta.value.preguntas[pregIdx].opciones = encuesta.value.preguntas[pregIdx].opciones || []
-  encuesta.value.preguntas[pregIdx].opciones.push('')
+function cambiarTipoPregunta(index, tipo) {
+  encuesta.value.preguntas[index].tipo = tipo
+  if (tipo !== 'Selección Única') {
+    encuesta.value.preguntas[index].opciones = []
+  }
 }
 
-function eliminarOpcion(pregIdx, oidx) {
-  encuesta.value.preguntas[pregIdx].opciones.splice(oidx, 1)
+function agregarOpcion(preguntaIndex) {
+  encuesta.value.preguntas[preguntaIndex].opciones.push('')
+}
+
+function eliminarOpcion(preguntaIndex, opcionIndex) {
+  encuesta.value.preguntas[preguntaIndex].opciones.splice(opcionIndex, 1)
 }
 
 async function guardarEncuesta() {
-  error.value = ''
-  // Validación básica
+  // Validaciones previas
   if (!encuesta.value.titulo.trim()) {
-    error.value = 'El título es obligatorio.'
+    toast.error('El título de la encuesta es obligatorio.')
     return
   }
   if (!encuesta.value.preguntas.length) {
-    error.value = 'Debes agregar al menos una pregunta.'
+    toast.error('Debes agregar al menos una pregunta.')
     return
   }
-  for (const pregunta of encuesta.value.preguntas) {
-    if (!pregunta.texto.trim()) {
-      error.value = 'Todas las preguntas deben tener texto.'
-      return
-    }
-    if (
-      pregunta.tipo_pregunta === 'seleccion_unica' &&
-      (!pregunta.opciones || pregunta.opciones.length < 2)
-    ) {
-      error.value = 'Las preguntas de selección única deben tener al menos dos opciones.'
-      return
-    }
+  if (encuesta.value.preguntas.some(p => !p.texto.trim())) {
+    toast.error('Todas las preguntas deben tener texto.')
+    return
   }
+
   guardando.value = true
   try {
-    await adminStore.crearEncuesta(encuesta.value)
-    toast.success('Encuesta creada correctamente.')
+    if (adminStore.encuestaParaEditar) {
+      await adminStore.actualizarEncuesta(encuesta.value)
+      toast.success('Encuesta actualizada correctamente.')
+    } else {
+      await adminStore.crearEncuesta(encuesta.value)
+      toast.success('Encuesta guardada correctamente.')
+    }
     router.push({ name: 'EncuestasView' })
-  } catch (e) {
-    toast.error('No se pudo guardar la encuesta.')
+  } catch (error) {
+    toast.error(error.message || 'Error al guardar la encuesta.')
+    console.error(error)
   } finally {
     guardando.value = false
   }

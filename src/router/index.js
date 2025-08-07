@@ -1,9 +1,10 @@
 import { createRouter, createWebHistory } from 'vue-router';
-import { useAuthStore } from '../stores/auth.store';
-import { useAdminStore } from '../stores/admin.js';
+import { useAuthStore } from '../stores/auth.store'; // Asegúrate de importar el store
+import { useAdminStore } from '@/stores/admin'; // Paso 2: Importa el adminStore
 import LoginView from '../views/LoginView.vue';
 import NotFoundView from '../views/NotFoundView.vue';
 import AccessDeniedView from '../views/AccessDeniedView.vue';
+import StatsCard from '@/components/ui/StatsCard.vue';
 
 // Import route modules
 import { superadminRoutes } from './routes/superadmin.routes';
@@ -56,35 +57,32 @@ const router = createRouter({
   routes
 });
 
-router.beforeEach(async (to, from) => {
+router.beforeEach(async (to, from, next) => {
   const authStore = useAuthStore();
+  const adminStore = useAdminStore();
 
-  // 1. Inicializa la sesión si no está lista
+  // Inicializa el authStore si es necesario
   if (!authStore.isInitialized) {
-    await authStore.tryInitializeAuth(); // Debe existir en tu store y cargar usuario/empresa
+    await authStore.tryInitializeAuth();
   }
 
   const isAuthenticated = authStore.isAuthenticated;
   const requiresAuth = to.meta.requiresAuth;
 
-  // 2. Redirección si la ruta requiere autenticación y el usuario no está logueado
+  // Inicializa el adminStore solo si el usuario está autenticado
+  if (isAuthenticated && typeof adminStore.init === 'function') {
+    await adminStore.init();
+  }
+
   if (requiresAuth && !isAuthenticated) {
-    return { name: 'login' };
+    return next({ name: 'login' });
   }
 
-  // 3. Redirección si el usuario está logueado e intenta ir a login
   if (to.name === 'login' && isAuthenticated) {
-    const redirectMap = {
-      superadmin: '/superadmin/dashboard',
-      administrador: '/admin/dashboard',
-      empleado: '/empleado/dashboard',
-      colaborador: '/colaborador/dashboard'
-    };
-    return { path: redirectMap[authStore.userRole] || '/admin/dashboard' };
+    return next({ name: 'dashboard' });
   }
 
-  // 4. Permite la navegación
-  return true;
+  next();
 });
 
 export default router;

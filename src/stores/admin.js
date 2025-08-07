@@ -10,12 +10,10 @@ export const useAdminStore = defineStore('admin', {
     
     // Estadísticas del dashboard
     dashboardStats: {
-      total_empleados: 0,
-      empleados_activos: 0,
-      sesiones_proximas: 0,
-      participacion_promedio: 0,
-      encuestas_activas: 0,
-      puntos_promedio: 0
+      usuariosConectados: 0,
+      clasesReservadas: 0,
+      encuestasEnviadas: 0,
+      empleadosActivos: 0
     },
     
     // Empleados de la empresa
@@ -33,13 +31,30 @@ export const useAdminStore = defineStore('admin', {
     
     // Actividad reciente
     actividadReciente: [],
+    estadisticasPorDepartamento: [],
     
     // Estados de carga
     loading: false,
     error: null,
 
     // ID de la empresa del usuario actual
-    empresaId: null
+    empresaId: null,
+
+    // Encuesta para editar
+    encuestaParaEditar: null,
+
+    // Encuesta actual y respuestas actuales
+    encuestaActual: null,
+    respuestasActuales: [],
+
+    // Plantilla para editar
+    plantillaParaEditar: null,
+
+    // Empleado actual
+    empleadoActual: null,
+
+    // Nueva propiedad para el estado de carga del dashboard
+    dashboardLoading: false
   }),
 
   getters: {
@@ -108,24 +123,22 @@ export const useAdminStore = defineStore('admin', {
 
     // Cargar estadísticas del dashboard
     async loadDashboardStats(empresaId) {
+      this.loading = true
       try {
-        this.loading = true
-        this.error = null
-
         const { data, error } = await supabase
-          .rpc('get_admin_dashboard_stats', {
-            empresa_id_param: empresaId
-          })
-
+          .rpc('get_admin_dashboard_stats', { empresa_id_param: empresaId })
         if (error) throw error
-
         if (data && data.length > 0) {
           this.dashboardStats = data[0]
         }
-
-      } catch (error) {
-        console.error('Error cargando estadísticas del dashboard:', error)
-        this.error = error.message
+      } catch (err) {
+        this.dashboardStats = {
+          usuariosConectados: 0,
+          clasesReservadas: 0,
+          encuestasEnviadas: 0,
+          empleadosActivos: 0
+        }
+        this.error = err.message || 'Error al cargar estadísticas'
       } finally {
         this.loading = false
       }
@@ -154,47 +167,28 @@ export const useAdminStore = defineStore('admin', {
 
     // Cargar empleados de la empresa
     async loadEmpleados(empresaId) {
+      this.empleadosLoading = true
       try {
-        this.empleadosLoading = true
-        this.error = null
-
         const { data, error } = await supabase
           .from('usuarios')
           .select(`
             *,
-            perfil_empleados (
-              fecha_nacimiento,
-              genero,
-              cargo,
-              departamento,
-              preferencias_bienestar,
-              objetivos_bienestar,
-              nivel_actividad,
-              alergias,
-              restricciones_dieteticas,
-              puntos_bienestar,
-              fecha_actualizacion
-            )
+            perfil_empleados(*)
           `)
           .eq('empresa_id', empresaId)
           .eq('tipo_usuario', 'empleado')
-          .order('nombre')
 
         if (error) throw error
 
-        // Procesar datos para incluir información del perfil
+        // Mapear datos de perfil_empleados si existen
         this.empleados = (data || []).map(emp => ({
           ...emp,
-          ...emp.perfil_empleados?.[0],
-          puntos_bienestar: emp.perfil_empleados?.[0]?.puntos_bienestar || 0
+          cargo: emp.perfil_empleados?.cargo || '',
+          perfil: emp.perfil_empleados || null
         }))
-
-        // Obtener última participación de cada empleado
-        await this.loadUltimaParticipacion(empresaId)
-
-      } catch (error) {
-        console.error('Error cargando empleados:', error)
-        this.error = error.message
+      } catch (err) {
+        this.empleados = []
+        this.error = err.message || 'Error al cargar empleados'
       } finally {
         this.empleadosLoading = false
       }
@@ -286,40 +280,50 @@ export const useAdminStore = defineStore('admin', {
 
     // Cargar encuestas de la empresa
     async loadEncuestas(empresaId) {
-      this.encuestasLoading = true
-      this.encuestasError = null
+      this.encuestasLoading = true;
+      this.encuestasError = null;
       try {
         const { data, error } = await supabase
           .from('encuestas')
           .select('*')
           .eq('empresa_id', empresaId)
-          .order('fecha_creacion', { ascending: false })
-        if (error) throw error
-        this.encuestas = data || []
+          .order('fecha_creacion', { ascending: false });
+
+        if (error) {
+          throw error;
+        }
+
+        // ---- INICIO DEL CAMBIO ----
+        console.log('Encuestas recibidas desde Supabase:', data);
+        // ---- FIN DEL CAMBIO ----
+
+        this.encuestas = data;
+
       } catch (err) {
-        this.encuestasError = err.message || 'Error cargando encuestas'
-        this.encuestas = []
+        this.encuestasError = err.message || 'Error cargando encuestas';
+        this.encuestas = [];
+        throw err;
       } finally {
-        this.encuestasLoading = false
+        this.encuestasLoading = false;
       }
     },
 
     // Cargar actividad reciente
     async loadActividadReciente(empresaId, limit = 10) {
+      this.loading = true
       try {
         const { data, error } = await supabase
           .rpc('get_admin_recent_activity', {
             empresa_id_param: empresaId,
             limit_param: limit
           })
-
         if (error) throw error
-
         this.actividadReciente = data || []
-
-      } catch (error) {
-        console.error('Error cargando actividad reciente:', error)
-        this.error = error.message
+      } catch (err) {
+        this.actividadReciente = []
+        this.error = err.message || 'Error al cargar actividad reciente'
+      } finally {
+        this.loading = false
       }
     },
 
@@ -358,101 +362,87 @@ export const useAdminStore = defineStore('admin', {
     // Crear nueva encuesta
     async crearEncuesta(encuestaData) {
       const authStore = useAuthStore();
-      const idDeLaEmpresa = authStore.user?.empresa_id;
+      const empresaId = authStore.user?.empresa_id;
 
-      if (!idDeLaEmpresa) {
-        console.error("BLOQUEO: No se encontró empresa_id en el authStore. El usuario podría no estar autenticado correctamente.");
-        throw new Error("Error crítico: El ID de la empresa no está disponible.");
+      if (!empresaId) {
+        if (typeof this.toast === 'function') {
+          this.toast('No se encontró el ID de la empresa.', { type: 'error' });
+        }
+        throw new Error('No se encontró el ID de la empresa.');
       }
 
-      // Corrige el formato de fechas para Supabase (ISO completo)
-      function toIsoDatetime(val) {
-        // Si ya tiene segundos, no modifica
-        if (!val) return null;
-        return val.length === 16 ? val + ':00' : val;
-      }
-
+      this.loading = true;
       try {
-        const encuestaParaInsertar = {
-          empresa_id: idDeLaEmpresa,
+        // Paso 1: Insertar la encuesta principal
+        const encuestaObj = {
+          empresa_id: empresaId,
           titulo: encuestaData.titulo,
           descripcion: encuestaData.descripcion,
-          fecha_inicio: toIsoDatetime(encuestaData.fecha_inicio),
-          fecha_fin: toIsoDatetime(encuestaData.fecha_fin),
-          anonima: encuestaData.anonima ?? false,
-          categoria: encuestaData.categoria ?? null,
+          fecha_inicio: encuestaData.fecha_inicio,
+          fecha_fin: encuestaData.fecha_fin,
           estado: 'borrador',
           activo: true
         };
 
-        const { data, error } = await supabase
+        const { data: encuestaCreada, error: errorEncuesta } = await supabase
           .from('encuestas')
-          .insert([encuestaParaInsertar])
+          .insert([encuestaObj])
           .select()
           .single();
 
-        if (error) {
-          throw error;
+        if (errorEncuesta) throw errorEncuesta;
+
+        // Paso 2: Insertar las preguntas
+        if (Array.isArray(encuestaData.preguntas) && encuestaData.preguntas.length > 0) {
+          const preguntasParaInsertar = encuestaData.preguntas.map((pregunta, idx) => ({
+            encuesta_id: encuestaCreada.id,
+            texto: pregunta.texto,
+            tipo: pregunta.tipo,
+            opciones: pregunta.opciones && pregunta.tipo === 'Selección Única' ? pregunta.opciones : null,
+            orden: idx + 1
+          }));
+
+          const { error: errorPreguntas } = await supabase
+            .from('preguntas_encuesta')
+            .insert(preguntasParaInsertar);
+
+          if (errorPreguntas) throw errorPreguntas;
         }
 
-        // Aquí iría la lógica para guardar las preguntas, usando data.id
-        
-        return data;
+        if (typeof this.toast === 'function') {
+          this.toast('Encuesta creada correctamente', { type: 'success' });
+        }
 
-      } catch (err) {
-        console.error('Error creando encuesta:', err);
-        throw err;
+        return encuestaCreada;
+      } catch (error) {
+        if (typeof this.toast === 'function') {
+          this.toast(error.message || 'Error al crear la encuesta', { type: 'error' });
+        }
+        throw error;
+      } finally {
+        this.loading = false;
       }
     },
 
-    // Actualizar información de empleado
-    async actualizarEmpleado(empleadoId, datosEmpleado) {
+    async eliminarEmpleado(empleadoId) {
+      this.loading = true
       try {
-        this.loading = true
-        this.error = null
-
-        // Actualizar usuario
-        const { error: userError } = await supabase
+        // Borrado permanente del usuario (ON DELETE CASCADE elimina perfil_empleados)
+        const { error } = await supabase
           .from('usuarios')
-          .update({
-            nombre: datosEmpleado.nombre,
-            apellido: datosEmpleado.apellido,
-            telefono: datosEmpleado.telefono,
-            activo: datosEmpleado.activo
-          })
+          .delete()
           .eq('id', empleadoId)
+        if (error) throw error
 
-        if (userError) throw userError
-
-        // Actualizar perfil si existe
-        if (datosEmpleado.perfil) {
-          const { error: perfilError } = await supabase
-            .from('perfil_empleados')
-            .upsert([{
-              usuario_id: empleadoId,
-              ...datosEmpleado.perfil,
-              fecha_actualizacion: new Date().toISOString()
-            }])
-
-          if (perfilError) throw perfilError
+        await this.loadEmpleados(this.empresaId)
+        if (typeof this.toast === 'function') {
+          this.toast('Empleado eliminado permanentemente.', { type: 'success' })
         }
-
-        // Actualizar el empleado en el state
-        const index = this.empleados.findIndex(emp => emp.id === empleadoId)
-        if (index !== -1) {
-          this.empleados[index] = {
-            ...this.empleados[index],
-            ...datosEmpleado,
-            ...datosEmpleado.perfil
-          }
+      } catch (err) {
+        if (typeof this.toast === 'function') {
+          this.toast(err.message || 'Error al eliminar empleado', { type: 'error' })
         }
-
-        return true
-
-      } catch (error) {
-        console.error('Error actualizando empleado:', error)
-        this.error = error.message
-        throw error
+        throw err
       } finally {
         this.loading = false
       }
@@ -535,12 +525,10 @@ export const useAdminStore = defineStore('admin', {
       this.encuestas = []
       this.actividadReciente = []
       this.dashboardStats = {
-        total_empleados: 0,
-        empleados_activos: 0,
-        sesiones_proximas: 0,
-        participacion_promedio: 0,
-        encuestas_activas: 0,
-        puntos_promedio: 0
+        usuariosConectados: 0,
+        clasesReservadas: 0,
+        encuestasEnviadas: 0,
+        empleadosActivos: 0
       }
       this.error = null
     },
@@ -559,12 +547,309 @@ export const useAdminStore = defineStore('admin', {
     // Acción para inicializar el adminStore con el ID de empresa del usuario autenticado
     async init() {
       const authStore = useAuthStore();
-      // Espera a que el authStore esté inicializado
-      if (!authStore.isInitialized) {
-        await authStore.tryInitializeAuth();
-      }
-      // Asigna el ID de empresa del usuario autenticado al estado local
-      this.empresaId = authStore.empresaId;
+      // Obtén el empresa_id correctamente desde el usuario autenticado
+      const empresaId = authStore.user?.empresa_id;
+      this.empresaId = empresaId;
+      console.log('AdminStore: empresaId inicializado con', empresaId);
     },
+
+    // Editar encuesta
+    setEncuestaParaEditar(encuesta) {
+      this.encuestaParaEditar = encuesta
+    },
+    clearEncuestaParaEditar() {
+      this.encuestaParaEditar = null
+    },
+    async actualizarEncuesta(encuestaData) {
+      this.loading = true
+      try {
+        // Actualiza la encuesta principal
+        const { id, titulo, descripcion, fecha_inicio, fecha_fin } = encuestaData
+        const { error: errorEncuesta } = await supabase
+          .from('encuestas')
+          .update({
+            titulo,
+            descripcion,
+            fecha_inicio,
+            fecha_fin
+          })
+          .eq('id', id)
+
+        if (errorEncuesta) throw errorEncuesta
+
+        // Elimina preguntas existentes y vuelve a insertar
+        await supabase
+          .from('preguntas_encuesta')
+          .delete()
+          .eq('encuesta_id', id)
+
+        if (Array.isArray(encuestaData.preguntas) && encuestaData.preguntas.length > 0) {
+          const preguntasParaInsertar = encuestaData.preguntas.map((pregunta, idx) => ({
+            encuesta_id: id,
+            texto: pregunta.texto,
+            tipo: pregunta.tipo,
+            opciones: pregunta.opciones && pregunta.tipo === 'Selección Única' ? pregunta.opciones : null,
+            orden: idx + 1
+          }))
+          const { error: errorPreguntas } = await supabase
+            .from('preguntas_encuesta')
+            .insert(preguntasParaInsertar)
+          if (errorPreguntas) throw errorPreguntas
+        }
+
+        if (typeof this.toast === 'function') {
+          this.toast('Encuesta actualizada correctamente', { type: 'success' })
+        }
+      } catch (error) {
+        if (typeof this.toast === 'function') {
+          this.toast(error.message || 'Error al actualizar la encuesta', { type: 'error' })
+        }
+        throw error
+      } finally {
+        this.loading = false
+      }
+    },
+
+    // Archivar encuesta
+    async archivarEncuesta(encuestaId) {
+      this.loading = true
+      try {
+        const { error } = await supabase
+          .from('encuestas')
+          .update({ activo: false })
+          .eq('id', encuestaId)
+        if (error) throw error
+        await this.loadEncuestas(this.empresaId)
+        toast.success('Encuesta archivada correctamente')
+      } catch (err) {
+        toast.error('No se pudo archivar la encuesta')
+      } finally {
+        this.loading = false
+      }
+    },
+
+    // Enviar encuesta
+    async enviarEncuesta(encuestaId, listaDeCorreos) {
+      this.loading = true
+      try {
+        // Buscar usuarios por email y empresa
+        const { data: usuarios, error: errorUsuarios } = await supabase
+          .from('usuarios')
+          .select('id,email')
+          .in('email', listaDeCorreos)
+          .eq('empresa_id', this.empresaId)
+
+        if (errorUsuarios) throw errorUsuarios
+        if (!usuarios || usuarios.length === 0) throw new Error('No se encontraron usuarios válidos.')
+
+        // Insertar participantes
+        const participantes = usuarios.map(u => ({
+          encuesta_id: encuestaId,
+          usuario_id: u.id
+        }))
+        const { error: errorParticipantes } = await supabase
+          .from('participantes_encuesta')
+          .insert(participantes)
+        if (errorParticipantes) throw errorParticipantes
+
+        // Actualizar estado de la encuesta
+        const { error: errorUpdate } = await supabase
+          .from('encuestas')
+          .update({ estado: 'activa' })
+          .eq('id', encuestaId)
+        if (errorUpdate) throw errorUpdate
+
+        await this.loadEncuestas()
+        if (typeof this.toast === 'function') {
+          this.toast('Encuesta enviada correctamente', { type: 'success' })
+        }
+      } catch (error) {
+        if (typeof this.toast === 'function') {
+          this.toast(error.message || 'Error al enviar la encuesta', { type: 'error' })
+        }
+        throw error
+      } finally {
+        this.loading = false
+      }
+    },
+
+    // Cargar resultados de encuesta
+    async loadResultadosEncuesta(encuestaId) {
+      this.loading = true
+      try {
+        const { data: encuesta, error: errorEncuesta } = await supabase
+          .from('encuestas')
+          .select('*, preguntas:preguntas_encuesta(*)')
+          .eq('id', encuestaId)
+          .single()
+        if (errorEncuesta) throw errorEncuesta
+        this.encuestaActual = encuesta
+
+        const { data: respuestas, error: errorRespuestas } = await supabase
+          .from('respuestas_encuesta')
+          .select('*')
+          .eq('encuesta_id', encuestaId)
+        if (errorRespuestas) throw errorRespuestas
+        this.respuestasActuales = respuestas || []
+      } catch (err) {
+        this.encuestaActual = null
+        this.respuestasActuales = []
+      } finally {
+        this.loading = false
+      }
+    },
+
+    // Establecer plantilla para editar
+    setPlantillaParaEditar(plantilla) {
+      this.plantillaParaEditar = plantilla
+    },
+
+    // Limpiar plantilla para editar
+    clearPlantillaParaEditar() {
+      this.plantillaParaEditar = null
+    },
+
+    // Nueva acción para ranking de usuarios usando la función RPC
+    async obtenerRankingUsuarios(empresaId) {
+      this.loading = true
+      try {
+        const { data, error } = await supabase
+          .rpc('obtener_ranking_usuarios', { id_empresa: empresaId })
+        if (error) throw error
+        return data // [{ id, nombre, apellido, conteo_reservas }, ...]
+      } catch (err) {
+        this.error = err.message || 'Error obteniendo ranking de usuarios'
+        throw err
+      } finally {
+        this.loading = false
+      }
+    },
+
+    async crearEmpleado(empleadoData) {
+      this.loading = true
+      try {
+        // 1. Verificar duplicados por email
+        const { data: usuariosExistentes, error: errorSelect } = await supabase
+          .from('usuarios')
+          .select('id')
+          .eq('email', empleadoData.email)
+
+        if (errorSelect) throw errorSelect
+        if (usuariosExistentes && usuariosExistentes.length > 0) {
+          throw new Error('Este correo electrónico ya está registrado.')
+        }
+
+        // 2. Insertar en usuarios
+        const usuarioObj = {
+          nombre: empleadoData.nombre,
+          apellido: empleadoData.apellido,
+          email: empleadoData.email,
+          empresa_id: this.empresaId,
+          tipo_usuario: 'empleado'
+        }
+
+        const { data: nuevoUsuario, error: errorInsertUsuario } = await supabase
+          .from('usuarios')
+          .insert([usuarioObj])
+          .select()
+          .single()
+
+        if (errorInsertUsuario) throw errorInsertUsuario
+
+        // 3. Insertar en perfil_empleados
+        const perfilObj = {
+          usuario_id: nuevoUsuario.id,
+          cargo: empleadoData.cargo || ''
+        }
+
+        const { error: errorInsertPerfil } = await supabase
+          .from('perfil_empleados')
+          .insert([perfilObj])
+
+        if (errorInsertPerfil) throw errorInsertPerfil
+
+        // 4. Actualizar UI y notificar
+        await this.loadEmpleados(this.empresaId)
+        if (typeof this.toast === 'function') {
+          this.toast('Empleado creado correctamente.', { type: 'success' })
+        }
+
+        return nuevoUsuario
+      } catch (error) {
+        if (typeof this.toast === 'function') {
+          this.toast(error.message || 'Error al crear empleado.', { type: 'error' })
+        }
+        throw error
+      } finally {
+        this.loading = false
+      }
+    },
+
+    // Cargar empleado por ID
+    async loadEmpleadoById(empleadoId) {
+      this.loading = true
+      try {
+        const { data, error } = await supabase
+          .from('usuarios')
+          .select('*, perfil_empleados(*)')
+          .eq('id', empleadoId)
+          .single()
+        if (error) throw error
+        this.empleadoActual = data
+      } catch (err) {
+        this.empleadoActual = null
+        this.error = err.message || 'Error al cargar empleado'
+      } finally {
+        this.loading = false
+      }
+    },
+
+    // Nueva acción para cargar datos del dashboard (simplificada)
+    async loadAdminDashboardData(empresaId) {
+      this.dashboardLoading = true
+      try {
+        const { data, error } = await supabase.rpc('get_admin_dashboard_stats', { empresa_id_param: empresaId })
+        if (error) throw error
+        this.dashboardStats = {
+          usuariosConectados: data?.usuariosConectados ?? 0,
+          clasesReservadas: data?.clasesReservadas ?? 0,
+          encuestasEnviadas: data?.encuestasEnviadas ?? 0,
+          empleadosActivos: data?.empleadosActivos ?? 0
+        }
+      } catch (err) {
+        this.dashboardStats = {
+          usuariosConectados: 0,
+          clasesReservadas: 0,
+          encuestasEnviadas: 0,
+          empleadosActivos: 0
+        }
+      } finally {
+        this.dashboardLoading = false
+      }
+    },
+
+    async eliminarEncuesta(encuestaId) {
+      this.loading = true
+      try {
+        // Elimina la encuesta principal (ON DELETE CASCADE se encarga del resto)
+        const { error } = await supabase
+          .from('encuestas')
+          .delete()
+          .eq('id', encuestaId)
+        if (error) throw error
+
+        await this.loadEncuestas(this.empresaId) // <-- Corrección aquí
+        if (typeof this.toast === 'function') {
+          this.toast('Encuesta eliminada correctamente', { type: 'success' })
+        }
+      } catch (error) {
+        if (typeof this.toast === 'function') {
+          this.toast(error.message || 'Error al eliminar la encuesta', { type: 'error' })
+        }
+        throw error
+      } finally {
+        this.loading = false
+      }
+    }
   }
 })
