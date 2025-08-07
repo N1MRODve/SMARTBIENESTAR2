@@ -20,4 +20,20 @@ import TheHeader from '../components/layout/TheHeader.vue';
 
 const sidebarOpen = ref(false);
 </script>
+
+<template>
+  <EmpleadoLayout>
+    <h1>Próximas Actividades</h1>
+    <p>
+      Explora y apúntate a las sesiones de bienestar disponibles para ti en los próximos días.
+    </p>
+    <div>
+      <!-- Aquí se mostrarán las actividades disponibles -->
+    </div>
+  </EmpleadoLayout>
+</template>
+
+<script setup>
+import EmpleadoLayout from '@/layouts/EmpleadoLayout.vue';
+</script>
 ```

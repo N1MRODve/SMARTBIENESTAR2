@@ -19,6 +19,12 @@ export const empleadoRoutes = [
         path: 'reservas',
         name: 'empleado-reservas',
         component: () => import('../../views/empleado/ReservasView.vue')
+      },
+      {
+        path: 'reservar-actividad',
+        name: 'ReservarActividad',
+        component: () => import('@/views/empleado/ReservarActividadView.vue'),
+        meta: { requiresAuth: true }
       }
     ]
   }
