@@ -27,6 +27,18 @@ const routes = [
     component: () => import('../views/DemoSelectionView.vue')
   },
   {
+    path: '/demo/empleado',
+    name: 'DemoEmpleado',
+    component: () => import('../views/demo/DemoEmpleadoView.vue'),
+    meta: { isDemo: true }
+  },
+  {
+    path: '/demo/admin',
+    name: 'DemoAdmin',
+    component: () => import('../views/demo/DemoAdminView.vue'),
+    meta: { isDemo: true }
+  },
+  {
     path: '/acceso-denegado',
     name: 'access-denied',
     component: AccessDeniedView,
@@ -49,6 +61,11 @@ const router = createRouter({
 });
 
 router.beforeEach(async (to, from, next) => {
+  // Si es una ruta demo, permitir acceso directo sin autenticación
+  if (to.meta?.isDemo) {
+    return next()
+  }
+
   try {
     // 1) Inicializar authStore primero, siempre
     const { useAuthStore } = await import('@/stores/auth.store')

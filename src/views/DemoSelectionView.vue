@@ -260,27 +260,13 @@ function irALogin() {
 }
 
 function accederDemoEmpleado() {
-  // Activar modo demo y redirigir con credenciales pre-cargadas
-  router.push({
-    path: '/login',
-    query: {
-      demo: 'empleado',
-      email: 'demo.ana@innovatech-demo.com',
-      password: 'demo123'
-    }
-  });
+  // Ir directamente a la demo del empleado
+  router.push('/demo/empleado');
 }
 
 function accederDemoAdmin() {
-  // Activar modo demo y redirigir con credenciales pre-cargadas
-  router.push({
-    path: '/login',
-    query: {
-      demo: 'admin',
-      email: 'demo.admin@innovatech-demo.com',
-      password: 'demo123'
-    }
-  });
+  // Ir directamente a la demo del administrador
+  router.push('/demo/admin');
 }
 
 function contactarVentas() {
