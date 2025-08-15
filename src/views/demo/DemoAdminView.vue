@@ -169,6 +169,45 @@
                   <p class="font-medium text-gray-900">Nueva encuesta creada</p>
                   <p class="text-gray-500 text-xs">Ayer</p>
                 </div>
+                <div class="text-sm">
+                  <p class="font-medium text-gray-900">David completó encuesta de clima</p>
+                  <p class="text-gray-500 text-xs">Hace 1 día</p>
+                </div>
+                <div class="text-sm">
+                  <p class="font-medium text-gray-900">Carmen se unió al desafío de hidratación</p>
+                  <p class="text-gray-500 text-xs">Hace 2 días</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Próximas Sesiones -->
+          <div class="glass-container rounded-xl shadow-lg p-6 backdrop-blur-sm border border-white/30">
+            <h2 class="text-lg font-semibold mb-4">Próximas Sesiones Programadas</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+              <div class="glass-card p-4 rounded-xl backdrop-blur-sm border border-white/20">
+                <div class="flex items-center justify-between mb-2">
+                  <h4 class="font-semibold text-gray-900">Yoga Matutino</h4>
+                  <span class="bg-green-100 text-green-800 text-xs px-2 py-1 rounded-full">5/15</span>
+                </div>
+                <p class="text-sm text-gray-600">Mañana, 8:00 AM</p>
+                <p class="text-xs text-gray-500">Elena Vásquez</p>
+              </div>
+              <div class="glass-card p-4 rounded-xl backdrop-blur-sm border border-white/20">
+                <div class="flex items-center justify-between mb-2">
+                  <h4 class="font-semibold text-gray-900">Coaching Tiempo</h4>
+                  <span class="bg-yellow-100 text-yellow-800 text-xs px-2 py-1 rounded-full">12/20</span>
+                </div>
+                <p class="text-sm text-gray-600">Miércoles, 5:00 PM</p>
+                <p class="text-xs text-gray-500">Miguel Torres</p>
+              </div>
+              <div class="glass-card p-4 rounded-xl backdrop-blur-sm border border-white/20">
+                <div class="flex items-center justify-between mb-2">
+                  <h4 class="font-semibold text-gray-900">Nutrición Snacks</h4>
+                  <span class="bg-blue-100 text-blue-800 text-xs px-2 py-1 rounded-full">8/25</span>
+                </div>
+                <p class="text-sm text-gray-600">Jueves, 12:30 PM</p>
+                <p class="text-xs text-gray-500">Laura Sánchez</p>
               </div>
             </div>
           </div>
@@ -193,8 +232,31 @@
             </div>
           </div>
 
+          <!-- Estadísticas de empleados -->
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <div class="glass-card rounded-xl shadow-lg p-6 backdrop-blur-sm border border-white/20 text-center">
+              <h3 class="text-2xl font-bold text-primary mb-2">72%</h3>
+              <p class="text-gray-600">Participación Promedio</p>
+            </div>
+            <div class="glass-card rounded-xl shadow-lg p-6 backdrop-blur-sm border border-white/20 text-center">
+              <h3 class="text-2xl font-bold text-green-600 mb-2">4.3</h3>
+              <p class="text-gray-600">Satisfacción Promedio</p>
+            </div>
+            <div class="glass-card rounded-xl shadow-lg p-6 backdrop-blur-sm border border-white/20 text-center">
+              <h3 class="text-2xl font-bold text-yellow-600 mb-2">1,150</h3>
+              <p class="text-gray-600">Puntos Promedio</p>
+            </div>
+          </div>
+
           <!-- Tabla de empleados -->
           <div class="glass-container rounded-xl shadow-lg p-6 backdrop-blur-sm border border-white/30">
+            <div class="mb-4">
+              <input 
+                type="text" 
+                placeholder="Buscar empleados..." 
+                class="w-full px-4 py-2 border border-white/30 rounded-lg bg-white/60 backdrop-blur-sm focus:outline-none focus:ring-2 focus:ring-primary/50"
+              />
+            </div>
             <div class="glass-card rounded-xl overflow-hidden backdrop-blur-sm border border-white/20">
               <table class="min-w-full">
                 <thead class="bg-white/50 backdrop-blur-sm">
@@ -202,6 +264,7 @@
                     <th class="px-6 py-4 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">Empleado</th>
                     <th class="px-6 py-4 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">Departamento</th>
                     <th class="px-6 py-4 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">Puntos</th>
+                    <th class="px-6 py-4 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">Última Actividad</th>
                     <th class="px-6 py-4 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">Estado</th>
                     <th class="px-6 py-4 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">Acciones</th>
                   </tr>
@@ -222,6 +285,10 @@
                     <td class="px-6 py-4 text-gray-700">Tecnología</td>
                     <td class="px-6 py-4">
                       <span class="text-lg font-bold text-primary">1,250</span>
+                    </td>
+                    <td class="px-6 py-4">
+                      <span class="text-sm text-gray-600">Hace 2 horas</span>
+                      <p class="text-xs text-gray-500">Yoga Matutino</p>
                     </td>
                     <td class="px-6 py-4">
                       <span class="bg-green-100/80 text-green-800 px-3 py-1 rounded-full text-xs font-semibold backdrop-blur-sm border border-green-200/50">
@@ -249,6 +316,10 @@
                       <span class="text-lg font-bold text-primary">980</span>
                     </td>
                     <td class="px-6 py-4">
+                      <span class="text-sm text-gray-600">Hace 1 día</span>
+                      <p class="text-xs text-gray-500">Desafío completado</p>
+                    </td>
+                    <td class="px-6 py-4">
                       <span class="bg-yellow-100/80 text-yellow-800 px-3 py-1 rounded-full text-xs font-semibold backdrop-blur-sm border border-yellow-200/50">
                         Activo
                       </span>
@@ -272,6 +343,68 @@
                     <td class="px-6 py-4 text-gray-700">Diseño</td>
                     <td class="px-6 py-4">
                       <span class="text-lg font-bold text-primary">1,450</span>
+                    </td>
+                    <td class="px-6 py-4">
+                      <span class="text-sm text-gray-600">Hace 6 horas</span>
+                      <p class="text-xs text-gray-500">Calificó sesión 5★</p>
+                    </td>
+                    <td class="px-6 py-4">
+                      <span class="bg-green-100/80 text-green-800 px-3 py-1 rounded-full text-xs font-semibold backdrop-blur-sm border border-green-200/50">
+                        Muy Activo
+                      </span>
+                    </td>
+                    <td class="px-6 py-4">
+                      <Button variant="outline" class="text-xs px-3 py-1">Ver Perfil</Button>
+                    </td>
+                  </tr>
+                  <tr class="hover:bg-white/30 transition-colors duration-200">
+                    <td class="px-6 py-4">
+                      <div class="flex items-center">
+                        <div class="h-10 w-10 rounded-full bg-primary/20 flex items-center justify-center mr-3">
+                          <span class="text-primary font-medium">DR</span>
+                        </div>
+                        <div>
+                          <p class="font-medium text-gray-900">David Ruiz</p>
+                          <p class="text-sm text-gray-600">david.ruiz@innovatech.com</p>
+                        </div>
+                      </div>
+                    </td>
+                    <td class="px-6 py-4 text-gray-700">Marketing</td>
+                    <td class="px-6 py-4">
+                      <span class="text-lg font-bold text-primary">750</span>
+                    </td>
+                    <td class="px-6 py-4">
+                      <span class="text-sm text-gray-600">Hace 3 días</span>
+                      <p class="text-xs text-gray-500">Coaching sesión</p>
+                    </td>
+                    <td class="px-6 py-4">
+                      <span class="bg-yellow-100/80 text-yellow-800 px-3 py-1 rounded-full text-xs font-semibold backdrop-blur-sm border border-yellow-200/50">
+                        Activo
+                      </span>
+                    </td>
+                    <td class="px-6 py-4">
+                      <Button variant="outline" class="text-xs px-3 py-1">Ver Perfil</Button>
+                    </td>
+                  </tr>
+                  <tr class="hover:bg-white/30 transition-colors duration-200">
+                    <td class="px-6 py-4">
+                      <div class="flex items-center">
+                        <div class="h-10 w-10 rounded-full bg-primary/20 flex items-center justify-center mr-3">
+                          <span class="text-primary font-medium">CG</span>
+                        </div>
+                        <div>
+                          <p class="font-medium text-gray-900">Carmen García</p>
+                          <p class="text-sm text-gray-600">carmen.garcia@innovatech.com</p>
+                        </div>
+                      </div>
+                    </td>
+                    <td class="px-6 py-4 text-gray-700">Recursos Humanos</td>
+                    <td class="px-6 py-4">
+                      <span class="text-lg font-bold text-primary">1,100</span>
+                    </td>
+                    <td class="px-6 py-4">
+                      <span class="text-sm text-gray-600">Hace 1 día</span>
+                      <p class="text-xs text-gray-500">Meditación</p>
                     </td>
                     <td class="px-6 py-4">
                       <span class="bg-green-100/80 text-green-800 px-3 py-1 rounded-full text-xs font-semibold backdrop-blur-sm border border-green-200/50">
@@ -307,6 +440,26 @@
             </div>
           </div>
 
+          <!-- Estadísticas de encuestas -->
+          <div class="grid grid-cols-1 md:grid-cols-4 gap-6">
+            <div class="glass-card rounded-xl shadow-lg p-6 backdrop-blur-sm border border-white/20 text-center">
+              <h3 class="text-2xl font-bold text-primary mb-2">3</h3>
+              <p class="text-gray-600">Total Encuestas</p>
+            </div>
+            <div class="glass-card rounded-xl shadow-lg p-6 backdrop-blur-sm border border-white/20 text-center">
+              <h3 class="text-2xl font-bold text-green-600 mb-2">1</h3>
+              <p class="text-gray-600">Activas</p>
+            </div>
+            <div class="glass-card rounded-xl shadow-lg p-6 backdrop-blur-sm border border-white/20 text-center">
+              <h3 class="text-2xl font-bold text-yellow-600 mb-2">48%</h3>
+              <p class="text-gray-600">Tasa Respuesta</p>
+            </div>
+            <div class="glass-card rounded-xl shadow-lg p-6 backdrop-blur-sm border border-white/20 text-center">
+              <h3 class="text-2xl font-bold text-purple-600 mb-2">4.2</h3>
+              <p class="text-gray-600">Satisfacción Media</p>
+            </div>
+          </div>
+
           <!-- Lista de encuestas -->
           <div class="glass-container rounded-xl shadow-lg p-6 backdrop-blur-sm border border-white/30">
             <div class="space-y-4">
@@ -317,6 +470,7 @@
                   <div class="flex items-center space-x-4 mt-2">
                     <span class="text-xs text-gray-500">12/25 respuestas</span>
                     <span class="bg-green-100/80 text-green-800 px-2 py-1 rounded-full text-xs font-medium">Activa</span>
+                    <span class="text-xs text-gray-500">Termina en 15 días</span>
                   </div>
                 </div>
                 <div class="flex gap-2">
@@ -332,6 +486,7 @@
                   <div class="flex items-center space-x-4 mt-2">
                     <span class="text-xs text-gray-500">Borrador</span>
                     <span class="bg-yellow-100/80 text-yellow-800 px-2 py-1 rounded-full text-xs font-medium">Borrador</span>
+                    <span class="text-xs text-gray-500">7 preguntas preparadas</span>
                   </div>
                 </div>
                 <div class="flex gap-2">
@@ -347,6 +502,23 @@
                   <div class="flex items-center space-x-4 mt-2">
                     <span class="text-xs text-gray-500">18/25 respuestas</span>
                     <span class="bg-gray-100/80 text-gray-800 px-2 py-1 rounded-full text-xs font-medium">Finalizada</span>
+                    <span class="text-xs text-gray-500">Finalizada hace 1 mes</span>
+                  </div>
+                </div>
+                <div class="flex gap-2">
+                  <Button variant="outline" class="text-xs px-3 py-1">Ver Resultados</Button>
+                  <Button variant="secondary" class="text-xs px-3 py-1">Exportar</Button>
+                </div>
+              </div>
+
+              <div class="glass-card p-6 rounded-xl backdrop-blur-sm border border-white/20 flex items-center justify-between">
+                <div>
+                  <h3 class="text-lg font-semibold text-gray-900">Evaluación de Servicios de Nutrición</h3>
+                  <p class="text-sm text-gray-600 mt-1">Feedback sobre las sesiones nutricionales</p>
+                  <div class="flex items-center space-x-4 mt-2">
+                    <span class="text-xs text-gray-500">22/25 respuestas</span>
+                    <span class="bg-gray-100/80 text-gray-800 px-2 py-1 rounded-full text-xs font-medium">Finalizada</span>
+                    <span class="text-xs text-gray-500">Finalizada hace 2 meses</span>
                   </div>
                 </div>
                 <div class="flex gap-2">
@@ -373,6 +545,7 @@
               </div>
               <h3 class="text-2xl font-bold text-gray-900 mb-2">72%</h3>
               <p class="text-gray-600">Participación Promedio</p>
+              <p class="text-xs text-gray-500 mt-1">+15% vs mes anterior</p>
             </div>
 
             <div class="glass-card rounded-xl shadow-lg p-6 backdrop-blur-sm border border-white/20 text-center">
@@ -381,6 +554,7 @@
               </div>
               <h3 class="text-2xl font-bold text-gray-900 mb-2">4.3</h3>
               <p class="text-gray-600">Satisfacción Promedio</p>
+              <p class="text-xs text-gray-500 mt-1">+0.3 vs mes anterior</p>
             </div>
 
             <div class="glass-card rounded-xl shadow-lg p-6 backdrop-blur-sm border border-white/20 text-center">
@@ -389,6 +563,34 @@
               </div>
               <h3 class="text-2xl font-bold text-gray-900 mb-2">156</h3>
               <p class="text-gray-600">Objetivos Completados</p>
+              <p class="text-xs text-gray-500 mt-1">Este mes</p>
+            </div>
+
+            <div class="glass-card rounded-xl shadow-lg p-6 backdrop-blur-sm border border-white/20 text-center">
+              <div class="w-16 h-16 bg-gradient-to-br from-blue-400 to-blue-600 rounded-2xl flex items-center justify-center mx-auto mb-4">
+                <Calendar class="h-8 w-8 text-white" />
+              </div>
+              <h3 class="text-2xl font-bold text-gray-900 mb-2">89</h3>
+              <p class="text-gray-600">Sesiones Completadas</p>
+              <p class="text-xs text-gray-500 mt-1">Este trimestre</p>
+            </div>
+
+            <div class="glass-card rounded-xl shadow-lg p-6 backdrop-blur-sm border border-white/20 text-center">
+              <div class="w-16 h-16 bg-gradient-to-br from-red-400 to-red-600 rounded-2xl flex items-center justify-center mx-auto mb-4">
+                <Heart class="h-8 w-8 text-white" />
+              </div>
+              <h3 class="text-2xl font-bold text-gray-900 mb-2">94%</h3>
+              <p class="text-gray-600">Retención Empleados</p>
+              <p class="text-xs text-gray-500 mt-1">+8% vs año anterior</p>
+            </div>
+
+            <div class="glass-card rounded-xl shadow-lg p-6 backdrop-blur-sm border border-white/20 text-center">
+              <div class="w-16 h-16 bg-gradient-to-br from-indigo-400 to-indigo-600 rounded-2xl flex items-center justify-center mx-auto mb-4">
+                <Zap class="h-8 w-8 text-white" />
+              </div>
+              <h3 class="text-2xl font-bold text-gray-900 mb-2">87%</h3>
+              <p class="text-gray-600">Productividad</p>
+              <p class="text-xs text-gray-500 mt-1">Índice de productividad</p>
             </div>
           </div>
 
@@ -434,6 +636,22 @@
                     <span class="text-white font-bold text-sm">3</span>
                   </div>
                   <div>
+                    <p class="font-semibold text-gray-900">Carmen García</p>
+                    <p class="text-sm text-gray-600">Recursos Humanos</p>
+                  </div>
+                </div>
+                <div class="text-right">
+                  <p class="text-lg font-bold text-primary">1,100 pts</p>
+                  <p class="text-sm text-gray-500">9 actividades</p>
+                </div>
+              </div>
+
+              <div class="flex items-center justify-between p-4 glass-card rounded-xl backdrop-blur-sm border border-white/20">
+                <div class="flex items-center space-x-4">
+                  <div class="w-8 h-8 bg-blue-500 rounded-full flex items-center justify-center">
+                    <span class="text-white font-bold text-sm">4</span>
+                  </div>
+                  <div>
                     <p class="font-semibold text-gray-900">Luis Fernández</p>
                     <p class="text-sm text-gray-600">Product Manager</p>
                   </div>
@@ -442,6 +660,49 @@
                   <p class="text-lg font-bold text-primary">980 pts</p>
                   <p class="text-sm text-gray-500">6 actividades</p>
                 </div>
+              </div>
+
+              <div class="flex items-center justify-between p-4 glass-card rounded-xl backdrop-blur-sm border border-white/20">
+                <div class="flex items-center space-x-4">
+                  <div class="w-8 h-8 bg-green-500 rounded-full flex items-center justify-center">
+                    <span class="text-white font-bold text-sm">5</span>
+                  </div>
+                  <div>
+                    <p class="font-semibold text-gray-900">David Ruiz</p>
+                    <p class="text-sm text-gray-600">Marketing Manager</p>
+                  </div>
+                </div>
+                <div class="text-right">
+                  <p class="text-lg font-bold text-primary">750 pts</p>
+                  <p class="text-sm text-gray-500">4 actividades</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Análisis por Departamento -->
+          <div class="glass-container rounded-xl shadow-lg p-6 backdrop-blur-sm border border-white/30">
+            <h2 class="text-xl font-semibold mb-6">Análisis por Departamento</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+              <div class="glass-card p-4 rounded-xl backdrop-blur-sm border border-white/20 text-center">
+                <h4 class="font-semibold text-gray-900 mb-2">Tecnología</h4>
+                <p class="text-2xl font-bold text-primary mb-1">83%</p>
+                <p class="text-xs text-gray-500">12 empleados</p>
+              </div>
+              <div class="glass-card p-4 rounded-xl backdrop-blur-sm border border-white/20 text-center">
+                <h4 class="font-semibold text-gray-900 mb-2">Diseño</h4>
+                <p class="text-2xl font-bold text-primary mb-1">83%</p>
+                <p class="text-xs text-gray-500">6 empleados</p>
+              </div>
+              <div class="glass-card p-4 rounded-xl backdrop-blur-sm border border-white/20 text-center">
+                <h4 class="font-semibold text-gray-900 mb-2">Producto</h4>
+                <p class="text-2xl font-bold text-yellow-600 mb-1">50%</p>
+                <p class="text-xs text-gray-500">4 empleados</p>
+              </div>
+              <div class="glass-card p-4 rounded-xl backdrop-blur-sm border border-white/20 text-center">
+                <h4 class="font-semibold text-gray-900 mb-2">Marketing</h4>
+                <p class="text-2xl font-bold text-red-600 mb-1">33%</p>
+                <p class="text-xs text-gray-500">3 empleados</p>
               </div>
             </div>
           </div>
@@ -468,7 +729,9 @@ import {
   FileText,
   TrendingUp,
   Star,
-  Target
+  Target,
+  Heart,
+  Zap
 } from 'lucide-vue-next';
 import Button from '../../components/common/Button.vue';
 

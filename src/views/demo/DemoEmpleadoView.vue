@@ -175,6 +175,25 @@
             <p class="text-gray-600 mt-1">Explora las próximas actividades y reserva tu plaza.</p>
           </div>
 
+          <!-- Filtros -->
+          <div class="glass-container rounded-xl shadow-lg p-4 backdrop-blur-sm border border-white/30">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
+              <select class="px-3 py-2 border border-white/30 rounded-lg bg-white/60 backdrop-blur-sm">
+                <option>Todos los servicios</option>
+                <option>Yoga</option>
+                <option>Coaching</option>
+                <option>Nutrición</option>
+                <option>Meditación</option>
+              </select>
+              <select class="px-3 py-2 border border-white/30 rounded-lg bg-white/60 backdrop-blur-sm">
+                <option>Todas las modalidades</option>
+                <option>Presencial</option>
+                <option>Online</option>
+              </select>
+              <input type="date" class="px-3 py-2 border border-white/30 rounded-lg bg-white/60 backdrop-blur-sm">
+              <Button variant="primary">Filtrar</Button>
+            </div>
+          </div>
           <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             <div class="glass-card rounded-xl shadow-lg overflow-hidden backdrop-blur-sm border border-white/20 hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
               <img src="https://images.pexels.com/photos/3822622/pexels-photo-3822622.jpeg?auto=compress&cs=tinysrgb&w=400" alt="Yoga" class="w-full h-48 object-cover" />
@@ -184,6 +203,14 @@
                 <div class="flex items-center justify-between mb-4">
                   <span class="text-sm text-gray-500">Mañana, 8:00 AM</span>
                   <span class="bg-green-100 text-green-800 text-xs px-2 py-1 rounded-full">5/15 plazas</span>
+                </div>
+                <div class="flex items-center mb-4 text-sm text-gray-600">
+                  <MapPin class="h-4 w-4 mr-1" />
+                  <span>Sala de bienestar - Planta 2</span>
+                </div>
+                <div class="flex items-center mb-4 text-sm text-gray-600">
+                  <User class="h-4 w-4 mr-1" />
+                  <span>Elena Vásquez - Instructora certificada</span>
                 </div>
                 <button class="w-full glass-button-primary text-white py-3 px-4 rounded-lg font-medium transition-all duration-300 hover:shadow-md hover:-translate-y-0.5 backdrop-blur-sm border border-blue-500/30">
                   Reservar Plaza
@@ -200,6 +227,14 @@
                   <span class="text-sm text-gray-500">Miércoles, 5:00 PM</span>
                   <span class="bg-yellow-100 text-yellow-800 text-xs px-2 py-1 rounded-full">12/20 plazas</span>
                 </div>
+                <div class="flex items-center mb-4 text-sm text-gray-600">
+                  <Globe class="h-4 w-4 mr-1" />
+                  <span>Sesión online - Zoom</span>
+                </div>
+                <div class="flex items-center mb-4 text-sm text-gray-600">
+                  <User class="h-4 w-4 mr-1" />
+                  <span>Miguel Torres - Coach certificado</span>
+                </div>
                 <button class="w-full glass-button-primary text-white py-3 px-4 rounded-lg font-medium transition-all duration-300 hover:shadow-md hover:-translate-y-0.5 backdrop-blur-sm border border-blue-500/30">
                   Reservar Plaza
                 </button>
@@ -215,8 +250,85 @@
                   <span class="text-sm text-gray-500">Jueves, 12:30 PM</span>
                   <span class="bg-blue-100 text-blue-800 text-xs px-2 py-1 rounded-full">8/25 plazas</span>
                 </div>
+                <div class="flex items-center mb-4 text-sm text-gray-600">
+                  <Globe class="h-4 w-4 mr-1" />
+                  <span>Sesión online - Google Meet</span>
+                </div>
+                <div class="flex items-center mb-4 text-sm text-gray-600">
+                  <User class="h-4 w-4 mr-1" />
+                  <span>Laura Sánchez - Nutricionista clínica</span>
+                </div>
                 <button class="w-full glass-button-primary text-white py-3 px-4 rounded-lg font-medium transition-all duration-300 hover:shadow-md hover:-translate-y-0.5 backdrop-blur-sm border border-blue-500/30">
                   Reservar Plaza
+                </button>
+              </div>
+            </div>
+
+            <div class="glass-card rounded-xl shadow-lg overflow-hidden backdrop-blur-sm border border-white/20 hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
+              <img src="https://images.pexels.com/photos/3822622/pexels-photo-3822622.jpeg?auto=compress&cs=tinysrgb&w=400" alt="Meditación" class="w-full h-48 object-cover" />
+              <div class="p-6">
+                <h3 class="text-xl font-bold text-gray-900 mb-2">Meditación de Pausa Activa</h3>
+                <p class="text-gray-600 mb-4">Sesión corta de meditación para recargar energías a mitad del día.</p>
+                <div class="flex items-center justify-between mb-4">
+                  <span class="text-sm text-gray-500">Viernes, 2:00 PM</span>
+                  <span class="bg-green-100 text-green-800 text-xs px-2 py-1 rounded-full">3/12 plazas</span>
+                </div>
+                <div class="flex items-center mb-4 text-sm text-gray-600">
+                  <MapPin class="h-4 w-4 mr-1" />
+                  <span>Sala de relajación</span>
+                </div>
+                <div class="flex items-center mb-4 text-sm text-gray-600">
+                  <User class="h-4 w-4 mr-1" />
+                  <span>Elena Vásquez - Especialista mindfulness</span>
+                </div>
+                <button class="w-full glass-button-primary text-white py-3 px-4 rounded-lg font-medium transition-all duration-300 hover:shadow-md hover:-translate-y-0.5 backdrop-blur-sm border border-blue-500/30">
+                  Reservar Plaza
+                </button>
+              </div>
+            </div>
+
+            <div class="glass-card rounded-xl shadow-lg overflow-hidden backdrop-blur-sm border border-white/20 hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
+              <img src="https://images.pexels.com/photos/2402777/pexels-photo-2402777.jpeg?auto=compress&cs=tinysrgb&w=400" alt="Entrenamiento" class="w-full h-48 object-cover" />
+              <div class="p-6">
+                <h3 class="text-xl font-bold text-gray-900 mb-2">Entrenamiento Funcional</h3>
+                <p class="text-gray-600 mb-4">Rutina de ejercicios funcionales para fortalecer el cuerpo.</p>
+                <div class="flex items-center justify-between mb-4">
+                  <span class="text-sm text-gray-500">Lunes, 6:30 PM</span>
+                  <span class="bg-red-100 text-red-800 text-xs px-2 py-1 rounded-full">18/20 plazas</span>
+                </div>
+                <div class="flex items-center mb-4 text-sm text-gray-600">
+                  <MapPin class="h-4 w-4 mr-1" />
+                  <span>Gimnasio corporativo</span>
+                </div>
+                <div class="flex items-center mb-4 text-sm text-gray-600">
+                  <User class="h-4 w-4 mr-1" />
+                  <span>Carlos Fitness - Entrenador personal</span>
+                </div>
+                <button class="w-full glass-button-primary text-white py-3 px-4 rounded-lg font-medium transition-all duration-300 hover:shadow-md hover:-translate-y-0.5 backdrop-blur-sm border border-blue-500/30">
+                  Reservar Plaza
+                </button>
+              </div>
+            </div>
+
+            <div class="glass-card rounded-xl shadow-lg overflow-hidden backdrop-blur-sm border border-white/20 hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
+              <img src="https://images.pexels.com/photos/3184338/pexels-photo-3184338.jpeg?auto=compress&cs=tinysrgb&w=400" alt="Psicoterapia" class="w-full h-48 object-cover" />
+              <div class="p-6">
+                <h3 class="text-xl font-bold text-gray-900 mb-2">Apoyo Psicológico Individual</h3>
+                <p class="text-gray-600 mb-4">Sesión individual de apoyo psicológico para bienestar emocional.</p>
+                <div class="flex items-center justify-between mb-4">
+                  <span class="text-sm text-gray-500">Martes, 4:00 PM</span>
+                  <span class="bg-blue-100 text-blue-800 text-xs px-2 py-1 rounded-full">1/1 plaza</span>
+                </div>
+                <div class="flex items-center mb-4 text-sm text-gray-600">
+                  <Globe class="h-4 w-4 mr-1" />
+                  <span>Sesión privada online</span>
+                </div>
+                <div class="flex items-center mb-4 text-sm text-gray-600">
+                  <User class="h-4 w-4 mr-1" />
+                  <span>Dra. Patricia Mendoza - Psicóloga clínica</span>
+                </div>
+                <button class="w-full glass-button-primary text-white py-3 px-4 rounded-lg font-medium transition-all duration-300 hover:shadow-md hover:-translate-y-0.5 backdrop-blur-sm border border-blue-500/30">
+                  Solicitar Cita
                 </button>
               </div>
             </div>
@@ -238,15 +350,34 @@
                 <div>
                   <h3 class="font-semibold text-gray-900">Yoga Matutino para Principiantes</h3>
                   <p class="text-sm text-gray-600">Mañana, 8:00 AM - Presencial</p>
+                  <p class="text-xs text-gray-500 mt-1">Elena Vásquez • Sala de bienestar</p>
                 </div>
-                <span class="bg-green-100 text-green-800 px-3 py-1 rounded-full text-xs font-medium">Confirmada</span>
+                <div class="text-right">
+                  <span class="bg-green-100 text-green-800 px-3 py-1 rounded-full text-xs font-medium">Confirmada</span>
+                  <p class="text-xs text-gray-500 mt-1">+50 puntos</p>
+                </div>
               </div>
               <div class="glass-card p-4 rounded-xl backdrop-blur-sm border border-white/20 flex items-center justify-between">
                 <div>
                   <h3 class="font-semibold text-gray-900">Coaching: Gestión del Tiempo</h3>
                   <p class="text-sm text-gray-600">Miércoles, 5:00 PM - Online</p>
+                  <p class="text-xs text-gray-500 mt-1">Miguel Torres • Zoom</p>
                 </div>
-                <span class="bg-green-100 text-green-800 px-3 py-1 rounded-full text-xs font-medium">Confirmada</span>
+                <div class="text-right">
+                  <span class="bg-green-100 text-green-800 px-3 py-1 rounded-full text-xs font-medium">Confirmada</span>
+                  <p class="text-xs text-gray-500 mt-1">+40 puntos</p>
+                </div>
+              </div>
+              <div class="glass-card p-4 rounded-xl backdrop-blur-sm border border-white/20 flex items-center justify-between">
+                <div>
+                  <h3 class="font-semibold text-gray-900">Nutrición: Snacks Saludables</h3>
+                  <p class="text-sm text-gray-600">Jueves, 12:30 PM - Online</p>
+                  <p class="text-xs text-gray-500 mt-1">Laura Sánchez • Google Meet</p>
+                </div>
+                <div class="text-right">
+                  <span class="bg-green-100 text-green-800 px-3 py-1 rounded-full text-xs font-medium">Confirmada</span>
+                  <p class="text-xs text-gray-500 mt-1">+30 puntos</p>
+                </div>
               </div>
             </div>
           </div>
@@ -259,12 +390,55 @@
                 <div>
                   <h3 class="font-semibold text-gray-900">Yoga de Relajación</h3>
                   <p class="text-sm text-gray-600">10 de enero, 5:00 PM</p>
+                  <p class="text-xs text-gray-500 mt-1">Elena Vásquez • Presencial</p>
                 </div>
                 <div class="flex items-center space-x-2">
                   <span class="bg-blue-100 text-blue-800 px-3 py-1 rounded-full text-xs font-medium">Completada</span>
                   <div class="flex items-center">
                     <Star class="h-4 w-4 text-yellow-400 fill-current" />
                     <span class="text-sm text-gray-600 ml-1">5.0</span>
+                  </div>
+                </div>
+              </div>
+              <div class="glass-card p-4 rounded-xl backdrop-blur-sm border border-white/20 flex items-center justify-between">
+                <div>
+                  <h3 class="font-semibold text-gray-900">Meditación Anti-Estrés</h3>
+                  <p class="text-sm text-gray-600">12 de enero, 1:00 PM</p>
+                  <p class="text-xs text-gray-500 mt-1">Elena Vásquez • Online</p>
+                </div>
+                <div class="flex items-center space-x-2">
+                  <span class="bg-blue-100 text-blue-800 px-3 py-1 rounded-full text-xs font-medium">Completada</span>
+                  <div class="flex items-center">
+                    <Star class="h-4 w-4 text-yellow-400 fill-current" />
+                    <span class="text-sm text-gray-600 ml-1">4.8</span>
+                  </div>
+                </div>
+              </div>
+              <div class="glass-card p-4 rounded-xl backdrop-blur-sm border border-white/20 flex items-center justify-between">
+                <div>
+                  <h3 class="font-semibold text-gray-900">Coaching: Liderazgo Personal</h3>
+                  <p class="text-sm text-gray-600">8 de enero, 4:30 PM</p>
+                  <p class="text-xs text-gray-500 mt-1">Miguel Torres • Online</p>
+                </div>
+                <div class="flex items-center space-x-2">
+                  <span class="bg-blue-100 text-blue-800 px-3 py-1 rounded-full text-xs font-medium">Completada</span>
+                  <div class="flex items-center">
+                    <Star class="h-4 w-4 text-yellow-400 fill-current" />
+                    <span class="text-sm text-gray-600 ml-1">4.9</span>
+                  </div>
+                </div>
+              </div>
+              <div class="glass-card p-4 rounded-xl backdrop-blur-sm border border-white/20 flex items-center justify-between">
+                <div>
+                  <h3 class="font-semibold text-gray-900">Nutrición: Desayunos Energéticos</h3>
+                  <p class="text-sm text-gray-600">5 de enero, 9:00 AM</p>
+                  <p class="text-xs text-gray-500 mt-1">Laura Sánchez • Presencial</p>
+                </div>
+                <div class="flex items-center space-x-2">
+                  <span class="bg-blue-100 text-blue-800 px-3 py-1 rounded-full text-xs font-medium">Completada</span>
+                  <div class="flex items-center">
+                    <Star class="h-4 w-4 text-yellow-400 fill-current" />
+                    <span class="text-sm text-gray-600 ml-1">4.7</span>
                   </div>
                 </div>
               </div>
@@ -279,6 +453,52 @@
             <p class="text-gray-600 mt-1">Tu opinión es importante. Completa las encuestas pendientes.</p>
           </div>
 
+          <!-- Encuestas Pendientes -->
+          <div class="glass-container rounded-xl shadow-lg p-6 backdrop-blur-sm border border-white/30">
+            <h2 class="text-xl font-semibold mb-4">Encuestas Pendientes</h2>
+            <div class="space-y-4">
+              <div class="glass-card rounded-xl shadow-lg p-6 backdrop-blur-sm border border-white/20 flex items-center justify-between">
+                <div>
+                  <h2 class="text-lg font-bold text-gray-800">Evaluación de Clima Laboral Q1 2025</h2>
+                  <p class="text-sm text-gray-600 mt-1">Encuesta trimestral para evaluar el ambiente de trabajo y bienestar.</p>
+                  <p class="text-xs text-gray-500 mt-2">Fecha límite: 30 de enero de 2025 • 8 preguntas</p>
+                </div>
+                <button class="glass-button-primary text-white font-bold py-3 px-6 rounded-lg hover:bg-primary/90 transition-all duration-300 backdrop-blur-sm border border-blue-500/30">
+                  Completar Encuesta
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Encuestas Completadas -->
+          <div class="glass-container rounded-xl shadow-lg p-6 backdrop-blur-sm border border-white/30">
+            <h2 class="text-xl font-semibold mb-4">Encuestas Completadas</h2>
+            <div class="space-y-4">
+              <div class="glass-card rounded-xl shadow-lg p-6 backdrop-blur-sm border border-white/20 flex items-center justify-between">
+                <div>
+                  <h2 class="text-lg font-bold text-gray-800">Satisfacción con Servicios de Coaching</h2>
+                  <p class="text-sm text-gray-600 mt-1">Evaluación específica sobre las sesiones de coaching.</p>
+                  <p class="text-xs text-gray-500 mt-2">Completada el 15 de diciembre • 6 preguntas</p>
+                </div>
+                <div class="text-right">
+                  <span class="bg-green-100 text-green-800 px-3 py-1 rounded-full text-xs font-medium">Completada</span>
+                  <p class="text-xs text-gray-500 mt-1">+25 puntos ganados</p>
+                </div>
+              </div>
+              <div class="glass-card rounded-xl shadow-lg p-6 backdrop-blur-sm border border-white/20 flex items-center justify-between">
+                <div>
+                  <h2 class="text-lg font-bold text-gray-800">Feedback Actividades Noviembre</h2>
+                  <p class="text-sm text-gray-600 mt-1">Opiniones sobre las actividades de bienestar del mes.</p>
+                  <p class="text-xs text-gray-500 mt-2">Completada el 28 de noviembre • 5 preguntas</p>
+                </div>
+                <div class="text-right">
+                  <span class="bg-green-100 text-green-800 px-3 py-1 rounded-full text-xs font-medium">Completada</span>
+                  <p class="text-xs text-gray-500 mt-1">+20 puntos ganados</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
           <div class="space-y-4">
             <div class="glass-card rounded-xl shadow-lg p-6 backdrop-blur-sm border border-white/20 flex items-center justify-between">
               <div>
@@ -300,45 +520,64 @@
             <p class="text-gray-600 mt-1">Participa en nuestros desafíos, gana puntos y mejora tu bienestar.</p>
           </div>
 
-          <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            <div class="glass-card rounded-xl shadow-lg overflow-hidden backdrop-blur-sm border border-white/20 hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
-              <img src="https://images.pexels.com/photos/2402777/pexels-photo-2402777.jpeg?auto=compress&cs=tinysrgb&w=400" alt="Caminar" class="w-full h-48 object-cover" />
-              <div class="p-6">
-                <h3 class="text-xl font-bold text-gray-900 mb-2">Camina 10,000 pasos diarios</h3>
-                <p class="text-gray-600 mb-4">Mantén un estilo de vida activo durante una semana completa.</p>
-                <div class="flex items-center justify-between mb-4">
-                  <span class="bg-green-100 text-green-800 text-xs px-2 py-1 rounded-full">Activo</span>
-                  <span class="bg-yellow-100 text-yellow-800 text-xs px-2 py-1 rounded-full">150 puntos</span>
-                </div>
-                <div class="mb-4">
-                  <div class="flex justify-between text-sm mb-1">
-                    <span>Progreso</span>
-                    <span>3/7 días</span>
+          <!-- Mis Desafíos Activos -->
+          <div class="glass-container rounded-xl shadow-lg p-6 backdrop-blur-sm border border-white/30">
+            <h2 class="text-xl font-semibold mb-4">Mis Desafíos Activos</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div class="glass-card rounded-xl shadow-lg overflow-hidden backdrop-blur-sm border border-white/20">
+                <img src="https://images.pexels.com/photos/2402777/pexels-photo-2402777.jpeg?auto=compress&cs=tinysrgb&w=400" alt="Caminar" class="w-full h-32 object-cover" />
+                <div class="p-4">
+                  <h3 class="text-lg font-bold text-gray-900 mb-2">Camina 10,000 pasos diarios</h3>
+                  <p class="text-sm text-gray-600 mb-3">Progreso: 3/7 días completados</p>
+                  <div class="mb-3">
+                    <div class="flex justify-between text-sm mb-1">
+                      <span>Progreso</span>
+                      <span>43%</span>
+                    </div>
+                    <div class="bg-gray-200 rounded-full h-2">
+                      <div class="bg-primary rounded-full h-2" style="width: 43%"></div>
+                    </div>
                   </div>
-                  <div class="bg-gray-200 rounded-full h-2">
-                    <div class="bg-primary rounded-full h-2" style="width: 43%"></div>
+                  <div class="flex items-center justify-between mb-3">
+                    <span class="bg-yellow-100 text-yellow-800 text-xs px-2 py-1 rounded-full">150 puntos</span>
+                    <span class="text-xs text-gray-500">Termina en 4 días</span>
                   </div>
+                  <button class="w-full glass-button-secondary text-gray-800 py-2 px-4 rounded-lg font-medium transition-all duration-300 backdrop-blur-sm border border-gray-300/50">
+                    Registrar Progreso
+                  </button>
                 </div>
-                <button class="w-full glass-button-secondary text-gray-800 py-2 px-4 rounded-lg font-medium transition-all duration-300 backdrop-blur-sm border border-gray-300/50">
-                  Continuar Desafío
-                </button>
               </div>
-            </div>
 
-            <div class="glass-card rounded-xl shadow-lg overflow-hidden backdrop-blur-sm border border-white/20 hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
-              <img src="https://images.pexels.com/photos/3822622/pexels-photo-3822622.jpeg?auto=compress&cs=tinysrgb&w=400" alt="Meditación" class="w-full h-48 object-cover" />
-              <div class="p-6">
-                <h3 class="text-xl font-bold text-gray-900 mb-2">Meditación de 5 minutos</h3>
-                <p class="text-gray-600 mb-4">Dedica 5 minutos diarios a la meditación durante 2 semanas.</p>
-                <div class="flex items-center justify-between mb-4">
-                  <span class="bg-green-100 text-green-800 text-xs px-2 py-1 rounded-full">Activo</span>
-                  <span class="bg-yellow-100 text-yellow-800 text-xs px-2 py-1 rounded-full">100 puntos</span>
+              <div class="glass-card rounded-xl shadow-lg overflow-hidden backdrop-blur-sm border border-white/20">
+                <img src="https://images.pexels.com/photos/3822622/pexels-photo-3822622.jpeg?auto=compress&cs=tinysrgb&w=400" alt="Meditación" class="w-full h-32 object-cover" />
+                <div class="p-4">
+                  <h3 class="text-lg font-bold text-gray-900 mb-2">Meditación de 5 minutos</h3>
+                  <p class="text-sm text-gray-600 mb-3">Progreso: 1/14 días completados</p>
+                  <div class="mb-3">
+                    <div class="flex justify-between text-sm mb-1">
+                      <span>Progreso</span>
+                      <span>7%</span>
+                    </div>
+                    <div class="bg-gray-200 rounded-full h-2">
+                      <div class="bg-primary rounded-full h-2" style="width: 7%"></div>
+                    </div>
+                  </div>
+                  <div class="flex items-center justify-between mb-3">
+                    <span class="bg-yellow-100 text-yellow-800 text-xs px-2 py-1 rounded-full">100 puntos</span>
+                    <span class="text-xs text-gray-500">Termina en 13 días</span>
+                  </div>
+                  <button class="w-full glass-button-secondary text-gray-800 py-2 px-4 rounded-lg font-medium transition-all duration-300 backdrop-blur-sm border border-gray-300/50">
+                    Meditar Hoy
+                  </button>
                 </div>
-                <button class="w-full glass-button-primary text-white py-3 px-4 rounded-lg font-medium transition-all duration-300 hover:shadow-md hover:-translate-y-0.5 backdrop-blur-sm border border-blue-500/30">
-                  Unirse al Desafío
-                </button>
               </div>
             </div>
+          </div>
+
+          <!-- Desafíos Disponibles -->
+          <div class="glass-container rounded-xl shadow-lg p-6 backdrop-blur-sm border border-white/30">
+            <h2 class="text-xl font-semibold mb-4">Desafíos Disponibles</h2>
+          <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
 
             <div class="glass-card rounded-xl shadow-lg overflow-hidden backdrop-blur-sm border border-white/20 hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
               <img src="https://images.pexels.com/photos/416528/pexels-photo-416528.jpeg?auto=compress&cs=tinysrgb&w=400" alt="Hidratación" class="w-full h-48 object-cover" />
@@ -349,18 +588,106 @@
                   <span class="bg-green-100 text-green-800 text-xs px-2 py-1 rounded-full">Activo</span>
                   <span class="bg-yellow-100 text-yellow-800 text-xs px-2 py-1 rounded-full">75 puntos</span>
                 </div>
-                <div class="mb-4">
-                  <div class="flex justify-between text-sm mb-1">
-                    <span>Progreso</span>
-                    <span>5/10 días</span>
-                  </div>
-                  <div class="bg-gray-200 rounded-full h-2">
-                    <div class="bg-primary rounded-full h-2" style="width: 50%"></div>
+                <button class="w-full glass-button-primary text-white py-3 px-4 rounded-lg font-medium transition-all duration-300 hover:shadow-md hover:-translate-y-0.5 backdrop-blur-sm border border-blue-500/30">
+                  Unirse al Desafío
+                </button>
+              </div>
+            </div>
+
+            <div class="glass-card rounded-xl shadow-lg overflow-hidden backdrop-blur-sm border border-white/20 hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
+              <img src="https://images.pexels.com/photos/1181244/pexels-photo-1181244.jpeg?auto=compress&cs=tinysrgb&w=400" alt="Descanso digital" class="w-full h-48 object-cover" />
+              <div class="p-6">
+                <h3 class="text-xl font-bold text-gray-900 mb-2">Descanso Digital</h3>
+                <p class="text-gray-600 mb-4">Desconéctate de dispositivos 1 hora antes de dormir durante una semana.</p>
+                <div class="flex items-center justify-between mb-4">
+                  <span class="bg-green-100 text-green-800 text-xs px-2 py-1 rounded-full">Activo</span>
+                  <span class="bg-yellow-100 text-yellow-800 text-xs px-2 py-1 rounded-full">120 puntos</span>
+                </div>
+                <button class="w-full glass-button-primary text-white py-3 px-4 rounded-lg font-medium transition-all duration-300 hover:shadow-md hover:-translate-y-0.5 backdrop-blur-sm border border-blue-500/30">
+                  Unirse al Desafío
+                </button>
+              </div>
+            </div>
+
+            <div class="glass-card rounded-xl shadow-lg overflow-hidden backdrop-blur-sm border border-white/20 hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
+              <img src="https://images.pexels.com/photos/1640777/pexels-photo-1640777.jpeg?auto=compress&cs=tinysrgb&w=400" alt="Alimentación" class="w-full h-48 object-cover" />
+              <div class="p-6">
+                <h3 class="text-xl font-bold text-gray-900 mb-2">Alimentación Consciente</h3>
+                <p class="text-gray-600 mb-4">Practica la alimentación consciente durante las comidas principales.</p>
+                <div class="flex items-center justify-between mb-4">
+                  <span class="bg-green-100 text-green-800 text-xs px-2 py-1 rounded-full">Activo</span>
+                  <span class="bg-yellow-100 text-yellow-800 text-xs px-2 py-1 rounded-full">200 puntos</span>
+                </div>
+                <button class="w-full glass-button-primary text-white py-3 px-4 rounded-lg font-medium transition-all duration-300 hover:shadow-md hover:-translate-y-0.5 backdrop-blur-sm border border-blue-500/30">
+                  Unirse al Desafío
+                </button>
+              </div>
+            </div>
+
+            <div class="glass-card rounded-xl shadow-lg overflow-hidden backdrop-blur-sm border border-white/20 hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
+              <img src="https://images.pexels.com/photos/3768916/pexels-photo-3768916.jpeg?auto=compress&cs=tinysrgb&w=400" alt="Ejercicio" class="w-full h-48 object-cover" />
+              <div class="p-6">
+                <h3 class="text-xl font-bold text-gray-900 mb-2">30 Minutos de Ejercicio</h3>
+                <p class="text-gray-600 mb-4">Realiza 30 minutos de ejercicio diario durante 2 semanas.</p>
+                <div class="flex items-center justify-between mb-4">
+                  <span class="bg-green-100 text-green-800 text-xs px-2 py-1 rounded-full">Activo</span>
+                  <span class="bg-yellow-100 text-yellow-800 text-xs px-2 py-1 rounded-full">180 puntos</span>
+                </div>
+                <button class="w-full glass-button-primary text-white py-3 px-4 rounded-lg font-medium transition-all duration-300 hover:shadow-md hover:-translate-y-0.5 backdrop-blur-sm border border-blue-500/30">
+                  Unirse al Desafío
+                </button>
+              </div>
+            </div>
+          </div>
+          </div>
+
+          <!-- Desafíos Completados -->
+          <div class="glass-container rounded-xl shadow-lg p-6 backdrop-blur-sm border border-white/30">
+            <h2 class="text-xl font-semibold mb-4">Desafíos Completados</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              <div class="glass-card rounded-xl shadow-lg overflow-hidden backdrop-blur-sm border border-white/20">
+                <img src="https://images.pexels.com/photos/1181244/pexels-photo-1181244.jpeg?auto=compress&cs=tinysrgb&w=400" alt="Descanso digital" class="w-full h-32 object-cover" />
+                <div class="p-4">
+                  <h3 class="text-lg font-bold text-gray-900 mb-2">Descanso Digital</h3>
+                  <p class="text-sm text-gray-600 mb-3">Completado el 22 de diciembre</p>
+                  <div class="flex items-center justify-between">
+                    <span class="bg-green-100 text-green-800 text-xs px-2 py-1 rounded-full">+120 puntos</span>
+                    <div class="flex items-center">
+                      <CheckCircle class="h-4 w-4 text-green-500 mr-1" />
+                      <span class="text-xs text-green-600 font-medium">Completado</span>
+                    </div>
                   </div>
                 </div>
-                <button class="w-full glass-button-secondary text-gray-800 py-2 px-4 rounded-lg font-medium transition-all duration-300 backdrop-blur-sm border border-gray-300/50">
-                  Continuar Desafío
-                </button>
+              </div>
+
+              <div class="glass-card rounded-xl shadow-lg overflow-hidden backdrop-blur-sm border border-white/20">
+                <img src="https://images.pexels.com/photos/1640777/pexels-photo-1640777.jpeg?auto=compress&cs=tinysrgb&w=400" alt="Alimentación" class="w-full h-32 object-cover" />
+                <div class="p-4">
+                  <h3 class="text-lg font-bold text-gray-900 mb-2">Alimentación Consciente</h3>
+                  <p class="text-sm text-gray-600 mb-3">Completado el 20 de diciembre</p>
+                  <div class="flex items-center justify-between">
+                    <span class="bg-green-100 text-green-800 text-xs px-2 py-1 rounded-full">+200 puntos</span>
+                    <div class="flex items-center">
+                      <CheckCircle class="h-4 w-4 text-green-500 mr-1" />
+                      <span class="text-xs text-green-600 font-medium">Completado</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="glass-card rounded-xl shadow-lg overflow-hidden backdrop-blur-sm border border-white/20">
+                <img src="https://images.pexels.com/photos/3768916/pexels-photo-3768916.jpeg?auto=compress&cs=tinysrgb&w=400" alt="Ejercicio" class="w-full h-32 object-cover" />
+                <div class="p-4">
+                  <h3 class="text-lg font-bold text-gray-900 mb-2">Rutina de Estiramientos</h3>
+                  <p class="text-sm text-gray-600 mb-3">Completado el 15 de diciembre</p>
+                  <div class="flex items-center justify-between">
+                    <span class="bg-green-100 text-green-800 text-xs px-2 py-1 rounded-full">+80 puntos</span>
+                    <div class="flex items-center">
+                      <CheckCircle class="h-4 w-4 text-green-500 mr-1" />
+                      <span class="text-xs text-green-600 font-medium">Completado</span>
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
@@ -384,7 +711,11 @@ import {
   Activity,
   Brain,
   Droplets,
-  Star
+  Star,
+  MapPin,
+  Globe,
+  User,
+  CheckCircle
 } from 'lucide-vue-next';
 import Button from '../../components/common/Button.vue';
 
