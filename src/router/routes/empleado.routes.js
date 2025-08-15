@@ -22,14 +22,14 @@ export const empleadoRoutes = [
       },
       {
         path: 'reservar-actividad',
-        name: 'empleado-reservar-actividad',
+        name: 'ReservarActividad',
         component: () => import('../../views/empleado/ReservarActividadView.vue'),
         meta: { requiresAuth: true, roles: ['empleado'] }
       },
       {
         path: 'reservas',
         name: 'empleado-reservas',
-        component: () => import('../../views/empleado/ReservasView.vue'),
+        component: () => import('../../views/empleado/MisReservasView.vue'),
         meta: { requiresAuth: true, roles: ['empleado'] }
       },
       {

@@ -1,7 +1,7 @@
 <template>
   <div class="p-6 md:p-8">
     <header class="mb-8">
-      <h1 class="text-3xl font-bold text-gray-900">Reservar Actividad</h1>
+      <h1 class="text-3xl font-bold text-gray-900">Actividades Disponibles</h1>
       <p class="text-gray-600 mt-1">Explora las próximas actividades y reserva tu plaza.</p>
     </header>
 

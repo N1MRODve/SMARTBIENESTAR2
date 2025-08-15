@@ -1,9 +1,9 @@
 <template>
   <div class="min-h-screen bg-gray-50">
-    <TheSidebar v-model:open="sidebarOpen" />
+    <TheSidebar :open="sidebarOpen" @update:open="sidebarOpen = $event" />
     
     <div class="lg:ml-64 flex flex-col min-h-screen">
-      <TheHeader @toggle-sidebar="sidebarOpen = !sidebarOpen" />
+      <AppHeader @toggle-sidebar="sidebarOpen = !sidebarOpen" />
       
       <main class="flex-1 p-6">
         <router-view />
@@ -14,8 +14,8 @@
 
 <script setup>
 import { ref } from 'vue';
-import TheSidebar from '../components/layout/TheSidebar.vue';
-import TheHeader from '../components/layout/TheHeader.vue';
+import TheSidebar from '@/components/layout/TheSidebar.vue';
+import AppHeader from '@/components/layout/AppHeader.vue';
 
 const sidebarOpen = ref(false);
 </script>

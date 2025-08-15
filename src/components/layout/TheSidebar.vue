@@ -1,12 +1,12 @@
 <template>
   <div
-    v-show="open"
+    v-show="props.open"
     class="fixed inset-0 bg-black bg-opacity-50 z-40 lg:hidden"
     @click="$emit('update:open', false)"
   />
   <aside :class="[
     'fixed inset-y-0 left-0 w-64 bg-primary text-white z-50 transform transition-transform duration-300 ease-in-out lg:relative lg:transform-none',
-    open ? 'translate-x-0' : '-translate-x-full lg:translate-x-0'
+    props.open ? 'translate-x-0' : '-translate-x-full lg:translate-x-0'
   ]">
     <!-- Logo and close button -->
     <div class="h-16 flex items-center justify-between px-4 border-b border-primary-dark">
@@ -34,6 +34,7 @@
             ? 'bg-primary-dark text-white'
             : 'text-white hover:bg-primary-dark'
         ]"
+        @click="$emit('update:open', false)"
       >
         <component :is="link.icon" class="h-5 w-5 mr-3" />
         {{ link.text }}
@@ -92,7 +93,7 @@ const navigationLinks = computed(() => {
   if (userRole === 'empleado') {
     return [
       { to: '/empleado/dashboard', icon: LayoutDashboard, text: 'Dashboard' },
-      { to: '/empleado/reservar-actividad', icon: Calendar, text: 'Reservar Actividad' },
+      { to: '/empleado/reservar-actividad', icon: Calendar, text: 'Actividades' },
       { to: '/empleado/reservas', icon: CalendarCheck, text: 'Mis Reservas' },
       { to: '/empleado/encuestas', icon: ClipboardList, text: 'Encuestas' },
       { to: '/empleado/desafios', icon: Trophy, text: 'Desafíos' }
