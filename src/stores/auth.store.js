@@ -81,6 +81,8 @@ export const useAuthStore = defineStore('auth', {
         console.error("Error al inicializar la sesión:", error)
         this.user = null
         this.session = null
+        // Limpiar explícitamente cualquier dato de sesión inválido de Supabase
+        await supabase.auth.signOut()
       } finally {
         // Marcamos la inicialización como completada, incluso si falla
         this.isInitialized = true
