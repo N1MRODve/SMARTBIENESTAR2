@@ -34,7 +34,7 @@ export const useEmpleadoStore = defineStore('empleado', {
         const [statsRes, sesionesRes, encuestasRes] = await Promise.all([
           supabase
             .from('perfil_empleados')
-            .select('puntos_bienestar, sesiones_asistidas, desafios_completados')
+            .select('puntos_bienestar, desafios_completados')
             .eq('usuario_id', authStore.user.id)
             .single(),
           // CORREGIDO: select simplificado con relaciones válidas
@@ -55,7 +55,7 @@ export const useEmpleadoStore = defineStore('empleado', {
               )
             `)
             .eq('usuario_id', authStore.user.id)
-            .order('created_at', { ascending: false })
+            .order('fecha_reserva', { ascending: false })
             .limit(3),
           supabase
             .from('participantes_encuesta')
@@ -112,7 +112,7 @@ export const useEmpleadoStore = defineStore('empleado', {
             )
           `)
           .eq('usuario_id', authStore.user.id)
-          .order('created_at', { ascending: false })
+          .order('fecha_reserva', { ascending: false })
 
         if (error) throw error
         this.misReservas = data || []
