@@ -1,11 +1,11 @@
 ```vue
 <template>
-  <div class="bg-white rounded-lg shadow-sm p-6">
+  <div class="glass-card rounded-xl shadow-lg p-6 border border-white/20 backdrop-blur-sm hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
     <div class="flex items-center justify-between">
       <div class="flex-1">
-        <h3 class="text-sm font-medium text-gray-500">{{ title }}</h3>
+        <h3 class="text-sm font-medium text-gray-600">{{ title }}</h3>
         <div class="mt-2 flex items-baseline">
-          <p class="text-2xl font-semibold text-gray-900">{{ value }}</p>
+          <p class="text-3xl font-bold text-gray-900">{{ value }}</p>
           <p v-if="trend" :class="[
             'ml-2 text-sm',
             trend === 'up' ? 'text-green-600' : 
@@ -15,13 +15,13 @@
             {{ getTrendText }}
           </p>
         </div>
-        <p v-if="description" class="mt-1 text-sm text-gray-500">{{ description }}</p>
+        <p v-if="description" class="mt-2 text-sm text-gray-600">{{ description }}</p>
       </div>
       
       <div v-if="icon" class="p-3 bg-primary/10 rounded-full">
         <component 
           :is="icon" 
-          class="h-6 w-6 text-primary"
+          class="h-7 w-7 text-primary"
         />
       </div>
     </div>

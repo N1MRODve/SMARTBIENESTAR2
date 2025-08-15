@@ -1,5 +1,5 @@
 <template>
-  <div class="min-h-screen bg-gray-50">
+  <div class="min-h-screen bg-gradient-to-br from-blue-50 via-white to-indigo-50">
     <TheSidebar :open="sidebarOpen" @update:open="sidebarOpen = $event" />
     
     <div class="lg:ml-64 flex flex-col min-h-screen">

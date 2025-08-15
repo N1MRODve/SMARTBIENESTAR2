@@ -21,58 +21,59 @@
           Crear desde Plantilla
         </Button>
       </div>
-      <div class="bg-white border rounded-lg shadow-md p-6">
-        <table class="min-w-full bg-white rounded-lg shadow overflow-hidden">
-          <thead class="bg-gray-50">
+      <div class="glass-container rounded-xl shadow-lg p-6 backdrop-blur-sm border border-white/30">
+        <div class="glass-card rounded-xl overflow-hidden backdrop-blur-sm border border-white/20">
+          <table class="min-w-full">
+            <thead class="bg-white/50 backdrop-blur-sm">
             <tr>
-              <th class="px-4 py-2 text-left text-xs font-semibold text-gray-600">Título</th>
-              <th class="px-4 py-2 text-left text-xs font-semibold text-gray-600">Estado</th>
-              <th class="px-4 py-2 text-left text-xs font-semibold text-gray-600">Acciones</th>
+              <th class="px-6 py-4 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">Título</th>
+              <th class="px-6 py-4 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">Estado</th>
+              <th class="px-6 py-4 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">Acciones</th>
             </tr>
           </thead>
-          <tbody>
-            <tr v-for="encuesta in encuestasFiltradas" :key="encuesta.id" class="hover:bg-gray-50">
-              <td class="px-4 py-2 font-medium text-gray-900">{{ encuesta.titulo }}</td>
-              <td class="px-4 py-2">
+          <tbody class="divide-y divide-white/20">
+            <tr v-for="encuesta in encuestasFiltradas" :key="encuesta.id" class="hover:bg-white/30 transition-colors duration-200">
+              <td class="px-6 py-4 font-medium text-gray-900">{{ encuesta.titulo }}</td>
+              <td class="px-6 py-4">
                 <span
                   :class="{
-                    'bg-yellow-100 text-yellow-800': encuesta.estado === 'borrador',
-                    'bg-green-100 text-green-800': encuesta.estado === 'activa',
-                    'bg-gray-100 text-gray-800': encuesta.estado === 'finalizada'
+                    'bg-yellow-100/80 text-yellow-800 border border-yellow-200/50': encuesta.estado === 'borrador',
+                    'bg-green-100/80 text-green-800 border border-green-200/50': encuesta.estado === 'activa',
+                    'bg-gray-100/80 text-gray-800 border border-gray-200/50': encuesta.estado === 'finalizada'
                   }"
-                  class="px-2 py-1 rounded-full text-xs font-semibold"
+                  class="px-3 py-1 rounded-full text-xs font-semibold backdrop-blur-sm"
                 >
                   {{ encuesta.estado }}
                 </span>
               </td>
-              <td class="px-6 py-4 text-right flex gap-2">
+              <td class="px-6 py-4 text-right">
+                <div class="flex gap-2 justify-end">
                 <button
                   v-if="encuesta.estado === 'borrador'"
-                  class="bg-blue-600 hover:bg-blue-700 text-white px-3 py-2 rounded"
+                  class="glass-button-primary text-white px-4 py-2 rounded-lg hover:bg-blue-600/90 transition-all duration-300 font-medium shadow-md hover:shadow-lg hover:-translate-y-0.5 backdrop-blur-sm border border-blue-500/30"
                   @click="abrirModalEnviar(encuesta.id)"
                 >
                   Enviar
                 </button>
                 <button
                   v-if="encuesta.estado === 'borrador'"
-                  class="bg-green-600 hover:bg-green-700 text-white px-3 py-2 rounded flex items-center gap-2"
+                  class="glass-button-outline text-green-700 bg-white/60 hover:bg-green-50/80 px-4 py-2 rounded-lg transition-all duration-300 font-medium shadow-md hover:shadow-lg hover:-translate-y-0.5 backdrop-blur-sm border border-green-300/50"
                   @click="adminStore.setEncuestaParaEditar(encuesta)"
                 >
                   <span>Editar</span>
                 </button>
                 <button
-                  class="bg-red-600 hover:bg-red-700 text-white font-semibold px-4 py-2 rounded transition flex items-center gap-2"
+                  class="glass-button-outline text-red-700 bg-white/60 hover:bg-red-50/80 px-4 py-2 rounded-lg transition-all duration-300 font-medium shadow-md hover:shadow-lg hover:-translate-y-0.5 backdrop-blur-sm border border-red-300/50"
                   @click="iniciarEliminacion(encuesta.id)"
                 >
                   <span>Eliminar</span>
-                  <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
-                  </svg>
                 </button>
+                </div>
               </td>
             </tr>
           </tbody>
-        </table>
+          </table>
+        </div>
       </div>
       <EnviarEncuestaModal
         v-if="mostrarModalEnviar"

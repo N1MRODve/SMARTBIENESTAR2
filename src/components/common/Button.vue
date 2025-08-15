@@ -29,13 +29,13 @@ const props = defineProps({
 const buttonClasses = computed(() => {
   switch (props.variant) {
     case 'primary':
-      return 'bg-blue-700 text-white hover:bg-blue-800 focus:ring-2 focus:ring-blue-400 px-4 py-2 rounded-lg flex items-center transition font-semibold shadow-md focus:outline-none'
+      return 'glass-button-primary text-white hover:bg-blue-600/90 focus:ring-2 focus:ring-blue-400 px-4 py-2 rounded-xl flex items-center transition-all duration-300 font-semibold shadow-lg hover:shadow-xl hover:-translate-y-0.5 focus:outline-none backdrop-blur-sm border border-blue-500/30'
     case 'secondary':
-      return 'bg-gray-100 text-gray-800 hover:bg-gray-200 focus:ring-2 focus:ring-gray-400 px-4 py-2 rounded-lg flex items-center transition font-semibold shadow-md focus:outline-none'
+      return 'glass-button-secondary text-gray-800 hover:bg-gray-200/80 focus:ring-2 focus:ring-gray-400 px-4 py-2 rounded-xl flex items-center transition-all duration-300 font-semibold shadow-lg hover:shadow-xl hover:-translate-y-0.5 focus:outline-none backdrop-blur-sm border border-gray-300/50'
     case 'outline':
-      return 'border border-blue-700 text-blue-700 bg-white hover:bg-blue-50 focus:ring-2 focus:ring-blue-400 px-4 py-2 rounded-lg flex items-center transition font-semibold shadow-md focus:outline-none'
+      return 'glass-button-outline text-blue-700 bg-white/60 hover:bg-blue-50/80 focus:ring-2 focus:ring-blue-400 px-4 py-2 rounded-xl flex items-center transition-all duration-300 font-semibold shadow-lg hover:shadow-xl hover:-translate-y-0.5 focus:outline-none backdrop-blur-sm border border-blue-300/50'
     default:
-      return 'px-4 py-2 rounded-lg flex items-center transition font-semibold focus:outline-none'
+      return 'px-4 py-2 rounded-xl flex items-center transition-all duration-300 font-semibold focus:outline-none backdrop-blur-sm'
   }
 })
 

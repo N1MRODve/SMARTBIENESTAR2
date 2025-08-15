@@ -33,12 +33,12 @@
       </div>
 
       <!-- Lista de empleados -->
-      <div class="bg-white border rounded-lg shadow-md p-6">
+      <div class="glass-container rounded-xl shadow-lg p-6 backdrop-blur-sm border border-white/30">
         <div class="mb-4">
           <input
             v-model="busqueda"
             type="text"
-            class="w-full border rounded px-3 py-2"
+            class="w-full border border-white/30 rounded-xl px-4 py-3 bg-white/60 backdrop-blur-sm focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary transition-all duration-300"
             placeholder="Buscar empleado por nombre o correo..."
           />
         </div>
@@ -47,54 +47,57 @@
           <div v-if="empleadosFiltrados.length === 0" class="text-center text-gray-500 py-8">
             No se encontraron empleados.
           </div>
-          <table v-else class="min-w-full bg-white rounded-lg overflow-hidden">
-            <thead class="bg-gray-50">
+          <div v-else class="glass-card rounded-xl overflow-hidden backdrop-blur-sm border border-white/20">
+            <table class="min-w-full">
+              <thead class="bg-white/50 backdrop-blur-sm">
               <tr>
-                <th class="px-4 py-2 text-left text-xs font-semibold text-gray-600">Nombre</th>
-                <th class="px-4 py-2 text-left text-xs font-semibold text-gray-600">Correo</th>
-                <th class="px-4 py-2 text-left text-xs font-semibold text-gray-600">Cargo</th>
-                <th class="px-4 py-2 text-left text-xs font-semibold text-gray-600">Estado</th>
-                <th class="px-4 py-2 text-left text-xs font-semibold text-gray-600">Acciones</th>
+                <th class="px-6 py-4 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">Nombre</th>
+                <th class="px-6 py-4 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">Correo</th>
+                <th class="px-6 py-4 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">Cargo</th>
+                <th class="px-6 py-4 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">Estado</th>
+                <th class="px-6 py-4 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">Acciones</th>
               </tr>
             </thead>
-            <tbody>
-              <tr v-for="empleado in empleadosFiltrados" :key="empleado.id">
-                <td class="px-4 py-2">
+            <tbody class="divide-y divide-white/20">
+              <tr v-for="empleado in empleadosFiltrados" :key="empleado.id" class="hover:bg-white/30 transition-colors duration-200">
+                <td class="px-6 py-4">
                   <router-link
                     :to="{ name: 'EmpleadoDetailView', params: { id: empleado.id } }"
-                    class="text-blue-600 hover:underline"
+                    class="text-blue-600 hover:text-blue-800 font-medium hover:underline transition-colors duration-200"
                   >
                     {{ empleado.nombre }} {{ empleado.apellido }}
                   </router-link>
                 </td>
-                <td class="px-4 py-2">{{ empleado.correo }}</td>
-                <td class="px-4 py-2">{{ empleado.cargo }}</td>
-                <td class="px-4 py-2">
+                <td class="px-6 py-4 text-gray-700">{{ empleado.correo }}</td>
+                <td class="px-6 py-4 text-gray-700">{{ empleado.cargo }}</td>
+                <td class="px-6 py-4">
                   <span
                     :class="empleado.activo
-                      ? 'bg-green-100 text-green-800'
-                      : 'bg-gray-100 text-gray-800'"
-                    class="px-2 py-1 rounded-full text-xs font-semibold"
+                      ? 'bg-green-100/80 text-green-800 border border-green-200/50'
+                      : 'bg-gray-100/80 text-gray-800 border border-gray-200/50'"
+                    class="px-3 py-1 rounded-full text-xs font-semibold backdrop-blur-sm"
                   >
                     {{ empleado.activo ? 'Activo' : 'Inactivo' }}
                   </span>
                 </td>
-                <td class="px-4 py-2 flex gap-2">
+                <td class="px-6 py-4 flex gap-2">
                   <router-link
                     :to="{ name: 'EmpleadoDetailView', params: { id: empleado.id } }"
                   >
-                    <Button size="sm" variant="outline" icon="eye">Ver</Button>
+                    <Button variant="outline" class="text-xs px-3 py-1">Ver</Button>
                   </router-link>
                   <Button
-                    size="sm"
-                    variant="danger"
-                    icon="trash"
+                    variant="outline"
+                    class="text-xs px-3 py-1 text-red-600 border-red-300/50 hover:bg-red-50/80"
                     @click="iniciarEliminacion(empleado)"
-                  >Eliminar</Button>
+                  >
+                    Eliminar
+                  </Button>
                 </td>
               </tr>
             </tbody>
-          </table>
+            </table>
+          </div>
         </template>
       </div>
       <AñadirEmpleadoModal 

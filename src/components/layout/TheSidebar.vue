@@ -1,11 +1,11 @@
 <template>
   <div
     v-show="props.open"
-    class="fixed inset-0 bg-black bg-opacity-50 z-40 lg:hidden"
+    class="fixed inset-0 bg-black bg-opacity-50 z-30 lg:hidden"
     @click="$emit('update:open', false)"
   />
   <aside :class="[
-    'fixed inset-y-0 left-0 w-64 z-50 transform transition-all duration-300 ease-in-out lg:relative lg:transform-none',
+    'fixed inset-y-0 left-0 w-64 z-40 transform transition-all duration-300 ease-in-out lg:relative lg:transform-none',
     'bg-white/10 backdrop-blur-xl border-r border-white/20 text-white',
     'shadow-2xl shadow-black/10',
     props.open ? 'translate-x-0' : '-translate-x-full lg:translate-x-0'
