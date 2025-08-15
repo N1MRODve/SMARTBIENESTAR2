@@ -43,6 +43,10 @@
               <Zap class="h-5 w-5 mr-2" />
               Comenzar Ahora
             </Button>
+            <Button @click="irADemo" variant="outline" size="lg" class="text-lg px-8 py-4">
+              <Play class="h-5 w-5 mr-2" />
+              Ver Demo
+            </Button>
             <Button @click="scrollToFeatures" variant="outline" size="lg" class="text-lg px-8 py-4">
               <ArrowDown class="h-5 w-5 mr-2" />
               Conocer Más
@@ -293,6 +297,7 @@ import {
   LogIn, 
   Zap, 
   ArrowDown, 
+  Play,
   Activity, 
   Brain, 
   Apple, 
@@ -311,6 +316,10 @@ const router = useRouter();
 
 function irALogin() {
   router.push('/login');
+}
+
+function irADemo() {
+  router.push('/demo');
 }
 
 function scrollToFeatures() {

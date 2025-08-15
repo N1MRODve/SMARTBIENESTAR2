@@ -67,7 +67,7 @@
         </form>
 
         <!-- Demo credentials info -->
-        <div class="mt-8 p-4 bg-blue-50/80 rounded-xl border border-blue-200/50 backdrop-blur-sm">
+        <div v-if="!isDemoMode" class="mt-8 p-4 bg-blue-50/80 rounded-xl border border-blue-200/50 backdrop-blur-sm">
           <div class="flex items-start">
             <div class="flex-shrink-0">
               <Info class="h-5 w-5 text-blue-400" />
@@ -96,27 +96,58 @@
             </div>
           </div>
         </div>
+
+        <!-- Demo mode indicator -->
+        <div v-if="isDemoMode" class="mt-8 p-4 bg-gradient-to-r from-green-50 to-blue-50 rounded-xl border border-green-200/50 backdrop-blur-sm">
+          <div class="flex items-center justify-center">
+            <div class="flex items-center space-x-2">
+              <div class="w-3 h-3 bg-green-500 rounded-full animate-pulse"></div>
+              <span class="text-sm font-medium text-gray-700">Modo Demo Activado</span>
+            </div>
+          </div>
+          <p class="text-center text-xs text-gray-600 mt-2">
+            Estás accediendo a la demostración interactiva de SMART Bienestar
+          </p>
+        </div>
       </div>
     </div>
   </div>
 </template>
 
 <script setup>
-import { ref } from 'vue';
+import { ref, onMounted } from 'vue';
 import { useRouter } from 'vue-router';
+import { useRoute } from 'vue-router';
 import { useToast } from 'primevue/usetoast';
 import { ActivitySquare, Mail, Lock, Info } from 'lucide-vue-next';
 import { useAuthStore } from '../stores/auth.store';
 import Button from '../components/common/Button.vue';
 
+const route = useRoute();
 const router = useRouter();
 const toast = useToast();
 const authStore = useAuthStore();
 
 const email = ref('');
 const password = ref('');
-const loading = ref(false);
 
+const isDemoMode = ref(false);
+
+// Pre-cargar credenciales si viene de la demo
+onMounted(() => {
+  if (route.query.demo) {
+    isDemoMode.value = true;
+    email.value = route.query.email || '';
+    password.value = route.query.password || '';
+    
+    // Auto-login si vienen las credenciales
+    if (email.value && password.value) {
+      setTimeout(() => {
+        handleSubmit();
+      }, 500);
+    }
+  }
+});
 async function handleSubmit() {
   try {
     loading.value = true;

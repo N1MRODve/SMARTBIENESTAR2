@@ -22,6 +22,11 @@ const routes = [
     component: LoginView
   },
   {
+    path: '/demo',
+    name: 'DemoSelection',
+    component: () => import('../views/DemoSelectionView.vue')
+  },
+  {
     path: '/acceso-denegado',
     name: 'access-denied',
     component: AccessDeniedView,
