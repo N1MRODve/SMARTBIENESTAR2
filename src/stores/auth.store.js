@@ -1,5 +1,6 @@
 import { defineStore } from 'pinia';
 import { supabase } from '@/services/supabase'; // Importar la instancia única
+import { useDemoStore } from './demoStore';
 
 export const useAuthStore = defineStore('auth', {
   state: () => ({
@@ -13,6 +14,25 @@ export const useAuthStore = defineStore('auth', {
   // Las funciones de negocio deben estar dentro del objeto 'actions'.
   actions: {
     async login(email, password) {
+      // Verificar si es modo demo
+      const demoStore = useDemoStore();
+      if (demoStore.isDemoMode) {
+        this.loading = true;
+        this.error = null;
+        try {
+          await new Promise(resolve => setTimeout(resolve, 1000)); // Simular delay de autenticación
+          const user = await demoStore.loginDemo(email, password);
+          this.user = user;
+          this.session = { user }; // Simular sesión
+          return user;
+        } catch (error) {
+          this.error = error.message;
+          throw error;
+        } finally {
+          this.loading = false;
+        }
+      }
+
       this.loading = true;
       this.error = null;
       try {

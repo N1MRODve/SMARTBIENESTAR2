@@ -1,6 +1,7 @@
 import { defineStore } from 'pinia'
 import { supabase } from '@/services/supabase'
 import { useAuthStore } from './auth.store'
+import { useDemoStore } from './demoStore'
 
 export const useEmpleadoStore = defineStore('empleado', {
   state: () => ({
@@ -25,6 +26,32 @@ export const useEmpleadoStore = defineStore('empleado', {
 
   actions: {
     async loadDashboardData() {
+      // Usar datos demo si está en modo demo
+      const demoStore = useDemoStore();
+      if (demoStore.isDemoMode) {
+        const authStore = useAuthStore();
+        if (!authStore.user) return;
+        
+        this.loading.dashboard = true;
+        this.error = null;
+        
+        try {
+          await new Promise(resolve => setTimeout(resolve, 800)); // Simular delay
+          const dashboardData = await demoStore.getEmpleadoDashboardData(authStore.user.id);
+          
+          this.dashboardStats = dashboardData.stats;
+          this.proximasSesiones = dashboardData.proximasSesiones;
+          this.encuestasPendientes = dashboardData.encuestasPendientes;
+          return;
+        } catch (error) {
+          console.error('Error cargando dashboard demo:', error);
+          this.error = error.message;
+        } finally {
+          this.loading.dashboard = false;
+        }
+        return;
+      }
+
       const authStore = useAuthStore()
       if (!authStore.user) return
       this.loading.dashboard = true
@@ -88,6 +115,28 @@ export const useEmpleadoStore = defineStore('empleado', {
     },
 
     async loadMisReservas() {
+      // Usar datos demo si está en modo demo
+      const demoStore = useDemoStore();
+      if (demoStore.isDemoMode) {
+        const authStore = useAuthStore();
+        if (!authStore.user) return;
+        
+        this.loading.reservas = true;
+        this.error = null;
+        
+        try {
+          await new Promise(resolve => setTimeout(resolve, 600)); // Simular delay
+          this.misReservas = demoStore.getReservasByUsuario(authStore.user.id);
+          return;
+        } catch (error) {
+          console.error('Error cargando reservas demo:', error);
+          this.error = error.message;
+        } finally {
+          this.loading.reservas = false;
+        }
+        return;
+      }
+
       const authStore = useAuthStore()
       if (!authStore.user) return
       this.loading.reservas = true
@@ -125,6 +174,36 @@ export const useEmpleadoStore = defineStore('empleado', {
     },
 
     async loadMisEncuestas() {
+      // Usar datos demo si está en modo demo
+      const demoStore = useDemoStore();
+      if (demoStore.isDemoMode) {
+        const authStore = useAuthStore();
+        if (!authStore.user) return;
+        
+        this.loading.encuestas = true;
+        this.error = null;
+        
+        try {
+          await new Promise(resolve => setTimeout(resolve, 400)); // Simular delay
+          this.misEncuestas = demoStore.demoData.participantesEncuesta
+            .filter(p => p.usuario_id === authStore.user.id)
+            .map(p => {
+              const encuesta = demoStore.demoData.encuestas.find(e => e.id === p.encuesta_id);
+              return {
+                ...p,
+                encuesta: encuesta
+              };
+            });
+          return;
+        } catch (error) {
+          console.error('Error cargando encuestas demo:', error);
+          this.error = error.message;
+        } finally {
+          this.loading.encuestas = false;
+        }
+        return;
+      }
+
       const authStore = useAuthStore()
       if (!authStore.user) return
       this.loading.encuestas = true
@@ -186,6 +265,25 @@ export const useEmpleadoStore = defineStore('empleado', {
     },
 
     async loadDesafios() {
+      // Usar datos demo si está en modo demo
+      const demoStore = useDemoStore();
+      if (demoStore.isDemoMode) {
+        this.loading.desafios = true;
+        this.error = null;
+        
+        try {
+          await new Promise(resolve => setTimeout(resolve, 500)); // Simular delay
+          this.desafios = demoStore.demoData.desafiosBienestar;
+          return;
+        } catch (error) {
+          console.error('Error cargando desafíos demo:', error);
+          this.error = error.message;
+        } finally {
+          this.loading.desafios = false;
+        }
+        return;
+      }
+
       this.loading.desafios = true
       this.error = null
 
@@ -206,6 +304,36 @@ export const useEmpleadoStore = defineStore('empleado', {
     },
 
     async loadActividadesDisponibles() {
+      // Usar datos demo si está en modo demo
+      const demoStore = useDemoStore();
+      if (demoStore.isDemoMode) {
+        const authStore = useAuthStore();
+        if (!authStore.user?.empresa_id) return;
+        
+        this.loading.actividades = true;
+        this.error = null;
+        
+        try {
+          await new Promise(resolve => setTimeout(resolve, 700)); // Simular delay
+          const sesiones = demoStore.getSesionesConDetalles()
+            .filter(s => s.empresa_id === authStore.user.empresa_id)
+            .filter(s => new Date(s.fecha_inicio) > new Date())
+            .map(sesion => ({
+              ...sesion,
+              colaborador: sesion.colaborador_nombre
+            }));
+          
+          this.actividadesDisponibles = sesiones;
+          return;
+        } catch (error) {
+          console.error('Error cargando actividades demo:', error);
+          this.error = error.message;
+        } finally {
+          this.loading.actividades = false;
+        }
+        return;
+      }
+
       const authStore = useAuthStore()
       if (!authStore.user?.empresa_id) return
       this.loading.actividades = true

@@ -174,9 +174,11 @@
 import { ref, computed, onMounted } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 import { ArrowLeft, CheckCircle, Star } from 'lucide-vue-next';
+import { useDemoStore } from '@/stores/demoStore';
 
 const route = useRoute();
 const router = useRouter();
+const demoStore = useDemoStore();
 
 // Estado local
 const yaParticipando = ref(false);
@@ -185,95 +187,10 @@ const progresoActual = ref({
   dias_totales: 14
 });
 
-// Datos dummy expandidos
-const desafiosDummy = [
-  {
-    id: 1,
-    titulo: "Camina 10,000 pasos diarios",
-    descripcion: "Mantén un estilo de vida activo caminando al menos 10,000 pasos cada día durante una semana completa.",
-    descripcion_completa: "Este desafío te ayudará a incorporar más actividad física en tu rutina diaria. Caminar 10,000 pasos al día es una excelente manera de mejorar tu salud cardiovascular, fortalecer tus músculos y aumentar tu energía. Durante este desafío de una semana, te animamos a encontrar momentos a lo largo del día para moverte más: usa las escaleras en lugar del ascensor, camina durante las llamadas telefónicas, o da un paseo durante tu hora de almuerzo.",
-    imagen: "https://images.pexels.com/photos/2402777/pexels-photo-2402777.jpeg?auto=compress&cs=tinysrgb&w=800",
-    puntos: 150,
-    fecha_inicio: "2025-01-15T00:00:00Z",
-    fecha_fin: "2025-02-15T23:59:59Z",
-    estado: "activo",
-    participantes: 45,
-    duracion: "1 semana",
-    dificultad: 2,
-    categoria: "Actividad Física",
-    objetivos: [
-      "Caminar al menos 10,000 pasos diarios",
-      "Registrar tu progreso cada día",
-      "Mantener la constancia durante 7 días consecutivos",
-      "Compartir tu experiencia con el equipo"
-    ],
-    pasos: [
-      "Descarga una app de conteo de pasos o usa tu smartwatch",
-      "Registra tus pasos diarios en la plataforma",
-      "Comparte fotos de tus caminatas (opcional)",
-      "Completa el desafío durante 7 días consecutivos"
-    ]
-  },
-  {
-    id: 2,
-    titulo: "Meditación de 5 minutos",
-    descripcion: "Dedica 5 minutos diarios a la meditación durante 2 semanas para mejorar tu bienestar mental.",
-    descripcion_completa: "La meditación diaria puede reducir significativamente el estrés, mejorar la concentración y promover un mejor equilibrio emocional. Este desafío de 2 semanas te introducirá a la práctica de la meditación mindfulness. Solo necesitas 5 minutos al día para comenzar a experimentar los beneficios. Puedes meditar por la mañana para comenzar el día con claridad, o por la noche para relajarte antes de dormir.",
-    imagen: "https://images.pexels.com/photos/3822622/pexels-photo-3822622.jpeg?auto=compress&cs=tinysrgb&w=800",
-    puntos: 100,
-    fecha_inicio: "2025-01-20T00:00:00Z",
-    fecha_fin: "2025-02-20T23:59:59Z",
-    estado: "activo",
-    participantes: 32,
-    duracion: "2 semanas",
-    dificultad: 1,
-    categoria: "Bienestar Mental",
-    objetivos: [
-      "Meditar 5 minutos cada día",
-      "Aprender técnicas básicas de respiración",
-      "Desarrollar el hábito de la meditación",
-      "Reducir los niveles de estrés diario"
-    ],
-    pasos: [
-      "Encuentra un lugar tranquilo en tu casa u oficina",
-      "Usa la app de meditación recomendada o sigue las guías",
-      "Registra tu sesión diaria en la plataforma",
-      "Reflexiona sobre tu experiencia al final de cada semana"
-    ]
-  },
-  {
-    id: 3,
-    titulo: "Hidratación saludable",
-    descripcion: "Bebe al menos 8 vasos de agua al día durante 10 días consecutivos para mantener una hidratación óptima.",
-    descripcion_completa: "La hidratación adecuada es fundamental para el funcionamiento óptimo de nuestro cuerpo y mente. Este desafío te ayudará a desarrollar el hábito de beber suficiente agua a lo largo del día. Una hidratación adecuada mejora la concentración, aumenta los niveles de energía, mejora la digestión y contribuye a una piel más saludable. Durante 10 días, te retamos a beber al menos 8 vasos de agua (aproximadamente 2 litros) diariamente.",
-    imagen: "https://images.pexels.com/photos/416528/pexels-photo-416528.jpeg?auto=compress&cs=tinysrgb&w=800",
-    puntos: 75,
-    fecha_inicio: "2025-01-10T00:00:00Z",
-    fecha_fin: "2025-01-25T23:59:59Z",
-    estado: "activo",
-    participantes: 28,
-    duracion: "10 días",
-    dificultad: 1,
-    categoria: "Nutrición",
-    objetivos: [
-      "Beber 8 vasos de agua diarios",
-      "Mejorar los hábitos de hidratación",
-      "Aumentar los niveles de energía",
-      "Desarrollar una rutina saludable"
-    ],
-    pasos: [
-      "Lleva contigo una botella de agua reutilizable",
-      "Establece recordatorios para beber agua cada 2 horas",
-      "Registra tu consumo diario en la app",
-      "Celebra cada día completado con éxito"
-    ]
-  }
-];
-
 // Computed para encontrar el desafío actual
 const desafio = computed(() => {
   const id = parseInt(route.params.id);
-  return desafiosDummy.find(d => d.id === id);
+  return demoStore.demoData.desafiosBienestar.find(d => d.id === `desafio-${id}`);
 });
 
 // Métodos
@@ -300,7 +217,7 @@ const apuntarseDesafio = () => {
 // Simular si ya está participando (esto vendría de la base de datos)
 onMounted(() => {
   // Simular que algunos usuarios ya participan
-  const participandoIds = [1]; // IDs de desafíos donde ya participa
+  const participandoIds = ['desafio-1']; // IDs de desafíos donde ya participa
   if (desafio.value && participandoIds.includes(desafio.value.id)) {
     yaParticipando.value = true;
   }

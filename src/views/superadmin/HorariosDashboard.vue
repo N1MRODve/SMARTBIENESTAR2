@@ -9,50 +9,58 @@
     <!-- Estadísticas Principales -->
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
       <!-- Total Sesiones Programadas -->
-      <div class="stats-card stats-card-primary">
+      <div class="glass-card rounded-xl shadow-lg p-6 backdrop-blur-sm border border-white/20 hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
         <div class="flex items-center justify-between">
           <div>
-            <p class="text-sm font-medium text-gray-600">Sesiones Programadas</p>
-            <p class="text-3xl font-bold text-primary">{{ stats.totalSesiones }}</p>
+            <p class="text-sm font-semibold text-gray-600">Sesiones Programadas</p>
+            <p class="text-3xl font-bold text-primary mt-2">{{ stats.totalSesiones }}</p>
             <p class="text-xs text-gray-500 mt-1">Próximas 30 días</p>
           </div>
-          <Calendar class="h-12 w-12 text-primary opacity-20" />
+          <div class="p-3 bg-primary/10 rounded-xl">
+            <Calendar class="h-8 w-8 text-primary" />
+          </div>
         </div>
       </div>
 
       <!-- Ocupación Promedio -->
-      <div class="stats-card stats-card-secondary">
+      <div class="glass-card rounded-xl shadow-lg p-6 backdrop-blur-sm border border-white/20 hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
         <div class="flex items-center justify-between">
           <div>
-            <p class="text-sm font-medium text-gray-600">Ocupación Promedio</p>
-            <p class="text-3xl font-bold text-secondary">{{ stats.ocupacionPromedio }}%</p>
+            <p class="text-sm font-semibold text-gray-600">Ocupación Promedio</p>
+            <p class="text-3xl font-bold text-green-600 mt-2">{{ stats.ocupacionPromedio }}%</p>
             <p class="text-xs text-gray-500 mt-1">Últimos 7 días</p>
           </div>
-          <Users class="h-12 w-12 text-secondary opacity-20" />
+          <div class="p-3 bg-green-500/10 rounded-xl">
+            <Users class="h-8 w-8 text-green-600" />
+          </div>
         </div>
       </div>
 
       <!-- Total Reservas -->
-      <div class="stats-card stats-card-accent">
+      <div class="glass-card rounded-xl shadow-lg p-6 backdrop-blur-sm border border-white/20 hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
         <div class="flex items-center justify-between">
           <div>
-            <p class="text-sm font-medium text-gray-600">Total Reservas</p>
-            <p class="text-3xl font-bold text-dark">{{ stats.totalReservas }}</p>
+            <p class="text-sm font-semibold text-gray-600">Total Reservas</p>
+            <p class="text-3xl font-bold text-yellow-600 mt-2">{{ stats.totalReservas }}</p>
             <p class="text-xs text-gray-500 mt-1">Este mes</p>
           </div>
-          <BookmarkCheck class="h-12 w-12 text-dark opacity-20" />
+          <div class="p-3 bg-yellow-500/10 rounded-xl">
+            <BookmarkCheck class="h-8 w-8 text-yellow-600" />
+          </div>
         </div>
       </div>
 
       <!-- Colaboradores Activos -->
-      <div class="stats-card">
+      <div class="glass-card rounded-xl shadow-lg p-6 backdrop-blur-sm border border-white/20 hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
         <div class="flex items-center justify-between">
           <div>
-            <p class="text-sm font-medium text-gray-600">Colaboradores Activos</p>
-            <p class="text-3xl font-bold text-gray-900">{{ stats.colaboradoresActivos }}</p>
+            <p class="text-sm font-semibold text-gray-600">Colaboradores Activos</p>
+            <p class="text-3xl font-bold text-purple-600 mt-2">{{ stats.colaboradoresActivos }}</p>
             <p class="text-xs text-gray-500 mt-1">Con sesiones programadas</p>
           </div>
-          <UserCheck class="h-12 w-12 text-gray-400 opacity-20" />
+          <div class="p-3 bg-purple-500/10 rounded-xl">
+            <UserCheck class="h-8 w-8 text-purple-600" />
+          </div>
         </div>
       </div>
     </div>

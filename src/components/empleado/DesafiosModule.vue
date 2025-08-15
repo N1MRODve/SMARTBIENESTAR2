@@ -112,67 +112,13 @@
 import { ref, computed } from 'vue';
 import { useRouter } from 'vue-router';
 import { Trophy, Target, Clock, CheckCircle } from 'lucide-vue-next';
+import { useDemoStore } from '@/stores/demoStore';
 
 const router = useRouter();
+const demoStore = useDemoStore();
 
-// Datos dummy para desafíos
-const desafiosDummy = ref([
-  {
-    id: 1,
-    titulo: "Camina 10,000 pasos diarios",
-    descripcion: "Mantén un estilo de vida activo caminando al menos 10,000 pasos cada día durante una semana completa.",
-    imagen: "https://images.pexels.com/photos/2402777/pexels-photo-2402777.jpeg?auto=compress&cs=tinysrgb&w=400",
-    puntos: 150,
-    fecha_inicio: "2025-01-15T00:00:00Z",
-    fecha_fin: "2025-02-15T23:59:59Z",
-    estado: "activo",
-    participantes: 45
-  },
-  {
-    id: 2,
-    titulo: "Meditación de 5 minutos",
-    descripcion: "Dedica 5 minutos diarios a la meditación durante 2 semanas para mejorar tu bienestar mental.",
-    imagen: "https://images.pexels.com/photos/3822622/pexels-photo-3822622.jpeg?auto=compress&cs=tinysrgb&w=400",
-    puntos: 100,
-    fecha_inicio: "2025-01-20T00:00:00Z",
-    fecha_fin: "2025-02-20T23:59:59Z",
-    estado: "activo",
-    participantes: 32
-  },
-  {
-    id: 3,
-    titulo: "Hidratación saludable",
-    descripcion: "Bebe al menos 8 vasos de agua al día durante 10 días consecutivos para mantener una hidratación óptima.",
-    imagen: "https://images.pexels.com/photos/416528/pexels-photo-416528.jpeg?auto=compress&cs=tinysrgb&w=400",
-    puntos: 75,
-    fecha_inicio: "2025-01-10T00:00:00Z",
-    fecha_fin: "2025-01-25T23:59:59Z",
-    estado: "activo",
-    participantes: 28
-  },
-  {
-    id: 4,
-    titulo: "Descanso digital",
-    descripcion: "Desconéctate de dispositivos electrónicos 1 hora antes de dormir durante una semana.",
-    imagen: "https://images.pexels.com/photos/1181244/pexels-photo-1181244.jpeg?auto=compress&cs=tinysrgb&w=400",
-    puntos: 120,
-    fecha_inicio: "2024-12-15T00:00:00Z",
-    fecha_fin: "2024-12-30T23:59:59Z",
-    estado: "completado",
-    participantes: 67
-  },
-  {
-    id: 5,
-    titulo: "Alimentación consciente",
-    descripcion: "Practica la alimentación consciente durante las comidas principales por 2 semanas.",
-    imagen: "https://images.pexels.com/photos/1640777/pexels-photo-1640777.jpeg?auto=compress&cs=tinysrgb&w=400",
-    puntos: 200,
-    fecha_inicio: "2024-12-01T00:00:00Z",
-    fecha_fin: "2024-12-20T23:59:59Z",
-    estado: "completado",
-    participantes: 41
-  }
-]);
+// Obtener desafíos desde el store demo
+const desafiosDummy = computed(() => demoStore.demoData.desafiosBienestar);
 
 // Computed properties para filtrar desafíos
 const desafiosActivos = computed(() => {

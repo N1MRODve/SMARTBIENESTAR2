@@ -65,6 +65,37 @@
             Iniciar Sesión
           </Button>
         </form>
+
+        <!-- Demo credentials info -->
+        <div class="mt-8 p-4 bg-blue-50/80 rounded-xl border border-blue-200/50 backdrop-blur-sm">
+          <div class="flex items-start">
+            <div class="flex-shrink-0">
+              <Info class="h-5 w-5 text-blue-400" />
+            </div>
+            <div class="ml-3">
+              <h3 class="text-sm font-medium text-blue-800 mb-2">
+                Credenciales de Demo
+              </h3>
+              <div class="text-sm text-blue-700 space-y-2">
+                <div>
+                  <p class="font-semibold">Administrador:</p>
+                  <p>Email: admin@innovatech.com</p>
+                  <p>Contraseña: admin123</p>
+                </div>
+                <div>
+                  <p class="font-semibold">Empleado:</p>
+                  <p>Email: ana.martinez@innovatech.com</p>
+                  <p>Contraseña: empleado123</p>
+                </div>
+                <div>
+                  <p class="font-semibold">Colaborador:</p>
+                  <p>Email: elena.yoga@smartbienestar.com</p>
+                  <p>Contraseña: colaborador123</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -74,7 +105,7 @@
 import { ref } from 'vue';
 import { useRouter } from 'vue-router';
 import { useToast } from 'primevue/usetoast';
-import { ActivitySquare, Mail, Lock } from 'lucide-vue-next';
+import { ActivitySquare, Mail, Lock, Info } from 'lucide-vue-next';
 import { useAuthStore } from '../stores/auth.store';
 import Button from '../components/common/Button.vue';
 

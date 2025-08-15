@@ -67,6 +67,16 @@ export const adminRoutes = [
     name: 'PlantillasEncuestaView',
     component: () => import('@/views/admin/PlantillasEncuestaView.vue'),
     meta: { requiresAuth: true }
+  },
+  {
+    path: '/admin/encuestas/crear',
+    name: 'CrearEncuestaView',
+    component: () => import('@/views/admin/CrearEncuestaView.vue'),
+    meta: { 
+      requiresAuth: true, 
+      roles: ['administrador'],
+      title: 'Crear Encuesta'
+    }
   }
 ]
 
