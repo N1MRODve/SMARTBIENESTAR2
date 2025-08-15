@@ -5,10 +5,10 @@ export const demoData = {
     {
       id: 'demo-empresa-1',
       nombre: 'InnovaTech Solutions',
-      dominio_email: 'innovatech.com',
+      dominio_email: 'innovatech-demo.com',
       logo_url: 'https://images.pexels.com/photos/3184291/pexels-photo-3184291.jpeg?auto=compress&cs=tinysrgb&w=100',
       telefono: '+34 91 123 45 67',
-      sitio_web: 'https://innovatech.com',
+      sitio_web: 'https://innovatech-demo.com',
       direccion: 'Calle Serrano 123, Madrid',
       activo: true,
       fecha_registro: '2024-01-15T10:00:00Z',
@@ -17,10 +17,10 @@ export const demoData = {
     {
       id: 'demo-empresa-2',
       nombre: 'Creative Digital Agency',
-      dominio_email: 'creativedigital.com',
+      dominio_email: 'creativedigital-demo.com',
       logo_url: 'https://images.pexels.com/photos/3184338/pexels-photo-3184338.jpeg?auto=compress&cs=tinysrgb&w=100',
       telefono: '+34 93 987 65 43',
-      sitio_web: 'https://creativedigital.com',
+      sitio_web: 'https://creativedigital-demo.com',
       direccion: 'Passeig de Gràcia 456, Barcelona',
       activo: true,
       fecha_registro: '2024-02-20T14:30:00Z',
@@ -33,7 +33,7 @@ export const demoData = {
     // Administradores
     {
       id: 'demo-admin-1',
-      email: 'admin@innovatech.com',
+      email: 'demo.admin@innovatech-demo.com',
       nombre: 'María',
       apellido: 'González',
       tipo_usuario: 'administrador',
@@ -43,7 +43,7 @@ export const demoData = {
     },
     {
       id: 'demo-admin-2',
-      email: 'admin@creativedigital.com',
+      email: 'demo.admin@creativedigital-demo.com',
       nombre: 'Carlos',
       apellido: 'Rodríguez',
       tipo_usuario: 'administrador',
@@ -54,7 +54,7 @@ export const demoData = {
     // Empleados
     {
       id: 'demo-empleado-1',
-      email: 'ana.martinez@innovatech.com',
+      email: 'demo.ana@innovatech-demo.com',
       nombre: 'Ana',
       apellido: 'Martínez',
       tipo_usuario: 'empleado',
@@ -64,7 +64,7 @@ export const demoData = {
     },
     {
       id: 'demo-empleado-2',
-      email: 'luis.fernandez@innovatech.com',
+      email: 'demo.luis@innovatech-demo.com',
       nombre: 'Luis',
       apellido: 'Fernández',
       tipo_usuario: 'empleado',
@@ -74,7 +74,7 @@ export const demoData = {
     },
     {
       id: 'demo-empleado-3',
-      email: 'sofia.lopez@innovatech.com',
+      email: 'demo.sofia@innovatech-demo.com',
       nombre: 'Sofía',
       apellido: 'López',
       tipo_usuario: 'empleado',
@@ -84,7 +84,7 @@ export const demoData = {
     },
     {
       id: 'demo-empleado-4',
-      email: 'david.ruiz@creativedigital.com',
+      email: 'demo.david@creativedigital-demo.com',
       nombre: 'David',
       apellido: 'Ruiz',
       tipo_usuario: 'empleado',
@@ -95,7 +95,7 @@ export const demoData = {
     // Colaboradores
     {
       id: 'demo-colaborador-1',
-      email: 'elena.yoga@smartbienestar.com',
+      email: 'demo.elena@smartbienestar-demo.com',
       nombre: 'Elena',
       apellido: 'Vásquez',
       tipo_usuario: 'colaborador',
@@ -104,7 +104,7 @@ export const demoData = {
     },
     {
       id: 'demo-colaborador-2',
-      email: 'miguel.coach@smartbienestar.com',
+      email: 'demo.miguel@smartbienestar-demo.com',
       nombre: 'Miguel',
       apellido: 'Torres',
       tipo_usuario: 'colaborador',
@@ -113,7 +113,7 @@ export const demoData = {
     },
     {
       id: 'demo-colaborador-3',
-      email: 'laura.nutricion@smartbienestar.com',
+      email: 'demo.laura@smartbienestar-demo.com',
       nombre: 'Laura',
       apellido: 'Sánchez',
       tipo_usuario: 'colaborador',

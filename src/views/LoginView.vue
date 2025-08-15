@@ -79,18 +79,18 @@
               <div class="text-sm text-blue-700 space-y-2">
                 <div>
                   <p class="font-semibold">Administrador:</p>
-                  <p>Email: admin@innovatech.com</p>
-                  <p>Contraseña: admin123</p>
+                  <p>Email: demo.admin@innovatech-demo.com</p>
+                  <p>Contraseña: demo123</p>
                 </div>
                 <div>
                   <p class="font-semibold">Empleado:</p>
-                  <p>Email: ana.martinez@innovatech.com</p>
-                  <p>Contraseña: empleado123</p>
+                  <p>Email: demo.ana@innovatech-demo.com</p>
+                  <p>Contraseña: demo123</p>
                 </div>
                 <div>
                   <p class="font-semibold">Colaborador:</p>
-                  <p>Email: elena.yoga@smartbienestar.com</p>
-                  <p>Contraseña: colaborador123</p>
+                  <p>Email: demo.elena@smartbienestar-demo.com</p>
+                  <p>Contraseña: demo123</p>
                 </div>
               </div>
             </div>

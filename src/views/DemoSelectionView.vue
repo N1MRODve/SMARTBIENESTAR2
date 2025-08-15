@@ -97,8 +97,8 @@
             <div class="bg-green-50/80 rounded-xl p-4 mb-6 backdrop-blur-sm border border-green-200/50">
               <h4 class="text-sm font-semibold text-green-800 mb-2">Credenciales Demo:</h4>
               <div class="text-sm text-green-700 space-y-1">
-                <p><strong>Email:</strong> ana.martinez@innovatech.com</p>
-                <p><strong>Contraseña:</strong> empleado123</p>
+                <p><strong>Email:</strong> demo.ana@innovatech-demo.com</p>
+                <p><strong>Contraseña:</strong> demo123</p>
               </div>
             </div>
 
@@ -157,8 +157,8 @@
             <div class="bg-blue-50/80 rounded-xl p-4 mb-6 backdrop-blur-sm border border-blue-200/50">
               <h4 class="text-sm font-semibold text-blue-800 mb-2">Credenciales Demo:</h4>
               <div class="text-sm text-blue-700 space-y-1">
-                <p><strong>Email:</strong> admin@innovatech.com</p>
-                <p><strong>Contraseña:</strong> admin123</p>
+                <p><strong>Email:</strong> demo.admin@innovatech-demo.com</p>
+                <p><strong>Contraseña:</strong> demo123</p>
               </div>
             </div>
 
@@ -265,8 +265,8 @@ function accederDemoEmpleado() {
     path: '/login',
     query: {
       demo: 'empleado',
-      email: 'ana.martinez@innovatech.com',
-      password: 'empleado123'
+      email: 'demo.ana@innovatech-demo.com',
+      password: 'demo123'
     }
   });
 }
@@ -277,8 +277,8 @@ function accederDemoAdmin() {
     path: '/login',
     query: {
       demo: 'admin',
-      email: 'admin@innovatech.com',
-      password: 'admin123'
+      email: 'demo.admin@innovatech-demo.com',
+      password: 'demo123'
     }
   });
 }

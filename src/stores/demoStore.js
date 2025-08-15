@@ -69,12 +69,12 @@ export const useDemoStore = defineStore('demo', {
     async loginDemo(email, password) {
       // Credenciales demo
       const demoCredentials = {
-        'admin@innovatech.com': { password: 'admin123', userId: 'demo-admin-1' },
-        'ana.martinez@innovatech.com': { password: 'empleado123', userId: 'demo-empleado-1' },
-        'luis.fernandez@innovatech.com': { password: 'empleado123', userId: 'demo-empleado-2' },
-        'sofia.lopez@innovatech.com': { password: 'empleado123', userId: 'demo-empleado-3' },
-        'elena.yoga@smartbienestar.com': { password: 'colaborador123', userId: 'demo-colaborador-1' },
-        'miguel.coach@smartbienestar.com': { password: 'colaborador123', userId: 'demo-colaborador-2' }
+        'demo.admin@innovatech-demo.com': { password: 'demo123', userId: 'demo-admin-1' },
+        'demo.ana@innovatech-demo.com': { password: 'demo123', userId: 'demo-empleado-1' },
+        'demo.luis@innovatech-demo.com': { password: 'demo123', userId: 'demo-empleado-2' },
+        'demo.sofia@innovatech-demo.com': { password: 'demo123', userId: 'demo-empleado-3' },
+        'demo.elena@smartbienestar-demo.com': { password: 'demo123', userId: 'demo-colaborador-1' },
+        'demo.miguel@smartbienestar-demo.com': { password: 'demo123', userId: 'demo-colaborador-2' }
       };
 
       const credentials = demoCredentials[email];
