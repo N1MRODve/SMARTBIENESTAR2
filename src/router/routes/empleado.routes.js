@@ -11,39 +11,38 @@ export const empleadoRoutes = [
     },
     children: [
       {
+        path: '',
+        redirect: '/empleado/dashboard'
+      },
+      {
         path: 'dashboard',
         name: 'empleado-dashboard',
         component: () => import('../../views/empleado/DashboardView.vue'),
-        meta: { requiresAuth: true }
+        meta: { requiresAuth: true, roles: ['empleado'] }
+      },
+      {
+        path: 'reservar-actividad',
+        name: 'empleado-reservar-actividad',
+        component: () => import('../../views/empleado/ReservarActividadView.vue'),
+        meta: { requiresAuth: true, roles: ['empleado'] }
       },
       {
         path: 'reservas',
         name: 'empleado-reservas',
-        component: () => import('../../views/empleado/ReservasView.vue')
-      },
-      {
-        path: 'reservar-actividad',
-        name: 'ReservarActividad',
-        component: () => import('@/views/empleado/ReservarActividadView.vue'),
-        meta: { requiresAuth: true }
-      },
-      {
-        path: 'mis-reservas',
-        name: 'MisReservas',
-        component: () => import('@/views/empleado/MisReservasView.vue'),
-        meta: { requiresAuth: true }
+        component: () => import('../../views/empleado/ReservasView.vue'),
+        meta: { requiresAuth: true, roles: ['empleado'] }
       },
       {
         path: 'encuestas',
         name: 'empleado-encuestas',
-        component: () => import('@/views/empleado/EncuestasView.vue'),
-        meta: { requiresAuth: true }
+        component: () => import('../../views/empleado/EncuestasView.vue'),
+        meta: { requiresAuth: true, roles: ['empleado'] }
       },
       {
         path: 'desafios',
         name: 'empleado-desafios',
-        component: () => import('@/views/empleado/DesafiosView.vue'),
-        meta: { requiresAuth: true }
+        component: () => import('../../views/empleado/DesafiosView.vue'),
+        meta: { requiresAuth: true, roles: ['empleado'] }
       }
     ]
   }

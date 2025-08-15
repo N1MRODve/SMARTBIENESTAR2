@@ -21,6 +21,7 @@
         <X class="h-6 w-6" />
       </button>
     </div>
+    
     <!-- Navigation links -->
     <nav class="flex-1 px-4 py-4 space-y-1 overflow-y-auto">
       <router-link
@@ -38,6 +39,7 @@
         {{ link.text }}
       </router-link>
     </nav>
+    
     <!-- User info -->
     <div class="p-4 border-t border-primary-dark">
       <div class="flex items-center space-x-3">
@@ -62,7 +64,16 @@
 <script setup>
 import { computed } from 'vue';
 import { useAuthStore } from '../../stores/auth.store';
-import { ActivitySquare, X, LayoutDashboard, Building2, Users, Calendar, ClipboardList } from 'lucide-vue-next';
+import { 
+  ActivitySquare, 
+  X, 
+  LayoutDashboard, 
+  Calendar, 
+  CalendarCheck, 
+  ClipboardList, 
+  Trophy,
+  User
+} from 'lucide-vue-next';
 
 const props = defineProps({
   open: {
@@ -76,11 +87,41 @@ defineEmits(['update:open']);
 const authStore = useAuthStore();
 
 const navigationLinks = computed(() => {
-  return [
-    { to: '/superadmin/dashboard', icon: LayoutDashboard, text: 'Dashboard' },
-    { to: '/superadmin/empresas', icon: Building2, text: 'Empresas' },
-    { to: '/superadmin/colaboradores', icon: Users, text: 'Colaboradores' },
-    { to: '/superadmin/horarios', icon: Calendar, text: 'Gestión de Horarios' }
-  ];
+  const userRole = authStore.user?.tipo_usuario;
+  
+  if (userRole === 'empleado') {
+    return [
+      { to: '/empleado/dashboard', icon: LayoutDashboard, text: 'Dashboard' },
+      { to: '/empleado/reservar-actividad', icon: Calendar, text: 'Reservar Actividad' },
+      { to: '/empleado/reservas', icon: CalendarCheck, text: 'Mis Reservas' },
+      { to: '/empleado/encuestas', icon: ClipboardList, text: 'Encuestas' },
+      { to: '/empleado/desafios', icon: Trophy, text: 'Desafíos' }
+    ];
+  }
+  
+  if (userRole === 'administrador') {
+    return [
+      { to: '/admin/dashboard', icon: LayoutDashboard, text: 'Dashboard' },
+      { to: '/admin/empleados', icon: User, text: 'Empleados' },
+      { to: '/admin/encuestas', icon: ClipboardList, text: 'Encuestas' }
+    ];
+  }
+  
+  if (userRole === 'superadmin') {
+    return [
+      { to: '/superadmin/dashboard', icon: LayoutDashboard, text: 'Dashboard' },
+      { to: '/superadmin/empresas', icon: LayoutDashboard, text: 'Empresas' },
+      { to: '/superadmin/colaboradores', icon: User, text: 'Colaboradores' }
+    ];
+  }
+  
+  if (userRole === 'colaborador') {
+    return [
+      { to: '/colaborador/dashboard', icon: LayoutDashboard, text: 'Dashboard' },
+      { to: '/colaborador/sesiones', icon: Calendar, text: 'Sesiones' }
+    ];
+  }
+  
+  return [];
 });
 </script>
