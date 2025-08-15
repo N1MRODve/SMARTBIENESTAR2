@@ -1,8 +1,6 @@
 import { createRouter, createWebHistory } from 'vue-router';
-import { useAuthStore } from '@/stores/auth.store';
 import HomeView from '@/views/HomeView.vue';
 import LoginView from '@/views/LoginView.vue';
-import AdminDashboard from '@/views/admin/AdminDashboard.vue';
 import NotFoundView from '../views/NotFoundView.vue';
 import AccessDeniedView from '../views/AccessDeniedView.vue';
 
@@ -33,42 +31,6 @@ const routes = [
   ...adminRoutes,
   ...empleadoRoutes,
   ...colaboradorRoutes,
-  {
-    path: '/admin/dashboard',
-    name: 'AdminDashboard', // Nombre de ruta unificado
-    component: AdminDashboard,
-    meta: { requiresAuth: true, roles: ['administrador'] }
-  },
-  {
-    path: '/empleado/dashboard',
-    name: 'EmpleadoDashboard', // Nombre de ruta unificado
-    component: () => import('@/views/empleado/DashboardView.vue'),
-    meta: { requiresAuth: true, roles: ['empleado'] }
-  },
-  {
-    path: '/empleado/reservar',
-    name: 'ReservarActividad', // Asegúrate de que este nombre coincida con el del sidebar
-    component: () => import('@/views/empleado/ReservarActividadView.vue') // Corregido: Apunta al nombre de archivo correcto del componente.
-  },
-  {
-    path: '/empleado/mis-reservas',
-    name: 'MisReservas', // <-- AÑADIR ESTA RUTA
-    // Asumo que tendrás un componente para mostrar la lista de reservas.
-    // Si el archivo no existe, deberás crearlo.
-    component: () => import('@/views/empleado/MisReservasView.vue') 
-  },
-  {
-    path: '/superadmin/dashboard',
-    name: 'superadmin.dashboard',
-    component: () => import('@/views/superadmin/SuperAdminDashboard.vue'),
-    meta: { requiresAuth: true, roles: ['superadmin'] }
-  },
-  {
-    path: '/colaborador/dashboard',
-    name: 'colaborador.dashboard',
-    component: () => import('@/views/colaborador/ColaboradorDashboard.vue'),
-    meta: { requiresAuth: true, roles: ['colaborador'] }
-  },
   {
     path: '/:pathMatch(.*)*',
     name: 'not-found',
@@ -112,8 +74,18 @@ router.beforeEach(async (to, from, next) => {
     // Helper: destino home por rol
     const homeByRole = (user) => {
       if (!user) return { path: '/login' }
-      if (user.tipo_usuario === 'administrador') return { name: 'AdminDashboard' }
-      return { name: 'empleado-dashboard' }
+      switch (user.tipo_usuario) {
+        case 'administrador':
+          return { name: 'AdminDashboard' }
+        case 'empleado':
+          return { name: 'empleado-dashboard' }
+        case 'superadmin':
+          return { name: 'superadmin-dashboard' }
+        case 'colaborador':
+          return { name: 'colaborador-dashboard' }
+        default:
+          return { path: '/login' }
+      }
     }
 
     // 3) Reglas de acceso

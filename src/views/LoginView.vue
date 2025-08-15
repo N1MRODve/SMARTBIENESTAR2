@@ -94,9 +94,9 @@ async function handleSubmit() {
     // Mapa de redirección basado en roles y nombres de ruta
     const roleRedirectMap = {
       administrador: { name: 'AdminDashboard' },
-      empleado: { name: 'EmpleadoDashboard' },
-      superadmin: { name: 'superadmin.dashboard' }, // Asegúrate de que este nombre de ruta exista
-      colaborador: { name: 'colaborador.dashboard' } // Asegúrate de que este nombre de ruta exista
+      empleado: { name: 'empleado-dashboard' },
+      superadmin: { name: 'superadmin-dashboard' },
+      colaborador: { name: 'colaborador-dashboard' }
     };
 
     const redirectRoute = roleRedirectMap[userProfile.tipo_usuario];

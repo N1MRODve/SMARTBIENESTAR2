@@ -24,7 +24,9 @@ function toggleSidebar() {
       class="flex flex-col flex-1 transition-all duration-300"
       :class="{ 'ml-64': !collapsed, 'ml-20': collapsed }"
     >
-      <TheHeader />
+      <TheHeader>
+        <template #title>Panel de Empleado</template>
+      </TheHeader>
       <main class="flex-1 p-6 md:p-8">
         <slot />
       </main>
