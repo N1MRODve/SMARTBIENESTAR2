@@ -1,6 +1,5 @@
 import { createRouter, createWebHistory } from 'vue-router';
 import { useAuthStore } from '@/stores/auth.store';
-import { useAdminStore } from '@/stores/admin.js'; // Ajuste realizado para usar el nombre correcto del archivo
 import HomeView from '@/views/HomeView.vue';
 import LoginView from '@/views/LoginView.vue';
 import AdminDashboard from '@/views/admin/AdminDashboard.vue';
@@ -98,7 +97,7 @@ router.beforeEach(async (to, from, next) => {
     // 2) Inicializar otros stores dependientes del usuario (p.ej. adminStore)
     if (isAuthenticated && authStore.user?.tipo_usuario === 'administrador') {
       try {
-        const { useAdminStore } = await import('@/stores/admin.store')
+        const { useAdminStore } = await import('@/stores/admin')
         const adminStore = useAdminStore()
         if (typeof adminStore.init === 'function') {
           // Pasa el empresaId si tu init lo acepta (ambas firmas comunes)
@@ -146,3 +145,4 @@ router.beforeEach(async (to, from, next) => {
 })
 
 export default router
+
