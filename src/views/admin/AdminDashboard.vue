@@ -19,31 +19,31 @@
         </div>
         <div v-else class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-6">
           <StatsCard
-            title="Usuarios conectados"
-            :value="stats.usuariosConectados ?? 0"
+            title="Total Empleados"
+            :value="stats.total_empleados ?? 0"
             icon="Users"
+            trend="neutral"
+            kpi
+          />
+          <StatsCard
+            title="Empleados Activos"
+            :value="stats.empleados_activos ?? 0"
+            icon="UserCheck"
             trend="up"
             kpi
           />
           <StatsCard
-            title="Clases reservadas"
-            :value="stats.clasesReservadas ?? 0"
+            title="Sesiones Próximas"
+            :value="stats.sesiones_proximas ?? 0"
             icon="Calendar"
             trend="neutral"
             kpi
           />
           <StatsCard
-            title="Encuestas enviadas"
-            :value="stats.encuestasEnviadas ?? 0"
+            title="Encuestas Activas"
+            :value="stats.encuestas_activas ?? 0"
             icon="ClipboardList"
             trend="neutral"
-            kpi
-          />
-          <StatsCard
-            title="Empleados activos"
-            :value="stats.empleadosActivos ?? 0"
-            icon="UserCheck"
-            trend="up"
             kpi
           />
         </div>
@@ -70,21 +70,20 @@
       </div>
 
       <!-- Ranking de empleados -->
-      <div class="bg-white border border-gray-200 rounded-lg shadow-md p-6 mt-8">
+      <div v-if="!loading" class="bg-white border border-gray-200 rounded-lg shadow-md p-6 mt-8">
         <h2 class="text-lg font-semibold text-gray-900 mb-4">
-          Ranking de empleados más activos
+          Resumen de Empleados
         </h2>
-        <DataTable
-          title="Ranking de empleados más activos"
-          :columns="[
-            { key: 'nombre', header: 'Empleado' },
-            { key: 'clases', header: 'Clases Reservadas' },
-            { key: 'conexiones', header: 'Conexiones' }
-          ]"
-          :data="rankingEmpleados"
-          :searchable="false"
-          :pagination="false"
-        />
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div class="text-center p-4 bg-blue-50 rounded-lg">
+            <div class="text-2xl font-bold text-blue-600">{{ stats.total_empleados ?? 0 }}</div>
+            <div class="text-sm text-gray-600">Total Empleados</div>
+          </div>
+          <div class="text-center p-4 bg-green-50 rounded-lg">
+            <div class="text-2xl font-bold text-green-600">{{ stats.empleados_activos ?? 0 }}</div>
+            <div class="text-sm text-gray-600">Empleados Activos</div>
+          </div>
+        </div>
       </div>
 
       <!-- Card de acciones rápidas -->
@@ -127,9 +126,8 @@ const router = useRouter()
 const adminStore = useAdminStore()
 const authStore = useAuthStore()
 
-const loading = computed(() => adminStore.dashboardLoading)
+const loading = computed(() => adminStore.loading)
 const stats = computed(() => adminStore.dashboardStats)
-const rankingEmpleados = computed(() => adminStore.rankingEmpleados)
 const actividadReciente = computed(() => adminStore.actividadReciente)
 const departamentos = computed(() => adminStore.estadisticasPorDepartamento)
 
@@ -157,9 +155,23 @@ function añadirEmpleado() {
   router.push('/admin/empleados')
 }
 
-onMounted(() => {
+onMounted(async () => {
+  console.log('AdminDashboard mounted, user:', authStore.user)
+  
   if (authStore.user?.empresa_id) {
-    adminStore.loadAdminDashboardData(authStore.user.empresa_id)
+    console.log('Cargando datos del dashboard para empresa:', authStore.user.empresa_id)
+    
+    try {
+      await Promise.all([
+        adminStore.loadDashboardStats(authStore.user.empresa_id),
+        adminStore.loadActividadReciente(authStore.user.empresa_id, 10),
+        adminStore.loadEmpleados()
+      ])
+    } catch (error) {
+      console.error('Error cargando datos del dashboard:', error)
+    }
+  } else {
+    console.warn('No se encontró empresa_id en el usuario:', authStore.user)
   }
 })
 </script>

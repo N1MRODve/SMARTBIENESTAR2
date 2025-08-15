@@ -76,6 +76,8 @@ export const useAuthStore = defineStore('auth', {
           // Guardamos tanto el perfil completo como la sesión
           this.user = profileData
           this.session = session
+          
+          console.log('Auth initialized with user:', profileData)
         }
       } catch (error) {
         console.error("Error al inicializar la sesión:", error)

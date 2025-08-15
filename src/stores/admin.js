@@ -123,20 +123,38 @@ export const useAdminStore = defineStore('admin', {
 
     // Cargar estadísticas del dashboard
     async loadDashboardStats(empresaId) {
+      if (!empresaId) {
+        console.error('No se puede cargar estadísticas: empresaId no proporcionado')
+        return
+      }
+      
       this.loading = true
       try {
+        console.log('Cargando estadísticas para empresa:', empresaId)
         const { data, error } = await supabase
           .rpc('get_admin_dashboard_stats', { empresa_id_param: empresaId })
+        
+        console.log('Respuesta de get_admin_dashboard_stats:', { data, error })
+        
         if (error) throw error
         if (data && data.length > 0) {
           this.dashboardStats = data[0]
+        } else {
+          console.warn('No se recibieron datos de estadísticas')
+          this.dashboardStats = {
+            total_empleados: 0,
+            empleados_activos: 0,
+            sesiones_proximas: 0,
+            encuestas_activas: 0
+          }
         }
       } catch (err) {
+        console.error('Error cargando estadísticas del dashboard:', err)
         this.dashboardStats = {
-          usuariosConectados: 0,
-          clasesReservadas: 0,
-          encuestasEnviadas: 0,
-          empleadosActivos: 0
+          total_empleados: 0,
+          empleados_activos: 0,
+          sesiones_proximas: 0,
+          encuestas_activas: 0
         }
         this.error = err.message || 'Error al cargar estadísticas'
       } finally {
@@ -308,16 +326,26 @@ export const useAdminStore = defineStore('admin', {
 
     // Cargar actividad reciente
     async loadActividadReciente(empresaId, limit = 10) {
+      if (!empresaId) {
+        console.error('No se puede cargar actividad reciente: empresaId no proporcionado')
+        return
+      }
+      
       this.loading = true
       try {
+        console.log('Cargando actividad reciente para empresa:', empresaId)
         const { data, error } = await supabase
           .rpc('get_admin_recent_activity', {
             empresa_id_param: empresaId,
             limit_param: limit
           })
+        
+        console.log('Respuesta de get_admin_recent_activity:', { data, error })
+        
         if (error) throw error
         this.actividadReciente = data || []
       } catch (err) {
+        console.error('Error cargando actividad reciente:', err)
         this.actividadReciente = []
         this.error = err.message || 'Error al cargar actividad reciente'
       } finally {

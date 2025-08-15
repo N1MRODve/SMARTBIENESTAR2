@@ -49,8 +49,8 @@ router.beforeEach(async (to, from, next) => {
     const { useAuthStore } = await import('@/stores/auth.store')
     const authStore = useAuthStore()
 
-    // Si tu authStore expone un método de inicialización, esperarlo siempre (idempotente)
-    if (typeof authStore.tryInitializeAuth === 'function') {
+    // Esperar la inicialización del auth store si no está inicializado
+    if (!authStore.isInitialized) {
       await authStore.tryInitializeAuth()
     }
 
@@ -61,9 +61,8 @@ router.beforeEach(async (to, from, next) => {
       try {
         const { useAdminStore } = await import('@/stores/admin')
         const adminStore = useAdminStore()
-        if (typeof adminStore.init === 'function') {
-          // Pasa el empresaId si tu init lo acepta (ambas firmas comunes)
-          await adminStore.init(authStore.user?.empresa_id ?? undefined)
+        if (typeof adminStore.init === 'function' && authStore.user?.empresa_id) {
+          await adminStore.init()
         }
       } catch (e) {
         // Si no existe admin.store o falla init, no bloquear la navegación
