@@ -1,145 +1,90 @@
 import { defineStore } from 'pinia';
-import { ref, computed } from 'vue';
-import { supabase } from '../services/supabase';
+import { supabase } from '@/services/supabase'; // Importar la instancia única
 
 export const useAuthStore = defineStore('auth', {
   state: () => ({
     user: null,
-    isAuthenticated: false,
-    isInitialized: false,
-    userRole: null,
-    loading: true,
+    session: null,
+    loading: false,
     error: null,
+    isInitialized: false // Nuevo estado para controlar la inicialización
   }),
-  getters: {
-    empresaId: (state) => state.user?.id_empresa || null
-  },
+
+  // Las funciones de negocio deben estar dentro del objeto 'actions'.
   actions: {
-    async tryInitializeAuth() {
-      if (this.isInitialized) return;
-      try {
-        const { data: { session } } = await supabase.auth.getSession();
-        if (session?.user) {
-          const { data: userData, error: userError } = await supabase
-            .from('usuarios')
-            .select('*')
-            .eq('id', session.user.id)
-            .maybeSingle();
-
-          if (userError) throw userError;
-
-          this.user = { ...session.user, ...userData };
-          this.isAuthenticated = true;
-          this.userRole = userData.tipo_usuario; // Ajusta según tu modelo
-        } else {
-          this.user = null;
-          this.isAuthenticated = false;
-          this.userRole = null;
-        }
-      } catch (err) {
-        console.error('Error initializing auth:', err);
-        this.error = err.message || 'Error desconocido';
-        await supabase.auth.signOut();
-        this.user = null;
-      } finally {
-        this.isInitialized = true;
-        this.loading = false;
-      }
-    },
     async login(email, password) {
+      this.loading = true;
+      this.error = null;
       try {
-        this.loading = true;
-        this.error = null;
-
-        const { data, error: authError } = await supabase.auth.signInWithPassword({
+        // Paso 1: Autenticar al usuario con Supabase Auth
+        const { data: authData, error: authError } = await supabase.auth.signInWithPassword({
           email,
           password
         });
-
         if (authError) throw authError;
-        if (!data?.user) throw new Error('No se pudo obtener el usuario');
 
-        // Obtén los datos del usuario desde la tabla 'usuarios'
-        const { data: userData, error: userError } = await supabase
+        // Paso 2: Obtener el perfil completo del usuario de la tabla 'usuarios'
+        const { data: profileData, error: profileError } = await supabase
           .from('usuarios')
-          .select('*')
-          .eq('id', data.user.id)
-          .maybeSingle();
+          .select('*') // Seleccionar todas las columnas, incluyendo 'tipo_usuario'
+          .eq('id', authData.user.id)
+          .single(); // Esperamos un único resultado
 
-        if (userError) throw userError;
-        if (!userData) throw new Error('Usuario no encontrado');
+        if (profileError) throw profileError;
+        
+        // Guardar el perfil completo (con el rol) en el estado
+        this.user = profileData;
+        this.session = authData.session;
+        
+        return profileData; // Devolver el perfil completo
 
-        this.user = { ...data.user, ...userData };
-        this.isAuthenticated = true;
-        this.userRole = userData.tipo_usuario; // Ajusta según tu modelo
-
-        // Redirección según el tipo de usuario
-        switch (userData.tipo_usuario) {
-          case 'superadmin':
-            return '/superadmin/dashboard';
-          case 'administrador':
-            return '/admin/dashboard';
-          case 'empleado':
-            return '/empleado/dashboard';
-          case 'colaborador':
-            return '/colaborador/dashboard';
-          default:
-            throw new Error('Tipo de usuario no válido');
-        }
-      } catch (err) {
-        this.error = err.message || 'Error desconocido';
-        throw err;
+      } catch (error) {
+        this.error = error.message;
+        throw error;
       } finally {
         this.loading = false;
       }
     },
+
     async logout() {
+      this.loading = true;
       try {
         await supabase.auth.signOut();
         this.user = null;
-        this.isAuthenticated = false;
-        this.userRole = null;
-      } catch (err) {
-        console.error('Error logging out:', err);
-        this.error = err.message || 'Error desconocido';
-        throw err;
-      }
-    },
-    hasRole(roles) {
-      if (!this.userRole) return false;
-      return Array.isArray(roles) 
-        ? roles.includes(this.userRole)
-        : this.userRole === roles;
-    },
-    async fetchUser() {
-      try {
-        this.loading = true;
-        this.error = null;
-
-        const { data: { session } } = await supabase.auth.getSession();
-        if (session?.user) {
-          const { data: userData, error: userError } = await supabase
-            .from('usuarios')
-            .select('*')
-            .eq('id', session.user.id)
-            .maybeSingle();
-
-          if (userError) throw userError;
-
-          this.user = { ...session.user, ...userData };
-          this.isAuthenticated = true;
-          this.userRole = userData.tipo_usuario; // Ajusta según tu modelo
-        } else {
-          this.user = null;
-          this.isAuthenticated = false;
-          this.userRole = null;
-        }
-      } catch (err) {
-        console.error('Error fetching user:', err);
-        this.error = err.message || 'Error desconocido';
+        this.session = null;
+      } catch (error) {
+        this.error = error.message;
       } finally {
         this.loading = false;
       }
+    },
+
+    async tryInitializeAuth() {
+      try {
+        const { data: { session } } = await supabase.auth.getSession()
+        
+        if (session?.user) {
+          // Si hay una sesión, obtenemos el perfil completo de la tabla 'usuarios'
+          const { data: profileData, error: profileError } = await supabase
+            .from('usuarios')
+            .select('*') // Incluye tipo_usuario, empresa_id, etc.
+            .eq('id', session.user.id)
+            .single()
+
+          if (profileError) throw profileError
+          
+          // Guardamos tanto el perfil completo como la sesión
+          this.user = profileData
+          this.session = session
+        }
+      } catch (error) {
+        console.error("Error al inicializar la sesión:", error)
+        this.user = null
+        this.session = null
+      } finally {
+        // Marcamos la inicialización como completada, incluso si falla
+        this.isInitialized = true
+      }
     }
   }
-});
+})

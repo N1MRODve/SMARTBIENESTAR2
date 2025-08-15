@@ -1,62 +1,16 @@
 // src/layouts/AdminLayout.vue
 <template>
-  <div class="flex min-h-screen bg-gray-50">
+  <div class="min-h-screen flex bg-gray-50">
     <TheSidebar
-      :is-collapsed="isSidebarCollapsed"
+      :collapsed="isSidebarCollapsed"
       @toggle="toggleSidebar"
     />
-    <main
-      :class="[
-        'transition-all duration-300 flex-1',
-        isSidebarCollapsed ? 'ml-20' : 'ml-64'
-      ]"
-    >
-      <!-- Header móvil -->
-      <header class="bg-white shadow-sm border-b border-gray-200 lg:hidden">
-        <div class="flex items-center justify-between px-4 py-3">
-          <button @click="toggleSidebar" class="text-gray-500 hover:text-gray-600">
-            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
-            </svg>
-          </button>
-          <h1 class="text-lg font-semibold text-gray-900">{{ currentPageTitle }}</h1>
-          <div class="w-6"></div> <!-- Spacer -->
-        </div>
-      </header>
-
-      <!-- Breadcrumb -->
-      <div class="bg-white border-b border-gray-200 px-4 sm:px-6 lg:px-8 py-3" v-if="breadcrumbs.length > 1">
-        <nav class="flex" aria-label="Breadcrumb">
-          <ol class="flex items-center space-x-2">
-            <li v-for="(crumb, index) in breadcrumbs" :key="index" class="flex items-center">
-              <router-link 
-                v-if="index < breadcrumbs.length - 1"
-                :to="crumb.to"
-                class="text-primary hover:text-primary-dark text-sm font-medium"
-              >
-                {{ crumb.title }}
-              </router-link>
-              <span v-else class="text-gray-500 text-sm">{{ crumb.title }}</span>
-              
-              <svg 
-                v-if="index < breadcrumbs.length - 1"
-                class="w-4 h-4 text-gray-400 mx-2"
-                fill="none" 
-                stroke="currentColor" 
-                viewBox="0 0 24 24"
-              >
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
-              </svg>
-            </li>
-          </ol>
-        </nav>
-      </div>
-
-      <!-- Contenido de la página -->
-      <main class="flex-1 overflow-y-auto">
+    <div class="flex flex-col flex-grow min-h-screen">
+      <TheHeader @toggle-sidebar="toggleSidebar" />
+      <main class="flex-1 p-6">
         <slot />
       </main>
-    </main>
+    </div>
   </div>
 </template>
 
@@ -66,6 +20,7 @@ import { useRoute, useRouter } from 'vue-router'
 import { useAuthStore } from '@/stores/auth.store'
 import { useAdminStore } from '@/stores/admin'
 import TheSidebar from './TheSidebar.vue'
+import TheHeader from './TheHeader.vue'
 
 const isSidebarCollapsed = ref(false)
 function toggleSidebar() {

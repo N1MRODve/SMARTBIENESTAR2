@@ -1,9 +1,11 @@
 import { createClient } from '@supabase/supabase-js'
 
 const supabaseUrl = import.meta.env.VITE_SUPABASE_URL
-const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY
+const supabaseKey = import.meta.env.VITE_SUPABASE_KEY
 
-export const supabase = createClient(supabaseUrl, supabaseAnonKey)
+// Se crea una única instancia del cliente de Supabase y se exporta.
+// Esto evita la advertencia de "Multiple GoTrueClient instances".
+export const supabase = createClient(supabaseUrl, supabaseKey)
 
 export const loginWithRedirect = async (email, password) => {
   try {

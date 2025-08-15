@@ -166,29 +166,27 @@ export const useAdminStore = defineStore('admin', {
     },
 
     // Cargar empleados de la empresa
-    async loadEmpleados(empresaId) {
+    async loadEmpleados() {
+      const authStore = useAuthStore()
+      const currentEmpresaId = authStore.user?.empresa_id
+
+      if (!currentEmpresaId) {
+        console.error("No se pudo cargar empleados: empresaId no disponible.");
+        return;
+      }
+
       this.empleadosLoading = true
       try {
         const { data, error } = await supabase
           .from('usuarios')
-          .select(`
-            *,
-            perfil_empleados(*)
-          `)
-          .eq('empresa_id', empresaId)
+          .select(`*, perfil_empleados(*)`)
+          .eq('empresa_id', currentEmpresaId)
           .eq('tipo_usuario', 'empleado')
-
+        
         if (error) throw error
-
-        // Mapear datos de perfil_empleados si existen
-        this.empleados = (data || []).map(emp => ({
-          ...emp,
-          cargo: emp.perfil_empleados?.cargo || '',
-          perfil: emp.perfil_empleados || null
-        }))
-      } catch (err) {
-        this.empleados = []
-        this.error = err.message || 'Error al cargar empleados'
+        this.empleados = data
+      } catch (error) {
+        console.error("Error al cargar empleados:", error)
       } finally {
         this.empleadosLoading = false
       }
@@ -551,6 +549,24 @@ export const useAdminStore = defineStore('admin', {
       const empresaId = authStore.user?.empresa_id;
       this.empresaId = empresaId;
       console.log('AdminStore: empresaId inicializado con', empresaId);
+    },
+
+    // Acción para inicializar el store de admin de forma segura
+    async initializeAdminStore() {
+      const authStore = useAuthStore()
+      // Espera a que el authStore esté inicializado
+      if (!authStore.isInitialized) {
+        await new Promise(resolve => {
+          const unwatch = watch(() => authStore.isInitialized, (isInitialized) => {
+            if (isInitialized) {
+              unwatch()
+              resolve()
+            }
+          })
+        })
+      }
+      this.empresaId = authStore.user?.empresa_id
+      console.log('AdminStore: empresaId inicializado con', this.empresaId);
     },
 
     // Editar encuesta

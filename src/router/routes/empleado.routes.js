@@ -13,7 +13,8 @@ export const empleadoRoutes = [
       {
         path: 'dashboard',
         name: 'empleado-dashboard',
-        component: () => import('../../views/empleado/DashboardView.vue')
+        component: () => import('../../views/empleado/DashboardView.vue'),
+        meta: { requiresAuth: true }
       },
       {
         path: 'reservas',
@@ -24,6 +25,24 @@ export const empleadoRoutes = [
         path: 'reservar-actividad',
         name: 'ReservarActividad',
         component: () => import('@/views/empleado/ReservarActividadView.vue'),
+        meta: { requiresAuth: true }
+      },
+      {
+        path: 'mis-reservas',
+        name: 'MisReservas',
+        component: () => import('@/views/empleado/MisReservasView.vue'),
+        meta: { requiresAuth: true }
+      },
+      {
+        path: 'encuestas',
+        name: 'empleado-encuestas',
+        component: () => import('@/views/empleado/EncuestasView.vue'),
+        meta: { requiresAuth: true }
+      },
+      {
+        path: 'desafios',
+        name: 'empleado-desafios',
+        component: () => import('@/views/empleado/DesafiosView.vue'),
         meta: { requiresAuth: true }
       }
     ]

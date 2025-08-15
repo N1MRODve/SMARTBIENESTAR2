@@ -89,26 +89,36 @@ const loading = ref(false);
 async function handleSubmit() {
   try {
     loading.value = true;
-    const redirectPath = await authStore.login(email.value, password.value);
-    // Redirige según el rol
-    const redirectMap = {
-      superadmin: '/superadmin/dashboard',
-      administrador: '/admin/dashboard',
-      empleado: '/empleado/dashboard',
-      colaborador: '/colaborador/dashboard'
+    const userProfile = await authStore.login(email.value, password.value);
+
+    // Mapa de redirección basado en roles y nombres de ruta
+    const roleRedirectMap = {
+      administrador: { name: 'AdminDashboard' },
+      empleado: { name: 'EmpleadoDashboard' },
+      superadmin: { name: 'superadmin.dashboard' }, // Asegúrate de que este nombre de ruta exista
+      colaborador: { name: 'colaborador.dashboard' } // Asegúrate de que este nombre de ruta exista
+    };
+
+    const redirectRoute = roleRedirectMap[userProfile.tipo_usuario];
+
+    if (redirectRoute) {
+      router.push(redirectRoute);
+    } else {
+      // Redirección por defecto si el rol no está en el mapa
+      router.push('/');
     }
-    router.push(redirectMap[authStore.userRole] || '/admin/dashboard')
+
     toast.add({
       severity: 'success',
       summary: '¡Bienvenido!',
       detail: 'Has iniciado sesión correctamente',
       life: 3000
     });
-  } catch (err) {
+  } catch (error) {
     toast.add({
       severity: 'error',
       summary: 'Error',
-      detail: err.message || 'Credenciales incorrectas. Por favor intenta de nuevo.',
+      detail: error.message || 'Credenciales incorrectas. Por favor intenta de nuevo.',
       life: 5000
     });
   } finally {

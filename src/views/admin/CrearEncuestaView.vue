@@ -210,11 +210,11 @@ function eliminarOpcion(preguntaIndex, opcionIndex) {
 
 async function guardarEncuesta() {
   // Validaciones previas
-  if (!encuesta.value.titulo.trim()) {
+  if (!encuesta.value.titulo || encuesta.value.titulo.trim() === '') {
     toast.error('El título de la encuesta es obligatorio.')
     return
   }
-  if (!encuesta.value.preguntas.length) {
+  if (!encuesta.value.preguntas || encuesta.value.preguntas.length === 0) {
     toast.error('Debes agregar al menos una pregunta.')
     return
   }

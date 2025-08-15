@@ -237,8 +237,8 @@ export default {
             localStorage.removeItem('admin_email')
           }
 
-          // Redireccionar al dashboard
-          router.push('/admin')
+          // Redireccionar al dashboard (ajustado)
+          router.push('/admin/dashboard')
         } else {
           error.value = result.error || 'Credenciales incorrectas'
         }
