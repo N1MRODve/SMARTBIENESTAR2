@@ -5,17 +5,19 @@
     @click="$emit('update:open', false)"
   />
   <aside :class="[
-    'fixed inset-y-0 left-0 w-64 bg-primary text-white z-50 transform transition-transform duration-300 ease-in-out lg:relative lg:transform-none',
+    'fixed inset-y-0 left-0 w-64 z-50 transform transition-all duration-300 ease-in-out lg:relative lg:transform-none',
+    'bg-white/10 backdrop-blur-xl border-r border-white/20 text-white',
+    'shadow-2xl shadow-black/10',
     props.open ? 'translate-x-0' : '-translate-x-full lg:translate-x-0'
   ]">
     <!-- Logo and close button -->
-    <div class="h-16 flex items-center justify-between px-4 border-b border-primary-dark">
+    <div class="h-16 flex items-center justify-between px-4 border-b border-white/20 bg-white/5 backdrop-blur-sm">
       <div class="flex items-center space-x-2">
         <ActivitySquare class="h-8 w-8 text-white" />
-        <span class="text-xl font-bold text-white">SMART<span class="text-accent">Bienestar</span></span>
+        <span class="text-xl font-bold text-white drop-shadow-sm">SMART<span class="text-yellow-300">Bienestar</span></span>
       </div>
       <button
-        class="lg:hidden p-2 rounded-md text-white hover:bg-primary-dark"
+        class="lg:hidden p-2 rounded-md text-white hover:bg-white/20 transition-all duration-200"
         @click="$emit('update:open', false)"
       >
         <X class="h-6 w-6" />
@@ -23,28 +25,28 @@
     </div>
     
     <!-- Navigation links -->
-    <nav class="flex-1 px-4 py-4 space-y-1 overflow-y-auto">
+    <nav class="flex-1 px-4 py-6 space-y-2 overflow-y-auto">
       <router-link
         v-for="link in navigationLinks"
         :key="link.to"
         :to="link.to"
-        class="flex items-center px-4 py-2 text-sm font-medium rounded-lg transition-colors duration-150"
+        class="flex items-center px-4 py-3 text-sm font-medium rounded-xl transition-all duration-200 group"
         :class="[
           $route.path.startsWith(link.to)
-            ? 'bg-primary-dark text-white'
-            : 'text-white hover:bg-primary-dark'
+            ? 'bg-white/20 text-white shadow-lg backdrop-blur-sm border border-white/30'
+            : 'text-white/90 hover:bg-white/15 hover:text-white hover:shadow-md hover:backdrop-blur-sm'
         ]"
         @click="$emit('update:open', false)"
       >
-        <component :is="link.icon" class="h-5 w-5 mr-3" />
-        {{ link.text }}
+        <component :is="link.icon" class="h-5 w-5 mr-3 transition-transform duration-200 group-hover:scale-110" />
+        <span class="font-medium">{{ link.text }}</span>
       </router-link>
     </nav>
     
     <!-- User info -->
-    <div class="p-4 border-t border-primary-dark">
-      <div class="flex items-center space-x-3">
-        <div class="h-8 w-8 rounded-full bg-white/10 flex items-center justify-center">
+    <div class="p-4 border-t border-white/20 bg-white/5 backdrop-blur-sm">
+      <div class="flex items-center space-x-3 p-3 rounded-xl bg-white/10 backdrop-blur-sm border border-white/20">
+        <div class="h-10 w-10 rounded-full bg-white/20 backdrop-blur-sm flex items-center justify-center border border-white/30">
           <span class="text-sm font-medium text-white">
             {{ authStore.user?.nombre?.[0]?.toUpperCase() }}
           </span>
@@ -53,7 +55,7 @@
           <p class="text-sm font-medium text-white truncate">
             {{ authStore.user?.nombre }} {{ authStore.user?.apellido }}
           </p>
-          <p class="text-xs text-white/70 truncate">
+          <p class="text-xs text-white/60 truncate">
             {{ authStore.user?.email }}
           </p>
         </div>
