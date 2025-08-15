@@ -15,12 +15,12 @@
           <p class="text-gray-600">Puntos de Bienestar</p>
         </div>
         <div class="bg-white p-6 rounded-lg shadow-md text-center">
-          <h3 class="text-4xl font-bold text-primary">{{ stats.sesiones_asistidas || 0 }}</h3>
-          <p class="text-gray-600">Sesiones Asistidas</p>
-        </div>
-        <div class="bg-white p-6 rounded-lg shadow-md text-center">
           <h3 class="text-4xl font-bold text-primary">{{ stats.desafios_completados || 0 }}</h3>
           <p class="text-gray-600">Desafíos Completados</p>
+        </div>
+        <div class="bg-white p-6 rounded-lg shadow-md text-center">
+          <h3 class="text-4xl font-bold text-primary">{{ proximasSesiones.length || 0 }}</h3>
+          <p class="text-gray-600">Próximas Sesiones</p>
         </div>
       </div>
 
