@@ -130,6 +130,7 @@ const authStore = useAuthStore();
 
 const email = ref('');
 const password = ref('');
+const loading = ref(false);
 
 const isDemoMode = ref(false);
 
