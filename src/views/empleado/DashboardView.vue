@@ -1,6 +1,9 @@
 <template>
   <div class="p-6 md:p-8">
-    <h1 class="text-3xl font-bold text-gray-900 mb-6">Mi Dashboard</h1>
+    <header class="mb-8">
+      <h1 class="text-3xl font-bold text-gray-900 mb-2">Mi Dashboard</h1>
+      <p class="text-gray-600">Bienvenido a tu espacio personal de bienestar</p>
+    </header>
     
     <SkeletonDashboard v-if="isLoading" />
 
@@ -24,7 +27,10 @@
       <!-- Próximas Sesiones y Encuestas -->
       <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
         <div>
-          <h2 class="text-xl font-bold mb-4">Próximas Sesiones</h2>
+          <h2 class="text-xl font-semibold text-gray-900 mb-4 flex items-center">
+            <Calendar class="h-5 w-5 mr-2 text-primary" />
+            Próximas Sesiones
+          </h2>
           <div v-if="proximasSesiones.length === 0" class="bg-white p-6 rounded-lg shadow-sm text-center text-gray-500">
             No tienes sesiones próximas
           </div>
@@ -36,7 +42,10 @@
           </ul>
         </div>
         <div>
-          <h2 class="text-xl font-bold mb-4">Encuestas Pendientes</h2>
+          <h2 class="text-xl font-semibold text-gray-900 mb-4 flex items-center">
+            <ClipboardList class="h-5 w-5 mr-2 text-primary" />
+            Encuestas Pendientes
+          </h2>
           <div v-if="encuestasPendientes.length === 0" class="bg-white p-6 rounded-lg shadow-sm text-center text-gray-500">
             No tienes encuestas pendientes
           </div>
@@ -48,14 +57,21 @@
           </ul>
         </div>
       </div>
+
+      <!-- Módulo de Desafíos -->
+      <div class="mt-8">
+        <DesafiosModule />
+      </div>
     </div>
   </div>
 </template>
 
 <script setup>
 import { onMounted, computed } from 'vue'
+import { Calendar, ClipboardList } from 'lucide-vue-next'
 import { useEmpleadoStore } from '@/stores/empleado.store'
 import SkeletonDashboard from '@/components/common/SkeletonDashboard.vue'
+import DesafiosModule from '@/components/empleado/DesafiosModule.vue'
 
 const empleadoStore = useEmpleadoStore()
 

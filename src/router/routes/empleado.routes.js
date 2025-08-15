@@ -43,6 +43,12 @@ export const empleadoRoutes = [
         name: 'empleado-desafios',
         component: () => import('../../views/empleado/DesafiosView.vue'),
         meta: { requiresAuth: true, roles: ['empleado'] }
+      },
+      {
+        path: 'desafios/:id',
+        name: 'empleado-desafio-detalle',
+        component: () => import('../../views/empleado/DesafioDetalleView.vue'),
+        meta: { requiresAuth: true, roles: ['empleado'] }
       }
     ]
   }
