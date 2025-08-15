@@ -23,7 +23,7 @@ import { useAuthStore } from '@/stores/auth.store.js'
 const authStore = useAuthStore()
 const router = useRouter()
 
-const userName = computed(() => authStore.user?.name || 'Administrador')
+const userName = computed(() => authStore.user?.nombre || authStore.user?.name || 'Usuario')
 
 async function logout() {
   await authStore.logout()
