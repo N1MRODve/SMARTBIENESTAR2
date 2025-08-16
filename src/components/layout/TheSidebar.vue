@@ -95,7 +95,8 @@ import {
   Users,
   Briefcase,
   BarChart3,
-  Building2
+  Building2,
+  UserCheck
 } from 'lucide-vue-next';
 
 const props = defineProps({
