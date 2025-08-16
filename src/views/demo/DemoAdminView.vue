@@ -2174,6 +2174,623 @@
           </div>
         </div>
 
+        <!-- ROI y Métricas View -->
+        <div v-if="activeView === 'roi'" class="space-y-8">
+          <div class="flex justify-between items-center">
+            <div>
+              <h1 class="text-3xl font-bold text-gray-900">ROI y Métricas Clave</h1>
+              <p class="text-gray-600 mt-1">Justifica y optimiza tu inversión en bienestar empresarial</p>
+            </div>
+            <div class="flex gap-2">
+              <Button variant="primary">
+                <FileText class="h-4 w-4 mr-2" />
+                Generar Reporte Ejecutivo
+              </Button>
+              <Button variant="secondary">
+                <Download class="h-4 w-4 mr-2" />
+                Exportar Datos
+              </Button>
+            </div>
+          </div>
+
+          <!-- ROI Principal -->
+          <div class="glass-container rounded-xl shadow-lg p-8 backdrop-blur-sm border border-white/30">
+            <h2 class="text-xl font-semibold mb-6 flex items-center">
+              <DollarSign class="h-5 w-5 mr-2 text-green-500" />
+              Retorno de Inversión (ROI)
+            </h2>
+            
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
+              <div class="text-center p-6 bg-green-50/60 rounded-xl backdrop-blur-sm border border-green-200/50">
+                <h3 class="text-3xl font-bold text-green-600 mb-2">€156,000</h3>
+                <p class="text-gray-600 font-medium">Ahorro Total</p>
+                <p class="text-xs text-gray-500 mt-1">Este año</p>
+              </div>
+              <div class="text-center p-6 bg-blue-50/60 rounded-xl backdrop-blur-sm border border-blue-200/50">
+                <h3 class="text-3xl font-bold text-blue-600 mb-2">€48,000</h3>
+                <p class="text-gray-600 font-medium">Inversión Total</p>
+                <p class="text-xs text-gray-500 mt-1">Servicios + plataforma</p>
+              </div>
+              <div class="text-center p-6 bg-purple-50/60 rounded-xl backdrop-blur-sm border border-purple-200/50">
+                <h3 class="text-3xl font-bold text-purple-600 mb-2">325%</h3>
+                <p class="text-gray-600 font-medium">ROI Total</p>
+                <p class="text-xs text-gray-500 mt-1">Retorno sobre inversión</p>
+              </div>
+              <div class="text-center p-6 bg-yellow-50/60 rounded-xl backdrop-blur-sm border border-yellow-200/50">
+                <h3 class="text-3xl font-bold text-yellow-600 mb-2">€108,000</h3>
+                <p class="text-gray-600 font-medium">Beneficio Neto</p>
+                <p class="text-xs text-gray-500 mt-1">Ahorro - inversión</p>
+              </div>
+            </div>
+
+            <!-- Desglose de Ahorros -->
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+              <div>
+                <h3 class="text-lg font-medium text-gray-900 mb-4">Desglose de Ahorros</h3>
+                <div class="space-y-4">
+                  <div class="flex items-center justify-between p-4 bg-green-50/60 rounded-lg backdrop-blur-sm border border-green-200/50">
+                    <div class="flex items-center space-x-3">
+                      <UserCheck class="h-5 w-5 text-green-600" />
+                      <div>
+                        <p class="text-sm font-semibold text-gray-900">Reducción de Rotación</p>
+                        <p class="text-xs text-gray-600">23% menos renuncias</p>
+                      </div>
+                    </div>
+                    <span class="text-lg font-bold text-green-600">€89,000</span>
+                  </div>
+                  
+                  <div class="flex items-center justify-between p-4 bg-blue-50/60 rounded-lg backdrop-blur-sm border border-blue-200/50">
+                    <div class="flex items-center space-x-3">
+                      <Heart class="h-5 w-5 text-blue-600" />
+                      <div>
+                        <p class="text-sm font-semibold text-gray-900">Reducción Bajas Médicas</p>
+                        <p class="text-xs text-gray-600">18% menos días de baja</p>
+                      </div>
+                    </div>
+                    <span class="text-lg font-bold text-blue-600">€34,000</span>
+                  </div>
+                  
+                  <div class="flex items-center justify-between p-4 bg-purple-50/60 rounded-lg backdrop-blur-sm border border-purple-200/50">
+                    <div class="flex items-center space-x-3">
+                      <TrendingUp class="h-5 w-5 text-purple-600" />
+                      <div>
+                        <p class="text-sm font-semibold text-gray-900">Aumento Productividad</p>
+                        <p class="text-xs text-gray-600">15% mejora general</p>
+                      </div>
+                    </div>
+                    <span class="text-lg font-bold text-purple-600">€33,000</span>
+                  </div>
+                </div>
+              </div>
+
+              <div>
+                <h3 class="text-lg font-medium text-gray-900 mb-4">Desglose de Inversión</h3>
+                <div class="space-y-4">
+                  <div class="flex items-center justify-between p-4 bg-gray-50/60 rounded-lg backdrop-blur-sm border border-gray-200/50">
+                    <div class="flex items-center space-x-3">
+                      <Activity class="h-5 w-5 text-gray-600" />
+                      <div>
+                        <p class="text-sm font-semibold text-gray-900">Servicios de Bienestar</p>
+                        <p class="text-xs text-gray-600">Yoga, coaching, nutrición</p>
+                      </div>
+                    </div>
+                    <span class="text-lg font-bold text-gray-600">€32,000</span>
+                  </div>
+                  
+                  <div class="flex items-center justify-between p-4 bg-gray-50/60 rounded-lg backdrop-blur-sm border border-gray-200/50">
+                    <div class="flex items-center space-x-3">
+                      <Monitor class="h-5 w-5 text-gray-600" />
+                      <div>
+                        <p class="text-sm font-semibold text-gray-900">Plataforma SMART</p>
+                        <p class="text-xs text-gray-600">Licencia anual</p>
+                      </div>
+                    </div>
+                    <span class="text-lg font-bold text-gray-600">€12,000</span>
+                  </div>
+                  
+                  <div class="flex items-center justify-between p-4 bg-gray-50/60 rounded-lg backdrop-blur-sm border border-gray-200/50">
+                    <div class="flex items-center space-x-3">
+                      <Users class="h-5 w-5 text-gray-600" />
+                      <div>
+                        <p class="text-sm font-semibold text-gray-900">Gestión y Coordinación</p>
+                        <p class="text-xs text-gray-600">Tiempo dedicado</p>
+                      </div>
+                    </div>
+                    <span class="text-lg font-bold text-gray-600">€4,000</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Costo vs Participación -->
+          <div class="glass-container rounded-xl shadow-lg p-8 backdrop-blur-sm border border-white/30">
+            <h2 class="text-xl font-semibold mb-6">Análisis Costo vs Participación</h2>
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+              <!-- Gráfico de Eficiencia -->
+              <div>
+                <h3 class="text-lg font-medium text-gray-900 mb-4">Eficiencia por Servicio</h3>
+                <div class="space-y-4">
+                  <div class="p-4 bg-green-50/60 rounded-lg backdrop-blur-sm border border-green-200/50">
+                    <div class="flex items-center justify-between mb-2">
+                      <div class="flex items-center space-x-3">
+                        <Activity class="h-5 w-5 text-green-600" />
+                        <span class="font-semibold text-gray-900">Yoga</span>
+                      </div>
+                      <span class="text-sm font-bold text-green-600">€12/participante</span>
+                    </div>
+                    <div class="flex items-center justify-between text-sm">
+                      <span class="text-gray-600">156 participaciones</span>
+                      <span class="text-green-600 font-medium">ROI: 420%</span>
+                    </div>
+                    <div class="bg-gray-200 rounded-full h-2 mt-2">
+                      <div class="bg-green-500 rounded-full h-2" style="width: 95%"></div>
+                    </div>
+                  </div>
+                  
+                  <div class="p-4 bg-blue-50/60 rounded-lg backdrop-blur-sm border border-blue-200/50">
+                    <div class="flex items-center justify-between mb-2">
+                      <div class="flex items-center space-x-3">
+                        <MessageCircle class="h-5 w-5 text-blue-600" />
+                        <span class="font-semibold text-gray-900">Coaching</span>
+                      </div>
+                      <span class="text-sm font-bold text-blue-600">€85/sesión</span>
+                    </div>
+                    <div class="flex items-center justify-between text-sm">
+                      <span class="text-gray-600">48 sesiones</span>
+                      <span class="text-blue-600 font-medium">ROI: 280%</span>
+                    </div>
+                    <div class="bg-gray-200 rounded-full h-2 mt-2">
+                      <div class="bg-blue-500 rounded-full h-2" style="width: 88%"></div>
+                    </div>
+                  </div>
+                  
+                  <div class="p-4 bg-purple-50/60 rounded-lg backdrop-blur-sm border border-purple-200/50">
+                    <div class="flex items-center justify-between mb-2">
+                      <div class="flex items-center space-x-3">
+                        <Brain class="h-5 w-5 text-purple-600" />
+                        <span class="font-semibold text-gray-900">Meditación</span>
+                      </div>
+                      <span class="text-sm font-bold text-purple-600">€8/participante</span>
+                    </div>
+                    <div class="flex items-center justify-between text-sm">
+                      <span class="text-gray-600">203 participaciones</span>
+                      <span class="text-purple-600 font-medium">ROI: 380%</span>
+                    </div>
+                    <div class="bg-gray-200 rounded-full h-2 mt-2">
+                      <div class="bg-purple-500 rounded-full h-2" style="width: 92%"></div>
+                    </div>
+                  </div>
+                  
+                  <div class="p-4 bg-yellow-50/60 rounded-lg backdrop-blur-sm border border-yellow-200/50">
+                    <div class="flex items-center justify-between mb-2">
+                      <div class="flex items-center space-x-3">
+                        <Apple class="h-5 w-5 text-yellow-600" />
+                        <span class="font-semibold text-gray-900">Nutrición</span>
+                      </div>
+                      <span class="text-sm font-bold text-yellow-600">€25/consulta</span>
+                    </div>
+                    <div class="flex items-center justify-between text-sm">
+                      <span class="text-gray-600">72 consultas</span>
+                      <span class="text-yellow-600 font-medium">ROI: 240%</span>
+                    </div>
+                    <div class="bg-gray-200 rounded-full h-2 mt-2">
+                      <div class="bg-yellow-500 rounded-full h-2" style="width: 78%"></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Ranking de Servicios -->
+              <div>
+                <h3 class="text-lg font-medium text-gray-900 mb-4">Servicios Más Populares</h3>
+                <div class="space-y-3">
+                  <div class="flex items-center space-x-4 p-3 bg-purple-50/60 rounded-lg backdrop-blur-sm border border-purple-200/50">
+                    <div class="w-8 h-8 bg-purple-500 rounded-lg flex items-center justify-center">
+                      <span class="text-white font-bold text-sm">1</span>
+                    </div>
+                    <div class="flex-1">
+                      <p class="font-semibold text-gray-900">Meditación Mindfulness</p>
+                      <p class="text-sm text-gray-600">203 participaciones</p>
+                    </div>
+                    <div class="text-right">
+                      <p class="text-sm font-bold text-purple-600">94%</p>
+                      <p class="text-xs text-gray-500">satisfacción</p>
+                    </div>
+                  </div>
+                  
+                  <div class="flex items-center space-x-4 p-3 bg-green-50/60 rounded-lg backdrop-blur-sm border border-green-200/50">
+                    <div class="w-8 h-8 bg-green-500 rounded-lg flex items-center justify-center">
+                      <span class="text-white font-bold text-sm">2</span>
+                    </div>
+                    <div class="flex-1">
+                      <p class="font-semibold text-gray-900">Yoga Matutino</p>
+                      <p class="text-sm text-gray-600">156 participaciones</p>
+                    </div>
+                    <div class="text-right">
+                      <p class="text-sm font-bold text-green-600">91%</p>
+                      <p class="text-xs text-gray-500">satisfacción</p>
+                    </div>
+                  </div>
+                  
+                  <div class="flex items-center space-x-4 p-3 bg-yellow-50/60 rounded-lg backdrop-blur-sm border border-yellow-200/50">
+                    <div class="w-8 h-8 bg-yellow-500 rounded-lg flex items-center justify-center">
+                      <span class="text-white font-bold text-sm">3</span>
+                    </div>
+                    <div class="flex-1">
+                      <p class="font-semibold text-gray-900">Nutrición Personalizada</p>
+                      <p class="text-sm text-gray-600">72 consultas</p>
+                    </div>
+                    <div class="text-right">
+                      <p class="text-sm font-bold text-yellow-600">89%</p>
+                      <p class="text-xs text-gray-500">satisfacción</p>
+                    </div>
+                  </div>
+                  
+                  <div class="flex items-center space-x-4 p-3 bg-blue-50/60 rounded-lg backdrop-blur-sm border border-blue-200/50">
+                    <div class="w-8 h-8 bg-blue-500 rounded-lg flex items-center justify-center">
+                      <span class="text-white font-bold text-sm">4</span>
+                    </div>
+                    <div class="flex-1">
+                      <p class="font-semibold text-gray-900">Coaching Personal</p>
+                      <p class="text-sm text-gray-600">48 sesiones</p>
+                    </div>
+                    <div class="text-right">
+                      <p class="text-sm font-bold text-blue-600">96%</p>
+                      <p class="text-xs text-gray-500">satisfacción</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Evolución del Bienestar -->
+          <div class="glass-container rounded-xl shadow-lg p-8 backdrop-blur-sm border border-white/30">
+            <h2 class="text-xl font-semibold mb-6">Evolución del Bienestar Empresarial</h2>
+            
+            <!-- Métricas de Evolución -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+              <div class="text-center p-6 bg-green-50/60 rounded-xl backdrop-blur-sm border border-green-200/50">
+                <h3 class="text-2xl font-bold text-green-600 mb-2">7.8/10</h3>
+                <p class="text-gray-600 font-medium">Bienestar Promedio</p>
+                <div class="flex items-center justify-center mt-2">
+                  <TrendingUp class="h-4 w-4 text-green-500 mr-1" />
+                  <span class="text-sm text-green-600">+1.2 vs año anterior</span>
+                </div>
+              </div>
+              <div class="text-center p-6 bg-blue-50/60 rounded-xl backdrop-blur-sm border border-blue-200/50">
+                <h3 class="text-2xl font-bold text-blue-600 mb-2">87%</h3>
+                <p class="text-gray-600 font-medium">Participación Activa</p>
+                <div class="flex items-center justify-center mt-2">
+                  <TrendingUp class="h-4 w-4 text-blue-500 mr-1" />
+                  <span class="text-sm text-blue-600">+23% vs inicio</span>
+                </div>
+              </div>
+              <div class="text-center p-6 bg-purple-50/60 rounded-xl backdrop-blur-sm border border-purple-200/50">
+                <h3 class="text-2xl font-bold text-purple-600 mb-2">4.6/5</h3>
+                <p class="text-gray-600 font-medium">Satisfacción NPS</p>
+                <div class="flex items-center justify-center mt-2">
+                  <TrendingUp class="h-4 w-4 text-purple-500 mr-1" />
+                  <span class="text-sm text-purple-600">+0.8 vs trimestre anterior</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Timeline de Mejoras -->
+            <div>
+              <h3 class="text-lg font-medium text-gray-900 mb-4">Timeline de Mejoras</h3>
+              <div class="space-y-4">
+                <div class="flex items-center space-x-4">
+                  <div class="w-4 h-4 bg-green-500 rounded-full"></div>
+                  <div class="flex-1 p-4 bg-green-50/60 rounded-lg backdrop-blur-sm border border-green-200/50">
+                    <div class="flex items-center justify-between">
+                      <div>
+                        <p class="font-semibold text-gray-900">Implementación Yoga Matutino</p>
+                        <p class="text-sm text-gray-600">Octubre 2024</p>
+                      </div>
+                      <span class="text-sm text-green-600 font-medium">+15% bienestar general</span>
+                    </div>
+                  </div>
+                </div>
+                
+                <div class="flex items-center space-x-4">
+                  <div class="w-4 h-4 bg-blue-500 rounded-full"></div>
+                  <div class="flex-1 p-4 bg-blue-50/60 rounded-lg backdrop-blur-sm border border-blue-200/50">
+                    <div class="flex items-center justify-between">
+                      <div>
+                        <p class="font-semibold text-gray-900">Lanzamiento Coaching Personal</p>
+                        <p class="text-sm text-gray-600">Noviembre 2024</p>
+                      </div>
+                      <span class="text-sm text-blue-600 font-medium">+22% satisfacción laboral</span>
+                    </div>
+                  </div>
+                </div>
+                
+                <div class="flex items-center space-x-4">
+                  <div class="w-4 h-4 bg-purple-500 rounded-full"></div>
+                  <div class="flex-1 p-4 bg-purple-50/60 rounded-lg backdrop-blur-sm border border-purple-200/50">
+                    <div class="flex items-center justify-between">
+                      <div>
+                        <p class="font-semibold text-gray-900">Sistema de Gamificación</p>
+                        <p class="text-sm text-gray-600">Diciembre 2024</p>
+                      </div>
+                      <span class="text-sm text-purple-600 font-medium">+35% engagement</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Comparativa con Benchmarks -->
+          <div class="glass-container rounded-xl shadow-lg p-8 backdrop-blur-sm border border-white/30">
+            <h2 class="text-xl font-semibold mb-6">Comparativa con Benchmarks del Sector</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+              <!-- Métricas vs Industria -->
+              <div>
+                <h3 class="text-lg font-medium text-gray-900 mb-4">Tu Empresa vs Industria</h3>
+                <div class="space-y-4">
+                  <div>
+                    <div class="flex items-center justify-between mb-2">
+                      <span class="text-sm text-gray-700">Participación en Bienestar</span>
+                      <div class="flex items-center space-x-2">
+                        <span class="text-sm font-bold text-primary">87%</span>
+                        <span class="text-xs text-gray-500">vs 34% industria</span>
+                      </div>
+                    </div>
+                    <div class="bg-gray-200 rounded-full h-2">
+                      <div class="bg-primary rounded-full h-2" style="width: 87%"></div>
+                    </div>
+                    <p class="text-xs text-green-600 mt-1">+153% sobre promedio industria</p>
+                  </div>
+                  
+                  <div>
+                    <div class="flex items-center justify-between mb-2">
+                      <span class="text-sm text-gray-700">Retención de Empleados</span>
+                      <div class="flex items-center space-x-2">
+                        <span class="text-sm font-bold text-green-600">89%</span>
+                        <span class="text-xs text-gray-500">vs 72% industria</span>
+                      </div>
+                    </div>
+                    <div class="bg-gray-200 rounded-full h-2">
+                      <div class="bg-green-500 rounded-full h-2" style="width: 89%"></div>
+                    </div>
+                    <p class="text-xs text-green-600 mt-1">+17% sobre promedio industria</p>
+                  </div>
+                  
+                  <div>
+                    <div class="flex items-center justify-between mb-2">
+                      <span class="text-sm text-gray-700">Días de Baja por Estrés</span>
+                      <div class="flex items-center space-x-2">
+                        <span class="text-sm font-bold text-green-600">2.1</span>
+                        <span class="text-xs text-gray-500">vs 8.4 industria</span>
+                      </div>
+                    </div>
+                    <div class="bg-gray-200 rounded-full h-2">
+                      <div class="bg-green-500 rounded-full h-2" style="width: 25%"></div>
+                    </div>
+                    <p class="text-xs text-green-600 mt-1">-75% bajo promedio industria</p>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Posición Competitiva -->
+              <div>
+                <h3 class="text-lg font-medium text-gray-900 mb-4">Posición Competitiva</h3>
+                <div class="text-center mb-6">
+                  <div class="w-24 h-24 bg-gradient-to-br from-green-400 to-green-600 rounded-full flex items-center justify-center mx-auto mb-4">
+                    <span class="text-white text-2xl font-bold">A+</span>
+                  </div>
+                  <h4 class="text-xl font-bold text-gray-900 mb-2">Líder en Bienestar</h4>
+                  <p class="text-sm text-gray-600">Top 5% de empresas en tu sector</p>
+                </div>
+                
+                <div class="space-y-3">
+                  <div class="flex items-center justify-between p-3 bg-green-50/60 rounded-lg backdrop-blur-sm border border-green-200/50">
+                    <span class="text-sm text-gray-700">Ranking Nacional</span>
+                    <span class="text-sm font-bold text-green-600">#12 de 2,400</span>
+                  </div>
+                  <div class="flex items-center justify-between p-3 bg-blue-50/60 rounded-lg backdrop-blur-sm border border-blue-200/50">
+                    <span class="text-sm text-gray-700">Sector Tecnología</span>
+                    <span class="text-sm font-bold text-blue-600">#3 de 180</span>
+                  </div>
+                  <div class="flex items-center justify-between p-3 bg-purple-50/60 rounded-lg backdrop-blur-sm border border-purple-200/50">
+                    <span class="text-sm text-gray-700">Empresas 50-100 empleados</span>
+                    <span class="text-sm font-bold text-purple-600">#1 de 45</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Proyecciones Futuras -->
+          <div class="glass-container rounded-xl shadow-lg p-8 backdrop-blur-sm border border-white/30">
+            <h2 class="text-xl font-semibold mb-6">Proyecciones y Planificación</h2>
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+              <!-- Proyecciones 2025 -->
+              <div>
+                <h3 class="text-lg font-medium text-gray-900 mb-4">Proyecciones 2025</h3>
+                <div class="space-y-4">
+                  <div class="p-4 bg-green-50/60 rounded-lg backdrop-blur-sm border border-green-200/50">
+                    <div class="flex items-center justify-between mb-2">
+                      <span class="text-sm font-semibold text-gray-900">ROI Proyectado</span>
+                      <span class="text-lg font-bold text-green-600">385%</span>
+                    </div>
+                    <p class="text-xs text-gray-600">Basado en tendencias actuales</p>
+                    <div class="flex items-center mt-2">
+                      <TrendingUp class="h-4 w-4 text-green-500 mr-1" />
+                      <span class="text-xs text-green-600">+60% vs 2024</span>
+                    </div>
+                  </div>
+                  
+                  <div class="p-4 bg-blue-50/60 rounded-lg backdrop-blur-sm border border-blue-200/50">
+                    <div class="flex items-center justify-between mb-2">
+                      <span class="text-sm font-semibold text-gray-900">Ahorro Estimado</span>
+                      <span class="text-lg font-bold text-blue-600">€198,000</span>
+                    </div>
+                    <p class="text-xs text-gray-600">Con expansión de servicios</p>
+                    <div class="flex items-center mt-2">
+                      <TrendingUp class="h-4 w-4 text-blue-500 mr-1" />
+                      <span class="text-xs text-blue-600">+27% vs 2024</span>
+                    </div>
+                  </div>
+                  
+                  <div class="p-4 bg-purple-50/60 rounded-lg backdrop-blur-sm border border-purple-200/50">
+                    <div class="flex items-center justify-between mb-2">
+                      <span class="text-sm font-semibold text-gray-900">Participación Objetivo</span>
+                      <span class="text-lg font-bold text-purple-600">95%</span>
+                    </div>
+                    <p class="text-xs text-gray-600">Meta para fin de año</p>
+                    <div class="flex items-center mt-2">
+                      <Target class="h-4 w-4 text-purple-500 mr-1" />
+                      <span class="text-xs text-purple-600">+8% vs actual</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Recomendaciones de Inversión -->
+              <div>
+                <h3 class="text-lg font-medium text-gray-900 mb-4">Recomendaciones de Inversión</h3>
+                <div class="space-y-4">
+                  <div class="p-4 bg-yellow-50/60 rounded-lg backdrop-blur-sm border border-yellow-200/50">
+                    <div class="flex items-center space-x-3 mb-2">
+                      <Lightbulb class="h-5 w-5 text-yellow-500" />
+                      <h4 class="font-semibold text-gray-900">Expandir Coaching</h4>
+                    </div>
+                    <p class="text-sm text-gray-600 mb-2">
+                      Aumentar sesiones de coaching en 40% generaría un ROI adicional de €45,000
+                    </p>
+                    <div class="flex items-center justify-between">
+                      <span class="text-xs text-gray-500">Inversión: €15,000</span>
+                      <span class="text-xs text-yellow-600 font-medium">ROI: 300%</span>
+                    </div>
+                  </div>
+                  
+                  <div class="p-4 bg-blue-50/60 rounded-lg backdrop-blur-sm border border-blue-200/50">
+                    <div class="flex items-center space-x-3 mb-2">
+                      <Brain class="h-5 w-5 text-blue-500" />
+                      <h4 class="font-semibold text-gray-900">Programa Mindfulness</h4>
+                    </div>
+                    <p class="text-sm text-gray-600 mb-2">
+                      Implementar programa intensivo de mindfulness para equipos de alto estrés
+                    </p>
+                    <div class="flex items-center justify-between">
+                      <span class="text-xs text-gray-500">Inversión: €8,000</span>
+                      <span class="text-xs text-blue-600 font-medium">ROI: 450%</span>
+                    </div>
+                  </div>
+                  
+                  <div class="p-4 bg-green-50/60 rounded-lg backdrop-blur-sm border border-green-200/50">
+                    <div class="flex items-center space-x-3 mb-2">
+                      <Heart class="h-5 w-5 text-green-500" />
+                      <h4 class="font-semibold text-gray-900">Psicoterapia Preventiva</h4>
+                    </div>
+                    <p class="text-sm text-gray-600 mb-2">
+                      Sesiones preventivas de psicoterapia para equipos identificados en riesgo
+                    </p>
+                    <div class="flex items-center justify-between">
+                      <span class="text-xs text-gray-500">Inversión: €12,000</span>
+                      <span class="text-xs text-green-600 font-medium">ROI: 380%</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Reporte Ejecutivo -->
+          <div class="glass-container rounded-xl shadow-lg p-8 backdrop-blur-sm border border-white/30">
+            <h2 class="text-xl font-semibold mb-6">Resumen Ejecutivo</h2>
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+              <!-- Logros Clave -->
+              <div>
+                <h3 class="text-lg font-medium text-gray-900 mb-4">Logros Clave 2024</h3>
+                <div class="space-y-3">
+                  <div class="flex items-center space-x-3">
+                    <CheckCircle class="h-5 w-5 text-green-500" />
+                    <span class="text-sm text-gray-700">ROI del 325% alcanzado</span>
+                  </div>
+                  <div class="flex items-center space-x-3">
+                    <CheckCircle class="h-5 w-5 text-green-500" />
+                    <span class="text-sm text-gray-700">87% participación activa</span>
+                  </div>
+                  <div class="flex items-center space-x-3">
+                    <CheckCircle class="h-5 w-5 text-green-500" />
+                    <span class="text-sm text-gray-700">23% reducción rotación</span>
+                  </div>
+                  <div class="flex items-center space-x-3">
+                    <CheckCircle class="h-5 w-5 text-green-500" />
+                    <span class="text-sm text-gray-700">Top 5% sector tecnología</span>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Áreas de Mejora -->
+              <div>
+                <h3 class="text-lg font-medium text-gray-900 mb-4">Áreas de Oportunidad</h3>
+                <div class="space-y-3">
+                  <div class="flex items-center space-x-3">
+                    <AlertTriangle class="h-5 w-5 text-yellow-500" />
+                    <span class="text-sm text-gray-700">Equipo Ventas en riesgo</span>
+                  </div>
+                  <div class="flex items-center space-x-3">
+                    <Target class="h-5 w-5 text-blue-500" />
+                    <span class="text-sm text-gray-700">Expandir coaching personal</span>
+                  </div>
+                  <div class="flex items-center space-x-3">
+                    <TrendingUp class="h-5 w-5 text-purple-500" />
+                    <span class="text-sm text-gray-700">Aumentar actividades grupales</span>
+                  </div>
+                  <div class="flex items-center space-x-3">
+                    <Brain class="h-5 w-5 text-orange-500" />
+                    <span class="text-sm text-gray-700">Implementar mindfulness</span>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Próximos Pasos -->
+              <div>
+                <h3 class="text-lg font-medium text-gray-900 mb-4">Próximos Pasos</h3>
+                <div class="space-y-3">
+                  <div class="p-3 bg-red-50/60 rounded-lg backdrop-blur-sm border border-red-200/50">
+                    <div class="flex items-center space-x-2 mb-1">
+                      <span class="w-2 h-2 bg-red-500 rounded-full"></span>
+                      <span class="text-sm font-semibold text-gray-900">Urgente</span>
+                    </div>
+                    <p class="text-xs text-gray-600">Intervenir equipo Ventas</p>
+                  </div>
+                  
+                  <div class="p-3 bg-yellow-50/60 rounded-lg backdrop-blur-sm border border-yellow-200/50">
+                    <div class="flex items-center space-x-2 mb-1">
+                      <span class="w-2 h-2 bg-yellow-500 rounded-full"></span>
+                      <span class="text-sm font-semibold text-gray-900">Esta Semana</span>
+                    </div>
+                    <p class="text-xs text-gray-600">Lanzar desafío colaborativo</p>
+                  </div>
+                  
+                  <div class="p-3 bg-blue-50/60 rounded-lg backdrop-blur-sm border border-blue-200/50">
+                    <div class="flex items-center space-x-2 mb-1">
+                      <span class="w-2 h-2 bg-blue-500 rounded-full"></span>
+                      <span class="text-sm font-semibold text-gray-900">Este Mes</span>
+                    </div>
+                    <p class="text-xs text-gray-600">Expandir programa coaching</p>
+                  </div>
+                  
+                  <div class="p-3 bg-green-50/60 rounded-lg backdrop-blur-sm border border-green-200/50">
+                    <div class="flex items-center space-x-2 mb-1">
+                      <span class="w-2 h-2 bg-green-500 rounded-full"></span>
+                      <span class="text-sm font-semibold text-gray-900">Q2 2025</span>
+                    </div>
+                    <p class="text-xs text-gray-600">Implementar mindfulness</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
         <!-- Encuestas View -->
         <div v-if="activeView === 'encuestas'" class="space-y-8">
           <div class="flex justify-between items-center">
@@ -2501,7 +3118,10 @@ import {
   TrendingDown,
   Frown,
   Minus,
-  Lightbulb
+  Lightbulb,
+  DollarSign,
+  Apple,
+  Monitor
 } from 'lucide-vue-next';
 import Button from '../../components/common/Button.vue';
 
@@ -2514,6 +3134,7 @@ const adminNavLinks = [
   { id: 'desarrollo', text: 'Desarrollo y Carrera', icon: TrendingUp },
   { id: 'gamificacion', text: 'Gamificación y Reconocimiento', icon: Trophy },
   { id: 'analitica', text: 'Analítica Predictiva', icon: Brain },
+  { id: 'roi', text: 'ROI y Métricas', icon: DollarSign },
   { id: 'encuestas', text: 'Encuestas', icon: ClipboardList },
   { id: 'estadisticas', text: 'Estadísticas', icon: BarChart3 }
 ];
