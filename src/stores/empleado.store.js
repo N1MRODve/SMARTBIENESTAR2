@@ -26,31 +26,6 @@ export const useEmpleadoStore = defineStore('empleado', {
 
   actions: {
     async loadDashboardData() {
-      // Usar datos demo si está en modo demo
-      const demoStore = useDemoStore();
-      if (demoStore.isDemoMode) {
-        const authStore = useAuthStore();
-        if (!authStore.user) return;
-        
-        this.loading.dashboard = true;
-        this.error = null;
-        
-        try {
-          await new Promise(resolve => setTimeout(resolve, 800)); // Simular delay
-          const dashboardData = await demoStore.getEmpleadoDashboardData(authStore.user.id);
-          
-          this.dashboardStats = dashboardData.stats;
-          this.proximasSesiones = dashboardData.proximasSesiones;
-          this.encuestasPendientes = dashboardData.encuestasPendientes;
-          return;
-        } catch (error) {
-          console.error('Error cargando dashboard demo:', error);
-          this.error = error.message;
-        } finally {
-          this.loading.dashboard = false;
-        }
-        return;
-      }
 
       const authStore = useAuthStore()
       if (!authStore.user) return
@@ -58,54 +33,27 @@ export const useEmpleadoStore = defineStore('empleado', {
       this.error = null
 
       try {
-        const [statsRes, sesionesRes, encuestasRes] = await Promise.all([
-          supabase
-            .from('perfil_empleados')
-            .select('puntos_bienestar, desafios_completados')
-            .eq('usuario_id', authStore.user.id)
-            .single(),
-          // CORREGIDO: select simplificado con relaciones válidas
-          supabase
-            .from('reservas')
-            .select(`
-              *,
-              sesiones (
-                *,
-                servicios (
-                  nombre,
-                  tipo
-                ),
-                colaborador:usuarios (
-                  nombre,
-                  apellido
-                )
-              )
-            `)
-            .eq('usuario_id', authStore.user.id)
-            .order('fecha_reserva', { ascending: false })
-            .limit(3),
-          supabase
-            .from('participantes_encuesta')
-            .select(`
-              *,
-              encuesta:encuestas (
-                id,
-                titulo,
-                descripcion,
-                fecha_fin
-              )
-            `)
-            .eq('usuario_id', authStore.user.id)
-            .eq('estado', 'pendiente')
-        ])
+        // Cargar estadísticas usando función SQL
+        const { data: statsData, error: statsError } = await supabase
+          .rpc('get_employee_dashboard_stats', { usuario_id_param: authStore.user.id })
+        
+        if (statsError) throw statsError
+        this.dashboardStats = statsData?.[0] || {}
 
-        if (statsRes.error) throw statsRes.error
-        if (sesionesRes.error) throw sesionesRes.error
-        if (encuestasRes.error) throw encuestasRes.error
+        // Cargar próximas sesiones
+        const { data: sesionesData, error: sesionesError } = await supabase
+          .rpc('get_employee_upcoming_sessions', { usuario_id_param: authStore.user.id })
+        
+        if (sesionesError) throw sesionesError
+        this.proximasSesiones = sesionesData || []
 
-        this.dashboardStats = statsRes.data || {}
-        this.proximasSesiones = sesionesRes.data || []
-        this.encuestasPendientes = encuestasRes.data || []
+        // Cargar encuestas pendientes
+        const { data: encuestasData, error: encuestasError } = await supabase
+          .rpc('get_employee_pending_surveys', { usuario_id_param: authStore.user.id })
+        
+        if (encuestasError) throw encuestasError
+        this.encuestasPendientes = encuestasData || []
+        
       } catch (err) {
         console.error('Error cargando dashboard:', err)
         this.error = err.message
@@ -115,27 +63,6 @@ export const useEmpleadoStore = defineStore('empleado', {
     },
 
     async loadMisReservas() {
-      // Usar datos demo si está en modo demo
-      const demoStore = useDemoStore();
-      if (demoStore.isDemoMode) {
-        const authStore = useAuthStore();
-        if (!authStore.user) return;
-        
-        this.loading.reservas = true;
-        this.error = null;
-        
-        try {
-          await new Promise(resolve => setTimeout(resolve, 600)); // Simular delay
-          this.misReservas = demoStore.getReservasByUsuario(authStore.user.id);
-          return;
-        } catch (error) {
-          console.error('Error cargando reservas demo:', error);
-          this.error = error.message;
-        } finally {
-          this.loading.reservas = false;
-        }
-        return;
-      }
 
       const authStore = useAuthStore()
       if (!authStore.user) return
@@ -143,12 +70,11 @@ export const useEmpleadoStore = defineStore('empleado', {
       this.error = null
 
       try {
-        // CORREGIDO: select simplificado con relaciones válidas
         const { data, error } = await supabase
           .from('reservas')
           .select(`
             *,
-            sesiones (
+            sesiones!inner (
               *,
               servicios (
                 nombre,
@@ -164,7 +90,20 @@ export const useEmpleadoStore = defineStore('empleado', {
           .order('fecha_reserva', { ascending: false })
 
         if (error) throw error
-        this.misReservas = data || []
+        
+        // Procesar datos para facilitar el acceso
+        this.misReservas = (data || []).map(reserva => ({
+          ...reserva,
+          titulo: reserva.sesiones?.titulo,
+          fecha_inicio: reserva.sesiones?.fecha_inicio,
+          modalidad: reserva.sesiones?.modalidad,
+          ubicacion: reserva.sesiones?.ubicacion,
+          colaborador_nombre: reserva.sesiones?.colaborador ? 
+            `${reserva.sesiones.colaborador.nombre} ${reserva.sesiones.colaborador.apellido}` : 
+            'Sin asignar',
+          servicio_tipo: reserva.sesiones?.servicios?.tipo
+        }))
+        
       } catch (err) {
         console.error('Error cargando mis reservas:', err)
         this.error = err.message
@@ -265,24 +204,6 @@ export const useEmpleadoStore = defineStore('empleado', {
     },
 
     async loadDesafios() {
-      // Usar datos demo si está en modo demo
-      const demoStore = useDemoStore();
-      if (demoStore.isDemoMode) {
-        this.loading.desafios = true;
-        this.error = null;
-        
-        try {
-          await new Promise(resolve => setTimeout(resolve, 500)); // Simular delay
-          this.desafios = demoStore.demoData.desafiosBienestar;
-          return;
-        } catch (error) {
-          console.error('Error cargando desafíos demo:', error);
-          this.error = error.message;
-        } finally {
-          this.loading.desafios = false;
-        }
-        return;
-      }
 
       this.loading.desafios = true
       this.error = null
@@ -292,6 +213,7 @@ export const useEmpleadoStore = defineStore('empleado', {
           .from('desafios_bienestar')
           .select('*')
           .eq('activo', true)
+          .order('fecha_inicio', { ascending: false })
 
         if (error) throw error
         this.desafios = data || []
@@ -304,35 +226,6 @@ export const useEmpleadoStore = defineStore('empleado', {
     },
 
     async loadActividadesDisponibles() {
-      // Usar datos demo si está en modo demo
-      const demoStore = useDemoStore();
-      if (demoStore.isDemoMode) {
-        const authStore = useAuthStore();
-        if (!authStore.user?.empresa_id) return;
-        
-        this.loading.actividades = true;
-        this.error = null;
-        
-        try {
-          await new Promise(resolve => setTimeout(resolve, 700)); // Simular delay
-          const sesiones = demoStore.getSesionesConDetalles()
-            .filter(s => s.empresa_id === authStore.user.empresa_id)
-            .filter(s => new Date(s.fecha_inicio) > new Date())
-            .map(sesion => ({
-              ...sesion,
-              colaborador: sesion.colaborador_nombre
-            }));
-          
-          this.actividadesDisponibles = sesiones;
-          return;
-        } catch (error) {
-          console.error('Error cargando actividades demo:', error);
-          this.error = error.message;
-        } finally {
-          this.loading.actividades = false;
-        }
-        return;
-      }
 
       const authStore = useAuthStore()
       if (!authStore.user?.empresa_id) return
@@ -341,22 +234,7 @@ export const useEmpleadoStore = defineStore('empleado', {
 
       try {
         const { data, error } = await supabase
-          .from('sesiones')
-          .select(`
-            *,
-            servicios (
-              nombre,
-              descripcion,
-              tipo
-            ),
-            colaborador:usuarios (
-              nombre,
-              apellido
-            )
-          `)
-          .eq('empresa_id', authStore.user.empresa_id)
-          .gte('fecha_inicio', new Date().toISOString())
-          .order('fecha_inicio', { ascending: true })
+          .rpc('get_available_activities', { usuario_id_param: authStore.user.id })
 
         if (error) throw error
         this.actividadesDisponibles = data || []
