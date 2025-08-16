@@ -632,6 +632,239 @@
                 <select class="px-3 py-2 border border-white/30 rounded-lg bg-white/60 backdrop-blur-sm text-sm">
                   <option>Cualquier modalidad</option>
                   <option>Online</option>
+
+        <!-- Psicoterapia Online View -->
+        <div v-if="activeView === 'psicoterapia'" class="space-y-8">
+          <div>
+            <h1 class="text-3xl font-bold text-gray-900 mb-2">Psicoterapia Online</h1>
+            <p class="text-gray-600">Apoyo psicológico profesional con sesiones online y chat disponible</p>
+          </div>
+
+          <!-- Información importante -->
+          <div class="glass-container rounded-xl shadow-lg p-6 backdrop-blur-sm border border-white/30 bg-blue-50/30">
+            <div class="flex items-start space-x-3">
+              <div class="p-2 bg-blue-500/10 rounded-lg">
+                <Shield class="h-6 w-6 text-blue-600" />
+              </div>
+              <div>
+                <h3 class="text-lg font-semibold text-gray-900 mb-2">Confidencialidad y Privacidad</h3>
+                <p class="text-sm text-gray-600 mb-2">
+                  Todas las sesiones de psicoterapia son completamente confidenciales y están protegidas por el secreto profesional.
+                </p>
+                <ul class="text-sm text-gray-600 space-y-1">
+                  <li>• Sesiones encriptadas de extremo a extremo</li>
+                  <li>• Información no compartida con la empresa</li>
+                  <li>• Profesionales licenciados y certificados</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+
+          <!-- Psicoterapeutas disponibles -->
+          <div>
+            <h2 class="text-xl font-semibold mb-6">Psicoterapeutas Disponibles</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              <div v-for="psicologo in psicoterapeutasDisponibles" :key="psicologo.id" class="glass-card rounded-xl shadow-lg p-6 backdrop-blur-sm border border-white/20 hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
+                <div class="text-center mb-4">
+                  <img :src="psicologo.foto" :alt="psicologo.nombre" class="w-24 h-24 rounded-full mx-auto mb-4 object-cover border-4 border-white/50">
+                  <h3 class="text-xl font-bold text-gray-900">{{ psicologo.nombre }}</h3>
+                  <p class="text-sm text-gray-600">{{ psicologo.especialidad }}</p>
+                  <div class="flex items-center justify-center mt-2">
+                    <Star v-for="i in 5" :key="i" :class="['h-4 w-4', i <= psicologo.calificacion ? 'text-yellow-400 fill-current' : 'text-gray-300']" />
+                    <span class="ml-2 text-sm text-gray-600">({{ psicologo.calificacion }}/5)</span>
+                  </div>
+                </div>
+                
+                <div class="space-y-3 mb-6">
+                  <div class="flex items-center text-sm text-gray-600">
+                    <GraduationCap class="h-4 w-4 mr-2" />
+                    {{ psicologo.formacion }}
+                  </div>
+                  <div class="flex items-center text-sm text-gray-600">
+                    <Clock class="h-4 w-4 mr-2" />
+                    {{ psicologo.experiencia }} años de experiencia
+                  </div>
+                  <div class="flex items-center text-sm text-gray-600">
+                    <Users class="h-4 w-4 mr-2" />
+                    {{ psicologo.pacientes_atendidos }} pacientes atendidos
+                  </div>
+                  <div class="flex items-center text-sm text-gray-600">
+                    <MessageCircle class="h-4 w-4 mr-2" />
+                    Chat disponible 24/7
+                  </div>
+                </div>
+                
+                <div class="bg-gray-50/80 rounded-lg p-3 mb-4 backdrop-blur-sm">
+                  <p class="text-xs text-gray-700 font-medium mb-1">Especialidades:</p>
+                  <div class="flex flex-wrap gap-1">
+                    <span v-for="especialidad in psicologo.especialidades" :key="especialidad" class="bg-purple-100/80 text-purple-800 px-2 py-1 rounded-full text-xs">
+                      {{ especialidad }}
+                    </span>
+                  </div>
+                </div>
+                
+                <p class="text-sm text-gray-700 mb-6">{{ psicologo.descripcion }}</p>
+                
+                <div class="space-y-2">
+                  <Button class="w-full" variant="primary">
+                    <Calendar class="h-4 w-4 mr-2" />
+                    Reservar Sesión Online
+                  </Button>
+                  <Button class="w-full" variant="outline">
+                    <MessageCircle class="h-4 w-4 mr-2" />
+                    Iniciar Chat
+                  </Button>
+                  <Button class="w-full" variant="outline">
+                    <User class="h-4 w-4 mr-2" />
+                    Ver Perfil Completo
+                  </Button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Chat de Psicoterapia -->
+          <div class="glass-container rounded-xl shadow-lg p-6 backdrop-blur-sm border border-white/30">
+            <div class="flex items-center justify-between mb-6">
+              <h2 class="text-xl font-semibold">Chat de Apoyo Psicológico</h2>
+              <div class="flex items-center space-x-2">
+                <div class="w-3 h-3 bg-green-500 rounded-full animate-pulse"></div>
+                <span class="text-sm text-gray-600">Disponible 24/7</span>
+              </div>
+            </div>
+            
+            <div class="bg-gray-50/80 rounded-xl p-6 backdrop-blur-sm border border-gray-200/50">
+              <div class="flex items-center space-x-4 mb-4">
+                <div class="w-12 h-12 bg-purple-500 rounded-full flex items-center justify-center">
+                  <MessageCircle class="h-6 w-6 text-white" />
+                </div>
+                <div>
+                  <h3 class="font-semibold text-gray-900">Chat Confidencial</h3>
+                  <p class="text-sm text-gray-600">Conecta con un profesional cuando lo necesites</p>
+                </div>
+              </div>
+              
+              <div class="space-y-3 mb-6">
+                <div class="bg-white/80 rounded-lg p-3 backdrop-blur-sm">
+                  <p class="text-sm text-gray-700">
+                    <strong>Psicólogo de Guardia:</strong> Dr. Carlos Mendoza
+                  </p>
+                  <p class="text-xs text-gray-500 mt-1">Especialista en estrés laboral y ansiedad</p>
+                </div>
+                <div class="bg-white/80 rounded-lg p-3 backdrop-blur-sm">
+                  <p class="text-sm text-gray-700">
+                    <strong>Tiempo de respuesta promedio:</strong> 2-5 minutos
+                  </p>
+                </div>
+                <div class="bg-white/80 rounded-lg p-3 backdrop-blur-sm">
+                  <p class="text-sm text-gray-700">
+                    <strong>Disponibilidad:</strong> 24 horas, 7 días a la semana
+                  </p>
+                </div>
+              </div>
+              
+              <Button class="w-full" variant="primary">
+                <MessageCircle class="h-4 w-4 mr-2" />
+                Iniciar Chat Confidencial
+              </Button>
+            </div>
+          </div>
+
+          <!-- Mis sesiones de psicoterapia -->
+          <div class="glass-container rounded-xl shadow-lg p-6 backdrop-blur-sm border border-white/30">
+            <h2 class="text-xl font-semibold mb-6">Mis Sesiones de Psicoterapia</h2>
+            <div class="space-y-4">
+              <div class="glass-card p-4 rounded-xl backdrop-blur-sm border border-white/20 flex items-center justify-between">
+                <div class="flex items-center space-x-4">
+                  <img src="https://images.pexels.com/photos/5327580/pexels-photo-5327580.jpeg?auto=compress&cs=tinysrgb&w=150&h=150&fit=crop" alt="Dra. Patricia Morales" class="w-12 h-12 rounded-full object-cover">
+                  <div>
+                    <h4 class="font-semibold text-gray-900">Sesión con Dra. Patricia Morales</h4>
+                    <p class="text-sm text-gray-600">Mañana, 4:00 PM - 5:00 PM</p>
+                    <span class="bg-green-100/80 text-green-800 px-2 py-1 rounded-full text-xs font-medium">Confirmada</span>
+                  </div>
+                </div>
+                <div class="flex gap-2">
+                  <Button variant="outline" class="text-xs px-3 py-1">Reagendar</Button>
+                  <Button variant="primary" class="text-xs px-3 py-1">Unirse</Button>
+                </div>
+              </div>
+              
+              <div class="glass-card p-4 rounded-xl backdrop-blur-sm border border-white/20 flex items-center justify-between">
+                <div class="flex items-center space-x-4">
+                  <img src="https://images.pexels.com/photos/5327921/pexels-photo-5327921.jpeg?auto=compress&cs=tinysrgb&w=150&h=150&fit=crop" alt="Dr. Carlos Mendoza" class="w-12 h-12 rounded-full object-cover">
+                  <div>
+                    <h4 class="font-semibold text-gray-900">Sesión con Dr. Carlos Mendoza</h4>
+                    <p class="text-sm text-gray-600">Completada - Hace 1 semana</p>
+                    <span class="bg-blue-100/80 text-blue-800 px-2 py-1 rounded-full text-xs font-medium">Completada</span>
+                  </div>
+                </div>
+                <div class="flex gap-2">
+                  <Button variant="outline" class="text-xs px-3 py-1">Ver Notas</Button>
+                  <Button variant="outline" class="text-xs px-3 py-1">Calificar</Button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Recursos de autoayuda -->
+          <div class="glass-container rounded-xl shadow-lg p-6 backdrop-blur-sm border border-white/30">
+            <h2 class="text-xl font-semibold mb-6">Recursos de Autoayuda</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div class="glass-card p-4 rounded-xl backdrop-blur-sm border border-white/20">
+                <div class="flex items-center space-x-3 mb-3">
+                  <div class="w-10 h-10 bg-purple-500/10 rounded-lg flex items-center justify-center">
+                    <BookOpen class="h-5 w-5 text-purple-600" />
+                  </div>
+                  <h3 class="font-semibold text-gray-900">Artículos de Bienestar</h3>
+                </div>
+                <p class="text-sm text-gray-600 mb-4">Accede a artículos sobre manejo del estrés, ansiedad y bienestar mental</p>
+                <Button variant="outline" class="w-full text-sm">
+                  Explorar Artículos
+                </Button>
+              </div>
+              
+              <div class="glass-card p-4 rounded-xl backdrop-blur-sm border border-white/20">
+                <div class="flex items-center space-x-3 mb-3">
+                  <div class="w-10 h-10 bg-green-500/10 rounded-lg flex items-center justify-center">
+                    <Headphones class="h-5 w-5 text-green-600" />
+                  </div>
+                  <h3 class="font-semibold text-gray-900">Meditaciones Guiadas</h3>
+                </div>
+                <p class="text-sm text-gray-600 mb-4">Sesiones de meditación y relajación para reducir el estrés diario</p>
+                <Button variant="outline" class="w-full text-sm">
+                  Escuchar Ahora
+                </Button>
+              </div>
+              
+              <div class="glass-card p-4 rounded-xl backdrop-blur-sm border border-white/20">
+                <div class="flex items-center space-x-3 mb-3">
+                  <div class="w-10 h-10 bg-yellow-500/10 rounded-lg flex items-center justify-center">
+                    <Target class="h-5 w-5 text-yellow-600" />
+                  </div>
+                  <h3 class="font-semibold text-gray-900">Ejercicios de Respiración</h3>
+                </div>
+                <p class="text-sm text-gray-600 mb-4">Técnicas de respiración para momentos de estrés o ansiedad</p>
+                <Button variant="outline" class="w-full text-sm">
+                  Practicar Ahora
+                </Button>
+              </div>
+              
+              <div class="glass-card p-4 rounded-xl backdrop-blur-sm border border-white/20">
+                <div class="flex items-center space-x-3 mb-3">
+                  <div class="w-10 h-10 bg-red-500/10 rounded-lg flex items-center justify-center">
+                    <Phone class="h-5 w-5 text-red-600" />
+                  </div>
+                  <h3 class="font-semibold text-gray-900">Línea de Crisis</h3>
+                </div>
+                <p class="text-sm text-gray-600 mb-4">Apoyo inmediato disponible 24/7 para situaciones de emergencia</p>
+                <Button variant="primary" class="w-full text-sm">
+                  <Phone class="h-4 w-4 mr-2" />
+                  Contactar Ahora
+                </Button>
+              </div>
+            </div>
+          </div>
+        </div>
                   <option>Presencial</option>
                 </select>
               </div>
