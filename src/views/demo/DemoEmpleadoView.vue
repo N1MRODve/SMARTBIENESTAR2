@@ -286,6 +286,409 @@
             </div>
           </div>
 
+          <!-- Cursos y Talleres View -->
+          <div v-if="activeView === 'cursos'" class="max-w-7xl mx-auto space-y-8">
+            <div>
+              <h1 class="text-3xl font-bold text-gray-900 mb-2">Cursos y Talleres</h1>
+              <p class="text-gray-600">Desarrolla nuevas habilidades con nuestros cursos especializados</p>
+            </div>
+
+            <!-- Filtros de Cursos -->
+            <div class="glass-container rounded-xl shadow-lg p-6 backdrop-blur-sm border border-white/30">
+              <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
+                <select class="px-4 py-2 border border-white/30 rounded-lg bg-white/60 backdrop-blur-sm focus:outline-none focus:ring-2 focus:ring-primary/50">
+                  <option>Todas las categorías</option>
+                  <option>Desarrollo Personal</option>
+                  <option>Habilidades Blandas</option>
+                  <option>Bienestar Mental</option>
+                  <option>Salud Física</option>
+                  <option>Liderazgo</option>
+                </select>
+                <select class="px-4 py-2 border border-white/30 rounded-lg bg-white/60 backdrop-blur-sm focus:outline-none focus:ring-2 focus:ring-primary/50">
+                  <option>Todos los niveles</option>
+                  <option>Principiante</option>
+                  <option>Intermedio</option>
+                  <option>Avanzado</option>
+                </select>
+                <select class="px-4 py-2 border border-white/30 rounded-lg bg-white/60 backdrop-blur-sm focus:outline-none focus:ring-2 focus:ring-primary/50">
+                  <option>Todas las duraciones</option>
+                  <option>1-2 horas</option>
+                  <option>Medio día</option>
+                  <option>Día completo</option>
+                  <option>Varios días</option>
+                </select>
+                <Button variant="primary">Filtrar</Button>
+              </div>
+            </div>
+
+            <!-- Cursos Destacados -->
+            <div class="glass-container rounded-xl shadow-lg p-8 backdrop-blur-sm border border-white/30">
+              <h2 class="text-xl font-semibold mb-6">Cursos Destacados</h2>
+              <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <!-- Curso de Mindfulness -->
+                <div class="glass-card rounded-xl overflow-hidden backdrop-blur-sm border border-white/20 hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
+                  <img src="https://images.pexels.com/photos/3822622/pexels-photo-3822622.jpeg?auto=compress&cs=tinysrgb&w=400" alt="Mindfulness" class="w-full h-48 object-cover" />
+                  <div class="p-6">
+                    <div class="flex items-center justify-between mb-2">
+                      <span class="bg-purple-100 text-purple-800 text-xs px-2 py-1 rounded-full font-medium">Bienestar Mental</span>
+                      <span class="bg-green-100 text-green-800 text-xs px-2 py-1 rounded-full">8/20 plazas</span>
+                    </div>
+                    <h3 class="text-lg font-bold text-gray-900 mb-2">Mindfulness en el Trabajo</h3>
+                    <p class="text-sm text-gray-600 mb-3">Aprende técnicas de atención plena para mejorar tu concentración y reducir el estrés laboral</p>
+                    <div class="space-y-2 mb-4">
+                      <div class="flex items-center text-sm text-gray-500">
+                        <Calendar class="h-4 w-4 mr-2" />
+                        <span>Sábado 18 de enero, 9:00 AM - 1:00 PM</span>
+                      </div>
+                      <div class="flex items-center text-sm text-gray-500">
+                        <Clock class="h-4 w-4 mr-2" />
+                        <span>Duración: 4 horas</span>
+                      </div>
+                      <div class="flex items-center text-sm text-gray-500">
+                        <User class="h-4 w-4 mr-2" />
+                        <span>Instructor: Dr. Roberto Silva</span>
+                      </div>
+                    </div>
+                    <Button variant="primary" class="w-full">
+                      Inscribirse al Curso
+                    </Button>
+                  </div>
+                </div>
+
+                <!-- Taller de Comunicación -->
+                <div class="glass-card rounded-xl overflow-hidden backdrop-blur-sm border border-white/20 hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
+                  <img src="https://images.pexels.com/photos/3184465/pexels-photo-3184465.jpeg?auto=compress&cs=tinysrgb&w=400" alt="Comunicación" class="w-full h-48 object-cover" />
+                  <div class="p-6">
+                    <div class="flex items-center justify-between mb-2">
+                      <span class="bg-blue-100 text-blue-800 text-xs px-2 py-1 rounded-full font-medium">Habilidades Blandas</span>
+                      <span class="bg-yellow-100 text-yellow-800 text-xs px-2 py-1 rounded-full">15/25 plazas</span>
+                    </div>
+                    <h3 class="text-lg font-bold text-gray-900 mb-2">Comunicación Efectiva</h3>
+                    <p class="text-sm text-gray-600 mb-3">Mejora tus habilidades de comunicación interpersonal y presentaciones</p>
+                    <div class="space-y-2 mb-4">
+                      <div class="flex items-center text-sm text-gray-500">
+                        <Calendar class="h-4 w-4 mr-2" />
+                        <span>Viernes 24 de enero, 2:00 PM - 6:00 PM</span>
+                      </div>
+                      <div class="flex items-center text-sm text-gray-500">
+                        <Clock class="h-4 w-4 mr-2" />
+                        <span>Duración: 4 horas</span>
+                      </div>
+                      <div class="flex items-center text-sm text-gray-500">
+                        <User class="h-4 w-4 mr-2" />
+                        <span>Instructor: Lic. Carmen Vega</span>
+                      </div>
+                    </div>
+                    <Button variant="primary" class="w-full">
+                      Inscribirse al Taller
+                    </Button>
+                  </div>
+                </div>
+
+                <!-- Curso de Liderazgo -->
+                <div class="glass-card rounded-xl overflow-hidden backdrop-blur-sm border border-white/20 hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
+                  <img src="https://images.pexels.com/photos/3184338/pexels-photo-3184338.jpeg?auto=compress&cs=tinysrgb&w=400" alt="Liderazgo" class="w-full h-48 object-cover" />
+                  <div class="p-6">
+                    <div class="flex items-center justify-between mb-2">
+                      <span class="bg-orange-100 text-orange-800 text-xs px-2 py-1 rounded-full font-medium">Liderazgo</span>
+                      <span class="bg-blue-100 text-blue-800 text-xs px-2 py-1 rounded-full">5/15 plazas</span>
+                    </div>
+                    <h3 class="text-lg font-bold text-gray-900 mb-2">Liderazgo Transformacional</h3>
+                    <p class="text-sm text-gray-600 mb-3">Desarrolla habilidades de liderazgo para inspirar y motivar equipos</p>
+                    <div class="space-y-2 mb-4">
+                      <div class="flex items-center text-sm text-gray-500">
+                        <Calendar class="h-4 w-4 mr-2" />
+                        <span>28-29 de enero, 9:00 AM - 5:00 PM</span>
+                      </div>
+                      <div class="flex items-center text-sm text-gray-500">
+                        <Clock class="h-4 w-4 mr-2" />
+                        <span>Duración: 2 días</span>
+                      </div>
+                      <div class="flex items-center text-sm text-gray-500">
+                        <User class="h-4 w-4 mr-2" />
+                        <span>Instructor: Mg. Fernando López</span>
+                      </div>
+                    </div>
+                    <Button variant="primary" class="w-full">
+                      Inscribirse al Curso
+                    </Button>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Mis Cursos Inscritos -->
+            <div class="glass-container rounded-xl shadow-lg p-8 backdrop-blur-sm border border-white/30">
+              <h2 class="text-xl font-semibold mb-6">Mis Cursos Inscritos</h2>
+              <div class="space-y-4">
+                <div class="glass-card p-6 rounded-xl backdrop-blur-sm border border-white/20">
+                  <div class="flex items-center justify-between">
+                    <div class="flex items-center space-x-4">
+                      <div class="w-12 h-12 bg-green-100 rounded-xl flex items-center justify-center">
+                        <BookOpen class="h-6 w-6 text-green-600" />
+                      </div>
+                      <div>
+                        <h4 class="font-semibold text-gray-900">Gestión del Tiempo y Productividad</h4>
+                        <p class="text-sm text-gray-600">Completado el 10 de enero</p>
+                        <p class="text-xs text-gray-500">Instructor: Lic. María Fernández</p>
+                      </div>
+                    </div>
+                    <div class="flex items-center space-x-2">
+                      <span class="bg-green-100 text-green-800 text-xs px-2 py-1 rounded-full">Completado</span>
+                      <Button variant="outline" class="text-xs px-3 py-1">Ver Certificado</Button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Coaching Personal View -->
+          <div v-if="activeView === 'coaching'" class="max-w-7xl mx-auto space-y-8">
+            <div>
+              <h1 class="text-3xl font-bold text-gray-900 mb-2">Coaching Personal</h1>
+              <p class="text-gray-600">Desarrollo personal y profesional con coaches especializados</p>
+            </div>
+
+            <!-- Coaches Disponibles -->
+            <div class="glass-container rounded-xl shadow-lg p-8 backdrop-blur-sm border border-white/30">
+              <h2 class="text-xl font-semibold mb-6">Nuestros Coaches</h2>
+              <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <!-- Miguel Torres -->
+                <div class="glass-card rounded-xl overflow-hidden backdrop-blur-sm border border-white/20 hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
+                  <img src="https://images.pexels.com/photos/7176026/pexels-photo-7176026.jpeg?auto=compress&cs=tinysrgb&w=400" alt="Miguel Torres" class="w-full h-48 object-cover" />
+                  <div class="p-6">
+                    <h3 class="text-lg font-bold text-gray-900 mb-2">Miguel Torres</h3>
+                    <p class="text-sm text-primary font-medium mb-2">Coach Ejecutivo Certificado</p>
+                    <p class="text-sm text-gray-600 mb-4">Especialista en liderazgo, gestión del tiempo y desarrollo de carrera</p>
+                    <div class="flex items-center mb-4">
+                      <div class="flex items-center mr-4">
+                        <Star class="h-4 w-4 text-yellow-400 fill-current" />
+                        <Star class="h-4 w-4 text-yellow-400 fill-current" />
+                        <Star class="h-4 w-4 text-yellow-400 fill-current" />
+                        <Star class="h-4 w-4 text-yellow-400 fill-current" />
+                        <Star class="h-4 w-4 text-yellow-400 fill-current" />
+                      </div>
+                      <span class="text-sm text-gray-600">4.9 (85 reseñas)</span>
+                    </div>
+                    <div class="space-y-2 mb-4">
+                      <div class="flex items-center text-sm text-gray-600">
+                        <Clock class="h-4 w-4 mr-2" />
+                        <span>Disponible: Lun-Vie 9:00-17:00</span>
+                      </div>
+                      <div class="flex items-center text-sm text-gray-600">
+                        <Globe class="h-4 w-4 mr-2" />
+                        <span>Sesiones online y presenciales</span>
+                      </div>
+                    </div>
+                    <Button variant="primary" class="w-full">
+                      Agendar Sesión
+                    </Button>
+                  </div>
+                </div>
+
+                <!-- Lic. Carmen Vega -->
+                <div class="glass-card rounded-xl overflow-hidden backdrop-blur-sm border border-white/20 hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
+                  <img src="https://images.pexels.com/photos/5327647/pexels-photo-5327647.jpeg?auto=compress&cs=tinysrgb&w=400" alt="Carmen Vega" class="w-full h-48 object-cover" />
+                  <div class="p-6">
+                    <h3 class="text-lg font-bold text-gray-900 mb-2">Lic. Carmen Vega</h3>
+                    <p class="text-sm text-primary font-medium mb-2">Coach de Vida y Carrera</p>
+                    <p class="text-sm text-gray-600 mb-4">Especialista en equilibrio vida-trabajo y desarrollo personal</p>
+                    <div class="flex items-center mb-4">
+                      <div class="flex items-center mr-4">
+                        <Star class="h-4 w-4 text-yellow-400 fill-current" />
+                        <Star class="h-4 w-4 text-yellow-400 fill-current" />
+                        <Star class="h-4 w-4 text-yellow-400 fill-current" />
+                        <Star class="h-4 w-4 text-yellow-400 fill-current" />
+                        <Star class="h-4 w-4 text-yellow-400 fill-current" />
+                      </div>
+                      <span class="text-sm text-gray-600">4.8 (92 reseñas)</span>
+                    </div>
+                    <div class="space-y-2 mb-4">
+                      <div class="flex items-center text-sm text-gray-600">
+                        <Clock class="h-4 w-4 mr-2" />
+                        <span>Disponible: Mar-Sáb 8:00-16:00</span>
+                      </div>
+                      <div class="flex items-center text-sm text-gray-600">
+                        <Globe class="h-4 w-4 mr-2" />
+                        <span>Sesiones online</span>
+                      </div>
+                    </div>
+                    <Button variant="primary" class="w-full">
+                      Agendar Sesión
+                    </Button>
+                  </div>
+                </div>
+
+                <!-- Mg. Fernando López -->
+                <div class="glass-card rounded-xl overflow-hidden backdrop-blur-sm border border-white/20 hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
+                  <img src="https://images.pexels.com/photos/5327921/pexels-photo-5327921.jpeg?auto=compress&cs=tinysrgb&w=400" alt="Fernando López" class="w-full h-48 object-cover" />
+                  <div class="p-6">
+                    <h3 class="text-lg font-bold text-gray-900 mb-2">Mg. Fernando López</h3>
+                    <p class="text-sm text-primary font-medium mb-2">Coach de Alto Rendimiento</p>
+                    <p class="text-sm text-gray-600 mb-4">Especialista en productividad, metas y transformación de hábitos</p>
+                    <div class="flex items-center mb-4">
+                      <div class="flex items-center mr-4">
+                        <Star class="h-4 w-4 text-yellow-400 fill-current" />
+                        <Star class="h-4 w-4 text-yellow-400 fill-current" />
+                        <Star class="h-4 w-4 text-yellow-400 fill-current" />
+                        <Star class="h-4 w-4 text-yellow-400 fill-current" />
+                        <Star class="h-4 w-4 text-yellow-400 fill-current" />
+                      </div>
+                      <span class="text-sm text-gray-600">5.0 (67 reseñas)</span>
+                    </div>
+                    <div class="space-y-2 mb-4">
+                      <div class="flex items-center text-sm text-gray-600">
+                        <Clock class="h-4 w-4 mr-2" />
+                        <span>Disponible: Lun-Jue 10:00-18:00</span>
+                      </div>
+                      <div class="flex items-center text-sm text-gray-600">
+                        <MapPin class="h-4 w-4 mr-2" />
+                        <span>Presencial y online</span>
+                      </div>
+                    </div>
+                    <Button variant="primary" class="w-full">
+                      Agendar Sesión
+                    </Button>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Mis Sesiones de Coaching -->
+            <div class="glass-container rounded-xl shadow-lg p-8 backdrop-blur-sm border border-white/30">
+              <h2 class="text-xl font-semibold mb-6">Mis Sesiones de Coaching</h2>
+              
+              <!-- Próximas Sesiones -->
+              <div class="mb-8">
+                <h3 class="text-lg font-medium text-gray-900 mb-4">Próximas Sesiones</h3>
+                <div class="space-y-4">
+                  <div class="glass-card p-6 rounded-xl backdrop-blur-sm border border-white/20">
+                    <div class="flex items-center justify-between">
+                      <div class="flex items-center space-x-4">
+                        <div class="w-12 h-12 bg-blue-100 rounded-xl flex items-center justify-center">
+                          <MessageCircle class="h-6 w-6 text-blue-600" />
+                        </div>
+                        <div>
+                          <h4 class="font-semibold text-gray-900">Sesión con Miguel Torres</h4>
+                          <p class="text-sm text-gray-600">Miércoles, 15 de enero - 5:00 PM</p>
+                          <p class="text-xs text-gray-500">Tema: Gestión del tiempo y prioridades</p>
+                        </div>
+                      </div>
+                      <div class="flex items-center space-x-2">
+                        <span class="bg-green-100 text-green-800 text-xs px-2 py-1 rounded-full">Confirmada</span>
+                        <Button variant="outline" class="text-xs px-3 py-1">Unirse</Button>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="glass-card p-6 rounded-xl backdrop-blur-sm border border-white/20">
+                    <div class="flex items-center justify-between">
+                      <div class="flex items-center space-x-4">
+                        <div class="w-12 h-12 bg-purple-100 rounded-xl flex items-center justify-center">
+                          <MessageCircle class="h-6 w-6 text-purple-600" />
+                        </div>
+                        <div>
+                          <h4 class="font-semibold text-gray-900">Sesión con Lic. Carmen Vega</h4>
+                          <p class="text-sm text-gray-600">Viernes, 17 de enero - 3:00 PM</p>
+                          <p class="text-xs text-gray-500">Tema: Equilibrio vida-trabajo</p>
+                        </div>
+                      </div>
+                      <div class="flex items-center space-x-2">
+                        <span class="bg-yellow-100 text-yellow-800 text-xs px-2 py-1 rounded-full">Pendiente</span>
+                        <Button variant="outline" class="text-xs px-3 py-1">Confirmar</Button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Historial de Sesiones -->
+              <div>
+                <h3 class="text-lg font-medium text-gray-900 mb-4">Historial de Sesiones</h3>
+                <div class="space-y-4">
+                  <div class="glass-card p-6 rounded-xl backdrop-blur-sm border border-white/20">
+                    <div class="flex items-center justify-between">
+                      <div class="flex items-center space-x-4">
+                        <div class="w-12 h-12 bg-green-100 rounded-xl flex items-center justify-center">
+                          <MessageCircle class="h-6 w-6 text-green-600" />
+                        </div>
+                        <div>
+                          <h4 class="font-semibold text-gray-900">Sesión con Miguel Torres</h4>
+                          <p class="text-sm text-gray-600">8 de enero - Completada</p>
+                          <p class="text-xs text-gray-500">Tema: Definición de objetivos profesionales</p>
+                        </div>
+                      </div>
+                      <div class="flex items-center space-x-2">
+                        <div class="flex items-center">
+                          <Star class="h-4 w-4 text-yellow-400 fill-current" />
+                          <Star class="h-4 w-4 text-yellow-400 fill-current" />
+                          <Star class="h-4 w-4 text-yellow-400 fill-current" />
+                          <Star class="h-4 w-4 text-yellow-400 fill-current" />
+                          <Star class="h-4 w-4 text-yellow-400 fill-current" />
+                        </div>
+                        <span class="text-sm text-gray-600">5.0</span>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="glass-card p-6 rounded-xl backdrop-blur-sm border border-white/20">
+                    <div class="flex items-center justify-between">
+                      <div class="flex items-center space-x-4">
+                        <div class="w-12 h-12 bg-purple-100 rounded-xl flex items-center justify-center">
+                          <MessageCircle class="h-6 w-6 text-purple-600" />
+                        </div>
+                        <div>
+                          <h4 class="font-semibold text-gray-900">Sesión con Lic. Carmen Vega</h4>
+                          <p class="text-sm text-gray-600">22 de diciembre - Completada</p>
+                          <p class="text-xs text-gray-500">Tema: Manejo del estrés y ansiedad</p>
+                        </div>
+                      </div>
+                      <div class="flex items-center space-x-2">
+                        <div class="flex items-center">
+                          <Star class="h-4 w-4 text-yellow-400 fill-current" />
+                          <Star class="h-4 w-4 text-yellow-400 fill-current" />
+                          <Star class="h-4 w-4 text-yellow-400 fill-current" />
+                          <Star class="h-4 w-4 text-yellow-400 fill-current" />
+                          <Star class="h-4 w-4 text-gray-300" />
+                        </div>
+                        <span class="text-sm text-gray-600">4.0</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Beneficios del Coaching -->
+            <div class="glass-container rounded-xl shadow-lg p-8 backdrop-blur-sm border border-white/30">
+              <h2 class="text-xl font-semibold mb-6">¿Por qué elegir Coaching Personal?</h2>
+              <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <div class="text-center">
+                  <div class="w-16 h-16 bg-gradient-to-br from-blue-400 to-blue-600 rounded-2xl flex items-center justify-center mx-auto mb-4">
+                    <TrendingUp class="h-8 w-8 text-white" />
+                  </div>
+                  <h3 class="text-lg font-semibold text-gray-900 mb-2">Crecimiento Profesional</h3>
+                  <p class="text-sm text-gray-600">Desarrolla habilidades clave para avanzar en tu carrera</p>
+                </div>
+                <div class="text-center">
+                  <div class="w-16 h-16 bg-gradient-to-br from-green-400 to-green-600 rounded-2xl flex items-center justify-center mx-auto mb-4">
+                    <Target class="h-8 w-8 text-white" />
+                  </div>
+                  <h3 class="text-lg font-semibold text-gray-900 mb-2">Claridad de Objetivos</h3>
+                  <p class="text-sm text-gray-600">Define y alcanza tus metas personales y profesionales</p>
+                </div>
+                <div class="text-center">
+                  <div class="w-16 h-16 bg-gradient-to-br from-purple-400 to-purple-600 rounded-2xl flex items-center justify-center mx-auto mb-4">
+                    <Zap class="h-8 w-8 text-white" />
+                  </div>
+                  <h3 class="text-lg font-semibold text-gray-900 mb-2">Mayor Confianza</h3>
+                  <p class="text-sm text-gray-600">Aumenta tu autoestima y confianza en el entorno laboral</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
           <!-- Reservas View -->
           <div v-if="activeView === 'reservas'" class="max-w-7xl mx-auto space-y-8">
             <div>
@@ -882,7 +1285,10 @@ import {
   BookOpen,
   Shield,
   Phone,
-  Award
+  Award,
+  Target,
+  TrendingUp,
+  Zap
 } from 'lucide-vue-next';
 import Button from '../../components/common/Button.vue';
 
@@ -892,7 +1298,9 @@ const activeView = ref('dashboard');
 const empleadoNavLinks = [
   { id: 'dashboard', text: 'Dashboard', icon: LayoutDashboard },
   { id: 'actividades', text: 'Actividades', icon: Calendar },
+  { id: 'cursos', text: 'Cursos y Talleres', icon: BookOpen },
   { id: 'reservas', text: 'Mis Reservas', icon: CalendarCheck },
+  { id: 'coaching', text: 'Coaching Personal', icon: MessageCircle },
   { id: 'encuestas', text: 'Encuestas', icon: ClipboardList },
   { id: 'desafios', text: 'Desafíos', icon: Trophy },
   { id: 'psicoterapia', text: 'Psicoterapia Online', icon: Heart }
