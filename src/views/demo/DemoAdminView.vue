@@ -495,8 +495,6 @@ import {
   Code,
   DollarSign,
   Briefcase,
-  BarChart3,
-  Code,
-  DollarSign
+  BarChart3
 } from 'lucide-vue-next'
 </script>
