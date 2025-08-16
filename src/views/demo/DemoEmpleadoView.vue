@@ -1318,6 +1318,7 @@ const empleadoNavLinks = [
   { id: 'dashboard', text: 'Dashboard', icon: LayoutDashboard },
   { id: 'actividades', text: 'Actividades', icon: Calendar },
   { id: 'cursos', text: 'Cursos y Talleres', icon: GraduationCap },
+  { id: 'coaching', text: 'Coaching Personal', icon: MessageCircle }
   { id: 'reservas', text: 'Mis Reservas', icon: CalendarCheck },
   { id: 'encuestas', text: 'Encuestas', icon: ClipboardList },
   { id: 'desafios', text: 'Desafíos', icon: Trophy }
