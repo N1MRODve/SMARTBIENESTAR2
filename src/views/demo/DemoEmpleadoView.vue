@@ -499,19 +499,6 @@
             </div>
           </div>
         </div>
-          <div class="space-y-4">
-            <div class="glass-card rounded-xl shadow-lg p-6 backdrop-blur-sm border border-white/20 flex items-center justify-between">
-              <div>
-                <h2 class="text-lg font-bold text-gray-800">Evaluación de Clima Laboral Q1 2025</h2>
-                <p class="text-sm text-gray-600 mt-1">Encuesta trimestral para evaluar el ambiente de trabajo y bienestar.</p>
-                <p class="text-xs text-gray-500 mt-2">Fecha límite: 30 de enero de 2025</p>
-              </div>
-              <button class="glass-button-primary text-white font-bold py-3 px-6 rounded-lg hover:bg-primary/90 transition-all duration-300 backdrop-blur-sm border border-blue-500/30">
-                Completar Encuesta
-              </button>
-            </div>
-          </div>
-        </div>
 
         <!-- Desafíos View -->
         <div v-if="activeView === 'desafios'" class="space-y-8">
