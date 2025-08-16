@@ -1372,7 +1372,6 @@ import {
   CheckCircle,
   User,
   Clock,
-  BookOpen,
   Award
 } from 'lucide-vue-next';
 import Button from '../../components/common/Button.vue';
