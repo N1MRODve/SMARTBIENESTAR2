@@ -470,11 +470,16 @@
         </div>
       </div>
     </div>
-  </AdminLayout>
+      </main>
+    </div>
+  </div>
 </template>
 
 <script setup>
 import { 
+  ActivitySquare,
+  ArrowLeft,
+  LayoutDashboard,
   Users, 
   Calendar, 
   ClipboardList, 
@@ -492,7 +497,15 @@ import {
   Apple,
   Heart,
   Code,
-  DollarSign
+  DollarSign,
+  Briefcase,
+  BarChart3
 } from 'lucide-vue-next'
-import AdminLayout from '@/layouts/AdminLayout.vue'
+import { useRouter } from 'vue-router'
+
+const router = useRouter()
+
+const volverADemo = () => {
+  router.push('/demo')
+}
 </script>
