@@ -29,7 +29,7 @@
       <aside class="fixed inset-y-0 left-0 w-64 glass-sidebar backdrop-blur-xl border-r border-white/20 text-white pt-16 z-40">
         <nav class="flex-1 px-4 py-6 space-y-2 overflow-y-auto">
           <button
-            v-for="link in empleadoNavLinks"
+            v-for="link in empleadoNavLinks" 
             :key="link.id"
             @click="activeView = link.id"
             :class="[
@@ -1780,6 +1780,8 @@ import {
   ClipboardList, 
   Trophy,
   GraduationCap,
+  MessageCircle,
+  GraduationCap,
   Activity,
   Brain,
   Droplets,
@@ -1804,12 +1806,14 @@ const router = useRouter();
 const activeView = ref('dashboard');
 
 const empleadoNavLinks = [
-  { id: 'dashboard', text: 'Dashboard', icon: LayoutDashboard },
+const empleadoNavLinks = [
+  { id: 'dashboard', text: 'Mi Dashboard', icon: LayoutDashboard },
   { id: 'actividades', text: 'Actividades', icon: Calendar },
-  { id: 'cursos', text: 'Cursos y Talleres', icon: GraduationCap },
   { id: 'reservas', text: 'Mis Reservas', icon: CalendarCheck },
   { id: 'encuestas', text: 'Encuestas', icon: ClipboardList },
-  { id: 'desafios', text: 'Desafíos', icon: Trophy }
+  { id: 'desafios', text: 'Desafíos', icon: Trophy },
+  { id: 'cursos', text: 'Cursos y Talleres', icon: GraduationCap },
+  { id: 'coaching', text: 'Coaching Personal', icon: MessageCircle }
 ];
 
 function salirDemo() {
