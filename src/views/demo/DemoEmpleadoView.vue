@@ -335,6 +335,495 @@
           </div>
         </div>
 
+        <!-- Coaching Personal View -->
+        <div v-if="activeView === 'coaching'" class="space-y-8">
+          <div>
+            <h1 class="text-3xl font-bold text-gray-900 mb-2">Coaching Personal</h1>
+            <p class="text-gray-600">Reserva sesiones one-to-one con nuestros coaches especializados</p>
+          </div>
+
+          <!-- Estadísticas de coaching -->
+          <div class="grid grid-cols-1 md:grid-cols-4 gap-6">
+            <div class="glass-card rounded-xl shadow-lg p-6 backdrop-blur-sm border border-white/20 text-center hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
+              <div class="w-12 h-12 bg-blue-500/10 rounded-xl flex items-center justify-center mx-auto mb-3">
+                <MessageCircle class="h-6 w-6 text-blue-600" />
+              </div>
+              <h3 class="text-2xl font-bold text-blue-600 mb-1">4</h3>
+              <p class="text-gray-600 text-sm">Sesiones Completadas</p>
+            </div>
+            <div class="glass-card rounded-xl shadow-lg p-6 backdrop-blur-sm border border-white/20 text-center hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
+              <div class="w-12 h-12 bg-green-500/10 rounded-xl flex items-center justify-center mx-auto mb-3">
+                <Calendar class="h-6 w-6 text-green-600" />
+              </div>
+              <h3 class="text-2xl font-bold text-green-600 mb-1">2</h3>
+              <p class="text-gray-600 text-sm">Próximas Sesiones</p>
+            </div>
+            <div class="glass-card rounded-xl shadow-lg p-6 backdrop-blur-sm border border-white/20 text-center hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
+              <div class="w-12 h-12 bg-yellow-500/10 rounded-xl flex items-center justify-center mx-auto mb-3">
+                <Star class="h-6 w-6 text-yellow-600" />
+              </div>
+              <h3 class="text-2xl font-bold text-yellow-600 mb-1">4.5</h3>
+              <p class="text-gray-600 text-sm">Calificación Promedio</p>
+            </div>
+            <div class="glass-card rounded-xl shadow-lg p-6 backdrop-blur-sm border border-white/20 text-center hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
+              <div class="w-12 h-12 bg-purple-500/10 rounded-xl flex items-center justify-center mx-auto mb-3">
+                <Trophy class="h-6 w-6 text-purple-600" />
+              </div>
+              <h3 class="text-2xl font-bold text-purple-600 mb-1">270</h3>
+              <p class="text-gray-600 text-sm">Puntos Ganados</p>
+            </div>
+          </div>
+
+          <!-- Mis Sesiones Programadas -->
+          <div class="glass-container rounded-xl shadow-lg p-6 backdrop-blur-sm border border-white/30">
+            <h2 class="text-xl font-semibold mb-6 flex items-center">
+              <Calendar class="h-5 w-5 mr-2 text-primary" />
+              Mis Próximas Sesiones
+            </h2>
+            <div class="space-y-4">
+              <div class="glass-card p-6 rounded-xl backdrop-blur-sm border border-white/20 hover:shadow-lg transition-all duration-300">
+                <div class="flex items-start justify-between">
+                  <div class="flex items-start space-x-4">
+                    <img 
+                      src="https://images.pexels.com/photos/3184291/pexels-photo-3184291.jpeg?auto=compress&cs=tinysrgb&w=100" 
+                      alt="Elena Vásquez"
+                      class="w-16 h-16 rounded-xl object-cover"
+                    />
+                    <div class="flex-1">
+                      <h3 class="text-lg font-semibold text-gray-900">Sesión de Gestión del Estrés</h3>
+                      <p class="text-sm text-gray-600 mb-2">con Elena Vásquez - Coach de Vida y Bienestar</p>
+                      <div class="flex items-center space-x-4 text-sm text-gray-500">
+                        <span class="flex items-center">
+                          <Clock class="h-4 w-4 mr-1" />
+                          Lunes 22 Ene, 16:00 - 17:00
+                        </span>
+                        <span class="flex items-center">
+                          <Globe class="h-4 w-4 mr-1" />
+                          Online
+                        </span>
+                        <span class="flex items-center">
+                          <Star class="h-4 w-4 mr-1 text-yellow-500" />
+                          100 puntos
+                        </span>
+                      </div>
+                      <p class="text-sm text-gray-700 mt-2">
+                        <strong>Enfoque:</strong> Técnicas para manejar la presión de deadlines
+                      </p>
+                    </div>
+                  </div>
+                  <div class="flex flex-col gap-2">
+                    <span class="bg-green-100/80 text-green-800 px-3 py-1 rounded-full text-xs font-medium backdrop-blur-sm border border-green-200/50">
+                      Confirmada
+                    </span>
+                    <button class="glass-button-outline text-blue-700 bg-white/60 hover:bg-blue-50/80 px-4 py-2 rounded-lg transition-all duration-300 font-medium shadow-md hover:shadow-lg hover:-translate-y-0.5 backdrop-blur-sm border border-blue-300/50 text-xs">
+                      Unirse a reunión
+                    </button>
+                  </div>
+                </div>
+              </div>
+
+              <div class="glass-card p-6 rounded-xl backdrop-blur-sm border border-white/20 hover:shadow-lg transition-all duration-300">
+                <div class="flex items-start justify-between">
+                  <div class="flex items-start space-x-4">
+                    <img 
+                      src="https://images.pexels.com/photos/3184338/pexels-photo-3184338.jpeg?auto=compress&cs=tinysrgb&w=100" 
+                      alt="Miguel Torres"
+                      class="w-16 h-16 rounded-xl object-cover"
+                    />
+                    <div class="flex-1">
+                      <h3 class="text-lg font-semibold text-gray-900">Desarrollo de Liderazgo Personal</h3>
+                      <p class="text-sm text-gray-600 mb-2">con Miguel Torres - Coach Ejecutivo y Liderazgo</p>
+                      <div class="flex items-center space-x-4 text-sm text-gray-500">
+                        <span class="flex items-center">
+                          <Clock class="h-4 w-4 mr-1" />
+                          Viernes 25 Ene, 15:00 - 16:00
+                        </span>
+                        <span class="flex items-center">
+                          <MapPin class="h-4 w-4 mr-1" />
+                          Presencial
+                        </span>
+                        <span class="flex items-center">
+                          <Star class="h-4 w-4 mr-1 text-yellow-500" />
+                          120 puntos
+                        </span>
+                      </div>
+                      <p class="text-sm text-gray-700 mt-2">
+                        <strong>Enfoque:</strong> Mejorar habilidades de comunicación con el equipo
+                      </p>
+                    </div>
+                  </div>
+                  <div class="flex flex-col gap-2">
+                    <span class="bg-green-100/80 text-green-800 px-3 py-1 rounded-full text-xs font-medium backdrop-blur-sm border border-green-200/50">
+                      Confirmada
+                    </span>
+                    <button class="glass-button-outline text-gray-700 bg-white/60 hover:bg-gray-50/80 px-4 py-2 rounded-lg transition-all duration-300 font-medium shadow-md hover:shadow-lg hover:-translate-y-0.5 backdrop-blur-sm border border-gray-300/50 text-xs">
+                      Ver ubicación
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Coaches Disponibles -->
+          <div class="glass-container rounded-xl shadow-lg p-6 backdrop-blur-sm border border-white/30">
+            <div class="flex justify-between items-center mb-6">
+              <h2 class="text-xl font-semibold flex items-center">
+                <Users class="h-5 w-5 mr-2 text-primary" />
+                Coaches Disponibles
+              </h2>
+              <div class="flex gap-2">
+                <select class="px-3 py-2 border border-white/30 rounded-lg bg-white/60 backdrop-blur-sm text-sm">
+                  <option value="">Todas las especialidades</option>
+                  <option value="vida">Vida y Bienestar</option>
+                  <option value="ejecutivo">Ejecutivo y Liderazgo</option>
+                  <option value="nutricional">Nutricional</option>
+                  <option value="carrera">Desarrollo de Carrera</option>
+                  <option value="mindfulness">Mindfulness</option>
+                  <option value="productividad">Productividad</option>
+                </select>
+                <select class="px-3 py-2 border border-white/30 rounded-lg bg-white/60 backdrop-blur-sm text-sm">
+                  <option value="">Cualquier modalidad</option>
+                  <option value="online">Online</option>
+                  <option value="presencial">Presencial</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <!-- Coach 1 -->
+              <div class="glass-card p-6 rounded-xl backdrop-blur-sm border border-white/20 hover:shadow-lg transition-all duration-300">
+                <div class="flex items-start space-x-4">
+                  <img 
+                    src="https://images.pexels.com/photos/3184291/pexels-photo-3184291.jpeg?auto=compress&cs=tinysrgb&w=100" 
+                    alt="Elena Vásquez"
+                    class="w-20 h-20 rounded-xl object-cover"
+                  />
+                  <div class="flex-1">
+                    <h3 class="text-lg font-semibold text-gray-900">Elena Vásquez</h3>
+                    <p class="text-sm text-primary font-medium mb-2">Coach de Vida y Bienestar</p>
+                    <div class="flex items-center mb-2">
+                      <div class="flex items-center mr-4">
+                        <Star class="h-4 w-4 text-yellow-500 fill-current" />
+                        <span class="text-sm text-gray-600 ml-1">4.9 (127 reseñas)</span>
+                      </div>
+                      <span class="text-sm text-gray-600">8 años exp.</span>
+                    </div>
+                    <div class="flex flex-wrap gap-1 mb-3">
+                      <span class="bg-blue-100/80 text-blue-800 px-2 py-1 rounded-full text-xs backdrop-blur-sm border border-blue-200/50">Gestión del estrés</span>
+                      <span class="bg-green-100/80 text-green-800 px-2 py-1 rounded-full text-xs backdrop-blur-sm border border-green-200/50">Equilibrio vida-trabajo</span>
+                    </div>
+                    <p class="text-sm text-gray-700 mb-3">Especialista en equilibrio vida-trabajo y gestión del estrés.</p>
+                    <div class="flex items-center justify-between">
+                      <div class="text-sm">
+                        <span class="text-gray-500">Duración:</span>
+                        <span class="font-medium text-gray-900 ml-1">60 min</span>
+                      </div>
+                      <button class="glass-button-primary text-white px-4 py-2 rounded-lg hover:bg-primary/90 transition-all duration-300 font-medium shadow-md hover:shadow-lg hover:-translate-y-0.5 backdrop-blur-sm border border-blue-500/30 text-sm">
+                        Reservar Sesión
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Coach 2 -->
+              <div class="glass-card p-6 rounded-xl backdrop-blur-sm border border-white/20 hover:shadow-lg transition-all duration-300">
+                <div class="flex items-start space-x-4">
+                  <img 
+                    src="https://images.pexels.com/photos/3184338/pexels-photo-3184338.jpeg?auto=compress&cs=tinysrgb&w=100" 
+                    alt="Miguel Torres"
+                    class="w-20 h-20 rounded-xl object-cover"
+                  />
+                  <div class="flex-1">
+                    <h3 class="text-lg font-semibold text-gray-900">Miguel Torres</h3>
+                    <p class="text-sm text-primary font-medium mb-2">Coach Ejecutivo y Liderazgo</p>
+                    <div class="flex items-center mb-2">
+                      <div class="flex items-center mr-4">
+                        <Star class="h-4 w-4 text-yellow-500 fill-current" />
+                        <span class="text-sm text-gray-600 ml-1">4.8 (89 reseñas)</span>
+                      </div>
+                      <span class="text-sm text-gray-600">12 años exp.</span>
+                    </div>
+                    <div class="flex flex-wrap gap-1 mb-3">
+                      <span class="bg-purple-100/80 text-purple-800 px-2 py-1 rounded-full text-xs backdrop-blur-sm border border-purple-200/50">Liderazgo</span>
+                      <span class="bg-blue-100/80 text-blue-800 px-2 py-1 rounded-full text-xs backdrop-blur-sm border border-blue-200/50">Comunicación</span>
+                    </div>
+                    <p class="text-sm text-gray-700 mb-3">Experto en desarrollo de liderazgo y comunicación efectiva.</p>
+                    <div class="flex items-center justify-between">
+                      <div class="text-sm">
+                        <span class="text-gray-500">Duración:</span>
+                        <span class="font-medium text-gray-900 ml-1">60 min</span>
+                      </div>
+                      <button class="glass-button-primary text-white px-4 py-2 rounded-lg hover:bg-primary/90 transition-all duration-300 font-medium shadow-md hover:shadow-lg hover:-translate-y-0.5 backdrop-blur-sm border border-blue-500/30 text-sm">
+                        Reservar Sesión
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Coach 3 -->
+              <div class="glass-card p-6 rounded-xl backdrop-blur-sm border border-white/20 hover:shadow-lg transition-all duration-300">
+                <div class="flex items-start space-x-4">
+                  <img 
+                    src="https://images.pexels.com/photos/3822622/pexels-photo-3822622.jpeg?auto=compress&cs=tinysrgb&w=100" 
+                    alt="Laura Sánchez"
+                    class="w-20 h-20 rounded-xl object-cover"
+                  />
+                  <div class="flex-1">
+                    <h3 class="text-lg font-semibold text-gray-900">Laura Sánchez</h3>
+                    <p class="text-sm text-primary font-medium mb-2">Coach Nutricional y Wellness</p>
+                    <div class="flex items-center mb-2">
+                      <div class="flex items-center mr-4">
+                        <Star class="h-4 w-4 text-yellow-500 fill-current" />
+                        <span class="text-sm text-gray-600 ml-1">4.7 (64 reseñas)</span>
+                      </div>
+                      <span class="text-sm text-gray-600">6 años exp.</span>
+                    </div>
+                    <div class="flex flex-wrap gap-1 mb-3">
+                      <span class="bg-green-100/80 text-green-800 px-2 py-1 rounded-full text-xs backdrop-blur-sm border border-green-200/50">Nutrición</span>
+                      <span class="bg-yellow-100/80 text-yellow-800 px-2 py-1 rounded-full text-xs backdrop-blur-sm border border-yellow-200/50">Hábitos saludables</span>
+                    </div>
+                    <p class="text-sm text-gray-700 mb-3">Nutricionista especializada en hábitos saludables y bienestar integral.</p>
+                    <div class="flex items-center justify-between">
+                      <div class="text-sm">
+                        <span class="text-gray-500">Duración:</span>
+                        <span class="font-medium text-gray-900 ml-1">45 min</span>
+                      </div>
+                      <button class="glass-button-primary text-white px-4 py-2 rounded-lg hover:bg-primary/90 transition-all duration-300 font-medium shadow-md hover:shadow-lg hover:-translate-y-0.5 backdrop-blur-sm border border-blue-500/30 text-sm">
+                        Reservar Sesión
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Coach 4 -->
+              <div class="glass-card p-6 rounded-xl backdrop-blur-sm border border-white/20 hover:shadow-lg transition-all duration-300">
+                <div class="flex items-start space-x-4">
+                  <img 
+                    src="https://images.pexels.com/photos/3184465/pexels-photo-3184465.jpeg?auto=compress&cs=tinysrgb&w=100" 
+                    alt="Roberto Mendoza"
+                    class="w-20 h-20 rounded-xl object-cover"
+                  />
+                  <div class="flex-1">
+                    <h3 class="text-lg font-semibold text-gray-900">Roberto Mendoza</h3>
+                    <p class="text-sm text-primary font-medium mb-2">Coach de Carrera y Desarrollo</p>
+                    <div class="flex items-center mb-2">
+                      <div class="flex items-center mr-4">
+                        <Star class="h-4 w-4 text-yellow-500 fill-current" />
+                        <span class="text-sm text-gray-600 ml-1">4.9 (156 reseñas)</span>
+                      </div>
+                      <span class="text-sm text-gray-600">10 años exp.</span>
+                    </div>
+                    <div class="flex flex-wrap gap-1 mb-3">
+                      <span class="bg-indigo-100/80 text-indigo-800 px-2 py-1 rounded-full text-xs backdrop-blur-sm border border-indigo-200/50">Desarrollo de carrera</span>
+                      <span class="bg-purple-100/80 text-purple-800 px-2 py-1 rounded-full text-xs backdrop-blur-sm border border-purple-200/50">Planificación estratégica</span>
+                    </div>
+                    <p class="text-sm text-gray-700 mb-3">Especialista en desarrollo de carrera y transiciones profesionales.</p>
+                    <div class="flex items-center justify-between">
+                      <div class="text-sm">
+                        <span class="text-gray-500">Duración:</span>
+                        <span class="font-medium text-gray-900 ml-1">60 min</span>
+                      </div>
+                      <button class="glass-button-primary text-white px-4 py-2 rounded-lg hover:bg-primary/90 transition-all duration-300 font-medium shadow-md hover:shadow-lg hover:-translate-y-0.5 backdrop-blur-sm border border-blue-500/30 text-sm">
+                        Reservar Sesión
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Coach 5 -->
+              <div class="glass-card p-6 rounded-xl backdrop-blur-sm border border-white/20 hover:shadow-lg transition-all duration-300">
+                <div class="flex items-start space-x-4">
+                  <img 
+                    src="https://images.pexels.com/photos/3861958/pexels-photo-3861958.jpeg?auto=compress&cs=tinysrgb&w=100" 
+                    alt="Carmen Vega"
+                    class="w-20 h-20 rounded-xl object-cover"
+                  />
+                  <div class="flex-1">
+                    <h3 class="text-lg font-semibold text-gray-900">Carmen Vega</h3>
+                    <p class="text-sm text-primary font-medium mb-2">Coach de Mindfulness y Emocional</p>
+                    <div class="flex items-center mb-2">
+                      <div class="flex items-center mr-4">
+                        <Star class="h-4 w-4 text-yellow-500 fill-current" />
+                        <span class="text-sm text-gray-600 ml-1">4.8 (73 reseñas)</span>
+                      </div>
+                      <span class="text-sm text-gray-600">7 años exp.</span>
+                    </div>
+                    <div class="flex flex-wrap gap-1 mb-3">
+                      <span class="bg-pink-100/80 text-pink-800 px-2 py-1 rounded-full text-xs backdrop-blur-sm border border-pink-200/50">Inteligencia emocional</span>
+                      <span class="bg-purple-100/80 text-purple-800 px-2 py-1 rounded-full text-xs backdrop-blur-sm border border-purple-200/50">Mindfulness</span>
+                    </div>
+                    <p class="text-sm text-gray-700 mb-3">Psicóloga especializada en inteligencia emocional y mindfulness.</p>
+                    <div class="flex items-center justify-between">
+                      <div class="text-sm">
+                        <span class="text-gray-500">Duración:</span>
+                        <span class="font-medium text-gray-900 ml-1">50 min</span>
+                      </div>
+                      <button class="glass-button-primary text-white px-4 py-2 rounded-lg hover:bg-primary/90 transition-all duration-300 font-medium shadow-md hover:shadow-lg hover:-translate-y-0.5 backdrop-blur-sm border border-blue-500/30 text-sm">
+                        Reservar Sesión
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Coach 6 -->
+              <div class="glass-card p-6 rounded-xl backdrop-blur-sm border border-white/20 hover:shadow-lg transition-all duration-300">
+                <div class="flex items-start space-x-4">
+                  <img 
+                    src="https://images.pexels.com/photos/3861969/pexels-photo-3861969.jpeg?auto=compress&cs=tinysrgb&w=100" 
+                    alt="Andrés Morales"
+                    class="w-20 h-20 rounded-xl object-cover"
+                  />
+                  <div class="flex-1">
+                    <h3 class="text-lg font-semibold text-gray-900">Andrés Morales</h3>
+                    <p class="text-sm text-primary font-medium mb-2">Coach de Productividad y Organización</p>
+                    <div class="flex items-center mb-2">
+                      <div class="flex items-center mr-4">
+                        <Star class="h-4 w-4 text-yellow-500 fill-current" />
+                        <span class="text-sm text-gray-600 ml-1">4.6 (42 reseñas)</span>
+                      </div>
+                      <span class="text-sm text-gray-600">5 años exp.</span>
+                    </div>
+                    <div class="flex flex-wrap gap-1 mb-3">
+                      <span class="bg-orange-100/80 text-orange-800 px-2 py-1 rounded-full text-xs backdrop-blur-sm border border-orange-200/50">Gestión del tiempo</span>
+                      <span class="bg-red-100/80 text-red-800 px-2 py-1 rounded-full text-xs backdrop-blur-sm border border-red-200/50">Productividad</span>
+                    </div>
+                    <p class="text-sm text-gray-700 mb-3">Experto en optimización del tiempo y técnicas de productividad.</p>
+                    <div class="flex items-center justify-between">
+                      <div class="text-sm">
+                        <span class="text-gray-500">Duración:</span>
+                        <span class="font-medium text-gray-900 ml-1">45 min</span>
+                      </div>
+                      <button class="glass-button-primary text-white px-4 py-2 rounded-lg hover:bg-primary/90 transition-all duration-300 font-medium shadow-md hover:shadow-lg hover:-translate-y-0.5 backdrop-blur-sm border border-blue-500/30 text-sm">
+                        Reservar Sesión
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Historial de Sesiones -->
+          <div class="glass-container rounded-xl shadow-lg p-6 backdrop-blur-sm border border-white/30">
+            <h2 class="text-xl font-semibold mb-6 flex items-center">
+              <History class="h-5 w-5 mr-2 text-primary" />
+              Historial de Sesiones
+            </h2>
+            <div class="space-y-4">
+              <div class="glass-card p-6 rounded-xl backdrop-blur-sm border border-white/20">
+                <div class="flex items-start justify-between">
+                  <div class="flex items-start space-x-4">
+                    <img 
+                      src="https://images.pexels.com/photos/3822622/pexels-photo-3822622.jpeg?auto=compress&cs=tinysrgb&w=100" 
+                      alt="Laura Sánchez"
+                      class="w-12 h-12 rounded-lg object-cover"
+                    />
+                    <div class="flex-1">
+                      <h3 class="text-lg font-semibold text-gray-900">Consulta Nutricional Personalizada</h3>
+                      <p class="text-sm text-gray-600 mb-1">con Laura Sánchez - Coach Nutricional</p>
+                      <div class="flex items-center space-x-4 text-sm text-gray-500 mb-2">
+                        <span>10 Enero 2025, 12:00</span>
+                        <span class="flex items-center">
+                          <Globe class="h-3 w-3 mr-1" />
+                          Online
+                        </span>
+                        <span>45 min</span>
+                      </div>
+                      <p class="text-sm text-gray-700">"Excelente sesión, muy personalizada y útil"</p>
+                    </div>
+                  </div>
+                  <div class="text-right">
+                    <div class="flex items-center mb-2">
+                      <Star class="h-4 w-4 text-yellow-500 fill-current" />
+                      <Star class="h-4 w-4 text-yellow-500 fill-current" />
+                      <Star class="h-4 w-4 text-yellow-500 fill-current" />
+                      <Star class="h-4 w-4 text-yellow-500 fill-current" />
+                      <Star class="h-4 w-4 text-yellow-500 fill-current" />
+                    </div>
+                    <span class="bg-blue-100/80 text-blue-800 px-2 py-1 rounded-full text-xs font-medium backdrop-blur-sm border border-blue-200/50">
+                      +80 puntos
+                    </span>
+                  </div>
+                </div>
+              </div>
+
+              <div class="glass-card p-6 rounded-xl backdrop-blur-sm border border-white/20">
+                <div class="flex items-start justify-between">
+                  <div class="flex items-start space-x-4">
+                    <img 
+                      src="https://images.pexels.com/photos/3861958/pexels-photo-3861958.jpeg?auto=compress&cs=tinysrgb&w=100" 
+                      alt="Carmen Vega"
+                      class="w-12 h-12 rounded-lg object-cover"
+                    />
+                    <div class="flex-1">
+                      <h3 class="text-lg font-semibold text-gray-900">Sesión de Mindfulness y Gestión Emocional</h3>
+                      <p class="text-sm text-gray-600 mb-1">con Carmen Vega - Coach de Mindfulness</p>
+                      <div class="flex items-center space-x-4 text-sm text-gray-500 mb-2">
+                        <span>5 Enero 2025, 14:00</span>
+                        <span class="flex items-center">
+                          <MapPin class="h-3 w-3 mr-1" />
+                          Presencial
+                        </span>
+                        <span>50 min</span>
+                      </div>
+                      <p class="text-sm text-gray-700">"Muy relajante, aprendí técnicas que uso diariamente"</p>
+                    </div>
+                  </div>
+                  <div class="text-right">
+                    <div class="flex items-center mb-2">
+                      <Star class="h-4 w-4 text-yellow-500 fill-current" />
+                      <Star class="h-4 w-4 text-yellow-500 fill-current" />
+                      <Star class="h-4 w-4 text-yellow-500 fill-current" />
+                      <Star class="h-4 w-4 text-yellow-500 fill-current" />
+                      <Star class="h-4 w-4 text-gray-300" />
+                    </div>
+                    <span class="bg-blue-100/80 text-blue-800 px-2 py-1 rounded-full text-xs font-medium backdrop-blur-sm border border-blue-200/50">
+                      +90 puntos
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Beneficios del Coaching Personal -->
+          <div class="glass-container rounded-xl shadow-lg p-6 backdrop-blur-sm border border-white/30">
+            <h2 class="text-xl font-semibold mb-6 flex items-center">
+              <Heart class="h-5 w-5 mr-2 text-red-500" />
+              ¿Por qué elegir Coaching Personal?
+            </h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              <div class="text-center">
+                <div class="w-12 h-12 bg-blue-500/10 rounded-xl flex items-center justify-center mx-auto mb-3">
+                  <Target class="h-6 w-6 text-blue-600" />
+                </div>
+                <h3 class="font-semibold text-gray-900 mb-2">Atención Personalizada</h3>
+                <p class="text-sm text-gray-600">Sesiones 100% enfocadas en tus necesidades específicas</p>
+              </div>
+              <div class="text-center">
+                <div class="w-12 h-12 bg-green-500/10 rounded-xl flex items-center justify-center mx-auto mb-3">
+                  <TrendingUp class="h-6 w-6 text-green-600" />
+                </div>
+                <h3 class="font-semibold text-gray-900 mb-2">Resultados Medibles</h3>
+                <p class="text-sm text-gray-600">Seguimiento de progreso y objetivos claros</p>
+              </div>
+              <div class="text-center">
+                <div class="w-12 h-12 bg-purple-500/10 rounded-xl flex items-center justify-center mx-auto mb-3">
+                  <Clock class="h-6 w-6 text-purple-600" />
+                </div>
+                <h3 class="font-semibold text-gray-900 mb-2">Flexibilidad Total</h3>
+                <p class="text-sm text-gray-600">Horarios que se adaptan a tu agenda laboral</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
         <!-- Cursos y Talleres View -->
         <div v-if="activeView === 'cursos'" class="space-y-8">
           <div class="flex justify-between items-center">
@@ -1318,7 +1807,6 @@ const empleadoNavLinks = [
   { id: 'dashboard', text: 'Dashboard', icon: LayoutDashboard },
   { id: 'actividades', text: 'Actividades', icon: Calendar },
   { id: 'cursos', text: 'Cursos y Talleres', icon: GraduationCap },
-  { id: 'coaching', text: 'Coaching Personal', icon: MessageCircle }
   { id: 'reservas', text: 'Mis Reservas', icon: CalendarCheck },
   { id: 'encuestas', text: 'Encuestas', icon: ClipboardList },
   { id: 'desafios', text: 'Desafíos', icon: Trophy }
