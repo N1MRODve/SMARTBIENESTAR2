@@ -74,17 +74,61 @@
               <div class="glass-card p-6 rounded-xl shadow-lg text-center backdrop-blur-sm border border-white/20 hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
                 <h3 class="text-4xl font-bold text-primary mb-2">1,250</h3>
                 <p class="text-gray-700 font-medium">Puntos de Bienestar</p>
+                <p class="text-xs text-gray-500 mt-1">+150 esta semana</p>
               </div>
               <div class="glass-card p-6 rounded-xl shadow-lg text-center backdrop-blur-sm border border-white/20 hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
                 <h3 class="text-4xl font-bold text-primary mb-2">3</h3>
                 <p class="text-gray-700 font-medium">Desafíos Completados</p>
+                <p class="text-xs text-gray-500 mt-1">1 en progreso</p>
               </div>
               <div class="glass-card p-6 rounded-xl shadow-lg text-center backdrop-blur-sm border border-white/20 hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
                 <h3 class="text-4xl font-bold text-primary mb-2">2</h3>
                 <p class="text-gray-700 font-medium">Próximas Sesiones</p>
+                <p class="text-xs text-gray-500 mt-1">Esta semana</p>
               </div>
             </div>
 
+            <!-- Resumen Semanal -->
+            <div class="glass-container rounded-xl shadow-lg p-8 backdrop-blur-sm border border-white/30">
+              <h2 class="text-xl font-semibold text-gray-900 mb-6 flex items-center">
+                <TrendingUp class="h-5 w-5 mr-2 text-primary" />
+                Tu Semana de Bienestar
+              </h2>
+              <div class="grid grid-cols-1 md:grid-cols-4 gap-6">
+                <div class="text-center">
+                  <div class="w-12 h-12 bg-green-100 rounded-xl flex items-center justify-center mx-auto mb-3">
+                    <Activity class="h-6 w-6 text-green-600" />
+                  </div>
+                  <h4 class="font-semibold text-gray-900 mb-1">Actividades</h4>
+                  <p class="text-2xl font-bold text-green-600 mb-1">3</p>
+                  <p class="text-xs text-gray-500">Esta semana</p>
+                </div>
+                <div class="text-center">
+                  <div class="w-12 h-12 bg-blue-100 rounded-xl flex items-center justify-center mx-auto mb-3">
+                    <BookOpen class="h-6 w-6 text-blue-600" />
+                  </div>
+                  <h4 class="font-semibold text-gray-900 mb-1">Cursos</h4>
+                  <p class="text-2xl font-bold text-blue-600 mb-1">1</p>
+                  <p class="text-xs text-gray-500">Completado</p>
+                </div>
+                <div class="text-center">
+                  <div class="w-12 h-12 bg-purple-100 rounded-xl flex items-center justify-center mx-auto mb-3">
+                    <MessageCircle class="h-6 w-6 text-purple-600" />
+                  </div>
+                  <h4 class="font-semibold text-gray-900 mb-1">Coaching</h4>
+                  <p class="text-2xl font-bold text-purple-600 mb-1">2</p>
+                  <p class="text-xs text-gray-500">Sesiones</p>
+                </div>
+                <div class="text-center">
+                  <div class="w-12 h-12 bg-yellow-100 rounded-xl flex items-center justify-center mx-auto mb-3">
+                    <Trophy class="h-6 w-6 text-yellow-600" />
+                  </div>
+                  <h4 class="font-semibold text-gray-900 mb-1">Desafíos</h4>
+                  <p class="text-2xl font-bold text-yellow-600 mb-1">1</p>
+                  <p class="text-xs text-gray-500">En progreso</p>
+                </div>
+              </div>
+            </div>
             <!-- Content Grid -->
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
               <!-- Próximas Sesiones -->
@@ -95,57 +139,363 @@
                 </h2>
                 <div class="space-y-4">
                   <div class="glass-card p-4 rounded-xl shadow-md backdrop-blur-sm border border-white/20 hover:shadow-lg transition-all duration-300 hover:-translate-y-0.5">
+                    <div class="flex items-center justify-between mb-2">
                     <p class="font-semibold text-gray-900">Yoga Matutino</p>
+                      <span class="bg-green-100 text-green-800 text-xs px-2 py-1 rounded-full">Actividad</span>
+                    </div>
                     <p class="text-sm text-gray-600 mt-1">Mañana, 8:00 AM</p>
                     <p class="text-xs text-gray-500">Elena Vásquez</p>
                   </div>
                   <div class="glass-card p-4 rounded-xl shadow-md backdrop-blur-sm border border-white/20 hover:shadow-lg transition-all duration-300 hover:-translate-y-0.5">
+                    <div class="flex items-center justify-between mb-2">
                     <p class="font-semibold text-gray-900">Coaching Personal</p>
+                      <span class="bg-blue-100 text-blue-800 text-xs px-2 py-1 rounded-full">Coaching</span>
+                    </div>
                     <p class="text-sm text-gray-600 mt-1">Miércoles, 5:00 PM</p>
                     <p class="text-xs text-gray-500">Miguel Torres</p>
                   </div>
+                  <div class="glass-card p-4 rounded-xl shadow-md backdrop-blur-sm border border-white/20 hover:shadow-lg transition-all duration-300 hover:-translate-y-0.5">
+                    <div class="flex items-center justify-between mb-2">
+                      <p class="font-semibold text-gray-900">Taller Comunicación</p>
+                      <span class="bg-orange-100 text-orange-800 text-xs px-2 py-1 rounded-full">Curso</span>
+                    </div>
+                    <p class="text-sm text-gray-600 mt-1">Viernes, 2:00 PM</p>
+                    <p class="text-xs text-gray-500">Lic. Carmen Vega</p>
+                  </div>
+                </div>
+                <div class="mt-4 pt-4 border-t border-white/20">
+                  <Button variant="outline" class="w-full text-sm" @click="activeView = 'actividades'">
+                    Ver Todas las Actividades
+                  </Button>
                 </div>
               </div>
 
-              <!-- Encuestas Pendientes -->
+              <!-- Panel de Progreso -->
               <div class="glass-container rounded-xl shadow-lg p-8 backdrop-blur-sm border border-white/30">
                 <h2 class="text-xl font-semibold text-gray-900 mb-6 flex items-center">
-                  <ClipboardList class="h-5 w-5 mr-2 text-primary" />
-                  Encuestas Pendientes
+                  <Target class="h-5 w-5 mr-2 text-primary" />
+                  Mi Progreso
                 </h2>
-                <div class="space-y-4">
-                  <div class="glass-card p-4 rounded-xl shadow-md backdrop-blur-sm border border-white/20 hover:shadow-lg transition-all duration-300 hover:-translate-y-0.5 flex justify-between items-center">
+                
+                <!-- Desafío en Progreso -->
+                <div class="mb-6">
+                  <h3 class="text-sm font-semibold text-gray-700 mb-3">Desafío Activo</h3>
+                  <div class="glass-card p-4 rounded-xl backdrop-blur-sm border border-white/20">
                     <div>
-                      <p class="font-semibold text-gray-900">Clima Laboral Q1</p>
-                      <p class="text-sm text-gray-600">Termina en 5 días</p>
+                      <div class="flex items-center justify-between mb-2">
+                        <p class="font-semibold text-gray-900">Desafío 10,000 Pasos</p>
+                        <span class="text-sm text-gray-600">Día 5/14</span>
+                      </div>
+                      <div class="bg-gray-200 rounded-full h-2 mb-2">
+                        <div class="bg-primary rounded-full h-2 transition-all duration-300" style="width: 36%"></div>
+                      </div>
+                      <p class="text-xs text-gray-500">36% completado • 9 días restantes</p>
                     </div>
-                    <Button variant="primary" class="text-sm px-4 py-2">
-                      Completar
+                  </div>
+                </div>
+
+                <!-- Encuesta Pendiente -->
+                <div class="mb-6">
+                  <h3 class="text-sm font-semibold text-gray-700 mb-3">Encuesta Pendiente</h3>
+                  <div class="glass-card p-4 rounded-xl backdrop-blur-sm border border-white/20">
+                    <div class="flex items-center justify-between">
+                      <div>
+                        <p class="font-semibold text-gray-900">Clima Laboral Q1</p>
+                        <p class="text-xs text-gray-500">Termina en 5 días</p>
+                      </div>
+                      <Button variant="primary" class="text-xs px-3 py-1">
+                        Completar
+                      </Button>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Logros Recientes -->
+                <div>
+                  <h3 class="text-sm font-semibold text-gray-700 mb-3">Logros Recientes</h3>
+                  <div class="space-y-2">
+                    <div class="flex items-center space-x-3">
+                      <div class="w-8 h-8 bg-yellow-100 rounded-lg flex items-center justify-center">
+                        <Trophy class="h-4 w-4 text-yellow-600" />
+                      </div>
+                      <div>
+                        <p class="text-sm font-medium text-gray-900">Desafío Hidratación</p>
+                        <p class="text-xs text-gray-500">Completado hace 3 días</p>
+                      </div>
+                    </div>
+                    <div class="flex items-center space-x-3">
+                      <div class="w-8 h-8 bg-blue-100 rounded-lg flex items-center justify-center">
+                        <BookOpen class="h-4 w-4 text-blue-600" />
+                      </div>
+                      <div>
+                        <p class="text-sm font-medium text-gray-900">Curso Gestión del Tiempo</p>
+                        <p class="text-xs text-gray-500">Certificado obtenido</p>
+                      </div>
+                    </div>
+                    <div class="flex items-center space-x-3">
+                      <div class="w-8 h-8 bg-green-100 rounded-lg flex items-center justify-center">
+                        <Star class="h-4 w-4 text-green-600" />
+                      </div>
+                      <div>
+                        <p class="text-sm font-medium text-gray-900">Calificación 5★</p>
+                        <p class="text-xs text-gray-500">Sesión de meditación</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Actividades Recomendadas -->
+            <div class="glass-container rounded-xl shadow-lg p-8 backdrop-blur-sm border border-white/30">
+              <div class="flex items-center justify-between mb-6">
+                <h2 class="text-xl font-semibold text-gray-900 flex items-center">
+                  <Sparkles class="h-5 w-5 mr-2 text-primary" />
+                  Recomendado para Ti
+                </h2>
+                <Button variant="outline" class="text-sm" @click="activeView = 'actividades'">
+                  Ver Todas
+                </Button>
+              </div>
+              <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <!-- Actividad Recomendada -->
+                <div class="glass-card rounded-xl overflow-hidden backdrop-blur-sm border border-white/20 hover:shadow-lg transition-all duration-300">
+                  <img src="https://images.pexels.com/photos/3822622/pexels-photo-3822622.jpeg?auto=compress&cs=tinysrgb&w=400" alt="Yoga" class="w-full h-32 object-cover" />
+                  <div class="p-4">
+                    <div class="flex items-center justify-between mb-2">
+                      <h4 class="font-semibold text-gray-900">Yoga Avanzado</h4>
+                      <span class="bg-green-100 text-green-800 text-xs px-2 py-1 rounded-full">Nuevo</span>
+                    </div>
+                    <p class="text-sm text-gray-600 mb-3">Basado en tu progreso en yoga básico</p>
+                    <div class="flex items-center text-xs text-gray-500 mb-3">
+                      <Calendar class="h-3 w-3 mr-1" />
+                      <span>Lunes, 7:00 AM</span>
+                    </div>
+                    <Button variant="primary" class="w-full text-sm">
+                      Reservar Plaza
+                    </Button>
+                  </div>
+                </div>
+
+                <!-- Curso Recomendado -->
+                <div class="glass-card rounded-xl overflow-hidden backdrop-blur-sm border border-white/20 hover:shadow-lg transition-all duration-300">
+                  <img src="https://images.pexels.com/photos/3184465/pexels-photo-3184465.jpeg?auto=compress&cs=tinysrgb&w=400" alt="Inteligencia Emocional" class="w-full h-32 object-cover" />
+                  <div class="p-4">
+                    <div class="flex items-center justify-between mb-2">
+                      <h4 class="font-semibold text-gray-900">Inteligencia Emocional</h4>
+                      <span class="bg-purple-100 text-purple-800 text-xs px-2 py-1 rounded-full">Curso</span>
+                    </div>
+                    <p class="text-sm text-gray-600 mb-3">Perfecto para tu desarrollo profesional</p>
+                    <div class="flex items-center text-xs text-gray-500 mb-3">
+                      <Calendar class="h-3 w-3 mr-1" />
+                      <span>Sábado, 9:00 AM</span>
+                    </div>
+                    <Button variant="primary" class="w-full text-sm">
+                      Inscribirse
                     </Button>
                   </div>
                 </div>
               </div>
             </div>
 
-            <!-- Desafíos Activos -->
+            <!-- Panel de Acciones Rápidas -->
+            <div class="glass-container rounded-xl shadow-lg p-8 backdrop-blur-sm border border-white/30">
+              <div class="flex items-center justify-between mb-6">
+                <h2 class="text-xl font-semibold text-gray-900 flex items-center">
+                  <Zap class="h-5 w-5 mr-2 text-primary" />
+                  Acciones Rápidas
+                </h2>
+              </div>
+              <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+                <Button variant="primary" class="flex flex-col items-center p-4 h-auto" @click="activeView = 'coaching'">
+                  <MessageCircle class="h-6 w-6 mb-2" />
+                  <span class="text-sm">Agendar Coaching</span>
+                </Button>
+                <Button variant="outline" class="flex flex-col items-center p-4 h-auto" @click="activeView = 'psicoterapia'">
+                  <Heart class="h-6 w-6 mb-2" />
+                  <span class="text-sm">Chat Psicológico</span>
+                </Button>
+                <Button variant="outline" class="flex flex-col items-center p-4 h-auto" @click="activeView = 'cursos'">
+                  <BookOpen class="h-6 w-6 mb-2" />
+                  <span class="text-sm">Explorar Cursos</span>
+                </Button>
+                <Button variant="outline" class="flex flex-col items-center p-4 h-auto" @click="activeView = 'desafios'">
+                  <Trophy class="h-6 w-6 mb-2" />
+                  <span class="text-sm">Unirse a Desafío</span>
+                </Button>
+              </div>
+            </div>
+
+            <!-- Actividad Reciente y Próximos Eventos -->
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+              <!-- Actividad Reciente -->
+              <div class="glass-container rounded-xl shadow-lg p-8 backdrop-blur-sm border border-white/30">
+                <h2 class="text-xl font-semibold text-gray-900 mb-6 flex items-center">
+                  <Clock class="h-5 w-5 mr-2 text-primary" />
+                  Actividad Reciente
+                </h2>
+                <div class="space-y-4">
+                  <div class="flex items-center space-x-3">
+                    <div class="w-8 h-8 bg-purple-100 rounded-lg flex items-center justify-center">
+                      <Brain class="h-4 w-4 text-purple-600" />
+                    </div>
+                    <div>
+                      <p class="text-sm font-medium text-gray-900">Completaste Meditación Mindfulness</p>
+                      <p class="text-xs text-gray-500">Ayer, 6:00 PM • +50 puntos</p>
+                    </div>
+                  </div>
+                  <div class="flex items-center space-x-3">
+                    <div class="w-8 h-8 bg-blue-100 rounded-lg flex items-center justify-center">
+                      <MessageCircle class="h-4 w-4 text-blue-600" />
+                    </div>
+                    <div>
+                      <p class="text-sm font-medium text-gray-900">Sesión de coaching completada</p>
+                      <p class="text-xs text-gray-500">Hace 2 días • Calificación 5★</p>
+                    </div>
+                  </div>
+                  <div class="flex items-center space-x-3">
+                    <div class="w-8 h-8 bg-green-100 rounded-lg flex items-center justify-center">
+                      <Trophy class="h-4 w-4 text-green-600" />
+                    </div>
+                    <div>
+                      <p class="text-sm font-medium text-gray-900">Desafío Hidratación completado</p>
+                      <p class="text-xs text-gray-500">Hace 3 días • +100 puntos</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Próximos Eventos -->
+              <div class="glass-container rounded-xl shadow-lg p-8 backdrop-blur-sm border border-white/30">
+                <h2 class="text-xl font-semibold text-gray-900 mb-6 flex items-center">
+                  <Calendar class="h-5 w-5 mr-2 text-primary" />
+                  Esta Semana
+                </h2>
+                <div class="space-y-4">
+                  <div class="flex items-center justify-between">
+                    <div class="flex items-center space-x-3">
+                      <div class="text-center">
+                        <div class="text-lg font-bold text-primary">15</div>
+                        <div class="text-xs text-gray-500">ENE</div>
+                      </div>
+                      <div>
+                        <p class="text-sm font-medium text-gray-900">Yoga Matutino</p>
+                        <p class="text-xs text-gray-500">8:00 AM</p>
+                      </div>
+                    </div>
+                    <span class="bg-green-100 text-green-800 text-xs px-2 py-1 rounded-full">Confirmada</span>
+                  </div>
+                  <div class="flex items-center justify-between">
+                    <div class="flex items-center space-x-3">
+                      <div class="text-center">
+                        <div class="text-lg font-bold text-primary">15</div>
+                        <div class="text-xs text-gray-500">ENE</div>
+                      </div>
+                      <div>
+                        <p class="text-sm font-medium text-gray-900">Coaching Personal</p>
+                        <p class="text-xs text-gray-500">5:00 PM</p>
+                      </div>
+                    </div>
+                    <span class="bg-green-100 text-green-800 text-xs px-2 py-1 rounded-full">Confirmada</span>
+                  </div>
+                  <div class="flex items-center justify-between">
+                    <div class="flex items-center space-x-3">
+                      <div class="text-center">
+                        <div class="text-lg font-bold text-primary">17</div>
+                        <div class="text-xs text-gray-500">ENE</div>
+                      </div>
+                      <div>
+                        <p class="text-sm font-medium text-gray-900">Taller Comunicación</p>
+                        <p class="text-xs text-gray-500">2:00 PM</p>
+                      </div>
+                    </div>
+                    <span class="bg-blue-100 text-blue-800 text-xs px-2 py-1 rounded-full">Inscrito</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Resumen de Bienestar -->
             <div class="glass-container rounded-xl shadow-lg p-8 backdrop-blur-sm border border-white/30">
               <h2 class="text-xl font-semibold text-gray-900 mb-6 flex items-center">
-                <Trophy class="h-5 w-5 mr-2 text-yellow-500" />
-                Desafíos de Bienestar
+                <Heart class="h-5 w-5 mr-2 text-red-500" />
+                Tu Bienestar en Números
               </h2>
-              <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                <div class="glass-card rounded-xl overflow-hidden backdrop-blur-sm border border-white/20 hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
-                  <img src="https://images.pexels.com/photos/4056723/pexels-photo-4056723.jpeg?auto=compress&cs=tinysrgb&w=400" alt="Desafío de pasos" class="w-full h-32 object-cover" />
-                  <div class="p-4">
-                    <h4 class="font-semibold text-gray-900 mb-2">Desafío 10,000 Pasos</h4>
-                    <p class="text-sm text-gray-600 mb-3">Camina 10,000 pasos diarios durante 2 semanas</p>
-                    <div class="flex items-center justify-between">
-                      <span class="bg-yellow-100 text-yellow-800 text-xs px-2 py-1 rounded-full font-medium">
-                        100 puntos
-                      </span>
-                      <Button variant="primary" class="text-xs px-3 py-1">
-                        Unirse
-                      </Button>
+              <div class="grid grid-cols-2 md:grid-cols-4 gap-6">
+                <div class="text-center">
+                  <div class="text-2xl font-bold text-green-600 mb-1">8</div>
+                  <p class="text-sm text-gray-600">Actividades</p>
+                  <p class="text-xs text-gray-500">Este mes</p>
+                </div>
+                <div class="text-center">
+                  <div class="text-2xl font-bold text-blue-600 mb-1">2</div>
+                  <p class="text-sm text-gray-600">Cursos</p>
+                  <p class="text-xs text-gray-500">Completados</p>
+                </div>
+                <div class="text-center">
+                  <div class="text-2xl font-bold text-purple-600 mb-1">4</div>
+                  <p class="text-sm text-gray-600">Coaching</p>
+                  <p class="text-xs text-gray-500">Sesiones</p>
+                </div>
+                <div class="text-center">
+                  <div class="text-2xl font-bold text-yellow-600 mb-1">4.8</div>
+                  <p class="text-sm text-gray-600">Satisfacción</p>
+                  <p class="text-xs text-gray-500">Promedio</p>
+                </div>
+              </div>
+            </div>
+
+            <!-- Desafíos Destacados -->
+            <div class="glass-container rounded-xl shadow-lg p-8 backdrop-blur-sm border border-white/30">
+              <div class="flex items-center justify-between mb-6">
+                <h2 class="text-xl font-semibold text-gray-900 flex items-center">
+                  <Trophy class="h-5 w-5 mr-2 text-yellow-500" />
+                  Desafíos Populares
+                </h2>
+                <Button variant="outline" class="text-sm" @click="activeView = 'desafios'">
+                  Ver Todos
+                </Button>
+              </div>
+              <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                <div class="glass-card p-4 rounded-xl backdrop-blur-sm border border-white/20 hover:shadow-lg transition-all duration-300">
+                  <div class="flex items-center justify-between mb-3">
+                    <h4 class="font-semibold text-gray-900">Desafío 10,000 Pasos</h4>
+                    <span class="bg-yellow-100 text-yellow-800 text-xs px-2 py-1 rounded-full">100 pts</span>
+                  </div>
+                  <p class="text-sm text-gray-600 mb-3">En progreso - Día 5/14</p>
+                  <div class="bg-gray-200 rounded-full h-2 mb-3">
+                    <div class="bg-primary rounded-full h-2" style="width: 36%"></div>
+                  </div>
+                  <Button variant="outline" class="w-full text-xs">
+                    Ver Progreso
+                  </Button>
+                </div>
+
+                <div class="glass-card p-4 rounded-xl backdrop-blur-sm border border-white/20 hover:shadow-lg transition-all duration-300">
+                  <div class="flex items-center justify-between mb-3">
+                    <h4 class="font-semibold text-gray-900">Meditación Diaria</h4>
+                    <span class="bg-yellow-100 text-yellow-800 text-xs px-2 py-1 rounded-full">200 pts</span>
+                  </div>
+                  <p class="text-sm text-gray-600 mb-3">Disponible - 15 días</p>
+                  <Button variant="primary" class="w-full text-xs">
+                    Unirse
+                  </Button>
+                </div>
+
+                <div class="glass-card p-4 rounded-xl backdrop-blur-sm border border-white/20 hover:shadow-lg transition-all duration-300">
+                  <div class="flex items-center justify-between mb-3">
+                    <h4 class="font-semibold text-gray-900">Hidratación Saludable</h4>
+                    <span class="bg-green-100 text-green-800 text-xs px-2 py-1 rounded-full">Completado</span>
+                  </div>
+                  <p class="text-sm text-gray-600 mb-3">+50 puntos ganados</p>
+                  <div class="flex items-center justify-center">
+                    <CheckCircle class="h-5 w-5 text-green-500 mr-2" />
+                    <span class="text-sm text-green-600 font-medium">Completado</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
                     </div>
                   </div>
                 </div>
@@ -1288,7 +1638,8 @@ import {
   Award,
   Target,
   TrendingUp,
-  Zap
+  Zap,
+  Sparkles
 } from 'lucide-vue-next';
 import Button from '../../components/common/Button.vue';
 
