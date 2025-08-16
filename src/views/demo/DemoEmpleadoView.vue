@@ -1805,17 +1805,4 @@ const router = useRouter();
 const activeView = ref('dashboard');
 
 const empleadoNavLinks = [
-const empleadoNavLinks = [
-  { id: 'dashboard', text: 'Mi Dashboard', icon: LayoutDashboard },
-  { id: 'actividades', text: 'Actividades', icon: Calendar },
-  { id: 'reservas', text: 'Mis Reservas', icon: CalendarCheck },
-  { id: 'encuestas', text: 'Encuestas', icon: ClipboardList },
-  { id: 'desafios', text: 'Desafíos', icon: Trophy },
-  { id: 'cursos', text: 'Cursos y Talleres', icon: GraduationCap },
-  { id: 'coaching', text: 'Coaching Personal', icon: MessageCircle }
-];
-
-function salirDemo() {
-  router.push('/');
-}
 </script>
