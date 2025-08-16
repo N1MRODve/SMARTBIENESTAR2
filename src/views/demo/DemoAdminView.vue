@@ -935,6 +935,666 @@
           </div>
         </div>
 
+        <!-- Gamificación y Reconocimiento View -->
+        <div v-if="activeView === 'gamificacion'" class="space-y-8">
+          <div class="flex justify-between items-center">
+            <div>
+              <h1 class="text-3xl font-bold text-gray-900">Gamificación y Reconocimiento</h1>
+              <p class="text-gray-600 mt-1">Fomenta una cultura de bienestar positiva y colaborativa</p>
+            </div>
+            <div class="flex gap-2">
+              <Button variant="primary">
+                <Plus class="h-4 w-4 mr-2" />
+                Crear Desafío de Equipo
+              </Button>
+              <Button variant="secondary">
+                <Award class="h-4 w-4 mr-2" />
+                Gestionar Recompensas
+              </Button>
+            </div>
+          </div>
+
+          <!-- Métricas de Engagement -->
+          <div class="grid grid-cols-1 md:grid-cols-4 gap-6">
+            <div class="glass-card rounded-xl shadow-lg p-6 backdrop-blur-sm border border-white/20 text-center">
+              <h3 class="text-2xl font-bold text-primary mb-2">94%</h3>
+              <p class="text-gray-600">Participación Activa</p>
+              <p class="text-xs text-gray-500 mt-1">+15% este mes</p>
+            </div>
+            <div class="glass-card rounded-xl shadow-lg p-6 backdrop-blur-sm border border-white/20 text-center">
+              <h3 class="text-2xl font-bold text-yellow-600 mb-2">156</h3>
+              <p class="text-gray-600">Logros Desbloqueados</p>
+              <p class="text-xs text-gray-500 mt-1">Esta semana</p>
+            </div>
+            <div class="glass-card rounded-xl shadow-lg p-6 backdrop-blur-sm border border-white/20 text-center">
+              <h3 class="text-2xl font-bold text-green-600 mb-2">8</h3>
+              <p class="text-gray-600">Desafíos de Equipo</p>
+              <p class="text-xs text-gray-500 mt-1">Activos</p>
+            </div>
+            <div class="glass-card rounded-xl shadow-lg p-6 backdrop-blur-sm border border-white/20 text-center">
+              <h3 class="text-2xl font-bold text-purple-600 mb-2">4.8</h3>
+              <p class="text-gray-600">Satisfacción Sistema</p>
+              <p class="text-xs text-gray-500 mt-1">Promedio empleados</p>
+            </div>
+          </div>
+
+          <!-- Muro de Reconocimiento -->
+          <div class="glass-container rounded-xl shadow-lg p-8 backdrop-blur-sm border border-white/30">
+            <div class="flex items-center justify-between mb-6">
+              <h2 class="text-xl font-semibold text-gray-900 flex items-center">
+                <Sparkles class="h-5 w-5 mr-2 text-yellow-500" />
+                Muro de Reconocimiento
+              </h2>
+              <Button variant="outline" class="text-sm">
+                <Plus class="h-4 w-4 mr-2" />
+                Crear Reconocimiento
+              </Button>
+            </div>
+            
+            <div class="space-y-4">
+              <!-- Reconocimiento Destacado -->
+              <div class="glass-card p-6 rounded-xl backdrop-blur-sm border border-yellow-300/30 bg-gradient-to-r from-yellow-50/60 to-orange-50/60">
+                <div class="flex items-start space-x-4">
+                  <div class="w-16 h-16 bg-gradient-to-br from-yellow-400 to-orange-500 rounded-2xl flex items-center justify-center">
+                    <Trophy class="h-8 w-8 text-white" />
+                  </div>
+                  <div class="flex-1">
+                    <div class="flex items-center space-x-2 mb-2">
+                      <h3 class="text-lg font-bold text-gray-900">¡Logro Épico Desbloqueado!</h3>
+                      <span class="bg-yellow-500 text-white text-xs px-2 py-1 rounded-full font-bold">ÉPICO</span>
+                    </div>
+                    <p class="text-gray-700 mb-2">
+                      <strong>Ana Martínez</strong> completó el desafío "Mes sin Estrés" - 30 días consecutivos de actividades de bienestar
+                    </p>
+                    <div class="flex items-center space-x-4 text-sm text-gray-600">
+                      <span class="flex items-center">
+                        <Star class="h-4 w-4 text-yellow-500 mr-1" />
+                        +500 puntos
+                      </span>
+                      <span class="flex items-center">
+                        <Heart class="h-4 w-4 text-red-500 mr-1" />
+                        23 reacciones
+                      </span>
+                      <span>Hace 2 horas</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Reconocimientos Recientes -->
+              <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div class="glass-card p-4 rounded-xl backdrop-blur-sm border border-white/20">
+                  <div class="flex items-center space-x-3 mb-3">
+                    <div class="w-10 h-10 bg-green-100 rounded-xl flex items-center justify-center">
+                      <CheckCircle class="h-5 w-5 text-green-600" />
+                    </div>
+                    <div>
+                      <h4 class="font-semibold text-gray-900">Sofía López</h4>
+                      <p class="text-sm text-gray-600">Completó "Desafío Hidratación"</p>
+                    </div>
+                  </div>
+                  <div class="flex items-center justify-between">
+                    <span class="text-xs text-gray-500">Hace 4 horas</span>
+                    <span class="bg-green-100 text-green-800 text-xs px-2 py-1 rounded-full">+100 puntos</span>
+                  </div>
+                </div>
+
+                <div class="glass-card p-4 rounded-xl backdrop-blur-sm border border-white/20">
+                  <div class="flex items-center space-x-3 mb-3">
+                    <div class="w-10 h-10 bg-blue-100 rounded-xl flex items-center justify-center">
+                      <Users class="h-5 w-5 text-blue-600" />
+                    </div>
+                    <div>
+                      <h4 class="font-semibold text-gray-900">Equipo Desarrollo</h4>
+                      <p class="text-sm text-gray-600">Ganó desafío "Yoga en Equipo"</p>
+                    </div>
+                  </div>
+                  <div class="flex items-center justify-between">
+                    <span class="text-xs text-gray-500">Ayer</span>
+                    <span class="bg-blue-100 text-blue-800 text-xs px-2 py-1 rounded-full">Desayuno equipo</span>
+                  </div>
+                </div>
+
+                <div class="glass-card p-4 rounded-xl backdrop-blur-sm border border-white/20">
+                  <div class="flex items-center space-x-3 mb-3">
+                    <div class="w-10 h-10 bg-purple-100 rounded-xl flex items-center justify-center">
+                      <Star class="h-5 w-5 text-purple-600" />
+                    </div>
+                    <div>
+                      <h4 class="font-semibold text-gray-900">Luis Fernández</h4>
+                      <p class="text-sm text-gray-600">Alcanzó nivel "Maestro del Bienestar"</p>
+                    </div>
+                  </div>
+                  <div class="flex items-center justify-between">
+                    <span class="text-xs text-gray-500">Hace 2 días</span>
+                    <span class="bg-purple-100 text-purple-800 text-xs px-2 py-1 rounded-full">Nivel 5</span>
+                  </div>
+                </div>
+
+                <div class="glass-card p-4 rounded-xl backdrop-blur-sm border border-white/20">
+                  <div class="flex items-center space-x-3 mb-3">
+                    <div class="w-10 h-10 bg-orange-100 rounded-xl flex items-center justify-center">
+                      <Award class="h-5 w-5 text-orange-600" />
+                    </div>
+                    <div>
+                      <h4 class="font-semibold text-gray-900">Carmen García</h4>
+                      <p class="text-sm text-gray-600">Certificado en "Mindfulness Avanzado"</p>
+                    </div>
+                  </div>
+                  <div class="flex items-center justify-between">
+                    <span class="text-xs text-gray-500">Hace 3 días</span>
+                    <span class="bg-orange-100 text-orange-800 text-xs px-2 py-1 rounded-full">Certificado</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Desafíos de Equipo Activos -->
+          <div class="glass-container rounded-xl shadow-lg p-8 backdrop-blur-sm border border-white/30">
+            <div class="flex items-center justify-between mb-6">
+              <h2 class="text-xl font-semibold text-gray-900 flex items-center">
+                <Users class="h-5 w-5 mr-2 text-primary" />
+                Desafíos de Equipo
+              </h2>
+              <Button variant="primary" class="text-sm">
+                <Plus class="h-4 w-4 mr-2" />
+                Crear Desafío
+              </Button>
+            </div>
+            
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+              <!-- Desafío Meditación por Departamentos -->
+              <div class="glass-card p-6 rounded-xl backdrop-blur-sm border border-white/20">
+                <div class="flex items-center justify-between mb-4">
+                  <div>
+                    <h3 class="text-lg font-semibold text-gray-900">Batalla de Meditación</h3>
+                    <p class="text-sm text-gray-600">Primer departamento en 50 sesiones gana</p>
+                  </div>
+                  <span class="bg-purple-100 text-purple-800 text-xs px-2 py-1 rounded-full">Activo</span>
+                </div>
+                
+                <div class="space-y-3 mb-4">
+                  <div class="flex items-center justify-between">
+                    <div class="flex items-center space-x-2">
+                      <div class="w-6 h-6 bg-blue-500 rounded-lg flex items-center justify-center">
+                        <span class="text-white text-xs font-bold">1</span>
+                      </div>
+                      <span class="text-sm font-medium text-gray-900">Desarrollo</span>
+                    </div>
+                    <div class="flex items-center space-x-2">
+                      <div class="bg-gray-200 rounded-full h-2 w-24">
+                        <div class="bg-blue-500 rounded-full h-2" style="width: 84%"></div>
+                      </div>
+                      <span class="text-sm font-bold text-blue-600">42/50</span>
+                    </div>
+                  </div>
+                  
+                  <div class="flex items-center justify-between">
+                    <div class="flex items-center space-x-2">
+                      <div class="w-6 h-6 bg-green-500 rounded-lg flex items-center justify-center">
+                        <span class="text-white text-xs font-bold">2</span>
+                      </div>
+                      <span class="text-sm font-medium text-gray-900">Marketing</span>
+                    </div>
+                    <div class="flex items-center space-x-2">
+                      <div class="bg-gray-200 rounded-full h-2 w-24">
+                        <div class="bg-green-500 rounded-full h-2" style="width: 78%"></div>
+                      </div>
+                      <span class="text-sm font-bold text-green-600">39/50</span>
+                    </div>
+                  </div>
+                  
+                  <div class="flex items-center justify-between">
+                    <div class="flex items-center space-x-2">
+                      <div class="w-6 h-6 bg-yellow-500 rounded-lg flex items-center justify-center">
+                        <span class="text-white text-xs font-bold">3</span>
+                      </div>
+                      <span class="text-sm font-medium text-gray-900">Ventas</span>
+                    </div>
+                    <div class="flex items-center space-x-2">
+                      <div class="bg-gray-200 rounded-full h-2 w-24">
+                        <div class="bg-yellow-500 rounded-full h-2" style="width: 66%"></div>
+                      </div>
+                      <span class="text-sm font-bold text-yellow-600">33/50</span>
+                    </div>
+                  </div>
+                </div>
+                
+                <div class="bg-yellow-50/60 p-3 rounded-lg backdrop-blur-sm border border-yellow-200/50">
+                  <div class="flex items-center justify-between">
+                    <span class="text-sm font-medium text-gray-900">Premio:</span>
+                    <span class="text-sm text-yellow-700 font-semibold">🥐 Desayuno Premium para el Equipo</span>
+                  </div>
+                  <p class="text-xs text-gray-600 mt-1">Termina en 12 días</p>
+                </div>
+              </div>
+
+              <!-- Desafío Pasos Colaborativo -->
+              <div class="glass-card p-6 rounded-xl backdrop-blur-sm border border-white/20">
+                <div class="flex items-center justify-between mb-4">
+                  <div>
+                    <h3 class="text-lg font-semibold text-gray-900">Maratón de Pasos Corporativo</h3>
+                    <p class="text-sm text-gray-600">Meta: 1 millón de pasos como empresa</p>
+                  </div>
+                  <span class="bg-green-100 text-green-800 text-xs px-2 py-1 rounded-full">Activo</span>
+                </div>
+                
+                <div class="mb-4">
+                  <div class="flex items-center justify-between mb-2">
+                    <span class="text-sm font-medium text-gray-900">Progreso Total</span>
+                    <span class="text-sm font-bold text-primary">847,392 / 1,000,000</span>
+                  </div>
+                  <div class="bg-gray-200 rounded-full h-3">
+                    <div class="bg-gradient-to-r from-primary to-secondary rounded-full h-3 transition-all duration-500" style="width: 84.7%"></div>
+                  </div>
+                  <p class="text-xs text-gray-500 mt-1">84.7% completado • 152,608 pasos restantes</p>
+                </div>
+                
+                <div class="bg-green-50/60 p-3 rounded-lg backdrop-blur-sm border border-green-200/50">
+                  <div class="flex items-center justify-between">
+                    <span class="text-sm font-medium text-gray-900">Premio:</span>
+                    <span class="text-sm text-green-700 font-semibold">🎉 Día Libre Extra para Todos</span>
+                  </div>
+                  <p class="text-xs text-gray-600 mt-1">Termina en 8 días</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Ranking de Equipos -->
+          <div class="glass-container rounded-xl shadow-lg p-8 backdrop-blur-sm border border-white/30">
+            <h2 class="text-xl font-semibold mb-6">Ranking de Equipos por Bienestar</h2>
+            <div class="space-y-4">
+              <!-- Primer Lugar -->
+              <div class="glass-card p-4 rounded-xl backdrop-blur-sm border border-yellow-300/30 bg-gradient-to-r from-yellow-50/60 to-yellow-100/60">
+                <div class="flex items-center justify-between">
+                  <div class="flex items-center space-x-4">
+                    <div class="w-12 h-12 bg-gradient-to-br from-yellow-400 to-yellow-600 rounded-xl flex items-center justify-center">
+                      <span class="text-white font-bold">1</span>
+                    </div>
+                    <div>
+                      <h3 class="text-lg font-semibold text-gray-900">Equipo Desarrollo</h3>
+                      <p class="text-sm text-gray-600">8 miembros • 95% participación</p>
+                    </div>
+                  </div>
+                  <div class="text-right">
+                    <p class="text-2xl font-bold text-yellow-600">2,840</p>
+                    <p class="text-xs text-gray-500">puntos este mes</p>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Segundo Lugar -->
+              <div class="glass-card p-4 rounded-xl backdrop-blur-sm border border-gray-300/30">
+                <div class="flex items-center justify-between">
+                  <div class="flex items-center space-x-4">
+                    <div class="w-12 h-12 bg-gradient-to-br from-gray-400 to-gray-600 rounded-xl flex items-center justify-center">
+                      <span class="text-white font-bold">2</span>
+                    </div>
+                    <div>
+                      <h3 class="text-lg font-semibold text-gray-900">Equipo Marketing</h3>
+                      <p class="text-sm text-gray-600">6 miembros • 88% participación</p>
+                    </div>
+                  </div>
+                  <div class="text-right">
+                    <p class="text-2xl font-bold text-gray-600">2,650</p>
+                    <p class="text-xs text-gray-500">puntos este mes</p>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Tercer Lugar -->
+              <div class="glass-card p-4 rounded-xl backdrop-blur-sm border border-orange-300/30">
+                <div class="flex items-center justify-between">
+                  <div class="flex items-center space-x-4">
+                    <div class="w-12 h-12 bg-gradient-to-br from-orange-400 to-orange-600 rounded-xl flex items-center justify-center">
+                      <span class="text-white font-bold">3</span>
+                    </div>
+                    <div>
+                      <h3 class="text-lg font-semibold text-gray-900">Equipo Ventas</h3>
+                      <p class="text-sm text-gray-600">10 miembros • 82% participación</p>
+                    </div>
+                  </div>
+                  <div class="text-right">
+                    <p class="text-2xl font-bold text-orange-600">2,420</p>
+                    <p class="text-xs text-gray-500">puntos este mes</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Catálogo de Recompensas Experienciales -->
+          <div class="glass-container rounded-xl shadow-lg p-8 backdrop-blur-sm border border-white/30">
+            <div class="flex items-center justify-between mb-6">
+              <h2 class="text-xl font-semibold text-gray-900 flex items-center">
+                <Gift class="h-5 w-5 mr-2 text-primary" />
+                Catálogo de Recompensas Experienciales
+              </h2>
+              <Button variant="outline" class="text-sm">
+                <Plus class="h-4 w-4 mr-2" />
+                Añadir Recompensa
+              </Button>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              <!-- Recompensas de Tiempo -->
+              <div class="glass-card p-6 rounded-xl backdrop-blur-sm border border-white/20 hover:shadow-lg transition-all duration-300">
+                <div class="w-12 h-12 bg-blue-100 rounded-xl flex items-center justify-center mb-4">
+                  <Calendar class="h-6 w-6 text-blue-600" />
+                </div>
+                <h3 class="text-lg font-semibold text-gray-900 mb-2">Tiempo Libre</h3>
+                <div class="space-y-3">
+                  <div class="flex items-center justify-between p-2 bg-blue-50/60 rounded-lg">
+                    <span class="text-sm text-gray-700">Día libre extra</span>
+                    <span class="text-sm font-bold text-blue-600">1,500 pts</span>
+                  </div>
+                  <div class="flex items-center justify-between p-2 bg-blue-50/60 rounded-lg">
+                    <span class="text-sm text-gray-700">Tarde libre viernes</span>
+                    <span class="text-sm font-bold text-blue-600">800 pts</span>
+                  </div>
+                  <div class="flex items-center justify-between p-2 bg-blue-50/60 rounded-lg">
+                    <span class="text-sm text-gray-700">Llegada tarde lunes</span>
+                    <span class="text-sm font-bold text-blue-600">400 pts</span>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Recompensas de Experiencias -->
+              <div class="glass-card p-6 rounded-xl backdrop-blur-sm border border-white/20 hover:shadow-lg transition-all duration-300">
+                <div class="w-12 h-12 bg-purple-100 rounded-xl flex items-center justify-center mb-4">
+                  <Star class="h-6 w-6 text-purple-600" />
+                </div>
+                <h3 class="text-lg font-semibold text-gray-900 mb-2">Experiencias VIP</h3>
+                <div class="space-y-3">
+                  <div class="flex items-center justify-between p-2 bg-purple-50/60 rounded-lg">
+                    <span class="text-sm text-gray-700">Coaching con CEO</span>
+                    <span class="text-sm font-bold text-purple-600">3,000 pts</span>
+                  </div>
+                  <div class="flex items-center justify-between p-2 bg-purple-50/60 rounded-lg">
+                    <span class="text-sm text-gray-700">Almuerzo con directivos</span>
+                    <span class="text-sm font-bold text-purple-600">2,000 pts</span>
+                  </div>
+                  <div class="flex items-center justify-between p-2 bg-purple-50/60 rounded-lg">
+                    <span class="text-sm text-gray-700">Mentoría con líder</span>
+                    <span class="text-sm font-bold text-purple-600">1,800 pts</span>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Recompensas de Bienestar -->
+              <div class="glass-card p-6 rounded-xl backdrop-blur-sm border border-white/20 hover:shadow-lg transition-all duration-300">
+                <div class="w-12 h-12 bg-green-100 rounded-xl flex items-center justify-center mb-4">
+                  <Heart class="h-6 w-6 text-green-600" />
+                </div>
+                <h3 class="text-lg font-semibold text-gray-900 mb-2">Bienestar Premium</h3>
+                <div class="space-y-3">
+                  <div class="flex items-center justify-between p-2 bg-green-50/60 rounded-lg">
+                    <span class="text-sm text-gray-700">Masaje relajante</span>
+                    <span class="text-sm font-bold text-green-600">1,200 pts</span>
+                  </div>
+                  <div class="flex items-center justify-between p-2 bg-green-50/60 rounded-lg">
+                    <span class="text-sm text-gray-700">Sesión spa</span>
+                    <span class="text-sm font-bold text-green-600">2,500 pts</span>
+                  </div>
+                  <div class="flex items-center justify-between p-2 bg-green-50/60 rounded-lg">
+                    <span class="text-sm text-gray-700">Kit bienestar</span>
+                    <span class="text-sm font-bold text-green-600">600 pts</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Sistema de Niveles y Logros -->
+          <div class="glass-container rounded-xl shadow-lg p-8 backdrop-blur-sm border border-white/30">
+            <h2 class="text-xl font-semibold mb-6">Sistema de Niveles y Logros</h2>
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+              <!-- Niveles de Bienestar -->
+              <div>
+                <h3 class="text-lg font-medium text-gray-900 mb-4">Niveles de Bienestar</h3>
+                <div class="space-y-4">
+                  <div class="flex items-center space-x-4 p-4 bg-green-50/60 rounded-lg backdrop-blur-sm border border-green-200/50">
+                    <div class="w-12 h-12 bg-gradient-to-br from-green-400 to-green-600 rounded-xl flex items-center justify-center">
+                      <span class="text-white font-bold text-sm">5</span>
+                    </div>
+                    <div class="flex-1">
+                      <h4 class="font-semibold text-gray-900">Maestro del Bienestar</h4>
+                      <p class="text-sm text-gray-600">2,500+ puntos</p>
+                      <div class="flex items-center mt-1">
+                        <span class="text-xs text-green-600 font-medium">3 empleados</span>
+                      </div>
+                    </div>
+                  </div>
+                  
+                  <div class="flex items-center space-x-4 p-4 bg-blue-50/60 rounded-lg backdrop-blur-sm border border-blue-200/50">
+                    <div class="w-12 h-12 bg-gradient-to-br from-blue-400 to-blue-600 rounded-xl flex items-center justify-center">
+                      <span class="text-white font-bold text-sm">4</span>
+                    </div>
+                    <div class="flex-1">
+                      <h4 class="font-semibold text-gray-900">Experto en Bienestar</h4>
+                      <p class="text-sm text-gray-600">1,500 - 2,499 puntos</p>
+                      <div class="flex items-center mt-1">
+                        <span class="text-xs text-blue-600 font-medium">7 empleados</span>
+                      </div>
+                    </div>
+                  </div>
+                  
+                  <div class="flex items-center space-x-4 p-4 bg-purple-50/60 rounded-lg backdrop-blur-sm border border-purple-200/50">
+                    <div class="w-12 h-12 bg-gradient-to-br from-purple-400 to-purple-600 rounded-xl flex items-center justify-center">
+                      <span class="text-white font-bold text-sm">3</span>
+                    </div>
+                    <div class="flex-1">
+                      <h4 class="font-semibold text-gray-900">Entusiasta del Bienestar</h4>
+                      <p class="text-sm text-gray-600">800 - 1,499 puntos</p>
+                      <div class="flex items-center mt-1">
+                        <span class="text-xs text-purple-600 font-medium">12 empleados</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Logros Especiales -->
+              <div>
+                <h3 class="text-lg font-medium text-gray-900 mb-4">Logros Especiales</h3>
+                <div class="grid grid-cols-2 gap-3">
+                  <div class="text-center p-3 bg-yellow-50/60 rounded-lg backdrop-blur-sm border border-yellow-200/50">
+                    <div class="w-8 h-8 bg-yellow-500 rounded-lg flex items-center justify-center mx-auto mb-2">
+                      <Trophy class="h-4 w-4 text-white" />
+                    </div>
+                    <p class="text-xs font-semibold text-gray-900">Racha Perfecta</p>
+                    <p class="text-xs text-gray-600">30 días consecutivos</p>
+                    <p class="text-xs text-yellow-600 font-medium">5 empleados</p>
+                  </div>
+                  
+                  <div class="text-center p-3 bg-blue-50/60 rounded-lg backdrop-blur-sm border border-blue-200/50">
+                    <div class="w-8 h-8 bg-blue-500 rounded-lg flex items-center justify-center mx-auto mb-2">
+                      <Users class="h-4 w-4 text-white" />
+                    </div>
+                    <p class="text-xs font-semibold text-gray-900">Líder de Equipo</p>
+                    <p class="text-xs text-gray-600">Motivó a su equipo</p>
+                    <p class="text-xs text-blue-600 font-medium">8 empleados</p>
+                  </div>
+                  
+                  <div class="text-center p-3 bg-purple-50/60 rounded-lg backdrop-blur-sm border border-purple-200/50">
+                    <div class="w-8 h-8 bg-purple-500 rounded-lg flex items-center justify-center mx-auto mb-2">
+                      <Brain class="h-4 w-4 text-white" />
+                    </div>
+                    <p class="text-xs font-semibold text-gray-900">Zen Master</p>
+                    <p class="text-xs text-gray-600">50 sesiones meditación</p>
+                    <p class="text-xs text-purple-600 font-medium">2 empleados</p>
+                  </div>
+                  
+                  <div class="text-center p-3 bg-green-50/60 rounded-lg backdrop-blur-sm border border-green-200/50">
+                    <div class="w-8 h-8 bg-green-500 rounded-lg flex items-center justify-center mx-auto mb-2">
+                      <Heart class="h-4 w-4 text-white" />
+                    </div>
+                    <p class="text-xs font-semibold text-gray-900">Embajador</p>
+                    <p class="text-xs text-gray-600">Invitó 5+ colegas</p>
+                    <p class="text-xs text-green-600 font-medium">4 empleados</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Configuración de Gamificación -->
+          <div class="glass-container rounded-xl shadow-lg p-8 backdrop-blur-sm border border-white/30">
+            <h2 class="text-xl font-semibold mb-6">Configuración del Sistema</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+              <!-- Configuración de Puntos -->
+              <div>
+                <h3 class="text-lg font-medium text-gray-900 mb-4">Sistema de Puntos</h3>
+                <div class="space-y-3">
+                  <div class="flex items-center justify-between p-3 bg-gray-50/60 rounded-lg backdrop-blur-sm border border-gray-200/50">
+                    <span class="text-sm text-gray-700">Asistir a sesión</span>
+                    <div class="flex items-center space-x-2">
+                      <input type="number" value="50" class="w-16 px-2 py-1 text-xs border border-gray-300 rounded" />
+                      <span class="text-xs text-gray-500">puntos</span>
+                    </div>
+                  </div>
+                  <div class="flex items-center justify-between p-3 bg-gray-50/60 rounded-lg backdrop-blur-sm border border-gray-200/50">
+                    <span class="text-sm text-gray-700">Completar desafío</span>
+                    <div class="flex items-center space-x-2">
+                      <input type="number" value="100" class="w-16 px-2 py-1 text-xs border border-gray-300 rounded" />
+                      <span class="text-xs text-gray-500">puntos</span>
+                    </div>
+                  </div>
+                  <div class="flex items-center justify-between p-3 bg-gray-50/60 rounded-lg backdrop-blur-sm border border-gray-200/50">
+                    <span class="text-sm text-gray-700">Completar encuesta</span>
+                    <div class="flex items-center space-x-2">
+                      <input type="number" value="25" class="w-16 px-2 py-1 text-xs border border-gray-300 rounded" />
+                      <span class="text-xs text-gray-500">puntos</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Configuración de Reconocimientos -->
+              <div>
+                <h3 class="text-lg font-medium text-gray-900 mb-4">Reconocimientos Automáticos</h3>
+                <div class="space-y-3">
+                  <div class="flex items-center justify-between p-3 bg-gray-50/60 rounded-lg backdrop-blur-sm border border-gray-200/50">
+                    <div>
+                      <span class="text-sm text-gray-700">Racha de 7 días</span>
+                      <p class="text-xs text-gray-500">Publicar automáticamente</p>
+                    </div>
+                    <label class="relative inline-flex items-center cursor-pointer">
+                      <input type="checkbox" checked class="sr-only peer" />
+                      <div class="w-9 h-5 bg-gray-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-primary"></div>
+                    </label>
+                  </div>
+                  <div class="flex items-center justify-between p-3 bg-gray-50/60 rounded-lg backdrop-blur-sm border border-gray-200/50">
+                    <div>
+                      <span class="text-sm text-gray-700">Nuevo nivel alcanzado</span>
+                      <p class="text-xs text-gray-500">Notificar a toda la empresa</p>
+                    </div>
+                    <label class="relative inline-flex items-center cursor-pointer">
+                      <input type="checkbox" checked class="sr-only peer" />
+                      <div class="w-9 h-5 bg-gray-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-primary"></div>
+                    </label>
+                  </div>
+                  <div class="flex items-center justify-between p-3 bg-gray-50/60 rounded-lg backdrop-blur-sm border border-gray-200/50">
+                    <div>
+                      <span class="text-sm text-gray-700">Desafío completado</span>
+                      <p class="text-xs text-gray-500">Celebrar públicamente</p>
+                    </div>
+                    <label class="relative inline-flex items-center cursor-pointer">
+                      <input type="checkbox" checked class="sr-only peer" />
+                      <div class="w-9 h-5 bg-gray-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-primary"></div>
+                    </label>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Análisis de Engagement -->
+          <div class="glass-container rounded-xl shadow-lg p-8 backdrop-blur-sm border border-white/30">
+            <h2 class="text-xl font-semibold mb-6">Análisis de Engagement</h2>
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+              <!-- Participación por Departamento -->
+              <div class="lg:col-span-2">
+                <h3 class="text-lg font-medium text-gray-900 mb-4">Participación por Departamento</h3>
+                <div class="space-y-3">
+                  <div class="flex items-center justify-between">
+                    <span class="text-sm text-gray-700">Desarrollo</span>
+                    <div class="flex items-center space-x-2">
+                      <div class="bg-gray-200 rounded-full h-2 w-32">
+                        <div class="bg-blue-500 rounded-full h-2" style="width: 95%"></div>
+                      </div>
+                      <span class="text-sm font-bold text-blue-600">95%</span>
+                    </div>
+                  </div>
+                  <div class="flex items-center justify-between">
+                    <span class="text-sm text-gray-700">Marketing</span>
+                    <div class="flex items-center space-x-2">
+                      <div class="bg-gray-200 rounded-full h-2 w-32">
+                        <div class="bg-green-500 rounded-full h-2" style="width: 88%"></div>
+                      </div>
+                      <span class="text-sm font-bold text-green-600">88%</span>
+                    </div>
+                  </div>
+                  <div class="flex items-center justify-between">
+                    <span class="text-sm text-gray-700">Ventas</span>
+                    <div class="flex items-center space-x-2">
+                      <div class="bg-gray-200 rounded-full h-2 w-32">
+                        <div class="bg-yellow-500 rounded-full h-2" style="width: 82%"></div>
+                      </div>
+                      <span class="text-sm font-bold text-yellow-600">82%</span>
+                    </div>
+                  </div>
+                  <div class="flex items-center justify-between">
+                    <span class="text-sm text-gray-700">RRHH</span>
+                    <div class="flex items-center space-x-2">
+                      <div class="bg-gray-200 rounded-full h-2 w-32">
+                        <div class="bg-purple-500 rounded-full h-2" style="width: 78%"></div>
+                      </div>
+                      <span class="text-sm font-bold text-purple-600">78%</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Top Performers -->
+              <div>
+                <h3 class="text-lg font-medium text-gray-900 mb-4">Top Performers</h3>
+                <div class="space-y-3">
+                  <div class="flex items-center space-x-3">
+                    <div class="w-8 h-8 bg-gradient-to-br from-yellow-400 to-yellow-600 rounded-lg flex items-center justify-center">
+                      <span class="text-white text-xs font-bold">1</span>
+                    </div>
+                    <div>
+                      <p class="text-sm font-semibold text-gray-900">Ana Martínez</p>
+                      <p class="text-xs text-gray-600">2,840 puntos</p>
+                    </div>
+                  </div>
+                  <div class="flex items-center space-x-3">
+                    <div class="w-8 h-8 bg-gradient-to-br from-gray-400 to-gray-600 rounded-lg flex items-center justify-center">
+                      <span class="text-white text-xs font-bold">2</span>
+                    </div>
+                    <div>
+                      <p class="text-sm font-semibold text-gray-900">Luis Fernández</p>
+                      <p class="text-xs text-gray-600">2,650 puntos</p>
+                    </div>
+                  </div>
+                  <div class="flex items-center space-x-3">
+                    <div class="w-8 h-8 bg-gradient-to-br from-orange-400 to-orange-600 rounded-lg flex items-center justify-center">
+                      <span class="text-white text-xs font-bold">3</span>
+                    </div>
+                    <div>
+                      <p class="text-sm font-semibold text-gray-900">Sofía López</p>
+                      <p class="text-xs text-gray-600">2,420 puntos</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
         <!-- Encuestas View -->
         <div v-if="activeView === 'encuestas'" class="space-y-8">
           <div class="flex justify-between items-center">
@@ -1254,7 +1914,9 @@ import {
   Code,
   Award,
   AlertTriangle,
-  Sparkles
+  Sparkles,
+  Gift,
+  Brain
 } from 'lucide-vue-next';
 import Button from '../../components/common/Button.vue';
 
@@ -1265,6 +1927,7 @@ const adminNavLinks = [
   { id: 'dashboard', text: 'Dashboard', icon: LayoutDashboard },
   { id: 'empleados', text: 'Empleados', icon: Users },
   { id: 'desarrollo', text: 'Desarrollo y Carrera', icon: TrendingUp },
+  { id: 'gamificacion', text: 'Gamificación y Reconocimiento', icon: Trophy },
   { id: 'encuestas', text: 'Encuestas', icon: ClipboardList },
   { id: 'estadisticas', text: 'Estadísticas', icon: BarChart3 }
 ];
