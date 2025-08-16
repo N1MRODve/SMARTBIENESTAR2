@@ -1315,25 +1315,25 @@
             <h2 class="text-xl font-semibold mb-6">¿Por qué elegir Coaching Personal?</h2>
             <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
               <div class="text-center">
-                <div class="w-12 h-12 bg-primary/10 rounded-xl flex items-center justify-center mx-auto mb-3">
-                  <User class="h-6 w-6 text-primary" />
+                <div class="w-12 h-12 bg-blue-500/10 rounded-xl flex items-center justify-center mx-auto mb-4">
+                  <Target class="h-6 w-6 text-blue-600" />
                 </div>
-                <h3 class="font-semibold text-gray-900 mb-2">Atención Personalizada</h3>
-                <p class="text-sm text-gray-600">Sesiones adaptadas a tus necesidades específicas y objetivos personales</p>
+                <h3 class="font-semibold text-gray-900 mb-2">Objetivos Claros</h3>
+                <p class="text-sm text-gray-600">Define y alcanza tus metas profesionales y personales</p>
               </div>
               <div class="text-center">
-                <div class="w-12 h-12 bg-green-500/10 rounded-xl flex items-center justify-center mx-auto mb-3">
-                  <Target class="h-6 w-6 text-green-600" />
+                <div class="w-12 h-12 bg-green-500/10 rounded-xl flex items-center justify-center mx-auto mb-4">
+                  <TrendingUp class="h-6 w-6 text-green-600" />
                 </div>
-                <h3 class="font-semibold text-gray-900 mb-2">Resultados Medibles</h3>
-          <div class="glass-container rounded-xl shadow-lg p-8 backdrop-blur-sm border border-white/30">
+                <h3 class="font-semibold text-gray-900 mb-2">Crecimiento Personal</h3>
+                <p class="text-sm text-gray-600">Desarrolla habilidades y competencias clave</p>
               </div>
               <div class="text-center">
-                <div class="w-12 h-12 bg-blue-500/10 rounded-xl flex items-center justify-center mx-auto mb-3">
-          <div class="glass-container rounded-xl shadow-lg p-8 backdrop-blur-sm border border-white/30 bg-gradient-to-r from-green-50/50 to-blue-50/50">
+                <div class="w-12 h-12 bg-purple-500/10 rounded-xl flex items-center justify-center mx-auto mb-4">
+                  <Users class="h-6 w-6 text-purple-600" />
                 </div>
-                <h3 class="font-semibold text-gray-900 mb-2">Flexibilidad Total</h3>
-                <p class="text-sm text-gray-600">Horarios adaptados a tu agenda laboral, modalidad online o presencial</p>
+                <h3 class="font-semibold text-gray-900 mb-2">Liderazgo</h3>
+                <p class="text-sm text-gray-600">Mejora tus habilidades de liderazgo y comunicación</p>
               </div>
             </div>
           </div>
