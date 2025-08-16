@@ -260,27 +260,13 @@ function irALogin() {
 }
 
 function accederDemoEmpleado() {
-  // Ir al login con credenciales pre-cargadas
-  router.push({
-    path: '/login',
-    query: {
-      demo: 'empleado',
-      email: 'ana.martinez@innovatech.com',
-      password: 'empleado123'
-    }
-  });
+  // Ir directamente a la vista demo del empleado
+  router.push('/demo/empleado');
 }
 
 function accederDemoAdmin() {
-  // Ir al login con credenciales pre-cargadas
-  router.push({
-    path: '/login',
-    query: {
-      demo: 'admin',
-      email: 'admin@innovatech.com',
-      password: 'admin123'
-    }
-  });
+  // Ir directamente a la vista demo del administrador
+  router.push('/demo/admin');
 }
 
 function contactarVentas() {

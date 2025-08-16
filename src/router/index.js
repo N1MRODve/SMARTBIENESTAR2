@@ -31,9 +31,7 @@ const routes = [
     name: 'DemoEmpleado',
     component: () => import('../views/demo/DemoEmpleadoView.vue'),
     meta: { 
-      isDemo: true,
-      requiresAuth: true,
-      roles: ['empleado']
+      isDemo: true
     }
   },
   {
@@ -41,9 +39,7 @@ const routes = [
     name: 'DemoAdmin',
     component: () => import('../views/demo/DemoAdminView.vue'),
     meta: { 
-      isDemo: true,
-      requiresAuth: true,
-      roles: ['administrador']
+      isDemo: true
     }
   },
   {
