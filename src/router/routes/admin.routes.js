@@ -77,6 +77,36 @@ export const adminRoutes = [
       roles: ['administrador'],
       title: 'Crear Encuesta'
     }
+  },
+  {
+    path: '/admin/analitica',
+    name: 'AdminAnalitica',
+    component: () => import('@/views/admin/AnaliticaView.vue'),
+    meta: { 
+      requiresAuth: true, 
+      roles: ['administrador'],
+      title: 'Analítica Predictiva'
+    }
+  },
+  {
+    path: '/admin/horarios',
+    name: 'AdminHorarios',
+    component: () => import('@/views/admin/HorariosView.vue'),
+    meta: { 
+      requiresAuth: true, 
+      roles: ['administrador'],
+      title: 'Gestión de Horarios'
+    }
+  },
+  {
+    path: '/admin/desafios/crear',
+    name: 'CrearDesafioView',
+    component: () => import('@/views/admin/CrearDesafioView.vue'),
+    meta: { 
+      requiresAuth: true, 
+      roles: ['administrador'],
+      title: 'Crear Desafío'
+    }
   }
 ]
 

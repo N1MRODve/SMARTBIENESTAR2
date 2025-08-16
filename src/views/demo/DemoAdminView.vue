@@ -63,151 +63,791 @@
         <!-- Dashboard View -->
         <div v-if="activeView === 'dashboard'" class="space-y-8">
           <div>
-            <h1 class="text-3xl font-bold text-gray-900 mb-2">Panel de Administración</h1>
-            <p class="text-gray-600">Vista general de InnovaTech Solutions</p>
+            <h1 class="text-3xl font-bold text-gray-900">Dashboard Administrador</h1>
+            <p class="text-gray-600 mt-1">Vista general de tu empresa y actividad de bienestar</p>
           </div>
 
-          <!-- KPIs -->
-          <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-6">
-            <div class="glass-card rounded-xl shadow-lg p-6 backdrop-blur-sm border border-white/20 hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
-              <div class="flex items-center justify-between">
-                <div>
-                  <h3 class="text-sm font-medium text-gray-600">Total Empleados</h3>
-                  <p class="text-3xl font-bold text-gray-900 mt-2">25</p>
-                  <p class="text-sm text-gray-500 mt-1">Empleados registrados</p>
-                </div>
-                <div class="p-3 bg-primary/10 rounded-xl">
-                  <Users class="h-7 w-7 text-primary" />
-                </div>
-              </div>
+          <!-- Stats Grid -->
+          <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+            <div class="glass-card p-6 rounded-xl shadow-lg text-center backdrop-blur-sm border border-white/20 hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
+              <h3 class="text-3xl font-bold text-primary mb-2">25</h3>
+              <p class="text-gray-700 font-medium">Empleados Activos</p>
+              <p class="text-xs text-gray-500 mt-1">87% participación</p>
             </div>
-
-            <div class="glass-card rounded-xl shadow-lg p-6 backdrop-blur-sm border border-white/20 hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
-              <div class="flex items-center justify-between">
-                <div>
-                  <h3 class="text-sm font-medium text-gray-600">Empleados Activos</h3>
-                  <p class="text-3xl font-bold text-gray-900 mt-2">18</p>
-                  <p class="text-sm text-gray-500 mt-1">Actualmente activos</p>
-                </div>
-                <div class="p-3 bg-green-500/10 rounded-xl">
-                  <UserCheck class="h-7 w-7 text-green-600" />
-                </div>
-              </div>
+            <div class="glass-card p-6 rounded-xl shadow-lg text-center backdrop-blur-sm border border-white/20 hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
+              <h3 class="text-3xl font-bold text-primary mb-2">8</h3>
+              <p class="text-gray-700 font-medium">Sesiones Esta Semana</p>
+              <p class="text-xs text-gray-500 mt-1">+2 vs semana anterior</p>
             </div>
-
-            <div class="glass-card rounded-xl shadow-lg p-6 backdrop-blur-sm border border-white/20 hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
-              <div class="flex items-center justify-between">
-                <div>
-                  <h3 class="text-sm font-medium text-gray-600">Sesiones Próximas</h3>
-                  <p class="text-3xl font-bold text-gray-900 mt-2">8</p>
-                  <p class="text-sm text-gray-500 mt-1">En los próximos 7 días</p>
-                </div>
-                <div class="p-3 bg-blue-500/10 rounded-xl">
-                  <Calendar class="h-7 w-7 text-blue-600" />
-                </div>
-              </div>
+            <div class="glass-card p-6 rounded-xl shadow-lg text-center backdrop-blur-sm border border-white/20 hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
+              <h3 class="text-3xl font-bold text-primary mb-2">2</h3>
+              <p class="text-gray-700 font-medium">Encuestas Activas</p>
+              <p class="text-xs text-gray-500 mt-1">78% respuestas</p>
             </div>
+            <div class="glass-card p-6 rounded-xl shadow-lg text-center backdrop-blur-sm border border-white/20 hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
+              <h3 class="text-3xl font-bold text-primary mb-2">4.6</h3>
+              <p class="text-gray-700 font-medium">Satisfacción General</p>
+              <p class="text-xs text-gray-500 mt-1">+0.3 vs mes anterior</p>
+            </div>
+          </div>
 
-            <div class="glass-card rounded-xl shadow-lg p-6 backdrop-blur-sm border border-white/20 hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
-              <div class="flex items-center justify-between">
-                <div>
-                  <h3 class="text-sm font-medium text-gray-600">Encuestas Activas</h3>
-                  <p class="text-3xl font-bold text-gray-900 mt-2">2</p>
-                  <p class="text-sm text-gray-500 mt-1">Encuestas en curso</p>
+          <!-- Alertas y Notificaciones Importantes -->
+          <div class="glass-container rounded-xl shadow-lg p-8 backdrop-blur-sm border border-white/30">
+            <h2 class="text-xl font-semibold mb-6 flex items-center">
+              <Bell class="h-5 w-5 mr-2 text-orange-500" />
+              Centro de Alertas
+            </h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <!-- Alerta Crítica -->
+              <div class="p-4 bg-red-50/60 rounded-lg backdrop-blur-sm border border-red-200/50">
+                <div class="flex items-center space-x-3 mb-2">
+                  <AlertTriangle class="h-5 w-5 text-red-500" />
+                  <h3 class="font-semibold text-gray-900">Alerta Crítica</h3>
                 </div>
-                <div class="p-3 bg-purple-500/10 rounded-xl">
-                  <ClipboardList class="h-7 w-7 text-purple-600" />
+                <p class="text-sm text-gray-700 mb-2">
+                  Equipo de Ventas muestra signos de burnout. Participación bajó 35% en 2 semanas.
+                </p>
+                <Button variant="primary" class="w-full text-sm bg-red-600 hover:bg-red-700">
+                  Revisar Inmediatamente
+                </Button>
+              </div>
+
+              <!-- Oportunidad -->
+              <div class="p-4 bg-green-50/60 rounded-lg backdrop-blur-sm border border-green-200/50">
+                <div class="flex items-center space-x-3 mb-2">
+                  <TrendingUp class="h-5 w-5 text-green-500" />
+                  <h3 class="font-semibold text-gray-900">Oportunidad</h3>
                 </div>
+                <p class="text-sm text-gray-700 mb-2">
+                  Equipo Desarrollo muestra excelente progreso. Considera replicar su modelo.
+                </p>
+                <Button variant="outline" class="w-full text-sm">
+                  Analizar Estrategia
+                </Button>
               </div>
             </div>
           </div>
 
           <!-- Content Grid -->
-          <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
-            <!-- Gráfico de participación -->
-            <div class="lg:col-span-2 glass-container rounded-xl shadow-lg p-6 backdrop-blur-sm border border-white/30">
-              <h2 class="text-lg font-semibold mb-4">Participación por Departamento</h2>
-              <div class="h-64 bg-white/50 rounded-xl flex items-center justify-center">
-                <div class="text-center">
-                  <BarChart3 class="h-16 w-16 text-gray-400 mx-auto mb-4" />
-                  <p class="text-gray-500">Gráfico de participación por departamento</p>
-                  <div class="mt-4 space-y-2">
-                    <div class="flex items-center justify-between text-sm">
-                      <span>Tecnología:</span>
-                      <span class="font-semibold">83% participación</span>
-                    </div>
-                    <div class="flex items-center justify-between text-sm">
-                      <span>Diseño:</span>
-                      <span class="font-semibold">83% participación</span>
-                    </div>
-                    <div class="flex items-center justify-between text-sm">
-                      <span>Producto:</span>
-                      <span class="font-semibold">50% participación</span>
-                    </div>
+          <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+            <!-- Actividad Reciente -->
+            <div class="glass-container rounded-xl shadow-lg p-8 backdrop-blur-sm border border-white/30">
+              <h2 class="text-xl font-semibold text-gray-900 mb-6 flex items-center">
+                <Clock class="h-5 w-5 mr-2 text-primary" />
+                Actividad Reciente
+              </h2>
+              <div class="space-y-4">
+                <div class="flex items-center space-x-4">
+                  <div class="w-10 h-10 bg-green-100 rounded-xl flex items-center justify-center">
+                    <UserCheck class="h-5 w-5 text-green-600" />
+                  </div>
+                  <div class="flex-1">
+                    <p class="text-sm font-medium text-gray-900">Ana Martínez completó "Yoga Avanzado"</p>
+                    <p class="text-xs text-gray-500">Hace 2 horas • +50 puntos</p>
+                  </div>
+                </div>
+                
+                <div class="flex items-center space-x-4">
+                  <div class="w-10 h-10 bg-blue-100 rounded-xl flex items-center justify-center">
+                    <Users class="h-5 w-5 text-blue-600" />
+                  </div>
+                  <div class="flex-1">
+                    <p class="text-sm font-medium text-gray-900">Equipo Marketing ganó desafío colaborativo</p>
+                    <p class="text-xs text-gray-500">Hace 5 horas • Desayuno premium</p>
+                  </div>
+                </div>
+                
+                <div class="flex items-center space-x-4">
+                  <div class="w-10 h-10 bg-purple-100 rounded-xl flex items-center justify-center">
+                    <ClipboardList class="h-5 w-5 text-purple-600" />
+                  </div>
+                  <div class="flex-1">
+                    <p class="text-sm font-medium text-gray-900">Nueva encuesta "Clima Laboral Q1" enviada</p>
+                    <p class="text-xs text-gray-500">Ayer • 18 respuestas recibidas</p>
+                  </div>
+                </div>
+                
+                <div class="flex items-center space-x-4">
+                  <div class="w-10 h-10 bg-yellow-100 rounded-xl flex items-center justify-center">
+                    <Trophy class="h-5 w-5 text-yellow-600" />
+                  </div>
+                  <div class="flex-1">
+                    <p class="text-sm font-medium text-gray-900">Luis Fernández alcanzó nivel "Maestro"</p>
+                    <p class="text-xs text-gray-500">Hace 2 días • 2,500+ puntos</p>
+                  </div>
+                </div>
+                
+                <div class="flex items-center space-x-4">
+                  <div class="w-10 h-10 bg-red-100 rounded-xl flex items-center justify-center">
+                    <AlertTriangle class="h-5 w-5 text-red-600" />
+                  </div>
+                  <div class="flex-1">
+                    <p class="text-sm font-medium text-gray-900">Alerta: Baja participación en Ventas</p>
+                    <p class="text-xs text-gray-500">Hace 3 días • Requiere atención</p>
                   </div>
                 </div>
               </div>
             </div>
 
-            <!-- Actividad reciente -->
-            <div class="glass-container rounded-xl shadow-lg p-6 backdrop-blur-sm border border-white/30">
-              <h2 class="text-lg font-semibold mb-4">Actividad Reciente</h2>
+            <!-- Próximas Sesiones -->
+            <div class="glass-container rounded-xl shadow-lg p-8 backdrop-blur-sm border border-white/30">
+              <h2 class="text-xl font-semibold text-gray-900 mb-6 flex items-center">
+                <Calendar class="h-5 w-5 mr-2 text-primary" />
+                Próximas Sesiones
+              </h2>
               <div class="space-y-4">
-                <div class="text-sm">
-                  <p class="font-medium text-gray-900">Ana se apuntó a Yoga Matutino</p>
-                  <p class="text-gray-500 text-xs">Hace 2 horas</p>
+                <div class="glass-card p-4 rounded-xl shadow-md backdrop-blur-sm border border-white/20 hover:shadow-lg transition-all duration-300 hover:-translate-y-0.5">
+                  <div class="flex items-center justify-between mb-2">
+                    <p class="font-semibold text-gray-900">Yoga Matutino</p>
+                    <span class="bg-green-100 text-green-800 text-xs px-2 py-1 rounded-full">12/15 plazas</span>
+                  </div>
+                  <p class="text-sm text-gray-600 mt-1">Mañana, 8:00 AM</p>
+                  <p class="text-xs text-gray-500">Elena Vásquez • Sala Yoga</p>
                 </div>
-                <div class="text-sm">
-                  <p class="font-medium text-gray-900">Luis completó desafío de pasos</p>
-                  <p class="text-gray-500 text-xs">Hace 4 horas</p>
+                <div class="glass-card p-4 rounded-xl shadow-md backdrop-blur-sm border border-white/20 hover:shadow-lg transition-all duration-300 hover:-translate-y-0.5">
+                  <div class="flex items-center justify-between mb-2">
+                    <p class="font-semibold text-gray-900">Coaching Grupal</p>
+                    <span class="bg-blue-100 text-blue-800 text-xs px-2 py-1 rounded-full">6/8 plazas</span>
+                  </div>
+                  <p class="text-sm text-gray-600 mt-1">Miércoles, 5:00 PM</p>
+                  <p class="text-xs text-gray-500">Miguel Torres • Online</p>
                 </div>
-                <div class="text-sm">
-                  <p class="font-medium text-gray-900">Sofía calificó sesión con 5★</p>
-                  <p class="text-gray-500 text-xs">Hace 6 horas</p>
+                <div class="glass-card p-4 rounded-xl shadow-md backdrop-blur-sm border border-white/20 hover:shadow-lg transition-all duration-300 hover:-translate-y-0.5">
+                  <div class="flex items-center justify-between mb-2">
+                    <p class="font-semibold text-gray-900">Taller Mindfulness</p>
+                    <span class="bg-purple-100 text-purple-800 text-xs px-2 py-1 rounded-full">20/20 plazas</span>
+                  </div>
+                  <p class="text-sm text-gray-600 mt-1">Viernes, 2:00 PM</p>
+                  <p class="text-xs text-gray-500">Dr. Patricia Ruiz • Sala Principal</p>
                 </div>
-                <div class="text-sm">
-                  <p class="font-medium text-gray-900">Nueva encuesta creada</p>
-                  <p class="text-gray-500 text-xs">Ayer</p>
+                <div class="glass-card p-4 rounded-xl shadow-md backdrop-blur-sm border border-white/20 hover:shadow-lg transition-all duration-300 hover:-translate-y-0.5">
+                  <div class="flex items-center justify-between mb-2">
+                    <p class="font-semibold text-gray-900">Consulta Nutricional</p>
+                    <span class="bg-yellow-100 text-yellow-800 text-xs px-2 py-1 rounded-full">Individual</span>
+                  </div>
+                  <p class="text-sm text-gray-600 mt-1">Lunes, 11:00 AM</p>
+                  <p class="text-xs text-gray-500">Lic. Roberto Vega • Consultorio</p>
                 </div>
-                <div class="text-sm">
-                  <p class="font-medium text-gray-900">David completó encuesta de clima</p>
-                  <p class="text-gray-500 text-xs">Hace 1 día</p>
+              </div>
+              <div class="mt-4 pt-4 border-t border-white/20">
+                <Button variant="outline" class="w-full text-sm" @click="activeView = 'estadisticas'">
+                  Ver Calendario Completo
+                </Button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Participación por Departamento -->
+          <div class="glass-container rounded-xl shadow-lg p-8 backdrop-blur-sm border border-white/30">
+            <h2 class="text-xl font-semibold mb-6">Participación por Departamento</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+              <div class="text-center p-4 bg-blue-50/60 rounded-xl backdrop-blur-sm border border-blue-200/50">
+                <div class="w-12 h-12 bg-blue-500 rounded-xl flex items-center justify-center mx-auto mb-3">
+                  <Code class="h-6 w-6 text-white" />
                 </div>
-                <div class="text-sm">
-                  <p class="font-medium text-gray-900">Carmen se unió al desafío de hidratación</p>
-                  <p class="text-gray-500 text-xs">Hace 2 días</p>
+                <h4 class="font-semibold text-gray-900 mb-1">Desarrollo</h4>
+                <p class="text-2xl font-bold text-blue-600 mb-1">95%</p>
+                <p class="text-xs text-gray-500">8 empleados</p>
+                <div class="bg-gray-200 rounded-full h-1 mt-2">
+                  <div class="bg-blue-500 rounded-full h-1" style="width: 95%"></div>
+                </div>
+              </div>
+              
+              <div class="text-center p-4 bg-green-50/60 rounded-xl backdrop-blur-sm border border-green-200/50">
+                <div class="w-12 h-12 bg-green-500 rounded-xl flex items-center justify-center mx-auto mb-3">
+                  <TrendingUp class="h-6 w-6 text-white" />
+                </div>
+                <h4 class="font-semibold text-gray-900 mb-1">Marketing</h4>
+                <p class="text-2xl font-bold text-green-600 mb-1">88%</p>
+                <p class="text-xs text-gray-500">6 empleados</p>
+                <div class="bg-gray-200 rounded-full h-1 mt-2">
+                  <div class="bg-green-500 rounded-full h-1" style="width: 88%"></div>
+                </div>
+              </div>
+              
+              <div class="text-center p-4 bg-yellow-50/60 rounded-xl backdrop-blur-sm border border-yellow-200/50">
+                <div class="w-12 h-12 bg-yellow-500 rounded-xl flex items-center justify-center mx-auto mb-3">
+                  <DollarSign class="h-6 w-6 text-white" />
+                </div>
+                <h4 class="font-semibold text-gray-900 mb-1">Ventas</h4>
+                <p class="text-2xl font-bold text-yellow-600 mb-1">65%</p>
+                <p class="text-xs text-gray-500">10 empleados</p>
+                <div class="bg-gray-200 rounded-full h-1 mt-2">
+                  <div class="bg-yellow-500 rounded-full h-1" style="width: 65%"></div>
+                </div>
+              </div>
+              
+              <div class="text-center p-4 bg-purple-50/60 rounded-xl backdrop-blur-sm border border-purple-200/50">
+                <div class="w-12 h-12 bg-purple-500 rounded-xl flex items-center justify-center mx-auto mb-3">
+                  <Users class="h-6 w-6 text-white" />
+                </div>
+                <h4 class="font-semibold text-gray-900 mb-1">RRHH</h4>
+                <p class="text-2xl font-bold text-purple-600 mb-1">82%</p>
+                <p class="text-xs text-gray-500">4 empleados</p>
+                <div class="bg-gray-200 rounded-full h-1 mt-2">
+                  <div class="bg-purple-500 rounded-full h-1" style="width: 82%"></div>
                 </div>
               </div>
             </div>
           </div>
 
-          <!-- Próximas Sesiones -->
-          <div class="glass-container rounded-xl shadow-lg p-6 backdrop-blur-sm border border-white/30">
-            <h2 class="text-lg font-semibold mb-4">Próximas Sesiones Programadas</h2>
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-              <div class="glass-card p-4 rounded-xl backdrop-blur-sm border border-white/20">
-                <div class="flex items-center justify-between mb-2">
-                  <h4 class="font-semibold text-gray-900">Yoga Matutino</h4>
-                  <span class="bg-green-100 text-green-800 text-xs px-2 py-1 rounded-full">5/15</span>
+          <!-- Servicios Más Populares y Tendencias -->
+          <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+            <!-- Servicios Populares -->
+            <div class="glass-container rounded-xl shadow-lg p-8 backdrop-blur-sm border border-white/30">
+              <h2 class="text-xl font-semibold text-gray-900 mb-6 flex items-center">
+                <Star class="h-5 w-5 mr-2 text-yellow-500" />
+                Servicios Más Populares
+              </h2>
+              <div class="space-y-4">
+                <div class="flex items-center justify-between p-3 bg-purple-50/60 rounded-lg backdrop-blur-sm border border-purple-200/50">
+                  <div class="flex items-center space-x-3">
+                    <Brain class="h-5 w-5 text-purple-600" />
+                    <div>
+                      <p class="font-semibold text-gray-900">Meditación</p>
+                      <p class="text-xs text-gray-600">203 participaciones</p>
+                    </div>
+                  </div>
+                  <div class="text-right">
+                    <p class="text-sm font-bold text-purple-600">94%</p>
+                    <p class="text-xs text-gray-500">satisfacción</p>
+                  </div>
                 </div>
-                <p class="text-sm text-gray-600">Mañana, 8:00 AM</p>
-                <p class="text-xs text-gray-500">Elena Vásquez</p>
+                
+                <div class="flex items-center justify-between p-3 bg-green-50/60 rounded-lg backdrop-blur-sm border border-green-200/50">
+                  <div class="flex items-center space-x-3">
+                    <ActivitySquare class="h-5 w-5 text-green-600" />
+                    <div>
+                      <p class="font-semibold text-gray-900">Yoga</p>
+                      <p class="text-xs text-gray-600">156 participaciones</p>
+                    </div>
+                  </div>
+                  <div class="text-right">
+                    <p class="text-sm font-bold text-green-600">91%</p>
+                    <p class="text-xs text-gray-500">satisfacción</p>
+                  </div>
+                </div>
+                
+                <div class="flex items-center justify-between p-3 bg-blue-50/60 rounded-lg backdrop-blur-sm border border-blue-200/50">
+                  <div class="flex items-center space-x-3">
+                    <MessageCircle class="h-5 w-5 text-blue-600" />
+                    <div>
+                      <p class="font-semibold text-gray-900">Coaching</p>
+                      <p class="text-xs text-gray-600">48 sesiones</p>
+                    </div>
+                  </div>
+                  <div class="text-right">
+                    <p class="text-sm font-bold text-blue-600">96%</p>
+                    <p class="text-xs text-gray-500">satisfacción</p>
+                  </div>
+                </div>
+                
+                <div class="flex items-center justify-between p-3 bg-yellow-50/60 rounded-lg backdrop-blur-sm border border-yellow-200/50">
+                  <div class="flex items-center space-x-3">
+                    <Apple class="h-5 w-5 text-yellow-600" />
+                    <div>
+                      <p class="font-semibold text-gray-900">Nutrición</p>
+                      <p class="text-xs text-gray-600">72 consultas</p>
+                    </div>
+                  </div>
+                  <div class="text-right">
+                    <p class="text-sm font-bold text-yellow-600">89%</p>
+                    <p class="text-xs text-gray-500">satisfacción</p>
+                  </div>
+                </div>
               </div>
-              <div class="glass-card p-4 rounded-xl backdrop-blur-sm border border-white/20">
-                <div class="flex items-center justify-between mb-2">
-                  <h4 class="font-semibold text-gray-900">Coaching Tiempo</h4>
-                  <span class="bg-yellow-100 text-yellow-800 text-xs px-2 py-1 rounded-full">12/20</span>
+            </div>
+
+            <!-- Tendencias de Bienestar -->
+            <div class="glass-container rounded-xl shadow-lg p-8 backdrop-blur-sm border border-white/30">
+              <h2 class="text-xl font-semibold text-gray-900 mb-6 flex items-center">
+                <TrendingUp class="h-5 w-5 mr-2 text-primary" />
+                Tendencias de Bienestar
+              </h2>
+              <div class="space-y-4">
+                <div class="p-4 bg-green-50/60 rounded-lg backdrop-blur-sm border border-green-200/50">
+                  <div class="flex items-center justify-between mb-2">
+                    <span class="text-sm font-semibold text-gray-900">Participación General</span>
+                    <div class="flex items-center space-x-1">
+                      <TrendingUp class="h-4 w-4 text-green-500" />
+                      <span class="text-sm font-bold text-green-600">+23%</span>
+                    </div>
+                  </div>
+                  <p class="text-xs text-gray-600">vs mes anterior</p>
                 </div>
-                <p class="text-sm text-gray-600">Miércoles, 5:00 PM</p>
-                <p class="text-xs text-gray-500">Miguel Torres</p>
+                
+                <div class="p-4 bg-blue-50/60 rounded-lg backdrop-blur-sm border border-blue-200/50">
+                  <div class="flex items-center justify-between mb-2">
+                    <span class="text-sm font-semibold text-gray-900">Nuevos Usuarios</span>
+                    <div class="flex items-center space-x-1">
+                      <TrendingUp class="h-4 w-4 text-blue-500" />
+                      <span class="text-sm font-bold text-blue-600">+18%</span>
+                    </div>
+                  </div>
+                  <p class="text-xs text-gray-600">vs mes anterior</p>
+                </div>
+                
+                <div class="p-4 bg-purple-50/60 rounded-lg backdrop-blur-sm border border-purple-200/50">
+                  <div class="flex items-center justify-between mb-2">
+                    <span class="text-sm font-semibold text-gray-900">Tiempo Promedio</span>
+                    <div class="flex items-center space-x-1">
+                      <TrendingUp class="h-4 w-4 text-purple-500" />
+                      <span class="text-sm font-bold text-purple-600">+12%</span>
+                    </div>
+                  </div>
+                  <p class="text-xs text-gray-600">45 min/sesión promedio</p>
+                </div>
+                
+                <div class="p-4 bg-yellow-50/60 rounded-lg backdrop-blur-sm border border-yellow-200/50">
+                  <div class="flex items-center justify-between mb-2">
+                    <span class="text-sm font-semibold text-gray-900">Retención Mensual</span>
+                    <div class="flex items-center space-x-1">
+                      <TrendingUp class="h-4 w-4 text-yellow-500" />
+                      <span class="text-sm font-bold text-yellow-600">+8%</span>
+                    </div>
+                  </div>
+                  <p class="text-xs text-gray-600">Empleados que repiten</p>
+                </div>
               </div>
-              <div class="glass-card p-4 rounded-xl backdrop-blur-sm border border-white/20">
-                <div class="flex items-center justify-between mb-2">
-                  <h4 class="font-semibold text-gray-900">Nutrición Snacks</h4>
-                  <span class="bg-blue-100 text-blue-800 text-xs px-2 py-1 rounded-full">8/25</span>
+            </div>
+          </div>
+
+          <!-- Empleados Destacados y Desafíos Activos -->
+          <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+            <!-- Top Performers -->
+            <div class="glass-container rounded-xl shadow-lg p-8 backdrop-blur-sm border border-white/30">
+              <h2 class="text-xl font-semibold text-gray-900 mb-6 flex items-center">
+                <Trophy class="h-5 w-5 mr-2 text-yellow-500" />
+                Empleados Destacados
+              </h2>
+              <div class="space-y-4">
+                <div class="flex items-center space-x-4 p-3 bg-yellow-50/60 rounded-lg backdrop-blur-sm border border-yellow-200/50">
+                  <div class="w-10 h-10 bg-gradient-to-br from-yellow-400 to-yellow-600 rounded-xl flex items-center justify-center">
+                    <span class="text-white font-bold text-sm">1</span>
+                  </div>
+                  <div class="flex-1">
+                    <p class="font-semibold text-gray-900">Ana Martínez</p>
+                    <p class="text-sm text-gray-600">2,840 puntos • Nivel 5</p>
+                  </div>
+                  <div class="text-right">
+                    <p class="text-xs text-yellow-600 font-medium">Racha 30 días</p>
+                  </div>
                 </div>
-                <p class="text-sm text-gray-600">Jueves, 12:30 PM</p>
-                <p class="text-xs text-gray-500">Laura Sánchez</p>
+                
+                <div class="flex items-center space-x-4 p-3 bg-gray-50/60 rounded-lg backdrop-blur-sm border border-gray-200/50">
+                  <div class="w-10 h-10 bg-gradient-to-br from-gray-400 to-gray-600 rounded-xl flex items-center justify-center">
+                    <span class="text-white font-bold text-sm">2</span>
+                  </div>
+                  <div class="flex-1">
+                    <p class="font-semibold text-gray-900">Luis Fernández</p>
+                    <p class="text-sm text-gray-600">2,650 puntos • Nivel 5</p>
+                  </div>
+                  <div class="text-right">
+                    <p class="text-xs text-gray-600 font-medium">Líder equipo</p>
+                  </div>
+                </div>
+                
+                <div class="flex items-center space-x-4 p-3 bg-orange-50/60 rounded-lg backdrop-blur-sm border border-orange-200/50">
+                  <div class="w-10 h-10 bg-gradient-to-br from-orange-400 to-orange-600 rounded-xl flex items-center justify-center">
+                    <span class="text-white font-bold text-sm">3</span>
+                  </div>
+                  <div class="flex-1">
+                    <p class="font-semibold text-gray-900">Sofía López</p>
+                    <p class="text-sm text-gray-600">2,420 puntos • Nivel 4</p>
+                  </div>
+                  <div class="text-right">
+                    <p class="text-xs text-orange-600 font-medium">Embajadora</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Desafíos de Equipo Activos -->
+            <div class="glass-container rounded-xl shadow-lg p-8 backdrop-blur-sm border border-white/30">
+              <h2 class="text-xl font-semibold text-gray-900 mb-6 flex items-center">
+                <Users class="h-5 w-5 mr-2 text-primary" />
+                Desafíos de Equipo
+              </h2>
+              <div class="space-y-4">
+                <!-- Desafío Meditación -->
+                <div class="glass-card p-4 rounded-xl backdrop-blur-sm border border-white/20">
+                  <div class="flex items-center justify-between mb-3">
+                    <div>
+                      <h4 class="font-semibold text-gray-900">Batalla de Meditación</h4>
+                      <p class="text-sm text-gray-600">Primer depto. en 50 sesiones</p>
+                    </div>
+                    <span class="bg-purple-100 text-purple-800 text-xs px-2 py-1 rounded-full">Activo</span>
+                  </div>
+                  <div class="space-y-2">
+                    <div class="flex items-center justify-between text-sm">
+                      <span class="text-gray-700">🥇 Desarrollo</span>
+                      <span class="font-bold text-blue-600">42/50</span>
+                    </div>
+                    <div class="flex items-center justify-between text-sm">
+                      <span class="text-gray-700">🥈 Marketing</span>
+                      <span class="font-bold text-green-600">39/50</span>
+                    </div>
+                    <div class="flex items-center justify-between text-sm">
+                      <span class="text-gray-700">🥉 Ventas</span>
+                      <span class="font-bold text-yellow-600">33/50</span>
+                    </div>
+                  </div>
+                </div>
+                
+                <!-- Desafío Pasos -->
+                <div class="glass-card p-4 rounded-xl backdrop-blur-sm border border-white/20">
+                  <div class="flex items-center justify-between mb-3">
+                    <div>
+                      <h4 class="font-semibold text-gray-900">Maratón Corporativo</h4>
+                      <p class="text-sm text-gray-600">1M pasos como empresa</p>
+                    </div>
+                    <span class="bg-green-100 text-green-800 text-xs px-2 py-1 rounded-full">84.7%</span>
+                  </div>
+                  <div class="bg-gray-200 rounded-full h-2 mb-2">
+                    <div class="bg-gradient-to-r from-primary to-secondary rounded-full h-2" style="width: 84.7%"></div>
+                  </div>
+                  <p class="text-xs text-gray-500">847,392 / 1,000,000 pasos • 8 días restantes</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Estado de Encuestas y Feedback -->
+          <div class="glass-container rounded-xl shadow-lg p-8 backdrop-blur-sm border border-white/30">
+            <h2 class="text-xl font-semibold mb-6">Estado de Encuestas y Feedback</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <!-- Encuestas Activas -->
+              <div>
+                <h3 class="text-lg font-medium text-gray-900 mb-4">Encuestas Activas</h3>
+                <div class="space-y-3">
+                  <div class="glass-card p-4 rounded-xl backdrop-blur-sm border border-white/20">
+                    <div class="flex items-center justify-between mb-2">
+                      <h4 class="font-semibold text-gray-900">Clima Laboral Q1</h4>
+                      <span class="bg-green-100 text-green-800 text-xs px-2 py-1 rounded-full">Activa</span>
+                    </div>
+                    <div class="flex items-center justify-between mb-2">
+                      <span class="text-sm text-gray-600">Respuestas</span>
+                      <span class="text-sm font-bold text-primary">18/25</span>
+                    </div>
+                    <div class="bg-gray-200 rounded-full h-2">
+                      <div class="bg-primary rounded-full h-2" style="width: 72%"></div>
+                    </div>
+                    <p class="text-xs text-gray-500 mt-1">Termina en 5 días</p>
+                  </div>
+                  
+                  <div class="glass-card p-4 rounded-xl backdrop-blur-sm border border-white/20">
+                    <div class="flex items-center justify-between mb-2">
+                      <h4 class="font-semibold text-gray-900">Feedback Servicios</h4>
+                      <span class="bg-blue-100 text-blue-800 text-xs px-2 py-1 rounded-full">Activa</span>
+                    </div>
+                    <div class="flex items-center justify-between mb-2">
+                      <span class="text-sm text-gray-600">Respuestas</span>
+                      <span class="text-sm font-bold text-primary">22/25</span>
+                    </div>
+                    <div class="bg-gray-200 rounded-full h-2">
+                      <div class="bg-primary rounded-full h-2" style="width: 88%"></div>
+                    </div>
+                    <p class="text-xs text-gray-500 mt-1">Termina en 12 días</p>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Últimos Resultados -->
+              <div>
+                <h3 class="text-lg font-medium text-gray-900 mb-4">Últimos Resultados</h3>
+                <div class="space-y-3">
+                  <div class="p-4 bg-green-50/60 rounded-lg backdrop-blur-sm border border-green-200/50">
+                    <div class="flex items-center justify-between mb-2">
+                      <span class="text-sm font-semibold text-gray-900">Satisfacción General</span>
+                      <span class="text-lg font-bold text-green-600">4.6/5</span>
+                    </div>
+                    <p class="text-xs text-gray-600">Encuesta diciembre 2024</p>
+                    <div class="flex items-center mt-1">
+                      <TrendingUp class="h-3 w-3 text-green-500 mr-1" />
+                      <span class="text-xs text-green-600">+0.3 vs anterior</span>
+                    </div>
+                  </div>
+                  
+                  <div class="p-4 bg-blue-50/60 rounded-lg backdrop-blur-sm border border-blue-200/50">
+                    <div class="flex items-center justify-between mb-2">
+                      <span class="text-sm font-semibold text-gray-900">NPS Score</span>
+                      <span class="text-lg font-bold text-blue-600">72</span>
+                    </div>
+                    <p class="text-xs text-gray-600">Net Promoter Score</p>
+                    <div class="flex items-center mt-1">
+                      <TrendingUp class="h-3 w-3 text-blue-500 mr-1" />
+                      <span class="text-xs text-blue-600">+8 vs anterior</span>
+                    </div>
+                  </div>
+                  
+                  <div class="p-4 bg-purple-50/60 rounded-lg backdrop-blur-sm border border-purple-200/50">
+                    <div class="flex items-center justify-between mb-2">
+                      <span class="text-sm font-semibold text-gray-900">Recomendación</span>
+                      <span class="text-lg font-bold text-purple-600">89%</span>
+                    </div>
+                    <p class="text-xs text-gray-600">Recomendarían la empresa</p>
+                    <div class="flex items-center mt-1">
+                      <TrendingUp class="h-3 w-3 text-purple-500 mr-1" />
+                      <span class="text-xs text-purple-600">+12% vs anterior</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Próximas Acciones -->
+          <div class="glass-container rounded-xl shadow-lg p-8 backdrop-blur-sm border border-white/30">
+            <h2 class="text-xl font-semibold text-gray-900 mb-6 flex items-center">
+              <Target class="h-5 w-5 mr-2 text-primary" />
+              Próximas Acciones
+            </h2>
+            <div class="space-y-4">
+              <div class="p-4 bg-red-50/60 rounded-lg backdrop-blur-sm border border-red-200/50">
+                <div class="flex items-center space-x-3 mb-2">
+                  <div class="w-6 h-6 bg-red-500 rounded-lg flex items-center justify-center">
+                    <span class="text-white text-xs font-bold">!</span>
+                  </div>
+                  <span class="text-sm font-semibold text-gray-900">Urgente</span>
+                </div>
+                <p class="text-sm text-gray-700 mb-2">Reunión con equipo Ventas</p>
+                <p class="text-xs text-gray-500">Abordar signos de burnout detectados</p>
+              </div>
+              
+              <div class="p-4 bg-yellow-50/60 rounded-lg backdrop-blur-sm border border-yellow-200/50">
+                <div class="flex items-center space-x-3 mb-2">
+                  <Calendar class="h-4 w-4 text-yellow-600" />
+                  <span class="text-sm font-semibold text-gray-900">Esta Semana</span>
+                </div>
+                <p class="text-sm text-gray-700 mb-2">Revisar resultados encuesta clima</p>
+                <p class="text-xs text-gray-500">Analizar feedback y planificar mejoras</p>
+              </div>
+              
+              <div class="p-4 bg-blue-50/60 rounded-lg backdrop-blur-sm border border-blue-200/50">
+                <div class="flex items-center space-x-3 mb-2">
+                  <Plus class="h-4 w-4 text-blue-600" />
+                  <span class="text-sm font-semibold text-gray-900">Próximo Mes</span>
+                </div>
+                <p class="text-sm text-gray-700 mb-2">Lanzar programa mindfulness</p>
+                <p class="text-xs text-gray-500">Para equipos de alto estrés</p>
+              </div>
+              
+              <div class="p-4 bg-green-50/60 rounded-lg backdrop-blur-sm border border-green-200/50">
+                <div class="flex items-center space-x-3 mb-2">
+                  <Award class="h-4 w-4 text-green-600" />
+                  <span class="text-sm font-semibold text-gray-900">Q2 2025</span>
+                </div>
+                <p class="text-sm text-gray-700 mb-2">Reconocer top performers</p>
+                <p class="text-xs text-gray-500">Evento de reconocimiento trimestral</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Resumen de Servicios Contratados -->
+          <div class="glass-container rounded-xl shadow-lg p-8 backdrop-blur-sm border border-white/30">
+            <h2 class="text-xl font-semibold mb-6">Estado de Servicios Contratados</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+              <div class="text-center p-4 bg-green-50/60 rounded-xl backdrop-blur-sm border border-green-200/50">
+                <div class="w-12 h-12 bg-green-500 rounded-xl flex items-center justify-center mx-auto mb-3">
+                  <ActivitySquare class="h-6 w-6 text-white" />
+                </div>
+                <h4 class="font-semibold text-gray-900 mb-1">Yoga</h4>
+                <p class="text-sm text-green-600 font-medium mb-1">Muy Popular</p>
+                <p class="text-xs text-gray-500">156 participaciones</p>
+                <div class="bg-gray-200 rounded-full h-1 mt-2">
+                  <div class="bg-green-500 rounded-full h-1" style="width: 95%"></div>
+                </div>
+              </div>
+              
+              <div class="text-center p-4 bg-purple-50/60 rounded-xl backdrop-blur-sm border border-purple-200/50">
+                <div class="w-12 h-12 bg-purple-500 rounded-xl flex items-center justify-center mx-auto mb-3">
+                  <Brain class="h-6 w-6 text-white" />
+                </div>
+                <h4 class="font-semibold text-gray-900 mb-1">Meditación</h4>
+                <p class="text-sm text-purple-600 font-medium mb-1">Excelente</p>
+                <p class="text-xs text-gray-500">203 participaciones</p>
+                <div class="bg-gray-200 rounded-full h-1 mt-2">
+                  <div class="bg-purple-500 rounded-full h-1" style="width: 98%"></div>
+                </div>
+              </div>
+              
+              <div class="text-center p-4 bg-blue-50/60 rounded-xl backdrop-blur-sm border border-blue-200/50">
+                <div class="w-12 h-12 bg-blue-500 rounded-xl flex items-center justify-center mx-auto mb-3">
+                  <MessageCircle class="h-6 w-6 text-white" />
+                </div>
+                <h4 class="font-semibold text-gray-900 mb-1">Coaching</h4>
+                <p class="text-sm text-blue-600 font-medium mb-1">Alta Demanda</p>
+                <p class="text-xs text-gray-500">48 sesiones</p>
+                <div class="bg-gray-200 rounded-full h-1 mt-2">
+                  <div class="bg-blue-500 rounded-full h-1" style="width: 85%"></div>
+                </div>
+              </div>
+              
+              <div class="text-center p-4 bg-yellow-50/60 rounded-xl backdrop-blur-sm border border-yellow-200/50">
+                <div class="w-12 h-12 bg-yellow-500 rounded-xl flex items-center justify-center mx-auto mb-3">
+                  <Apple class="h-6 w-6 text-white" />
+                </div>
+                <h4 class="font-semibold text-gray-900 mb-1">Nutrición</h4>
+                <p class="text-sm text-yellow-600 font-medium mb-1">Creciendo</p>
+                <p class="text-xs text-gray-500">72 consultas</p>
+                <div class="bg-gray-200 rounded-full h-1 mt-2">
+                  <div class="bg-yellow-500 rounded-full h-1" style="width: 72%"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Panel de Acciones Rápidas -->
+          <div class="glass-container rounded-xl shadow-lg p-8 backdrop-blur-sm border border-white/30">
+            <h2 class="text-xl font-semibold mb-6 flex items-center">
+              <Zap class="h-5 w-5 mr-2 text-primary" />
+              Acciones Rápidas
+            </h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+              <Button variant="primary" class="flex flex-col items-center p-6 h-auto" @click="activeView = 'encuestas'">
+                <ClipboardList class="h-8 w-8 mb-3" />
+                <span class="text-sm font-medium">Crear Encuesta</span>
+                <span class="text-xs text-blue-200 mt-1">Feedback rápido</span>
+              </Button>
+              
+              <Button variant="outline" class="flex flex-col items-center p-6 h-auto" @click="activeView = 'empleados'">
+                <UserPlus class="h-8 w-8 mb-3" />
+                <span class="text-sm font-medium">Invitar Empleado</span>
+                <span class="text-xs text-gray-500 mt-1">Expandir equipo</span>
+              </Button>
+              
+              <Button variant="outline" class="flex flex-col items-center p-6 h-auto" @click="activeView = 'gamificacion'">
+                <Trophy class="h-8 w-8 mb-3" />
+                <span class="text-sm font-medium">Crear Desafío</span>
+                <span class="text-xs text-gray-500 mt-1">Motivar equipos</span>
+              </Button>
+              
+              <Button variant="outline" class="flex flex-col items-center p-6 h-auto" @click="activeView = 'analitica'">
+                <Brain class="h-8 w-8 mb-3" />
+                <span class="text-sm font-medium">Ver Alertas</span>
+                <span class="text-xs text-gray-500 mt-1">Prevenir problemas</span>
+              </Button>
+            </div>
+          </div>
+
+          <!-- Resumen Semanal -->
+          <div class="glass-container rounded-xl shadow-lg p-8 backdrop-blur-sm border border-white/30">
+            <h2 class="text-xl font-semibold mb-6 flex items-center">
+              <Calendar class="h-5 w-5 mr-2 text-primary" />
+              Resumen de la Semana
+            </h2>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+              <!-- Logros de la Semana -->
+              <div>
+                <h3 class="text-lg font-medium text-gray-900 mb-4">Logros Destacados</h3>
+                <div class="space-y-3">
+                  <div class="flex items-center space-x-3">
+                    <div class="w-8 h-8 bg-yellow-100 rounded-lg flex items-center justify-center">
+                      <Trophy class="h-4 w-4 text-yellow-600" />
+                    </div>
+                    <div>
+                      <p class="text-sm font-medium text-gray-900">Equipo Marketing</p>
+                      <p class="text-xs text-gray-500">Ganó desafío yoga grupal</p>
+                    </div>
+                  </div>
+                  
+                  <div class="flex items-center space-x-3">
+                    <div class="w-8 h-8 bg-green-100 rounded-lg flex items-center justify-center">
+                      <Star class="h-4 w-4 text-green-600" />
+                    </div>
+                    <div>
+                      <p class="text-sm font-medium text-gray-900">Ana Martínez</p>
+                      <p class="text-xs text-gray-500">Completó "Mes sin Estrés"</p>
+                    </div>
+                  </div>
+                  
+                  <div class="flex items-center space-x-3">
+                    <div class="w-8 h-8 bg-blue-100 rounded-lg flex items-center justify-center">
+                      <CheckCircle class="h-4 w-4 text-blue-600" />
+                    </div>
+                    <div>
+                      <p class="text-sm font-medium text-gray-900">156 logros</p>
+                      <p class="text-xs text-gray-500">Desbloqueados esta semana</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Métricas Clave -->
+              <div>
+                <h3 class="text-lg font-medium text-gray-900 mb-4">Métricas Clave</h3>
+                <div class="space-y-3">
+                  <div class="flex items-center justify-between">
+                    <span class="text-sm text-gray-600">Asistencia promedio</span>
+                    <span class="text-sm font-bold text-green-600">92%</span>
+                  </div>
+                  <div class="flex items-center justify-between">
+                    <span class="text-sm text-gray-600">Tiempo por sesión</span>
+                    <span class="text-sm font-bold text-blue-600">45 min</span>
+                  </div>
+                  <div class="flex items-center justify-between">
+                    <span class="text-sm text-gray-600">Nuevas reservas</span>
+                    <span class="text-sm font-bold text-purple-600">34</span>
+                  </div>
+                  <div class="flex items-center justify-between">
+                    <span class="text-sm text-gray-600">Cancelaciones</span>
+                    <span class="text-sm font-bold text-yellow-600">3</span>
+                  </div>
+                  <div class="flex items-center justify-between">
+                    <span class="text-sm text-gray-600">Puntos otorgados</span>
+                    <span class="text-sm font-bold text-primary">2,840</span>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Próximos Eventos -->
+              <div>
+                <h3 class="text-lg font-medium text-gray-900 mb-4">Próximos Eventos</h3>
+                <div class="space-y-3">
+                  <div class="flex items-center space-x-3">
+                    <div class="text-center">
+                      <div class="text-sm font-bold text-primary">15</div>
+                      <div class="text-xs text-gray-500">ENE</div>
+                    </div>
+                    <div>
+                      <p class="text-sm font-medium text-gray-900">Yoga Matutino</p>
+                      <p class="text-xs text-gray-500">8:00 AM • 12/15 plazas</p>
+                    </div>
+                  </div>
+                  
+                  <div class="flex items-center space-x-3">
+                    <div class="text-center">
+                      <div class="text-sm font-bold text-primary">17</div>
+                      <div class="text-xs text-gray-500">ENE</div>
+                    </div>
+                    <div>
+                      <p class="text-sm font-medium text-gray-900">Taller Mindfulness</p>
+                      <p class="text-xs text-gray-500">2:00 PM • Completo</p>
+                    </div>
+                  </div>
+                  
+                  <div class="flex items-center space-x-3">
+                    <div class="text-center">
+                      <div class="text-sm font-bold text-primary">20</div>
+                      <div class="text-xs text-gray-500">ENE</div>
+                    </div>
+                    <div>
+                      <p class="text-sm font-medium text-gray-900">Coaching Grupal</p>
+                      <p class="text-xs text-gray-500">5:00 PM • 6/8 plazas</p>
+                    </div>
+                  </div>
+                  
+                  <div class="flex items-center space-x-3">
+                    <div class="text-center">
+                      <div class="text-sm font-bold text-primary">22</div>
+                      <div class="text-xs text-gray-500">ENE</div>
+                    </div>
+                    <div>
+                      <p class="text-sm font-medium text-gray-900">Evento Bienestar</p>
+                      <p class="text-xs text-gray-500">Todo el día • Planificando</p>
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
@@ -868,7 +1508,7 @@
                   <div class="flex items-center justify-between p-3 bg-green-50/60 rounded-lg backdrop-blur-sm border border-green-200/50">
                     <div class="flex items-center space-x-3">
                       <div class="w-8 h-8 bg-green-100 rounded-lg flex items-center justify-center">
-                        <User class="h-4 w-4 text-green-600" />
+                        <UserCheck class="h-4 w-4 text-green-600" />
                       </div>
                       <div>
                         <p class="text-sm font-semibold text-gray-900">Sofía López</p>
@@ -883,7 +1523,7 @@
                   <div class="flex items-center justify-between p-3 bg-yellow-50/60 rounded-lg backdrop-blur-sm border border-yellow-200/50">
                     <div class="flex items-center space-x-3">
                       <div class="w-8 h-8 bg-yellow-100 rounded-lg flex items-center justify-center">
-                        <User class="h-4 w-4 text-yellow-600" />
+                        <UserCheck class="h-4 w-4 text-yellow-600" />
                       </div>
                       <div>
                         <p class="text-sm font-semibold text-gray-900">Carmen García</p>
@@ -2268,7 +2908,7 @@
                 <div class="space-y-4">
                   <div class="flex items-center justify-between p-4 bg-gray-50/60 rounded-lg backdrop-blur-sm border border-gray-200/50">
                     <div class="flex items-center space-x-3">
-                      <Activity class="h-5 w-5 text-gray-600" />
+                      <ActivitySquare class="h-5 w-5 text-gray-600" />
                       <div>
                         <p class="text-sm font-semibold text-gray-900">Servicios de Bienestar</p>
                         <p class="text-xs text-gray-600">Yoga, coaching, nutrición</p>
@@ -2314,7 +2954,7 @@
                   <div class="p-4 bg-green-50/60 rounded-lg backdrop-blur-sm border border-green-200/50">
                     <div class="flex items-center justify-between mb-2">
                       <div class="flex items-center space-x-3">
-                        <Activity class="h-5 w-5 text-green-600" />
+                        <ActivitySquare class="h-5 w-5 text-green-600" />
                         <span class="font-semibold text-gray-900">Yoga</span>
                       </div>
                       <span class="text-sm font-bold text-green-600">€12/participante</span>
@@ -3055,91 +3695,4 @@
             <h2 class="text-xl font-semibold mb-6">Análisis por Departamento</h2>
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
               <div class="glass-card p-4 rounded-xl backdrop-blur-sm border border-white/20 text-center">
-                <h4 class="font-semibold text-gray-900 mb-2">Tecnología</h4>
-                <p class="text-2xl font-bold text-primary mb-1">83%</p>
-                <p class="text-xs text-gray-500">12 empleados</p>
-              </div>
-              <div class="glass-card p-4 rounded-xl backdrop-blur-sm border border-white/20 text-center">
-                <h4 class="font-semibold text-gray-900 mb-2">Diseño</h4>
-                <p class="text-2xl font-bold text-primary mb-1">83%</p>
-                <p class="text-xs text-gray-500">6 empleados</p>
-              </div>
-              <div class="glass-card p-4 rounded-xl backdrop-blur-sm border border-white/20 text-center">
-                <h4 class="font-semibold text-gray-900 mb-2">Producto</h4>
-                <p class="text-2xl font-bold text-yellow-600 mb-1">50%</p>
-                <p class="text-xs text-gray-500">4 empleados</p>
-              </div>
-              <div class="glass-card p-4 rounded-xl backdrop-blur-sm border border-white/20 text-center">
-                <h4 class="font-semibold text-gray-900 mb-2">Marketing</h4>
-                <p class="text-2xl font-bold text-red-600 mb-1">33%</p>
-                <p class="text-xs text-gray-500">3 empleados</p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </main>
-    </div>
-  </div>
-</template>
-
-<script setup>
-import { ref } from 'vue';
-import { useRouter } from 'vue-router';
-import { 
-  ActivitySquare, 
-  ArrowLeft, 
-  LayoutDashboard, 
-  Users, 
-  ClipboardList, 
-  BarChart3,
-  Calendar,
-  UserCheck,
-  UserPlus,
-  Plus,
-  FileText,
-  TrendingUp,
-  Star,
-  Target,
-  Heart,
-  Zap,
-  BookOpen,
-  MessageCircle,
-  Trophy,
-  CheckCircle,
-  Clock,
-  Code,
-  Award,
-  AlertTriangle,
-  Sparkles,
-  Gift,
-  Brain,
-  Settings,
-  Download,
-  TrendingDown,
-  Frown,
-  Minus,
-  Lightbulb,
-  DollarSign,
-  Apple,
-  Monitor
-} from 'lucide-vue-next';
-import Button from '../../components/common/Button.vue';
-
-const router = useRouter();
-const activeView = ref('dashboard');
-
-const adminNavLinks = [
-  { id: 'dashboard', text: 'Dashboard', icon: LayoutDashboard },
-  { id: 'empleados', text: 'Empleados', icon: Users },
-  { id: 'desarrollo', text: 'Desarrollo y Carrera', icon: TrendingUp },
-  { id: 'gamificacion', text: 'Gamificación y Reconocimiento', icon: Trophy },
-  { id: 'analitica', text: 'Analítica Predictiva', icon: Brain },
-  { id: 'roi', text: 'ROI y Métricas', icon: DollarSign },
-  { id: 'encuestas', text: 'Encuestas', icon: ClipboardList },
-  { id: 'estadisticas', text: 'Estadísticas', icon: BarChart3 }
-];
-
-function salirDemo() {
-  router.push('/');
-}
-</script>
+                <h
