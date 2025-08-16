@@ -75,7 +75,10 @@ import {
   CalendarCheck, 
   ClipboardList, 
   Trophy,
-  User
+  User,
+  MessageCircle,
+  GraduationCap,
+  Heart
 } from 'lucide-vue-next';
 
 const props = defineProps({
@@ -98,7 +101,10 @@ const navigationLinks = computed(() => {
       { to: '/empleado/reservar-actividad', icon: Calendar, text: 'Actividades' },
       { to: '/empleado/reservas', icon: CalendarCheck, text: 'Mis Reservas' },
       { to: '/empleado/encuestas', icon: ClipboardList, text: 'Encuestas' },
-      { to: '/empleado/desafios', icon: Trophy, text: 'Desafíos' }
+      { to: '/empleado/desafios', icon: Trophy, text: 'Desafíos' },
+      { to: '/empleado/coaching', icon: MessageCircle, text: 'Coaching' },
+      { to: '/empleado/talleres', icon: GraduationCap, text: 'Talleres' },
+      { to: '/empleado/psicoterapia', icon: Heart, text: 'Psicoterapia' }
     ];
   }
   
