@@ -3,6 +3,8 @@ import HomeView from '@/views/HomeView.vue';
 import LoginView from '@/views/LoginView.vue';
 import NotFoundView from '../views/NotFoundView.vue';
 import AccessDeniedView from '../views/AccessDeniedView.vue';
+import DemoEmpleadoLayout from '../layouts/DemoEmpleadoLayout.vue';
+import DemoAdminLayout from '../layouts/DemoAdminLayout.vue';
 
 // Import route modules
 import { superadminRoutes } from './routes/superadmin.routes';
@@ -29,17 +31,78 @@ const routes = [
   {
     path: '/demo/empleado',
     name: 'DemoEmpleado',
-    component: () => import('../views/demo/DemoEmpleadoView.vue'),
+    component: DemoEmpleadoLayout,
     meta: { 
       isDemo: true
-    }
+    },
+    children: [
+      {
+        path: '',
+        component: () => import('../views/demo/DemoEmpleadoView.vue')
+      },
+      {
+        path: 'actividades',
+        component: () => import('../views/demo/empleado/DemoActividadesView.vue')
+      },
+      {
+        path: 'reservas',
+        component: () => import('../views/demo/empleado/DemoReservasView.vue')
+      },
+      {
+        path: 'encuestas',
+        component: () => import('../views/demo/empleado/DemoEncuestasView.vue')
+      },
+      {
+        path: 'desafios',
+        component: () => import('../views/demo/empleado/DemoDesafiosView.vue')
+      },
+      {
+        path: 'coaching',
+        component: () => import('../views/demo/empleado/DemoCoachingView.vue')
+      },
+      {
+        path: 'talleres',
+        component: () => import('../views/demo/empleado/DemoTalleresView.vue')
+      },
+      {
+        path: 'psicoterapia',
+        component: () => import('../views/demo/empleado/DemoPsicoterapiaView.vue')
+      }
+    ]
   },
   {
     path: '/demo/admin',
     name: 'DemoAdmin',
-    component: () => import('../views/demo/DemoAdminView.vue'),
+    component: DemoAdminLayout,
     meta: { 
       isDemo: true
+    },
+    children: [
+      {
+        path: '',
+        component: () => import('../views/demo/DemoAdminView.vue')
+      },
+      {
+        path: 'empleados',
+        component: () => import('../views/demo/admin/DemoEmpleadosView.vue')
+      },
+      {
+        path: 'encuestas',
+        component: () => import('../views/demo/admin/DemoEncuestasView.vue')
+      },
+      {
+        path: 'servicios',
+        component: () => import('../views/demo/admin/DemoServiciosView.vue')
+      },
+      {
+        path: 'analitica',
+        component: () => import('../views/demo/admin/DemoAnaliticaView.vue')
+      },
+      {
+        path: 'horarios',
+        component: () => import('../views/demo/admin/DemoHorariosView.vue')
+      }
+    ]
     }
   },
   {

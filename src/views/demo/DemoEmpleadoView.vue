@@ -1,6 +1,5 @@
 <template>
-  <EmpleadoLayout>
-    <div class="space-y-8">
+  <div class="space-y-8">
       <!-- Header -->
       <header class="mb-8">
         <div class="flex items-center justify-between">
@@ -371,8 +370,7 @@
           </div>
         </div>
       </div>
-    </div>
-  </EmpleadoLayout>
+  </div>
 </template>
 
 <script setup>
@@ -396,13 +394,8 @@ import {
   Brain,
   Apple,
   Dumbbell,
-  MessageCircle
+  MessageCircle,
+  Code,
+  DollarSign
 } from 'lucide-vue-next'
-import { useRouter } from 'vue-router'
-
-const router = useRouter()
-
-const volverADemo = () => {
-  router.push('/demo')
-}
 </script>

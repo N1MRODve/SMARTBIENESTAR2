@@ -1,6 +1,5 @@
 <template>
-  <AdminLayout>
-    <div class="space-y-8">
+  <div class="space-y-8">
       <!-- Header -->
       <header class="mb-8">
         <div class="flex items-center justify-between">
@@ -469,9 +468,6 @@
           </button>
         </div>
       </div>
-    </div>
-      </main>
-    </div>
   </div>
 </template>
 
@@ -499,13 +495,8 @@ import {
   Code,
   DollarSign,
   Briefcase,
-  BarChart3
+  BarChart3,
+  Code,
+  DollarSign
 } from 'lucide-vue-next'
-import { useRouter } from 'vue-router'
-
-const router = useRouter()
-
-const volverADemo = () => {
-  router.push('/demo')
-}
 </script>
