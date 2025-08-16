@@ -312,4 +312,21 @@
   .empleado-content {
     @apply flex-1 overflow-y-auto;
   }
+  
+  /* Layout específico para administrador */
+  .admin-layout {
+    @apply min-h-screen flex;
+  }
+  
+  .admin-sidebar {
+    @apply w-64 flex-shrink-0;
+  }
+  
+  .admin-main {
+    @apply flex-1 flex flex-col;
+  }
+  
+  .admin-content {
+    @apply flex-1 overflow-y-auto;
+  }
 }

@@ -8,9 +8,34 @@
         >
           <Menu class="h-6 w-6" />
         </button>
+        
+        <!-- Breadcrumb o título de página -->
+        <div class="hidden lg:block ml-4">
+          <h1 class="text-lg font-semibold text-gray-900">
+            {{ getPageTitle() }}
+          </h1>
+        </div>
       </div>
 
       <div class="flex items-center space-x-4">
+        <!-- Información del usuario -->
+        <div class="hidden md:flex items-center space-x-3">
+          <div class="text-right">
+            <p class="text-sm font-medium text-gray-900">
+              {{ authStore.user?.nombre }} {{ authStore.user?.apellido }}
+            </p>
+            <p class="text-xs text-gray-500">
+              {{ getRoleDisplayName(authStore.user?.tipo_usuario) }}
+            </p>
+          </div>
+          <div class="h-8 w-8 rounded-full bg-gradient-to-br from-primary to-primary-dark flex items-center justify-center">
+            <span class="text-xs font-bold text-white">
+              {{ authStore.user?.nombre?.[0] }}{{ authStore.user?.apellido?.[0] }}
+            </span>
+          </div>
+        </div>
+        
+        <!-- Botón de logout -->
         <Button
           variant="outline"
           size="sm"
@@ -25,18 +50,58 @@
 </template>
 
 <script setup>
+import { useRoute, useRouter } from 'vue-router';
+import { useToast } from 'primevue/usetoast';
 import { Menu, LogOut } from 'lucide-vue-next';
-import { useRouter } from 'vue-router';
 import { useAuthStore } from '../../stores/auth.store';
 import Button from '../common/Button.vue';
 
+const route = useRoute();
 const router = useRouter();
+const toast = useToast();
 const authStore = useAuthStore();
 
+defineEmits(['toggle-sidebar']);
+
 const handleLogout = async () => {
-  await authStore.logout();
-  router.push('/login');
+  try {
+    await authStore.logout();
+    router.push('/login');
+    toast.add({
+      severity: 'success',
+      summary: '¡Hasta pronto!',
+      detail: 'Has cerrado sesión correctamente',
+      life: 3000
+    });
+  } catch (error) {
+    toast.add({
+      severity: 'error',
+      summary: 'Error',
+      detail: 'No se pudo cerrar sesión',
+      life: 5000
+    });
+  }
 };
 
-defineEmits(['toggle-sidebar']);
+const getPageTitle = () => {
+  const titles = {
+    '/admin/dashboard': 'Dashboard',
+    '/admin/empleados': 'Gestión de Empleados',
+    '/admin/encuestas': 'Gestión de Encuestas',
+    '/admin/servicios': 'Servicios Contratados',
+    '/admin/analitica': 'Analítica Predictiva',
+    '/admin/horarios': 'Gestión de Horarios'
+  };
+  return titles[route.path] || 'Panel de Administración';
+};
+
+const getRoleDisplayName = (role) => {
+  const roleNames = {
+    empleado: 'Empleado',
+    administrador: 'Administrador',
+    superadmin: 'Super Admin',
+    colaborador: 'Colaborador'
+  };
+  return roleNames[role] || 'Usuario';
+};
 </script>
