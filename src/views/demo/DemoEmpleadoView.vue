@@ -23,6 +23,408 @@
         </div>
       </div>
     </nav>
+      <!-- Psicoterapia Online View -->
+      <div v-if="activeView === 'psicoterapia'" class="space-y-8">
+        <div>
+          <h1 class="text-3xl font-bold text-gray-900 mb-2">Psicoterapia Online</h1>
+          <p class="text-gray-600">Apoyo psicológico profesional para tu bienestar emocional</p>
+        </div>
+
+        <!-- Chat de Crisis y Sesiones Rápidas -->
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+          <!-- Chat 24/7 -->
+          <div class="glass-container rounded-xl shadow-lg p-6 backdrop-blur-sm border border-white/30">
+            <div class="flex items-center justify-between mb-4">
+              <h2 class="text-xl font-semibold text-gray-900 flex items-center">
+                <MessageCircle class="h-5 w-5 mr-2 text-green-500" />
+                Chat Confidencial 24/7
+              </h2>
+              <div class="flex items-center">
+                <div class="w-3 h-3 bg-green-500 rounded-full mr-2 animate-pulse"></div>
+                <span class="text-sm text-green-600 font-medium">Disponible</span>
+              </div>
+            </div>
+            <p class="text-gray-600 mb-4">
+              Conecta inmediatamente con un psicólogo de guardia para apoyo emocional urgente.
+            </p>
+            <div class="bg-green-50/80 rounded-lg p-4 mb-4 backdrop-blur-sm border border-green-200/50">
+              <div class="flex items-center text-sm text-green-800">
+                <Shield class="h-4 w-4 mr-2" />
+                <span class="font-medium">100% Confidencial y Privado</span>
+              </div>
+              <p class="text-xs text-green-700 mt-1">
+                Tiempo de respuesta: 2-5 minutos
+              </p>
+            </div>
+            <Button class="w-full" variant="primary">
+              <MessageCircle class="h-4 w-4 mr-2" />
+              Iniciar Chat Ahora
+            </Button>
+          </div>
+
+          <!-- Línea de Crisis -->
+          <div class="glass-container rounded-xl shadow-lg p-6 backdrop-blur-sm border border-white/30">
+            <div class="flex items-center justify-between mb-4">
+              <h2 class="text-xl font-semibold text-gray-900 flex items-center">
+                <Phone class="h-5 w-5 mr-2 text-red-500" />
+                Línea de Crisis
+              </h2>
+              <div class="flex items-center">
+                <div class="w-3 h-3 bg-red-500 rounded-full mr-2 animate-pulse"></div>
+                <span class="text-sm text-red-600 font-medium">Emergencias</span>
+              </div>
+            </div>
+            <p class="text-gray-600 mb-4">
+              Para situaciones de crisis emocional que requieren atención inmediata.
+            </p>
+            <div class="bg-red-50/80 rounded-lg p-4 mb-4 backdrop-blur-sm border border-red-200/50">
+              <div class="flex items-center text-sm text-red-800">
+                <AlertTriangle class="h-4 w-4 mr-2" />
+                <span class="font-medium">Atención Inmediata</span>
+              </div>
+              <p class="text-xs text-red-700 mt-1">
+                Disponible 24/7 - Respuesta en menos de 1 minuto
+              </p>
+            </div>
+            <Button class="w-full" variant="outline">
+              <Phone class="h-4 w-4 mr-2" />
+              Contactar Línea de Crisis
+            </Button>
+          </div>
+        </div>
+
+        <!-- Nuestros Psicoterapeutas -->
+        <div class="glass-container rounded-xl shadow-lg p-6 backdrop-blur-sm border border-white/30">
+          <h2 class="text-xl font-semibold mb-6">Nuestros Psicoterapeutas</h2>
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <!-- Dra. Patricia Morales -->
+            <div class="glass-card rounded-xl p-6 backdrop-blur-sm border border-white/20 hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
+              <div class="text-center mb-4">
+                <div class="w-20 h-20 bg-gradient-to-br from-pink-400 to-pink-600 rounded-full flex items-center justify-center mx-auto mb-4">
+                  <span class="text-white text-xl font-bold">PM</span>
+                </div>
+                <h3 class="text-lg font-semibold text-gray-900">Dra. Patricia Morales</h3>
+                <p class="text-sm text-gray-600">Psicóloga Clínica</p>
+                <div class="flex items-center justify-center mt-2">
+                  <Star class="h-4 w-4 text-yellow-400 fill-current" />
+                  <Star class="h-4 w-4 text-yellow-400 fill-current" />
+                  <Star class="h-4 w-4 text-yellow-400 fill-current" />
+                  <Star class="h-4 w-4 text-yellow-400 fill-current" />
+                  <Star class="h-4 w-4 text-yellow-400 fill-current" />
+                  <span class="ml-2 text-sm text-gray-600">4.9 (127 reseñas)</span>
+                </div>
+              </div>
+              <div class="space-y-3 mb-4">
+                <div class="text-sm">
+                  <p class="font-medium text-gray-900 mb-1">Especialidades:</p>
+                  <div class="flex flex-wrap gap-1">
+                    <span class="bg-pink-100/80 text-pink-800 px-2 py-1 rounded-full text-xs">Ansiedad</span>
+                    <span class="bg-pink-100/80 text-pink-800 px-2 py-1 rounded-full text-xs">Depresión</span>
+                    <span class="bg-pink-100/80 text-pink-800 px-2 py-1 rounded-full text-xs">Estrés Laboral</span>
+                  </div>
+                </div>
+                <div class="text-sm">
+                  <p class="font-medium text-gray-900">Experiencia:</p>
+                  <p class="text-gray-600">12 años en psicología clínica</p>
+                </div>
+                <div class="text-sm">
+                  <p class="font-medium text-gray-900">Disponibilidad:</p>
+                  <p class="text-gray-600">Lun-Vie: 9:00-18:00</p>
+                </div>
+              </div>
+              <div class="space-y-2">
+                <Button class="w-full" variant="primary">
+                  <Calendar class="h-4 w-4 mr-2" />
+                  Reservar Sesión
+                </Button>
+                <Button class="w-full" variant="outline">
+                  <MessageCircle class="h-4 w-4 mr-2" />
+                  Chat Directo
+                </Button>
+              </div>
+            </div>
+
+            <!-- Dr. Carlos Mendoza -->
+            <div class="glass-card rounded-xl p-6 backdrop-blur-sm border border-white/20 hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
+              <div class="text-center mb-4">
+                <div class="w-20 h-20 bg-gradient-to-br from-blue-400 to-blue-600 rounded-full flex items-center justify-center mx-auto mb-4">
+                  <span class="text-white text-xl font-bold">CM</span>
+                </div>
+                <h3 class="text-lg font-semibold text-gray-900">Dr. Carlos Mendoza</h3>
+                <p class="text-sm text-gray-600">Psicólogo Organizacional</p>
+                <div class="flex items-center justify-center mt-2">
+                  <Star class="h-4 w-4 text-yellow-400 fill-current" />
+                  <Star class="h-4 w-4 text-yellow-400 fill-current" />
+                  <Star class="h-4 w-4 text-yellow-400 fill-current" />
+                  <Star class="h-4 w-4 text-yellow-400 fill-current" />
+                  <Star class="h-4 w-4 text-yellow-400 fill-current" />
+                  <span class="ml-2 text-sm text-gray-600">4.8 (89 reseñas)</span>
+                </div>
+              </div>
+              <div class="space-y-3 mb-4">
+                <div class="text-sm">
+                  <p class="font-medium text-gray-900 mb-1">Especialidades:</p>
+                  <div class="flex flex-wrap gap-1">
+                    <span class="bg-blue-100/80 text-blue-800 px-2 py-1 rounded-full text-xs">Burnout</span>
+                    <span class="bg-blue-100/80 text-blue-800 px-2 py-1 rounded-full text-xs">Estrés Laboral</span>
+                    <span class="bg-blue-100/80 text-blue-800 px-2 py-1 rounded-full text-xs">Liderazgo</span>
+                  </div>
+                </div>
+                <div class="text-sm">
+                  <p class="font-medium text-gray-900">Experiencia:</p>
+                  <p class="text-gray-600">15 años en psicología organizacional</p>
+                </div>
+                <div class="text-sm">
+                  <p class="font-medium text-gray-900">Disponibilidad:</p>
+                  <p class="text-gray-600">Lun-Vie: 10:00-19:00</p>
+                </div>
+              </div>
+              <div class="space-y-2">
+                <Button class="w-full" variant="primary">
+                  <Calendar class="h-4 w-4 mr-2" />
+                  Reservar Sesión
+                </Button>
+                <Button class="w-full" variant="outline">
+                  <MessageCircle class="h-4 w-4 mr-2" />
+                  Chat Directo
+                </Button>
+              </div>
+            </div>
+
+            <!-- Dra. Ana Sofía Ruiz -->
+            <div class="glass-card rounded-xl p-6 backdrop-blur-sm border border-white/20 hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
+              <div class="text-center mb-4">
+                <div class="w-20 h-20 bg-gradient-to-br from-purple-400 to-purple-600 rounded-full flex items-center justify-center mx-auto mb-4">
+                  <span class="text-white text-xl font-bold">AR</span>
+                </div>
+                <h3 class="text-lg font-semibold text-gray-900">Dra. Ana Sofía Ruiz</h3>
+                <p class="text-sm text-gray-600">Psicóloga de Pareja y Familia</p>
+                <div class="flex items-center justify-center mt-2">
+                  <Star class="h-4 w-4 text-yellow-400 fill-current" />
+                  <Star class="h-4 w-4 text-yellow-400 fill-current" />
+                  <Star class="h-4 w-4 text-yellow-400 fill-current" />
+                  <Star class="h-4 w-4 text-yellow-400 fill-current" />
+                  <Star class="h-4 w-4 text-yellow-400 fill-current" />
+                  <span class="ml-2 text-sm text-gray-600">4.9 (156 reseñas)</span>
+                </div>
+              </div>
+              <div class="space-y-3 mb-4">
+                <div class="text-sm">
+                  <p class="font-medium text-gray-900 mb-1">Especialidades:</p>
+                  <div class="flex flex-wrap gap-1">
+                    <span class="bg-purple-100/80 text-purple-800 px-2 py-1 rounded-full text-xs">Equilibrio Vida-Trabajo</span>
+                    <span class="bg-purple-100/80 text-purple-800 px-2 py-1 rounded-full text-xs">Autoestima</span>
+                    <span class="bg-purple-100/80 text-purple-800 px-2 py-1 rounded-full text-xs">Relaciones</span>
+                  </div>
+                </div>
+                <div class="text-sm">
+                  <p class="font-medium text-gray-900">Experiencia:</p>
+                  <p class="text-gray-600">10 años en terapia familiar</p>
+                </div>
+                <div class="text-sm">
+                  <p class="font-medium text-gray-900">Disponibilidad:</p>
+                  <p class="text-gray-600">Lun-Sáb: 8:00-20:00</p>
+                </div>
+              </div>
+              <div class="space-y-2">
+                <Button class="w-full" variant="primary">
+                  <Calendar class="h-4 w-4 mr-2" />
+                  Reservar Sesión
+                </Button>
+                <Button class="w-full" variant="outline">
+                  <MessageCircle class="h-4 w-4 mr-2" />
+                  Chat Directo
+                </Button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Mis Sesiones de Psicoterapia -->
+        <div class="glass-container rounded-xl shadow-lg p-6 backdrop-blur-sm border border-white/30">
+          <h2 class="text-xl font-semibold mb-6">Mis Sesiones de Psicoterapia</h2>
+          
+          <!-- Próximas Sesiones -->
+          <div class="mb-8">
+            <h3 class="text-lg font-medium text-gray-800 mb-4">Próximas Sesiones</h3>
+            <div class="space-y-3">
+              <div class="glass-card p-4 rounded-xl backdrop-blur-sm border border-white/20 flex items-center justify-between">
+                <div class="flex items-center space-x-4">
+                  <div class="w-12 h-12 bg-pink-100 rounded-lg flex items-center justify-center">
+                    <Heart class="h-6 w-6 text-pink-600" />
+                  </div>
+                  <div>
+                    <h4 class="font-semibold text-gray-900">Sesión de Manejo de Ansiedad</h4>
+                    <p class="text-sm text-gray-600">Dra. Patricia Morales</p>
+                    <p class="text-xs text-gray-500">Mañana, 15:00 - 16:00</p>
+                  </div>
+                </div>
+                <div class="flex gap-2">
+                  <Button variant="outline" class="text-xs px-3 py-1">Reagendar</Button>
+                  <Button variant="primary" class="text-xs px-3 py-1">Unirse</Button>
+                </div>
+              </div>
+
+              <div class="glass-card p-4 rounded-xl backdrop-blur-sm border border-white/20 flex items-center justify-between">
+                <div class="flex items-center space-x-4">
+                  <div class="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center">
+                    <Brain class="h-6 w-6 text-blue-600" />
+                  </div>
+                  <div>
+                    <h4 class="font-semibold text-gray-900">Terapia de Burnout Laboral</h4>
+                    <p class="text-sm text-gray-600">Dr. Carlos Mendoza</p>
+                    <p class="text-xs text-gray-500">Viernes, 17:30 - 18:30</p>
+                  </div>
+                </div>
+                <div class="flex gap-2">
+                  <Button variant="outline" class="text-xs px-3 py-1">Reagendar</Button>
+                  <Button variant="primary" class="text-xs px-3 py-1">Unirse</Button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Historial de Sesiones -->
+          <div>
+            <h3 class="text-lg font-medium text-gray-800 mb-4">Historial de Sesiones</h3>
+            <div class="space-y-3">
+              <div class="glass-card p-4 rounded-xl backdrop-blur-sm border border-white/20 flex items-center justify-between">
+                <div class="flex items-center space-x-4">
+                  <div class="w-12 h-12 bg-purple-100 rounded-lg flex items-center justify-center">
+                    <Heart class="h-6 w-6 text-purple-600" />
+                  </div>
+                  <div>
+                    <h4 class="font-semibold text-gray-900">Sesión de Autoestima</h4>
+                    <p class="text-sm text-gray-600">Dra. Ana Sofía Ruiz</p>
+                    <p class="text-xs text-gray-500">Completada - 15 de Enero, 2025</p>
+                  </div>
+                </div>
+                <div class="flex items-center space-x-2">
+                  <div class="flex items-center">
+                    <Star class="h-4 w-4 text-yellow-400 fill-current" />
+                    <Star class="h-4 w-4 text-yellow-400 fill-current" />
+                    <Star class="h-4 w-4 text-yellow-400 fill-current" />
+                    <Star class="h-4 w-4 text-yellow-400 fill-current" />
+                    <Star class="h-4 w-4 text-yellow-400 fill-current" />
+                  </div>
+                  <span class="bg-green-100/80 text-green-800 px-2 py-1 rounded-full text-xs font-medium">Completada</span>
+                </div>
+              </div>
+
+              <div class="glass-card p-4 rounded-xl backdrop-blur-sm border border-white/20 flex items-center justify-between">
+                <div class="flex items-center space-x-4">
+                  <div class="w-12 h-12 bg-pink-100 rounded-lg flex items-center justify-center">
+                    <Brain class="h-6 w-6 text-pink-600" />
+                  </div>
+                  <div>
+                    <h4 class="font-semibold text-gray-900">Manejo de Estrés Laboral</h4>
+                    <p class="text-sm text-gray-600">Dra. Patricia Morales</p>
+                    <p class="text-xs text-gray-500">Completada - 8 de Enero, 2025</p>
+                  </div>
+                </div>
+                <div class="flex items-center space-x-2">
+                  <div class="flex items-center">
+                    <Star class="h-4 w-4 text-yellow-400 fill-current" />
+                    <Star class="h-4 w-4 text-yellow-400 fill-current" />
+                    <Star class="h-4 w-4 text-yellow-400 fill-current" />
+                    <Star class="h-4 w-4 text-yellow-400 fill-current" />
+                    <Star class="h-4 w-4 text-gray-300" />
+                  </div>
+                  <span class="bg-green-100/80 text-green-800 px-2 py-1 rounded-full text-xs font-medium">Completada</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Recursos de Autoayuda -->
+        <div class="glass-container rounded-xl shadow-lg p-6 backdrop-blur-sm border border-white/30">
+          <h2 class="text-xl font-semibold mb-6">Recursos de Autoayuda</h2>
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <!-- Artículos -->
+            <div class="glass-card rounded-xl p-6 backdrop-blur-sm border border-white/20 text-center hover:shadow-lg transition-all duration-300 hover:-translate-y-1">
+              <div class="w-16 h-16 bg-gradient-to-br from-green-400 to-green-600 rounded-2xl flex items-center justify-center mx-auto mb-4">
+                <BookOpen class="h-8 w-8 text-white" />
+              </div>
+              <h3 class="text-lg font-semibold text-gray-900 mb-2">Artículos</h3>
+              <p class="text-gray-600 text-sm mb-4">Guías y consejos escritos por profesionales</p>
+              <Button variant="outline" class="w-full">
+                <BookOpen class="h-4 w-4 mr-2" />
+                Ver Artículos
+              </Button>
+            </div>
+
+            <!-- Meditaciones Guiadas -->
+            <div class="glass-card rounded-xl p-6 backdrop-blur-sm border border-white/20 text-center hover:shadow-lg transition-all duration-300 hover:-translate-y-1">
+              <div class="w-16 h-16 bg-gradient-to-br from-purple-400 to-purple-600 rounded-2xl flex items-center justify-center mx-auto mb-4">
+                <Brain class="h-8 w-8 text-white" />
+              </div>
+              <h3 class="text-lg font-semibold text-gray-900 mb-2">Meditaciones</h3>
+              <p class="text-gray-600 text-sm mb-4">Sesiones de mindfulness y relajación</p>
+              <Button variant="outline" class="w-full">
+                <Play class="h-4 w-4 mr-2" />
+                Escuchar Ahora
+              </Button>
+            </div>
+
+            <!-- Ejercicios de Respiración -->
+            <div class="glass-card rounded-xl p-6 backdrop-blur-sm border border-white/20 text-center hover:shadow-lg transition-all duration-300 hover:-translate-y-1">
+              <div class="w-16 h-16 bg-gradient-to-br from-blue-400 to-blue-600 rounded-2xl flex items-center justify-center mx-auto mb-4">
+                <Wind class="h-8 w-8 text-white" />
+              </div>
+              <h3 class="text-lg font-semibold text-gray-900 mb-2">Respiración</h3>
+              <p class="text-gray-600 text-sm mb-4">Técnicas de respiración para el estrés</p>
+              <Button variant="outline" class="w-full">
+                <Wind class="h-4 w-4 mr-2" />
+                Practicar
+              </Button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Información Importante -->
+        <div class="glass-container rounded-xl shadow-lg p-6 backdrop-blur-sm border border-white/30">
+          <h2 class="text-xl font-semibold mb-4 flex items-center">
+            <Shield class="h-5 w-5 mr-2 text-blue-500" />
+            Confidencialidad y Privacidad
+          </h2>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div class="space-y-3">
+              <div class="flex items-start space-x-3">
+                <Lock class="h-5 w-5 text-green-500 mt-0.5" />
+                <div>
+                  <h4 class="font-semibold text-gray-900">Privacidad Total</h4>
+                  <p class="text-sm text-gray-600">Todas las sesiones son completamente confidenciales</p>
+                </div>
+              </div>
+              <div class="flex items-start space-x-3">
+                <Shield class="h-5 w-5 text-blue-500 mt-0.5" />
+                <div>
+                  <h4 class="font-semibold text-gray-900">Datos Protegidos</h4>
+                  <p class="text-sm text-gray-600">Cumplimos con todas las normativas de protección de datos</p>
+                </div>
+              </div>
+            </div>
+            <div class="space-y-3">
+              <div class="flex items-start space-x-3">
+                <UserCheck class="h-5 w-5 text-purple-500 mt-0.5" />
+                <div>
+                  <h4 class="font-semibold text-gray-900">Profesionales Certificados</h4>
+                  <p class="text-sm text-gray-600">Todos nuestros terapeutas están colegiados</p>
+                </div>
+              </div>
+              <div class="flex items-start space-x-3">
+                <Clock class="h-5 w-5 text-yellow-500 mt-0.5" />
+                <div>
+                  <h4 class="font-semibold text-gray-900">Disponibilidad Extendida</h4>
+                  <p class="text-sm text-gray-600">Chat 24/7 y sesiones en horarios flexibles</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
 
     <!-- Sidebar Demo -->
     <div class="flex">
@@ -959,6 +1361,12 @@ import {
   Apple,
   Heart,
   Dumbbell,
+  Phone,
+  AlertTriangle,
+  BookOpen,
+  Play,
+  Wind,
+  Lock,
   Target,
   Star,
   CheckCircle,
