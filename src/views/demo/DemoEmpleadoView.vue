@@ -381,14 +381,14 @@
             </div>
           </div>
         </div>
-
+        <div v-if="activeView === 'psicoterapia'" class="space-y-8 max-w-7xl">
         <!-- Información Importante -->
         <div class="glass-container rounded-xl shadow-lg p-6 backdrop-blur-sm border border-white/30">
           <h2 class="text-xl font-semibold mb-4 flex items-center">
             <Shield class="h-5 w-5 mr-2 text-blue-500" />
             Confidencialidad y Privacidad
           </h2>
-          <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
             <div class="space-y-3">
               <div class="flex items-start space-x-3">
                 <Lock class="h-5 w-5 text-green-500 mt-0.5" />
@@ -679,7 +679,7 @@
           </div>
 
           <!-- Historial -->
-          <div class="glass-container rounded-xl shadow-lg p-6 backdrop-blur-sm border border-white/30">
+          <div class="glass-container rounded-xl shadow-lg p-8 backdrop-blur-sm border border-white/30">
             <h2 class="text-xl font-semibold mb-6">Historial de Actividades</h2>
             <div class="space-y-4">
               <div class="glass-card p-6 rounded-xl backdrop-blur-sm border border-white/20 flex items-center justify-between">
@@ -826,7 +826,7 @@
             </div>
 
             <div class="glass-card rounded-xl shadow-lg p-6 backdrop-blur-sm border border-white/20 text-center">
-              <div class="w-12 h-12 bg-purple-500/10 rounded-xl flex items-center justify-center mx-auto mb-3">
+          <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
                 <Star class="h-6 w-6 text-purple-600" />
               </div>
               <h3 class="text-2xl font-bold text-gray-900 mb-1">4.7</h3>
@@ -1326,11 +1326,11 @@
                   <Target class="h-6 w-6 text-green-600" />
                 </div>
                 <h3 class="font-semibold text-gray-900 mb-2">Resultados Medibles</h3>
-                <p class="text-sm text-gray-600">Seguimiento de progreso con métricas claras y objetivos alcanzables</p>
+          <div class="glass-container rounded-xl shadow-lg p-8 backdrop-blur-sm border border-white/30">
               </div>
               <div class="text-center">
                 <div class="w-12 h-12 bg-blue-500/10 rounded-xl flex items-center justify-center mx-auto mb-3">
-                  <Clock class="h-6 w-6 text-blue-600" />
+          <div class="glass-container rounded-xl shadow-lg p-8 backdrop-blur-sm border border-white/30 bg-gradient-to-r from-green-50/50 to-blue-50/50">
                 </div>
                 <h3 class="font-semibold text-gray-900 mb-2">Flexibilidad Total</h3>
                 <p class="text-sm text-gray-600">Horarios adaptados a tu agenda laboral, modalidad online o presencial</p>
