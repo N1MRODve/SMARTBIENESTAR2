@@ -372,6 +372,7 @@
         </div>
       </div>
     </div>
+  </EmpleadoLayout>
 </template>
 
 <script setup>
