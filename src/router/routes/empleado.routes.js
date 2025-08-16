@@ -33,6 +33,12 @@ export const empleadoRoutes = [
         meta: { requiresAuth: true, roles: ['empleado'] }
       },
       {
+        path: 'reservas/:id',
+        name: 'empleado-reserva-detalle',
+        component: () => import('../../views/empleado/ReservaDetalleView.vue'),
+        meta: { requiresAuth: true, roles: ['empleado'] }
+      },
+      {
         path: 'encuestas',
         name: 'empleado-encuestas',
         component: () => import('../../views/empleado/EncuestasView.vue'),

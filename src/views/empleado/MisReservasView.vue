@@ -30,13 +30,14 @@
         </div>
         
         <div class="flex items-end">
-          <Button @click="limpiarFiltros" variant="outline" class="w-full">
+          <button @click="limpiarFiltros" class="w-full glass-button-outline text-gray-700 bg-white/60 hover:bg-gray-50/80 px-4 py-2 rounded-lg transition-all duration-300 font-medium shadow-md hover:shadow-lg hover:-translate-y-0.5 backdrop-blur-sm border border-gray-300/50">
             Limpiar Filtros
-          </Button>
+          </button>
         </div>
       </div>
     </div>
 
+    <!-- Loading State -->
     <div v-if="loading" class="space-y-4">
       <div v-for="n in 4" :key="n" class="glass-card rounded-xl shadow-lg p-6 animate-pulse backdrop-blur-sm border border-white/20">
         <div class="flex items-center justify-between">
@@ -49,22 +50,26 @@
       </div>
     </div>
 
+    <!-- Empty State -->
     <div v-else-if="reservasFiltradas.length === 0" class="glass-card rounded-xl shadow-lg p-12 text-center backdrop-blur-sm border border-white/20">
       <BookmarkCheck class="h-16 w-16 text-gray-400 mx-auto mb-4" />
       <h3 class="text-lg font-medium text-gray-900 mb-2">
-        {{ reservas.length === 0 ? 'Aún no tienes reservas' : 'No se encontraron resultados' }}
+        {{ reservas.length === 0 ? 'Aún no tenemos datos' : 'No se encontraron resultados' }}
       </h3>
       <p class="text-gray-500 mb-4">
         {{ reservas.length === 0 
-          ? '¡Anímate a apuntarte a una actividad!' 
+          ? 'No tienes reservas registradas. ¡Anímate a apuntarte a una actividad!' 
           : 'Intenta ajustar los filtros de búsqueda.'
         }}
       </p>
-      <Button @click="$router.push('/empleado/reservar-actividad')" variant="primary">
-        Explorar Actividades
-      </Button>
+      <router-link to="/empleado/reservar-actividad">
+        <button class="bg-primary text-white px-6 py-2 rounded-lg hover:bg-primary-dark transition-colors font-medium">
+          Explorar Actividades
+        </button>
+      </router-link>
     </div>
 
+    <!-- Lista de Reservas -->
     <div v-else class="space-y-4">
       <div 
         v-for="reserva in reservasPaginadas" 
@@ -73,15 +78,16 @@
       >
         <div class="p-6">
           <div class="flex items-center justify-between mb-4">
-            <div class="flex-1">
-              <h3 class="text-xl font-bold text-gray-900 mb-2">{{ reserva.titulo }}</h3>
-              <div class="flex items-center mb-2">
-                <Calendar class="h-4 w-4 text-gray-500 mr-2" />
-                <p class="text-sm text-gray-600">{{ formatDateTime(reserva.fecha_inicio) }}</p>
+            <div class="flex items-center space-x-4">
+              <div :class="[
+                'w-12 h-12 rounded-xl flex items-center justify-center',
+                getServiceIconClass(reserva.tipo)
+              ]">
+                <component :is="getServiceIcon(reserva.tipo)" class="h-6 w-6 text-white" />
               </div>
-              <div class="flex items-center">
-                <User class="h-4 w-4 text-gray-500 mr-2" />
-                <p class="text-sm text-gray-600">{{ reserva.colaborador_nombre }}</p>
+              <div>
+                <h3 class="text-xl font-bold text-gray-900">{{ reserva.titulo }}</h3>
+                <p class="text-sm text-gray-600">{{ reserva.colaborador }}</p>
               </div>
             </div>
             
@@ -93,19 +99,25 @@
                 {{ getStatusText(reserva.estado) }}
               </span>
               
-              <div v-if="reserva.estado === 'completada' && reserva.puntos_otorgados" class="flex items-center justify-end">
+              <div v-if="reserva.estado === 'completada' && reserva.puntos" class="flex items-center justify-end">
                 <Star class="h-4 w-4 text-yellow-500 mr-1" />
-                <span class="text-sm text-primary font-medium">+{{ reserva.puntos_otorgados }} puntos</span>
+                <span class="text-sm text-primary font-medium">+{{ reserva.puntos }} puntos</span>
               </div>
             </div>
           </div>
           
-          <!-- Modalidad y ubicación -->
-          <div class="flex items-center mb-4">
-            <component :is="reserva.modalidad === 'online' ? Globe : MapPin" class="h-4 w-4 text-gray-500 mr-2" />
-            <p class="text-sm text-gray-600">
-              {{ reserva.modalidad === 'online' ? 'Sesión Online' : reserva.ubicacion }}
-            </p>
+          <!-- Información de la sesión -->
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+            <div class="flex items-center">
+              <Calendar class="h-4 w-4 text-gray-500 mr-2" />
+              <span class="text-sm text-gray-600">{{ formatDateTime(reserva.fecha) }}</span>
+            </div>
+            <div class="flex items-center">
+              <component :is="reserva.modalidad === 'online' ? Globe : MapPin" class="h-4 w-4 text-gray-500 mr-2" />
+              <span class="text-sm text-gray-600">
+                {{ reserva.modalidad === 'online' ? 'Sesión Online' : reserva.ubicacion }}
+              </span>
+            </div>
           </div>
 
           <!-- Calificación si existe -->
@@ -131,90 +143,143 @@
         
         <!-- Acciones -->
         <div class="px-6 py-4 bg-gray-50/50 border-t border-gray-200/50 flex gap-2">
-          <Button 
-            variant="outline" 
-            class="flex-1 text-sm"
+          <button 
+            class="flex-1 glass-button-outline text-gray-700 bg-white/60 hover:bg-gray-50/80 px-4 py-2 rounded-lg transition-all duration-300 font-medium shadow-md hover:shadow-lg hover:-translate-y-0.5 backdrop-blur-sm border border-gray-300/50 text-sm"
             @click="verDetalles(reserva)"
           >
             Ver Detalles
-          </Button>
+          </button>
           
-          <Button 
-            v-if="reserva.estado === 'confirmada' && new Date(reserva.fecha_inicio) > new Date()"
-            variant="outline" 
-            class="text-sm text-red-600 border-red-300 hover:bg-red-50"
+          <button 
+            v-if="reserva.estado === 'confirmada' && new Date(reserva.fecha) > new Date()"
+            class="text-sm text-red-600 border border-red-300/50 hover:bg-red-50/80 px-4 py-2 rounded-lg transition-all duration-300 font-medium shadow-md hover:shadow-lg hover:-translate-y-0.5 backdrop-blur-sm"
             @click="cancelarReserva(reserva)"
           >
             Cancelar
-          </Button>
+          </button>
           
-          <Button 
+          <button 
             v-if="reserva.estado === 'completada' && !reserva.calificacion"
-            variant="primary" 
-            class="text-sm"
+            class="glass-button-primary text-white px-4 py-2 rounded-lg hover:bg-primary/90 transition-all duration-300 font-medium shadow-md hover:shadow-lg hover:-translate-y-0.5 backdrop-blur-sm border border-blue-500/30 text-sm"
             @click="calificarSesion(reserva)"
           >
             Calificar
-          </Button>
+          </button>
         </div>
       </div>
     </div>
 
     <!-- Paginación -->
     <div v-if="totalPages > 1" class="flex justify-center items-center space-x-4 mt-8">
-      <Button
-        variant="outline"
+      <button
         :disabled="currentPage === 1"
         @click="cambiarPagina(currentPage - 1)"
+        class="glass-button-outline text-gray-700 bg-white/60 hover:bg-gray-50/80 px-4 py-2 rounded-lg transition-all duration-300 font-medium shadow-md hover:shadow-lg hover:-translate-y-0.5 backdrop-blur-sm border border-gray-300/50 disabled:opacity-50"
       >
         <ChevronLeft class="h-4 w-4" />
-      </Button>
+      </button>
       
       <span class="text-sm text-gray-600">
         Página {{ currentPage }} de {{ totalPages }}
       </span>
       
-      <Button
-        variant="outline"
+      <button
         :disabled="currentPage === totalPages"
         @click="cambiarPagina(currentPage + 1)"
+        class="glass-button-outline text-gray-700 bg-white/60 hover:bg-gray-50/80 px-4 py-2 rounded-lg transition-all duration-300 font-medium shadow-md hover:shadow-lg hover:-translate-y-0.5 backdrop-blur-sm border border-gray-300/50 disabled:opacity-50"
       >
         <ChevronRight class="h-4 w-4" />
-      </Button>
+      </button>
     </div>
   </div>
 </template>
 
 <script setup>
-import { ref, computed, onMounted } from 'vue'
+import { ref, computed } from 'vue'
 import { useRouter } from 'vue-router'
 import { useToast } from 'primevue/usetoast'
 import { 
   Calendar, 
-  User, 
   Users, 
   Star, 
   Globe, 
   MapPin,
   BookmarkCheck,
   ChevronLeft,
-  ChevronRight
+  ChevronRight,
+  Activity,
+  Brain,
+  Apple,
+  MessageCircle,
+  Heart,
+  Dumbbell
 } from 'lucide-vue-next'
-import { useAuthStore } from '../../stores/auth.store'
-import { supabase } from '../../services/supabase'
-import Button from '../../components/common/Button.vue'
 
 const router = useRouter()
 const toast = useToast()
-const authStore = useAuthStore()
 
 // Estado reactivo
-const loading = ref(true)
-const reservas = ref([])
+const loading = ref(false)
 const filtroEstado = ref('')
 const filtroServicio = ref('')
 const currentPage = ref(1)
 const itemsPerPage = 10
+
+// Datos de ejemplo (dummy data)
+const reservas = ref([
+  {
+    id: 1,
+    titulo: 'Yoga Matutino',
+    fecha: '2025-01-18T08:00:00',
+    colaborador: 'Elena Vásquez',
+    modalidad: 'presencial',
+    ubicacion: 'Sala Zen',
+    tipo: 'yoga',
+    estado: 'completada',
+    calificacion: 5,
+    comentario: 'Excelente sesión, muy relajante',
+    puntos: 50
+  },
+  {
+    id: 2,
+    titulo: 'Coaching de Productividad',
+    fecha: '2025-01-22T16:00:00',
+    colaborador: 'Carlos Ruiz',
+    modalidad: 'online',
+    ubicacion: 'Google Meet',
+    tipo: 'coaching',
+    estado: 'confirmada',
+    calificacion: null,
+    comentario: null,
+    puntos: null
+  },
+  {
+    id: 3,
+    titulo: 'Meditación Mindfulness',
+    fecha: '2025-01-15T12:30:00',
+    colaborador: 'Miguel Torres',
+    modalidad: 'online',
+    ubicacion: 'Zoom',
+    tipo: 'meditacion',
+    estado: 'completada',
+    calificacion: null,
+    comentario: null,
+    puntos: 40
+  },
+  {
+    id: 4,
+    titulo: 'Nutrición Saludable',
+    fecha: '2025-01-10T14:00:00',
+    colaborador: 'Dr. Ana López',
+    modalidad: 'presencial',
+    ubicacion: 'Sala de Conferencias',
+    tipo: 'nutricion',
+    estado: 'cancelada',
+    calificacion: null,
+    comentario: 'Cancelada por enfermedad',
+    puntos: null
+  }
+])
 
 // Computed
 const reservasFiltradas = computed(() => {
@@ -225,7 +290,7 @@ const reservasFiltradas = computed(() => {
   }
   
   if (filtroServicio.value) {
-    resultado = resultado.filter(r => r.servicio_tipo === filtroServicio.value)
+    resultado = resultado.filter(r => r.tipo === filtroServicio.value)
   }
   
   return resultado
@@ -254,81 +319,48 @@ const formatDateTime = (dateString) => {
   })
 }
 
-const getStatusClass = (estado) => {
-  const classes = {
-    'confirmada': 'bg-green-100 text-green-800',
-    'pendiente': 'bg-yellow-100 text-yellow-800',
-    'cancelada': 'bg-red-100 text-red-800',
-    'completada': 'bg-blue-100 text-blue-800'
+const getServiceIcon = (tipo) => {
+  const iconMap = {
+    yoga: Activity,
+    meditacion: Brain,
+    nutricion: Apple,
+    coaching: MessageCircle,
+    psicoterapia: Heart,
+    entrenamiento: Dumbbell
   }
-  return classes[estado] || 'bg-gray-100 text-gray-800'
+  return iconMap[tipo] || Activity
+}
+
+const getServiceIconClass = (tipo) => {
+  const classMap = {
+    yoga: 'bg-gradient-to-br from-green-400 to-green-600',
+    meditacion: 'bg-gradient-to-br from-purple-400 to-purple-600',
+    nutricion: 'bg-gradient-to-br from-yellow-400 to-orange-500',
+    coaching: 'bg-gradient-to-br from-blue-400 to-blue-600',
+    psicoterapia: 'bg-gradient-to-br from-pink-400 to-pink-600',
+    entrenamiento: 'bg-gradient-to-br from-red-400 to-red-600'
+  }
+  return classMap[tipo] || 'bg-gradient-to-br from-gray-400 to-gray-600'
+}
+
+const getStatusClass = (estado) => {
+  const classMap = {
+    confirmada: 'bg-green-100 text-green-800',
+    pendiente: 'bg-yellow-100 text-yellow-800',
+    cancelada: 'bg-red-100 text-red-800',
+    completada: 'bg-blue-100 text-blue-800'
+  }
+  return classMap[estado] || 'bg-gray-100 text-gray-800'
 }
 
 const getStatusText = (estado) => {
-  const textos = {
-    'confirmada': 'Confirmada',
-    'pendiente': 'Pendiente',
-    'cancelada': 'Cancelada',
-    'completada': 'Completada'
+  const textMap = {
+    confirmada: 'Confirmada',
+    pendiente: 'Pendiente',
+    cancelada: 'Cancelada',
+    completada: 'Completada'
   }
-  return textos[estado] || estado
-}
-
-const cargarReservas = async () => {
-  try {
-    loading.value = true
-    
-    const { data, error } = await supabase
-      .from('reservas')
-      .select(`
-        *,
-        sesiones (
-          titulo,
-          fecha_inicio,
-          fecha_fin,
-          modalidad,
-          ubicacion,
-          colaborador:usuarios (
-            nombre,
-            apellido
-          ),
-          servicios (
-            tipo,
-            nombre
-          )
-        )
-      `)
-      .eq('usuario_id', authStore.user.id)
-      .order('fecha_reserva', { ascending: false })
-    
-    if (error) throw error
-    
-    // Procesar datos para facilitar el acceso
-    reservas.value = (data || []).map(reserva => ({
-      ...reserva,
-      titulo: reserva.sesiones?.titulo,
-      fecha_inicio: reserva.sesiones?.fecha_inicio,
-      fecha_fin: reserva.sesiones?.fecha_fin,
-      modalidad: reserva.sesiones?.modalidad,
-      ubicacion: reserva.sesiones?.ubicacion,
-      colaborador_nombre: reserva.sesiones?.colaborador ? 
-        `${reserva.sesiones.colaborador.nombre} ${reserva.sesiones.colaborador.apellido}` : 
-        'Sin asignar',
-      servicio_tipo: reserva.sesiones?.servicios?.tipo,
-      servicio_nombre: reserva.sesiones?.servicios?.nombre
-    }))
-    
-  } catch (error) {
-    console.error('Error loading reservations:', error)
-    toast.add({
-      severity: 'error',
-      summary: 'Error',
-      detail: 'No se pudieron cargar las reservas',
-      life: 5000
-    })
-  } finally {
-    loading.value = false
-  }
+  return textMap[estado] || estado
 }
 
 const cancelarReserva = async (reserva) => {
@@ -337,15 +369,12 @@ const cancelarReserva = async (reserva) => {
   }
   
   try {
-    const { error } = await supabase
-      .from('reservas')
-      .update({ 
-        estado: 'cancelada',
-        fecha_cancelacion: new Date().toISOString()
-      })
-      .eq('id', reserva.id)
+    // Simular cancelación (aquí iría la lógica real)
+    await new Promise(resolve => setTimeout(resolve, 500))
     
-    if (error) throw error
+    // Actualizar estado localmente
+    reserva.estado = 'cancelada'
+    reserva.comentario = 'Cancelada por el usuario'
     
     toast.add({
       severity: 'success',
@@ -353,9 +382,6 @@ const cancelarReserva = async (reserva) => {
       detail: 'Tu reserva ha sido cancelada exitosamente',
       life: 3000
     })
-    
-    // Recargar reservas
-    await cargarReservas()
     
   } catch (error) {
     console.error('Error canceling reservation:', error)
@@ -369,8 +395,6 @@ const cancelarReserva = async (reserva) => {
 }
 
 const calificarSesion = (reserva) => {
-  // Implementar modal de calificación
-  console.log('Calificar sesión:', reserva.id)
   toast.add({
     severity: 'info',
     summary: 'Próximamente',
@@ -380,7 +404,6 @@ const calificarSesion = (reserva) => {
 }
 
 const verDetalles = (reserva) => {
-  // Navegar a vista de detalles
   router.push(`/empleado/reservas/${reserva.id}`)
 }
 
@@ -398,12 +421,4 @@ const cambiarPagina = (page) => {
   currentPage.value = page
   window.scrollTo({ top: 0, behavior: 'smooth' })
 }
-
-// Lifecycle
-onMounted(() => {
-  if (authStore.user?.id) {
-    cargarReservas()
-  }
-})
 </script>
-</template>
