@@ -1595,6 +1595,585 @@
           </div>
         </div>
 
+        <!-- Analítica Predictiva View -->
+        <div v-if="activeView === 'analitica'" class="space-y-8">
+          <div class="flex justify-between items-center">
+            <div>
+              <h1 class="text-3xl font-bold text-gray-900">Analítica Predictiva de Bienestar</h1>
+              <p class="text-gray-600 mt-1">Anticipa problemas y prevé riesgos de burnout antes de que ocurran</p>
+            </div>
+            <div class="flex gap-2">
+              <Button variant="primary">
+                <Settings class="h-4 w-4 mr-2" />
+                Configurar Alertas
+              </Button>
+              <Button variant="secondary">
+                <Download class="h-4 w-4 mr-2" />
+                Exportar Reporte
+              </Button>
+            </div>
+          </div>
+
+          <!-- Alertas Críticas -->
+          <div class="glass-container rounded-xl shadow-lg p-8 backdrop-blur-sm border border-red-300/30 bg-red-50/20">
+            <div class="flex items-center mb-6">
+              <AlertTriangle class="h-6 w-6 text-red-500 mr-3" />
+              <h2 class="text-xl font-semibold text-gray-900">Alertas Críticas</h2>
+              <span class="bg-red-500 text-white text-xs px-2 py-1 rounded-full ml-3">3 Activas</span>
+            </div>
+            
+            <div class="space-y-4">
+              <!-- Alerta Crítica - Equipo Ventas -->
+              <div class="glass-card p-6 rounded-xl backdrop-blur-sm border border-red-300/30 bg-red-50/40">
+                <div class="flex items-start justify-between mb-4">
+                  <div class="flex items-start space-x-4">
+                    <div class="w-12 h-12 bg-red-500 rounded-xl flex items-center justify-center">
+                      <AlertTriangle class="h-6 w-6 text-white" />
+                    </div>
+                    <div>
+                      <h3 class="text-lg font-semibold text-gray-900">Riesgo Alto de Burnout - Equipo Ventas</h3>
+                      <p class="text-sm text-gray-600">Detectado hace 2 días</p>
+                      <div class="flex items-center space-x-4 mt-2">
+                        <span class="bg-red-100 text-red-800 text-xs px-2 py-1 rounded-full">Crítico</span>
+                        <span class="text-xs text-gray-500">Confianza: 94%</span>
+                      </div>
+                    </div>
+                  </div>
+                  <Button variant="primary" class="text-sm bg-red-600 hover:bg-red-700">
+                    Intervenir Ahora
+                  </Button>
+                </div>
+                
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
+                  <div class="bg-white/60 p-3 rounded-lg backdrop-blur-sm border border-red-200/50">
+                    <div class="flex items-center mb-2">
+                      <TrendingDown class="h-4 w-4 text-red-600 mr-2" />
+                      <span class="text-sm font-medium text-gray-900">Participación</span>
+                    </div>
+                    <p class="text-lg font-bold text-red-600">-35%</p>
+                    <p class="text-xs text-gray-600">Últimas 2 semanas</p>
+                  </div>
+                  <div class="bg-white/60 p-3 rounded-lg backdrop-blur-sm border border-red-200/50">
+                    <div class="flex items-center mb-2">
+                      <Frown class="h-4 w-4 text-red-600 mr-2" />
+                      <span class="text-sm font-medium text-gray-900">Satisfacción</span>
+                    </div>
+                    <p class="text-lg font-bold text-red-600">2.1/5</p>
+                    <p class="text-xs text-gray-600">Última encuesta</p>
+                  </div>
+                  <div class="bg-white/60 p-3 rounded-lg backdrop-blur-sm border border-red-200/50">
+                    <div class="flex items-center mb-2">
+                      <Clock class="h-4 w-4 text-red-600 mr-2" />
+                      <span class="text-sm font-medium text-gray-900">Horas Extra</span>
+                    </div>
+                    <p class="text-lg font-bold text-red-600">+28%</p>
+                    <p class="text-xs text-gray-600">Este mes</p>
+                  </div>
+                </div>
+                
+                <div class="bg-red-100/60 p-4 rounded-lg backdrop-blur-sm border border-red-200/50">
+                  <h4 class="text-sm font-semibold text-gray-900 mb-2">Acciones Recomendadas:</h4>
+                  <ul class="text-sm text-gray-700 space-y-1">
+                    <li>• Reunión urgente con manager del equipo</li>
+                    <li>• Sesiones de coaching grupal inmediatas</li>
+                    <li>• Revisar carga de trabajo y redistribuir</li>
+                    <li>• Implementar días de bienestar mental</li>
+                  </ul>
+                </div>
+              </div>
+
+              <!-- Alerta Moderada - David Ruiz -->
+              <div class="glass-card p-6 rounded-xl backdrop-blur-sm border border-yellow-300/30 bg-yellow-50/40">
+                <div class="flex items-start justify-between mb-4">
+                  <div class="flex items-start space-x-4">
+                    <div class="w-12 h-12 bg-yellow-500 rounded-xl flex items-center justify-center">
+                      <AlertTriangle class="h-6 w-6 text-white" />
+                    </div>
+                    <div>
+                      <h3 class="text-lg font-semibold text-gray-900">Riesgo Moderado - David Ruiz</h3>
+                      <p class="text-sm text-gray-600">Patrón detectado hace 5 días</p>
+                      <div class="flex items-center space-x-4 mt-2">
+                        <span class="bg-yellow-100 text-yellow-800 text-xs px-2 py-1 rounded-full">Moderado</span>
+                        <span class="text-xs text-gray-500">Confianza: 78%</span>
+                      </div>
+                    </div>
+                  </div>
+                  <Button variant="outline" class="text-sm">
+                    Revisar Caso
+                  </Button>
+                </div>
+                
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
+                  <div class="bg-white/60 p-3 rounded-lg backdrop-blur-sm border border-yellow-200/50">
+                    <div class="flex items-center mb-2">
+                      <TrendingDown class="h-4 w-4 text-yellow-600 mr-2" />
+                      <span class="text-sm font-medium text-gray-900">Actividad</span>
+                    </div>
+                    <p class="text-lg font-bold text-yellow-600">-22%</p>
+                    <p class="text-xs text-gray-600">Últimas 3 semanas</p>
+                  </div>
+                  <div class="bg-white/60 p-3 rounded-lg backdrop-blur-sm border border-yellow-200/50">
+                    <div class="flex items-center mb-2">
+                      <Calendar class="h-4 w-4 text-yellow-600 mr-2" />
+                      <span class="text-sm font-medium text-gray-900">Ausencias</span>
+                    </div>
+                    <p class="text-lg font-bold text-yellow-600">3</p>
+                    <p class="text-xs text-gray-600">Sesiones canceladas</p>
+                  </div>
+                  <div class="bg-white/60 p-3 rounded-lg backdrop-blur-sm border border-yellow-200/50">
+                    <div class="flex items-center mb-2">
+                      <MessageCircle class="h-4 w-4 text-yellow-600 mr-2" />
+                      <span class="text-sm font-medium text-gray-900">Feedback</span>
+                    </div>
+                    <p class="text-lg font-bold text-yellow-600">3.2/5</p>
+                    <p class="text-xs text-gray-600">Última evaluación</p>
+                  </div>
+                </div>
+                
+                <div class="bg-yellow-100/60 p-4 rounded-lg backdrop-blur-sm border border-yellow-200/50">
+                  <h4 class="text-sm font-semibold text-gray-900 mb-2">Acciones Sugeridas:</h4>
+                  <ul class="text-sm text-gray-700 space-y-1">
+                    <li>• Check-in personal con el empleado</li>
+                    <li>• Ofrecer sesiones de coaching individual</li>
+                    <li>• Revisar carga de trabajo actual</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Dashboard Predictivo -->
+          <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+            <!-- Métricas Predictivas -->
+            <div class="lg:col-span-2 glass-container rounded-xl shadow-lg p-8 backdrop-blur-sm border border-white/30">
+              <h2 class="text-xl font-semibold mb-6">Tendencias y Predicciones</h2>
+              
+              <!-- Gráfico de Tendencias -->
+              <div class="mb-6">
+                <h3 class="text-lg font-medium text-gray-900 mb-4">Índice de Bienestar por Departamento</h3>
+                <div class="space-y-4">
+                  <!-- Desarrollo - Tendencia Positiva -->
+                  <div class="p-4 bg-green-50/60 rounded-lg backdrop-blur-sm border border-green-200/50">
+                    <div class="flex items-center justify-between mb-2">
+                      <div class="flex items-center space-x-3">
+                        <div class="w-8 h-8 bg-green-500 rounded-lg flex items-center justify-center">
+                          <TrendingUp class="h-4 w-4 text-white" />
+                        </div>
+                        <span class="font-semibold text-gray-900">Desarrollo</span>
+                      </div>
+                      <span class="text-lg font-bold text-green-600">8.7/10</span>
+                    </div>
+                    <div class="bg-gray-200 rounded-full h-2 mb-2">
+                      <div class="bg-green-500 rounded-full h-2" style="width: 87%"></div>
+                    </div>
+                    <div class="flex items-center justify-between text-xs">
+                      <span class="text-green-600 font-medium">↗ Tendencia positiva</span>
+                      <span class="text-gray-500">Predicción: Estable</span>
+                    </div>
+                  </div>
+
+                  <!-- Marketing - Tendencia Estable -->
+                  <div class="p-4 bg-blue-50/60 rounded-lg backdrop-blur-sm border border-blue-200/50">
+                    <div class="flex items-center justify-between mb-2">
+                      <div class="flex items-center space-x-3">
+                        <div class="w-8 h-8 bg-blue-500 rounded-lg flex items-center justify-center">
+                          <Minus class="h-4 w-4 text-white" />
+                        </div>
+                        <span class="font-semibold text-gray-900">Marketing</span>
+                      </div>
+                      <span class="text-lg font-bold text-blue-600">7.2/10</span>
+                    </div>
+                    <div class="bg-gray-200 rounded-full h-2 mb-2">
+                      <div class="bg-blue-500 rounded-full h-2" style="width: 72%"></div>
+                    </div>
+                    <div class="flex items-center justify-between text-xs">
+                      <span class="text-blue-600 font-medium">→ Tendencia estable</span>
+                      <span class="text-gray-500">Predicción: Mantener</span>
+                    </div>
+                  </div>
+
+                  <!-- Ventas - Tendencia Negativa -->
+                  <div class="p-4 bg-red-50/60 rounded-lg backdrop-blur-sm border border-red-200/50">
+                    <div class="flex items-center justify-between mb-2">
+                      <div class="flex items-center space-x-3">
+                        <div class="w-8 h-8 bg-red-500 rounded-lg flex items-center justify-center">
+                          <TrendingDown class="h-4 w-4 text-white" />
+                        </div>
+                        <span class="font-semibold text-gray-900">Ventas</span>
+                      </div>
+                      <span class="text-lg font-bold text-red-600">5.8/10</span>
+                    </div>
+                    <div class="bg-gray-200 rounded-full h-2 mb-2">
+                      <div class="bg-red-500 rounded-full h-2" style="width: 58%"></div>
+                    </div>
+                    <div class="flex items-center justify-between text-xs">
+                      <span class="text-red-600 font-medium">↘ Tendencia negativa</span>
+                      <span class="text-gray-500">Predicción: Riesgo alto</span>
+                    </div>
+                  </div>
+
+                  <!-- RRHH - Tendencia Positiva -->
+                  <div class="p-4 bg-purple-50/60 rounded-lg backdrop-blur-sm border border-purple-200/50">
+                    <div class="flex items-center justify-between mb-2">
+                      <div class="flex items-center space-x-3">
+                        <div class="w-8 h-8 bg-purple-500 rounded-lg flex items-center justify-center">
+                          <TrendingUp class="h-4 w-4 text-white" />
+                        </div>
+                        <span class="font-semibold text-gray-900">RRHH</span>
+                      </div>
+                      <span class="text-lg font-bold text-purple-600">7.9/10</span>
+                    </div>
+                    <div class="bg-gray-200 rounded-full h-2 mb-2">
+                      <div class="bg-purple-500 rounded-full h-2" style="width: 79%"></div>
+                    </div>
+                    <div class="flex items-center justify-between text-xs">
+                      <span class="text-purple-600 font-medium">↗ Tendencia positiva</span>
+                      <span class="text-gray-500">Predicción: Mejorando</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Panel de Alertas -->
+            <div class="glass-container rounded-xl shadow-lg p-8 backdrop-blur-sm border border-white/30">
+              <h2 class="text-xl font-semibold mb-6">Centro de Alertas Inteligentes</h2>
+              <div class="space-y-4">
+                <!-- Alerta de Patrón -->
+                <div class="glass-card p-4 rounded-xl backdrop-blur-sm border border-orange-300/30 bg-orange-50/40">
+                  <div class="flex items-start space-x-4">
+                    <div class="w-10 h-10 bg-orange-500 rounded-xl flex items-center justify-center">
+                      <Brain class="h-5 w-5 text-white" />
+                    </div>
+                    <div class="flex-1">
+                      <h4 class="font-semibold text-gray-900">Patrón de Estrés Detectado</h4>
+                      <p class="text-sm text-gray-600 mb-2">
+                        El departamento de Marketing muestra signos de fatiga. Participación en actividades de relajación aumentó 40% mientras que actividades físicas disminuyeron 25%.
+                      </p>
+                      <div class="flex items-center space-x-4 text-xs text-gray-500">
+                        <span>Detectado: Hace 1 día</span>
+                        <span>Confianza: 82%</span>
+                        <span class="bg-orange-100 text-orange-800 px-2 py-1 rounded-full">Patrón</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Alerta de Engagement -->
+                <div class="glass-card p-4 rounded-xl backdrop-blur-sm border border-blue-300/30 bg-blue-50/40">
+                  <div class="flex items-start space-x-4">
+                    <div class="w-10 h-10 bg-blue-500 rounded-xl flex items-center justify-center">
+                      <TrendingDown class="h-5 w-5 text-white" />
+                    </div>
+                    <div class="flex-1">
+                      <h4 class="font-semibold text-gray-900">Disminución de Engagement</h4>
+                      <p class="text-sm text-gray-600 mb-2">
+                        3 empleados del equipo de RRHH han reducido su participación en un 30% en las últimas 2 semanas. Posible sobrecarga de trabajo.
+                      </p>
+                      <div class="flex items-center space-x-4 text-xs text-gray-500">
+                        <span>Detectado: Hace 3 días</span>
+                        <span>Confianza: 71%</span>
+                        <span class="bg-blue-100 text-blue-800 px-2 py-1 rounded-full">Engagement</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Alerta Positiva -->
+                <div class="glass-card p-4 rounded-xl backdrop-blur-sm border border-green-300/30 bg-green-50/40">
+                  <div class="flex items-start space-x-4">
+                    <div class="w-10 h-10 bg-green-500 rounded-xl flex items-center justify-center">
+                      <TrendingUp class="h-5 w-5 text-white" />
+                    </div>
+                    <div class="flex-1">
+                      <h4 class="font-semibold text-gray-900">Mejora Significativa Detectada</h4>
+                      <p class="text-sm text-gray-600 mb-2">
+                        El equipo de Desarrollo muestra una mejora del 45% en bienestar general tras implementar las sesiones de yoga matutino.
+                      </p>
+                      <div class="flex items-center space-x-4 text-xs text-gray-500">
+                        <span>Detectado: Hace 1 hora</span>
+                        <span>Confianza: 96%</span>
+                        <span class="bg-green-100 text-green-800 px-2 py-1 rounded-full">Positivo</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Análisis de Factores de Riesgo -->
+          <div class="glass-container rounded-xl shadow-lg p-8 backdrop-blur-sm border border-white/30">
+            <h2 class="text-xl font-semibold mb-6">Análisis de Factores de Riesgo</h2>
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+              <!-- Factores de Riesgo Identificados -->
+              <div>
+                <h3 class="text-lg font-medium text-gray-900 mb-4">Factores de Riesgo Principales</h3>
+                <div class="space-y-4">
+                  <div class="flex items-center justify-between p-4 bg-red-50/60 rounded-lg backdrop-blur-sm border border-red-200/50">
+                    <div class="flex items-center space-x-3">
+                      <div class="w-8 h-8 bg-red-500 rounded-lg flex items-center justify-center">
+                        <Clock class="h-4 w-4 text-white" />
+                      </div>
+                      <div>
+                        <p class="text-sm font-semibold text-gray-900">Sobrecarga de Trabajo</p>
+                        <p class="text-xs text-gray-600">Horas extra excesivas</p>
+                      </div>
+                    </div>
+                    <span class="text-sm font-bold text-red-600">Alto</span>
+                  </div>
+                  
+                  <div class="flex items-center justify-between p-4 bg-yellow-50/60 rounded-lg backdrop-blur-sm border border-yellow-200/50">
+                    <div class="flex items-center space-x-3">
+                      <div class="w-8 h-8 bg-yellow-500 rounded-lg flex items-center justify-center">
+                        <Users class="h-4 w-4 text-white" />
+                      </div>
+                      <div>
+                        <p class="text-sm font-semibold text-gray-900">Aislamiento Social</p>
+                        <p class="text-xs text-gray-600">Baja participación grupal</p>
+                      </div>
+                    </div>
+                    <span class="text-sm font-bold text-yellow-600">Medio</span>
+                  </div>
+                  
+                  <div class="flex items-center justify-between p-4 bg-orange-50/60 rounded-lg backdrop-blur-sm border border-orange-200/50">
+                    <div class="flex items-center space-x-3">
+                      <div class="w-8 h-8 bg-orange-500 rounded-lg flex items-center justify-center">
+                        <Frown class="h-4 w-4 text-white" />
+                      </div>
+                      <div>
+                        <p class="text-sm font-semibold text-gray-900">Feedback Negativo</p>
+                        <p class="text-xs text-gray-600">Satisfacción decreciente</p>
+                      </div>
+                    </div>
+                    <span class="text-sm font-bold text-orange-600">Medio</span>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Factores Protectores -->
+              <div>
+                <h3 class="text-lg font-medium text-gray-900 mb-4">Factores Protectores</h3>
+                <div class="space-y-4">
+                  <div class="flex items-center justify-between p-4 bg-green-50/60 rounded-lg backdrop-blur-sm border border-green-200/50">
+                    <div class="flex items-center space-x-3">
+                      <div class="w-8 h-8 bg-green-500 rounded-lg flex items-center justify-center">
+                        <Heart class="h-4 w-4 text-white" />
+                      </div>
+                      <div>
+                        <p class="text-sm font-semibold text-gray-900">Participación Activa</p>
+                        <p class="text-xs text-gray-600">Engagement alto</p>
+                      </div>
+                    </div>
+                    <span class="text-sm font-bold text-green-600">Fuerte</span>
+                  </div>
+                  
+                  <div class="flex items-center justify-between p-4 bg-blue-50/60 rounded-lg backdrop-blur-sm border border-blue-200/50">
+                    <div class="flex items-center space-x-3">
+                      <div class="w-8 h-8 bg-blue-500 rounded-lg flex items-center justify-center">
+                        <Users class="h-4 w-4 text-white" />
+                      </div>
+                      <div>
+                        <p class="text-sm font-semibold text-gray-900">Apoyo Social</p>
+                        <p class="text-xs text-gray-600">Actividades grupales</p>
+                      </div>
+                    </div>
+                    <span class="text-sm font-bold text-blue-600">Fuerte</span>
+                  </div>
+                  
+                  <div class="flex items-center justify-between p-4 bg-purple-50/60 rounded-lg backdrop-blur-sm border border-purple-200/50">
+                    <div class="flex items-center space-x-3">
+                      <div class="w-8 h-8 bg-purple-500 rounded-lg flex items-center justify-center">
+                        <TrendingUp class="h-4 w-4 text-white" />
+                      </div>
+                      <div>
+                        <p class="text-sm font-semibold text-gray-900">Desarrollo Personal</p>
+                        <p class="text-xs text-gray-600">Rutas de carrera activas</p>
+                      </div>
+                    </div>
+                    <span class="text-sm font-bold text-purple-600">Fuerte</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Predicciones y Recomendaciones -->
+          <div class="glass-container rounded-xl shadow-lg p-8 backdrop-blur-sm border border-white/30">
+            <h2 class="text-xl font-semibold mb-6">Predicciones y Recomendaciones IA</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <!-- Predicciones -->
+              <div>
+                <h3 class="text-lg font-medium text-gray-900 mb-4">Predicciones para los Próximos 30 Días</h3>
+                <div class="space-y-4">
+                  <div class="p-4 bg-red-50/60 rounded-lg backdrop-blur-sm border border-red-200/50">
+                    <div class="flex items-center space-x-3 mb-2">
+                      <AlertTriangle class="h-5 w-5 text-red-500" />
+                      <h4 class="font-semibold text-gray-900">Riesgo de Burnout</h4>
+                    </div>
+                    <p class="text-sm text-gray-600 mb-2">
+                      El equipo de Ventas tiene un 78% de probabilidad de experimentar burnout si continúan las tendencias actuales.
+                    </p>
+                    <p class="text-xs text-red-600 font-medium">Acción requerida en 7 días</p>
+                  </div>
+                  
+                  <div class="p-4 bg-yellow-50/60 rounded-lg backdrop-blur-sm border border-yellow-200/50">
+                    <div class="flex items-center space-x-3 mb-2">
+                      <TrendingDown class="h-5 w-5 text-yellow-500" />
+                      <h4 class="font-semibold text-gray-900">Disminución de Participación</h4>
+                    </div>
+                    <p class="text-sm text-gray-600 mb-2">
+                      Se prevé una disminución del 15% en la participación general si no se implementan nuevas actividades.
+                    </p>
+                    <p class="text-xs text-yellow-600 font-medium">Monitorear de cerca</p>
+                  </div>
+                  
+                  <div class="p-4 bg-green-50/60 rounded-lg backdrop-blur-sm border border-green-200/50">
+                    <div class="flex items-center space-x-3 mb-2">
+                      <TrendingUp class="h-5 w-5 text-green-500" />
+                      <h4 class="font-semibold text-gray-900">Mejora Continua</h4>
+                    </div>
+                    <p class="text-sm text-gray-600 mb-2">
+                      El equipo de Desarrollo mantendrá su alto nivel de bienestar con 92% de probabilidad.
+                    </p>
+                    <p class="text-xs text-green-600 font-medium">Mantener estrategia actual</p>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Recomendaciones IA -->
+              <div>
+                <h3 class="text-lg font-medium text-gray-900 mb-4">Recomendaciones Inteligentes</h3>
+                <div class="space-y-4">
+                  <div class="p-4 bg-blue-50/60 rounded-lg backdrop-blur-sm border border-blue-200/50">
+                    <div class="flex items-center space-x-3 mb-2">
+                      <Lightbulb class="h-5 w-5 text-blue-500" />
+                      <h4 class="font-semibold text-gray-900">Intervención Inmediata</h4>
+                    </div>
+                    <p class="text-sm text-gray-600 mb-3">
+                      Implementar "Viernes de Bienestar" para el equipo de Ventas: sesiones de relajación obligatorias y reducción de reuniones.
+                    </p>
+                    <Button variant="primary" class="w-full text-sm">
+                      Implementar Ahora
+                    </Button>
+                  </div>
+                  
+                  <div class="p-4 bg-purple-50/60 rounded-lg backdrop-blur-sm border border-purple-200/50">
+                    <div class="flex items-center space-x-3 mb-2">
+                      <Target class="h-5 w-5 text-purple-500" />
+                      <h4 class="font-semibold text-gray-900">Optimización</h4>
+                    </div>
+                    <p class="text-sm text-gray-600 mb-3">
+                      Crear desafío colaborativo entre Marketing y RRHH para aumentar la cohesión interdepartamental.
+                    </p>
+                    <Button variant="outline" class="w-full text-sm">
+                      Crear Desafío
+                    </Button>
+                  </div>
+                  
+                  <div class="p-4 bg-green-50/60 rounded-lg backdrop-blur-sm border border-green-200/50">
+                    <div class="flex items-center space-x-3 mb-2">
+                      <Award class="h-5 w-5 text-green-500" />
+                      <h4 class="font-semibold text-gray-900">Reconocimiento</h4>
+                    </div>
+                    <p class="text-sm text-gray-600 mb-3">
+                      Destacar públicamente los logros del equipo de Desarrollo para motivar a otros departamentos.
+                    </p>
+                    <Button variant="outline" class="w-full text-sm">
+                      Crear Reconocimiento
+                    </Button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Configuración de Algoritmos -->
+          <div class="glass-container rounded-xl shadow-lg p-8 backdrop-blur-sm border border-white/30">
+            <h2 class="text-xl font-semibold mb-6">Configuración de Algoritmos Predictivos</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+              <!-- Sensibilidad de Alertas -->
+              <div>
+                <h3 class="text-lg font-medium text-gray-900 mb-4">Sensibilidad de Alertas</h3>
+                <div class="space-y-4">
+                  <div>
+                    <div class="flex items-center justify-between mb-2">
+                      <span class="text-sm text-gray-700">Alertas de Burnout</span>
+                      <span class="text-sm font-medium text-gray-900">Alta</span>
+                    </div>
+                    <div class="bg-gray-200 rounded-full h-2">
+                      <div class="bg-red-500 rounded-full h-2" style="width: 80%"></div>
+                    </div>
+                    <p class="text-xs text-gray-500 mt-1">Detectar riesgos temprano</p>
+                  </div>
+                  
+                  <div>
+                    <div class="flex items-center justify-between mb-2">
+                      <span class="text-sm text-gray-700">Patrones de Engagement</span>
+                      <span class="text-sm font-medium text-gray-900">Media</span>
+                    </div>
+                    <div class="bg-gray-200 rounded-full h-2">
+                      <div class="bg-yellow-500 rounded-full h-2" style="width: 60%"></div>
+                    </div>
+                    <p class="text-xs text-gray-500 mt-1">Balance entre precisión y ruido</p>
+                  </div>
+                  
+                  <div>
+                    <div class="flex items-center justify-between mb-2">
+                      <span class="text-sm text-gray-700">Tendencias Positivas</span>
+                      <span class="text-sm font-medium text-gray-900">Media</span>
+                    </div>
+                    <div class="bg-gray-200 rounded-full h-2">
+                      <div class="bg-green-500 rounded-full h-2" style="width: 65%"></div>
+                    </div>
+                    <p class="text-xs text-gray-500 mt-1">Celebrar mejoras significativas</p>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Frecuencia de Análisis -->
+              <div>
+                <h3 class="text-lg font-medium text-gray-900 mb-4">Frecuencia de Análisis</h3>
+                <div class="space-y-3">
+                  <div class="flex items-center justify-between p-3 bg-gray-50/60 rounded-lg backdrop-blur-sm border border-gray-200/50">
+                    <span class="text-sm text-gray-700">Análisis de patrones</span>
+                    <select class="px-2 py-1 text-xs border border-gray-300 rounded">
+                      <option>Diario</option>
+                      <option selected>Cada 3 días</option>
+                      <option>Semanal</option>
+                    </select>
+                  </div>
+                  <div class="flex items-center justify-between p-3 bg-gray-50/60 rounded-lg backdrop-blur-sm border border-gray-200/50">
+                    <span class="text-sm text-gray-700">Reportes predictivos</span>
+                    <select class="px-2 py-1 text-xs border border-gray-300 rounded">
+                      <option selected>Semanal</option>
+                      <option>Quincenal</option>
+                      <option>Mensual</option>
+                    </select>
+                  </div>
+                  <div class="flex items-center justify-between p-3 bg-gray-50/60 rounded-lg backdrop-blur-sm border border-gray-200/50">
+                    <span class="text-sm text-gray-700">Alertas críticas</span>
+                    <select class="px-2 py-1 text-xs border border-gray-300 rounded">
+                      <option selected>Inmediato</option>
+                      <option>Cada hora</option>
+                      <option>Diario</option>
+                    </select>
+                  </div>
+                </div>
+                
+                <div class="mt-6 p-4 bg-blue-50/60 rounded-lg backdrop-blur-sm border border-blue-200/50">
+                  <h4 class="text-sm font-semibold text-gray-900 mb-2">Próximo Análisis Completo</h4>
+                  <p class="text-sm text-gray-600">Lunes, 20 de enero a las 9:00 AM</p>
+                  <div class="flex items-center mt-2">
+                    <Clock class="h-4 w-4 text-blue-500 mr-2" />
+                    <span class="text-xs text-blue-600">Análisis automático programado</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
         <!-- Encuestas View -->
         <div v-if="activeView === 'encuestas'" class="space-y-8">
           <div class="flex justify-between items-center">
@@ -1916,7 +2495,13 @@ import {
   AlertTriangle,
   Sparkles,
   Gift,
-  Brain
+  Brain,
+  Settings,
+  Download,
+  TrendingDown,
+  Frown,
+  Minus,
+  Lightbulb
 } from 'lucide-vue-next';
 import Button from '../../components/common/Button.vue';
 
@@ -1928,6 +2513,7 @@ const adminNavLinks = [
   { id: 'empleados', text: 'Empleados', icon: Users },
   { id: 'desarrollo', text: 'Desarrollo y Carrera', icon: TrendingUp },
   { id: 'gamificacion', text: 'Gamificación y Reconocimiento', icon: Trophy },
+  { id: 'analitica', text: 'Analítica Predictiva', icon: Brain },
   { id: 'encuestas', text: 'Encuestas', icon: ClipboardList },
   { id: 'estadisticas', text: 'Estadísticas', icon: BarChart3 }
 ];
