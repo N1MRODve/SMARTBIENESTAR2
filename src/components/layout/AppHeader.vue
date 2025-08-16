@@ -1,5 +1,5 @@
 <template>
-  <header class="bg-white shadow-sm">
+  <header class="bg-white/80 backdrop-blur-xl border-b border-white/20 shadow-sm sticky top-0 z-20">
     <div class="px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
       <div class="flex items-center">
         <button

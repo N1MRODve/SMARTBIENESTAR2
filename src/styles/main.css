@@ -55,7 +55,7 @@
   
   /* Layout base - CORREGIDO */
   .dashboard-layout {
-    @apply flex min-h-screen;
+    @apply min-h-screen;
     margin: 0;
     padding: 0;
     background-color: rgb(var(--color-background));
@@ -64,57 +64,17 @@
   /* Sidebar - CORREGIDO */
   .sidebar {
     background-color: rgb(var(--color-primary));
-    @apply text-white flex flex-col;
-    width: 16rem;
+    @apply text-white;
     margin: 0;
     padding: 0;
-    min-height: 100vh;
   }
 
   /* Main content - CORREGIDO */
   .main-content {
-    @apply flex-1 min-h-screen;
+    @apply flex-1;
     margin: 0;
     padding: 0;
-    overflow-y: auto;
     background-color: rgb(var(--color-background));
-  }
-
-  /* Responsive adjustments - CORREGIDO */
-  @media (max-width: 1023px) {
-    .dashboard-layout {
-      @apply block;
-    }
-    
-    .sidebar {
-      @apply fixed inset-y-0 left-0 z-50;
-      transform: translateX(-100%);
-      transition: transform 0.3s ease-in-out;
-      margin: 0;
-    }
-    
-    .sidebar.open {
-      transform: translateX(0);
-    }
-    
-    .main-content {
-      margin-left: 0;
-      width: 100%;
-    }
-  }
-
-  @media (min-width: 1024px) {
-    .sidebar {
-      @apply relative;
-      transform: none !important;
-      flex-shrink: 0;
-      margin: 0;
-    }
-    
-    .main-content {
-      margin-left: 0;
-      flex: 1;
-    }
   }
 
   /* Sidebar navegación */
@@ -334,5 +294,22 @@
     background: rgba(255, 255, 255, 0.4);
     backdrop-filter: blur(15px);
     border: 1px solid rgba(255, 255, 255, 0.3);
+  }
+  
+  /* Layout específico para empleado */
+  .empleado-layout {
+    @apply min-h-screen flex;
+  }
+  
+  .empleado-sidebar {
+    @apply w-64 flex-shrink-0;
+  }
+  
+  .empleado-main {
+    @apply flex-1 flex flex-col;
+  }
+  
+  .empleado-content {
+    @apply flex-1 overflow-y-auto;
   }
 }

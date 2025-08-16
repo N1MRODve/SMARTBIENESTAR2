@@ -91,7 +91,11 @@ import {
   Trophy,
   MessageCircle,
   GraduationCap,
-  Heart
+  Heart,
+  Users,
+  Briefcase,
+  BarChart3,
+  Building2
 } from 'lucide-vue-next';
 
 const props = defineProps({

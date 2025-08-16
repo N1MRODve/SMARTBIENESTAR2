@@ -1,5 +1,5 @@
 <template>
-  <div class="min-h-screen bg-gradient-to-br from-blue-50 via-white to-indigo-50">
+  <div class="min-h-screen bg-gradient-to-br from-blue-50 via-white to-indigo-50 flex">
     <!-- Sidebar -->
     <TheSidebar 
       :open="sidebarOpen" 
@@ -7,15 +7,13 @@
     />
     
     <!-- Main content area -->
-    <div class="lg:ml-64 flex flex-col min-h-screen">
+    <div class="flex-1 flex flex-col min-h-screen">
       <!-- Header -->
       <AppHeader @toggle-sidebar="sidebarOpen = !sidebarOpen" />
       
       <!-- Main content -->
-      <main class="flex-1 overflow-y-auto">
-        <div class="p-6 md:p-8">
-          <router-view />
-        </div>
+      <main class="flex-1 p-6 md:p-8">
+        <router-view />
       </main>
     </div>
   </div>

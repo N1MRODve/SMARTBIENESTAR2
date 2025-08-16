@@ -1,5 +1,5 @@
 <template>
-  <div class="space-y-8">
+  <div class="max-w-7xl mx-auto space-y-8">
     <!-- Header -->
     <header class="mb-8">
       <h1 class="text-3xl font-bold text-gray-900 mb-2">Mi Dashboard</h1>
@@ -7,7 +7,7 @@
     </header>
     
     <!-- Sección de Estadísticas -->
-    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
       <!-- Puntos de Bienestar -->
       <div class="glass-card p-6 rounded-xl shadow-lg text-center backdrop-blur-sm border border-white/20 hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
         <div class="flex items-center justify-center mb-4">
@@ -55,7 +55,7 @@
     </div>
 
     <!-- Próximas Sesiones -->
-    <div class="glass-container rounded-xl shadow-lg p-8 backdrop-blur-sm border border-white/30 mb-8">
+    <div class="glass-container rounded-xl shadow-lg p-8 backdrop-blur-sm border border-white/30">
       <div class="flex items-center justify-between mb-6">
         <h2 class="text-xl font-semibold text-gray-900 flex items-center">
           <Calendar class="h-5 w-5 mr-2 text-primary" />
