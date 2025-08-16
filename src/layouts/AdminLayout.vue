@@ -1,5 +1,5 @@
 <template>
-  <div class="min-h-screen bg-gradient-to-br from-blue-50 via-white to-indigo-50">
+  <div class="min-h-screen bg-gradient-to-br from-blue-50 via-white to-indigo-50 flex">
     <!-- Mobile overlay -->
     <div
       v-show="sidebarOpen"
@@ -13,13 +13,13 @@
       @update:open="sidebarOpen = $event" 
     />
     
-    <!-- Main content area with proper margin for sidebar -->
-    <div class="lg:ml-64 flex flex-col min-h-screen">
+    <!-- Main content area -->
+    <div class="flex-1 flex flex-col min-h-screen">
       <!-- Header -->
       <AppHeader @toggle-sidebar="sidebarOpen = !sidebarOpen" />
       
       <!-- Main content -->
-      <main class="flex-1 p-6 md:p-8 bg-gradient-to-br from-blue-50 via-white to-indigo-50">
+      <main class="flex-1 p-6 md:p-8">
         <slot />
       </main>
     </div>

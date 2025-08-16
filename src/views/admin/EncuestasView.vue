@@ -1,5 +1,5 @@
 <template>
-  <div class="space-y-8">
+  <div class="max-w-7xl mx-auto space-y-8">
     <!-- Header -->
     <header class="mb-8">
       <h1 class="text-3xl font-bold text-gray-900 mb-2">Gestión de Encuestas</h1>
