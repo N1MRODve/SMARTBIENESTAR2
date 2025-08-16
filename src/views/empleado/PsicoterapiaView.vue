@@ -1,12 +1,12 @@
 <template>
-  <div class="p-6 md:p-8">
-    <header class="mb-8">
+  <div class="space-y-8">
+    <header>
       <h1 class="text-3xl font-bold text-gray-900">Psicoterapia y Bienestar Mental</h1>
       <p class="text-gray-600 mt-1">Cuida tu salud mental con sesiones profesionales y confidenciales.</p>
     </header>
 
     <!-- Estadísticas de Bienestar Mental -->
-    <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
+    <div class="grid grid-cols-1 md:grid-cols-4 gap-6">
       <div class="glass-card p-6 rounded-xl shadow-lg text-center backdrop-blur-sm border border-white/20">
         <h3 class="text-3xl font-bold text-primary mb-2">{{ stats.sesionesCompletadas }}</h3>
         <p class="text-gray-700 font-medium">Sesiones Completadas</p>
@@ -26,7 +26,7 @@
     </div>
 
     <!-- Acceso Rápido a Servicios -->
-    <div class="glass-container rounded-xl shadow-lg p-8 backdrop-blur-sm border border-white/30 mb-8">
+    <div class="glass-container rounded-xl shadow-lg p-8 backdrop-blur-sm border border-white/30">
       <h2 class="text-xl font-semibold text-gray-900 mb-6 flex items-center">
         <Heart class="h-5 w-5 mr-2 text-red-500" />
         Servicios de Apoyo Mental
@@ -81,7 +81,7 @@
     </div>
 
     <!-- Próximas Sesiones -->
-    <div class="glass-container rounded-xl shadow-lg p-8 backdrop-blur-sm border border-white/30 mb-8">
+    <div class="glass-container rounded-xl shadow-lg p-8 backdrop-blur-sm border border-white/30">
       <div class="flex items-center justify-between mb-6">
         <h2 class="text-xl font-semibold text-gray-900 flex items-center">
           <Calendar class="h-5 w-5 mr-2 text-primary" />

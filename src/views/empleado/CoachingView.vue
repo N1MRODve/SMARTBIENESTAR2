@@ -1,12 +1,12 @@
 <template>
-  <div class="p-6 md:p-8">
-    <header class="mb-8">
+  <div class="space-y-8">
+    <header>
       <h1 class="text-3xl font-bold text-gray-900">Coaching Personal</h1>
       <p class="text-gray-600 mt-1">Sesiones personalizadas para tu desarrollo profesional y personal.</p>
     </header>
 
     <!-- Estadísticas de Coaching -->
-    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
       <div class="glass-card p-6 rounded-xl shadow-lg text-center backdrop-blur-sm border border-white/20 hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
         <div class="flex items-center justify-center mb-4">
           <div class="w-16 h-16 bg-gradient-to-br from-blue-400 to-blue-600 rounded-2xl flex items-center justify-center">
@@ -42,7 +42,7 @@
     </div>
 
     <!-- Próximas Sesiones de Coaching -->
-    <div class="glass-container rounded-xl shadow-lg p-8 backdrop-blur-sm border border-white/30 mb-8">
+    <div class="glass-container rounded-xl shadow-lg p-8 backdrop-blur-sm border border-white/30">
       <div class="flex items-center justify-between mb-6">
         <h2 class="text-xl font-semibold text-gray-900 flex items-center">
           <Calendar class="h-5 w-5 mr-2 text-primary" />
@@ -120,7 +120,7 @@
     </div>
 
     <!-- Plan de Desarrollo Personal -->
-    <div class="glass-container rounded-xl shadow-lg p-8 backdrop-blur-sm border border-white/30 mb-8">
+    <div class="glass-container rounded-xl shadow-lg p-8 backdrop-blur-sm border border-white/30">
       <h2 class="text-xl font-semibold text-gray-900 mb-6 flex items-center">
         <Target class="h-5 w-5 mr-2 text-green-500" />
         Mi Plan de Desarrollo

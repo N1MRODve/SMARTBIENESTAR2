@@ -1,12 +1,12 @@
 <template>
-  <div class="p-6 md:p-8">
-    <header class="mb-8">
+  <div class="space-y-8">
+    <header>
       <h1 class="text-3xl font-bold text-gray-900">Talleres y Eventos</h1>
       <p class="text-gray-600 mt-1">Participa en talleres grupales y eventos especiales de bienestar.</p>
     </header>
 
     <!-- Estadísticas de Talleres -->
-    <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
+    <div class="grid grid-cols-1 md:grid-cols-4 gap-6">
       <div class="glass-card p-6 rounded-xl shadow-lg text-center backdrop-blur-sm border border-white/20">
         <h3 class="text-3xl font-bold text-primary mb-2">{{ stats.talleresAsistidos }}</h3>
         <p class="text-gray-700 font-medium">Talleres Asistidos</p>
@@ -26,7 +26,7 @@
     </div>
 
     <!-- Filtros -->
-    <div class="glass-container rounded-xl shadow-lg p-6 backdrop-blur-sm border border-white/30 mb-8">
+    <div class="glass-container rounded-xl shadow-lg p-6 backdrop-blur-sm border border-white/30">
       <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
         <div>
           <label class="block text-sm font-medium text-gray-700 mb-2">Categoría</label>

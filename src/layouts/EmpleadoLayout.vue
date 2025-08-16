@@ -1,12 +1,21 @@
 <template>
   <div class="min-h-screen bg-gradient-to-br from-blue-50 via-white to-indigo-50">
-    <TheSidebar :open="sidebarOpen" @update:open="sidebarOpen = $event" />
+    <!-- Sidebar -->
+    <TheSidebar 
+      :open="sidebarOpen" 
+      @update:open="sidebarOpen = $event" 
+    />
     
+    <!-- Main content area -->
     <div class="lg:ml-64 flex flex-col min-h-screen">
+      <!-- Header -->
       <AppHeader @toggle-sidebar="sidebarOpen = !sidebarOpen" />
       
-      <main class="flex-1 p-6">
-        <router-view />
+      <!-- Main content -->
+      <main class="flex-1 overflow-y-auto">
+        <div class="p-6 md:p-8">
+          <router-view />
+        </div>
       </main>
     </div>
   </div>

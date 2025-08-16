@@ -1,5 +1,5 @@
 <template>
-  <div class="p-6 md:p-8">
+  <div class="space-y-8">
     <!-- Header -->
     <header class="mb-8">
       <h1 class="text-3xl font-bold text-gray-900 mb-2">Mi Dashboard</h1>
