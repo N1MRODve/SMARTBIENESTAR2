@@ -986,4 +986,3 @@ function salirDemo() {
   router.push('/');
 }
 </script>
-</template>
