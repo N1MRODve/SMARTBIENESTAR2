@@ -103,7 +103,6 @@ const routes = [
         component: () => import('../views/demo/admin/DemoHorariosView.vue')
       }
     ]
-    }
   },
   {
     path: '/acceso-denegado',
