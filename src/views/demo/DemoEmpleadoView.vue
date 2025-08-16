@@ -372,11 +372,18 @@
         </div>
       </div>
     </div>
-  </EmpleadoLayout>
+      </main>
+    </div>
+  </div>
 </template>
 
 <script setup>
 import { 
+  ActivitySquare,
+  ArrowLeft,
+  LayoutDashboard,
+  CalendarCheck,
+  GraduationCap,
   Star, 
   Calendar, 
   Trophy, 
@@ -390,7 +397,14 @@ import {
   Activity,
   Brain,
   Apple,
-  Dumbbell
+  Dumbbell,
+  MessageCircle
 } from 'lucide-vue-next'
-import EmpleadoLayout from '@/layouts/EmpleadoLayout.vue'
+import { useRouter } from 'vue-router'
+
+const router = useRouter()
+
+const volverADemo = () => {
+  router.push('/demo')
+}
 </script>
