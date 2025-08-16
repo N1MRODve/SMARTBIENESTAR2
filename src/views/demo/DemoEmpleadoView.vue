@@ -964,11 +964,7 @@ import {
   CheckCircle,
   User,
   Clock,
-  Target,
-  Shield,
   BookOpen,
-  Headphones,
-  Phone
   Award
 } from 'lucide-vue-next';
 import Button from '../../components/common/Button.vue';
@@ -982,6 +978,7 @@ const empleadoNavLinks = [
   { id: 'reservas', text: 'Mis Reservas', icon: CalendarCheck },
   { id: 'encuestas', text: 'Encuestas', icon: ClipboardList },
   { id: 'desafios', text: 'Desafíos', icon: Trophy },
+  { id: 'psicoterapia', text: 'Psicoterapia Online', icon: Heart },
   { id: 'cursos', text: 'Cursos y Talleres', icon: GraduationCap },
   { id: 'coaching', text: 'Coaching Personal', icon: MessageCircle }
 ];
