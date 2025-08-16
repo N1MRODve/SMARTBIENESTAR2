@@ -527,6 +527,222 @@ export const demoData = {
     }
   ],
 
+  // Coaches disponibles para sesiones personalizadas
+  coachesPersonalizados: [
+    {
+      id: 'coach-1',
+      nombre: 'Elena',
+      apellido: 'Vásquez',
+      especialidad: 'Coach de Vida y Bienestar',
+      descripcion: 'Especialista en equilibrio vida-trabajo, gestión del estrés y desarrollo personal.',
+      experiencia: 8,
+      calificacion: 4.9,
+      precio_sesion: 75,
+      precio_empleado: 0, // Gratuito para empleados
+      duracion_sesion: 60,
+      modalidades: ['online', 'presencial'],
+      imagen: 'https://images.pexels.com/photos/3184291/pexels-photo-3184291.jpeg?auto=compress&cs=tinysrgb&w=400',
+      especialidades: ['Gestión del estrés', 'Equilibrio vida-trabajo', 'Autoestima', 'Objetivos personales'],
+      disponibilidad: {
+        lunes: ['09:00', '10:00', '11:00', '16:00', '17:00'],
+        martes: ['09:00', '10:00', '11:00', '16:00', '17:00'],
+        miercoles: ['09:00', '10:00', '11:00'],
+        jueves: ['09:00', '10:00', '11:00', '16:00', '17:00'],
+        viernes: ['09:00', '10:00', '11:00']
+      },
+      activo: true
+    },
+    {
+      id: 'coach-2',
+      nombre: 'Miguel',
+      apellido: 'Torres',
+      especialidad: 'Coach Ejecutivo y Liderazgo',
+      descripcion: 'Experto en desarrollo de liderazgo, comunicación efectiva y crecimiento profesional.',
+      experiencia: 12,
+      calificacion: 4.8,
+      precio_sesion: 90,
+      precio_empleado: 0,
+      duracion_sesion: 60,
+      modalidades: ['online', 'presencial'],
+      imagen: 'https://images.pexels.com/photos/3184338/pexels-photo-3184338.jpeg?auto=compress&cs=tinysrgb&w=400',
+      especialidades: ['Liderazgo', 'Comunicación', 'Productividad', 'Toma de decisiones'],
+      disponibilidad: {
+        lunes: ['10:00', '14:00', '15:00', '16:00'],
+        martes: ['10:00', '14:00', '15:00', '16:00'],
+        miercoles: ['10:00', '14:00', '15:00', '16:00'],
+        jueves: ['10:00', '14:00', '15:00', '16:00'],
+        viernes: ['10:00', '14:00', '15:00']
+      },
+      activo: true
+    },
+    {
+      id: 'coach-3',
+      nombre: 'Laura',
+      apellido: 'Sánchez',
+      especialidad: 'Coach Nutricional y Wellness',
+      descripcion: 'Nutricionista y coach especializada en hábitos saludables y bienestar integral.',
+      experiencia: 6,
+      calificacion: 4.7,
+      precio_sesion: 65,
+      precio_empleado: 0,
+      duracion_sesion: 45,
+      modalidades: ['online', 'presencial'],
+      imagen: 'https://images.pexels.com/photos/3822622/pexels-photo-3822622.jpeg?auto=compress&cs=tinysrgb&w=400',
+      especialidades: ['Nutrición', 'Hábitos saludables', 'Energía y vitalidad', 'Alimentación consciente'],
+      disponibilidad: {
+        lunes: ['08:00', '09:00', '12:00', '13:00', '17:00'],
+        martes: ['08:00', '09:00', '12:00', '13:00', '17:00'],
+        miercoles: ['08:00', '09:00', '12:00', '13:00'],
+        jueves: ['08:00', '09:00', '12:00', '13:00', '17:00'],
+        viernes: ['08:00', '09:00', '12:00', '13:00']
+      },
+      activo: true
+    },
+    {
+      id: 'coach-4',
+      nombre: 'Roberto',
+      apellido: 'Mendoza',
+      especialidad: 'Coach de Carrera y Desarrollo',
+      descripcion: 'Especialista en desarrollo de carrera, transiciones profesionales y planificación estratégica.',
+      experiencia: 10,
+      calificacion: 4.9,
+      precio_sesion: 85,
+      precio_empleado: 0,
+      duracion_sesion: 60,
+      modalidades: ['online', 'presencial'],
+      imagen: 'https://images.pexels.com/photos/3184465/pexels-photo-3184465.jpeg?auto=compress&cs=tinysrgb&w=400',
+      especialidades: ['Desarrollo de carrera', 'Transiciones profesionales', 'Planificación estratégica', 'Networking'],
+      disponibilidad: {
+        lunes: ['11:00', '15:00', '16:00', '17:00'],
+        martes: ['11:00', '15:00', '16:00', '17:00'],
+        miercoles: ['11:00', '15:00', '16:00'],
+        jueves: ['11:00', '15:00', '16:00', '17:00'],
+        viernes: ['11:00', '15:00', '16:00']
+      },
+      activo: true
+    },
+    {
+      id: 'coach-5',
+      nombre: 'Carmen',
+      apellido: 'Vega',
+      especialidad: 'Coach de Mindfulness y Emocional',
+      descripcion: 'Psicóloga y coach especializada en inteligencia emocional y técnicas de mindfulness.',
+      experiencia: 7,
+      calificacion: 4.8,
+      precio_sesion: 70,
+      precio_empleado: 0,
+      duracion_sesion: 50,
+      modalidades: ['online', 'presencial'],
+      imagen: 'https://images.pexels.com/photos/3861958/pexels-photo-3861958.jpeg?auto=compress&cs=tinysrgb&w=400',
+      especialidades: ['Inteligencia emocional', 'Mindfulness', 'Gestión de emociones', 'Resiliencia'],
+      disponibilidad: {
+        lunes: ['09:00', '10:00', '14:00', '15:00', '16:00'],
+        martes: ['09:00', '10:00', '14:00', '15:00', '16:00'],
+        miercoles: ['09:00', '10:00', '14:00', '15:00'],
+        jueves: ['09:00', '10:00', '14:00', '15:00', '16:00'],
+        viernes: ['09:00', '10:00', '14:00', '15:00']
+      },
+      activo: true
+    },
+    {
+      id: 'coach-6',
+      nombre: 'Andrés',
+      apellido: 'Morales',
+      especialidad: 'Coach de Productividad y Organización',
+      descripcion: 'Experto en optimización del tiempo, organización personal y técnicas de productividad.',
+      experiencia: 5,
+      calificacion: 4.6,
+      precio_sesion: 60,
+      precio_empleado: 0,
+      duracion_sesion: 45,
+      modalidades: ['online', 'presencial'],
+      imagen: 'https://images.pexels.com/photos/3861969/pexels-photo-3861969.jpeg?auto=compress&cs=tinysrgb&w=400',
+      especialidades: ['Gestión del tiempo', 'Organización personal', 'Productividad', 'Eliminación de distracciones'],
+      disponibilidad: {
+        lunes: ['08:00', '12:00', '13:00', '18:00', '19:00'],
+        martes: ['08:00', '12:00', '13:00', '18:00', '19:00'],
+        miercoles: ['08:00', '12:00', '13:00', '18:00'],
+        jueves: ['08:00', '12:00', '13:00', '18:00', '19:00'],
+        viernes: ['08:00', '12:00', '13:00', '18:00']
+      },
+      activo: true
+    }
+  ],
+
+  // Sesiones personalizadas reservadas
+  sesionesPersonalizadas: [
+    {
+      id: 'sesion-personal-1',
+      coach_id: 'coach-1',
+      usuario_id: 'demo-empleado-1',
+      titulo: 'Sesión de Gestión del Estrés',
+      descripcion: 'Trabajaremos técnicas específicas para manejar el estrés laboral y encontrar equilibrio.',
+      fecha_sesion: '2025-01-22T16:00:00Z',
+      duracion: 60,
+      modalidad: 'online',
+      enlace_reunion: 'https://zoom.us/j/coaching-123',
+      estado: 'confirmada',
+      precio_pagado: 0,
+      puntos_ganados: 100,
+      fecha_reserva: '2025-01-18T10:30:00Z',
+      notas_empleado: 'Me gustaría enfocarme en técnicas para manejar la presión de deadlines',
+      preparacion: 'Tener lista una situación específica de estrés que quieras trabajar'
+    },
+    {
+      id: 'sesion-personal-2',
+      coach_id: 'coach-2',
+      usuario_id: 'demo-empleado-1',
+      titulo: 'Desarrollo de Liderazgo Personal',
+      descripcion: 'Exploraremos tu potencial de liderazgo y desarrollaremos habilidades clave.',
+      fecha_sesion: '2025-01-25T15:00:00Z',
+      duracion: 60,
+      modalidad: 'presencial',
+      ubicacion: 'Oficina SMART Bienestar - Sala de Coaching 2',
+      estado: 'confirmada',
+      precio_pagado: 0,
+      puntos_ganados: 120,
+      fecha_reserva: '2025-01-19T14:20:00Z',
+      notas_empleado: 'Quiero mejorar mis habilidades de comunicación con el equipo',
+      preparacion: 'Reflexiona sobre situaciones donde has liderado o te gustaría liderar'
+    },
+    // Sesiones completadas
+    {
+      id: 'sesion-personal-historica-1',
+      coach_id: 'coach-3',
+      usuario_id: 'demo-empleado-1',
+      titulo: 'Consulta Nutricional Personalizada',
+      descripcion: 'Evaluación de hábitos alimentarios y plan personalizado de nutrición.',
+      fecha_sesion: '2025-01-10T12:00:00Z',
+      duracion: 45,
+      modalidad: 'online',
+      estado: 'completada',
+      precio_pagado: 0,
+      puntos_ganados: 80,
+      fecha_reserva: '2025-01-08T09:15:00Z',
+      calificacion: 5,
+      comentario: 'Excelente sesión, muy personalizada y útil',
+      fecha_completado: '2025-01-10T12:45:00Z'
+    },
+    {
+      id: 'sesion-personal-historica-2',
+      coach_id: 'coach-5',
+      usuario_id: 'demo-empleado-1',
+      titulo: 'Sesión de Mindfulness y Gestión Emocional',
+      descripcion: 'Técnicas personalizadas de mindfulness para mejorar el bienestar emocional.',
+      fecha_sesion: '2025-01-05T14:00:00Z',
+      duracion: 50,
+      modalidad: 'presencial',
+      ubicacion: 'Oficina SMART Bienestar - Sala de Mindfulness',
+      estado: 'completada',
+      precio_pagado: 0,
+      puntos_ganados: 90,
+      fecha_reserva: '2025-01-03T11:45:00Z',
+      calificacion: 4,
+      comentario: 'Muy relajante, aprendí técnicas que uso diariamente',
+      fecha_completado: '2025-01-05T14:50:00Z'
+    }
+  ],
+
   // Cursos y talleres disponibles
   cursosYTalleres: [
     {
