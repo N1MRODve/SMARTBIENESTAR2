@@ -1781,7 +1781,6 @@ import {
   Trophy,
   GraduationCap,
   MessageCircle,
-  GraduationCap,
   Activity,
   Brain,
   Droplets,
