@@ -67,46 +67,46 @@
         </form>
 
         <!-- Demo credentials info -->
-        <div v-if="!isDemoMode" class="mt-8 p-4 bg-blue-50/80 rounded-xl border border-blue-200/50 backdrop-blur-sm">
+        <div class="mt-8 p-4 bg-blue-50/80 rounded-xl border border-blue-200/50 backdrop-blur-sm">
           <div class="flex items-start">
             <div class="flex-shrink-0">
               <Info class="h-5 w-5 text-blue-400" />
             </div>
             <div class="ml-3">
               <h3 class="text-sm font-medium text-blue-800 mb-2">
-                Credenciales de Demo
+                Credenciales de Prueba
               </h3>
               <div class="text-sm text-blue-700 space-y-2">
                 <div>
                   <p class="font-semibold">Administrador:</p>
-                  <p>Email: demo.admin@innovatech-demo.com</p>
-                  <p>Contraseña: demo123</p>
+                  <p>Email: admin@innovatech.com</p>
+                  <p>Contraseña: admin123</p>
                 </div>
                 <div>
                   <p class="font-semibold">Empleado:</p>
-                  <p>Email: demo.ana@innovatech-demo.com</p>
-                  <p>Contraseña: demo123</p>
+                  <p>Email: ana.martinez@innovatech.com</p>
+                  <p>Contraseña: empleado123</p>
                 </div>
                 <div>
                   <p class="font-semibold">Colaborador:</p>
-                  <p>Email: demo.elena@smartbienestar-demo.com</p>
-                  <p>Contraseña: demo123</p>
+                  <p>Email: elena.vasquez@smartbienestar.com</p>
+                  <p>Contraseña: colaborador123</p>
                 </div>
               </div>
             </div>
           </div>
         </div>
 
-        <!-- Demo mode indicator -->
-        <div v-if="isDemoMode" class="mt-8 p-4 bg-gradient-to-r from-green-50 to-blue-50 rounded-xl border border-green-200/50 backdrop-blur-sm">
+        <!-- System status indicator -->
+        <div class="mt-8 p-4 bg-gradient-to-r from-green-50 to-blue-50 rounded-xl border border-green-200/50 backdrop-blur-sm">
           <div class="flex items-center justify-center">
             <div class="flex items-center space-x-2">
               <div class="w-3 h-3 bg-green-500 rounded-full animate-pulse"></div>
-              <span class="text-sm font-medium text-gray-700">Modo Demo Activado</span>
+              <span class="text-sm font-medium text-gray-700">Sistema Operativo</span>
             </div>
           </div>
           <p class="text-center text-xs text-gray-600 mt-2">
-            Estás accediendo a la demostración interactiva de SMART Bienestar
+            SMART Bienestar - Plataforma de Bienestar Corporativo
           </p>
         </div>
       </div>
@@ -152,36 +152,31 @@ onMounted(() => {
 async function handleSubmit() {
   try {
     loading.value = true;
+    console.log('🔐 Intentando login con:', email.value);
+    
     const userProfile = await authStore.login(email.value, password.value);
+    
+    console.log('✅ Login exitoso, usuario:', userProfile);
 
-    // Mapa de redirección basado en roles y nombres de ruta
-    const roleRedirectMap = {
-      administrador: { name: 'AdminDashboard' },
-      empleado: { name: 'empleado-dashboard' },
-      superadmin: { name: 'superadmin-dashboard' },
-      colaborador: { name: 'colaborador-dashboard' }
-    };
-
-    const redirectRoute = roleRedirectMap[userProfile.tipo_usuario];
-
-    if (redirectRoute) {
-      router.push(redirectRoute);
-    } else {
-      // Redirección por defecto si el rol no está en el mapa
-      router.push('/');
-    }
+    // Obtener ruta de redirección basada en el rol
+    const { getRoleRedirectPath } = await import('@/services/supabase');
+    const redirectPath = getRoleRedirectPath(userProfile.tipo_usuario);
+    
+    console.log('🔄 Redirigiendo a:', redirectPath);
+    router.push(redirectPath);
 
     toast.add({
       severity: 'success',
       summary: '¡Bienvenido!',
-      detail: 'Has iniciado sesión correctamente',
+      detail: `Bienvenido, ${userProfile.nombre || 'Usuario'}`,
       life: 3000
     });
   } catch (error) {
+    console.error('🚨 Error en handleSubmit:', error);
     toast.add({
       severity: 'error',
       summary: 'Error',
-      detail: error.message || 'Credenciales incorrectas. Por favor intenta de nuevo.',
+      detail: error.message || 'Credenciales incorrectas o usuario inactivo',
       life: 5000
     });
   } finally {

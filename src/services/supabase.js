@@ -7,61 +7,121 @@ const supabaseKey = import.meta.env.VITE_SUPABASE_KEY
 // Esto evita la advertencia de "Multiple GoTrueClient instances".
 export const supabase = createClient(supabaseUrl, supabaseKey)
 
-export const loginWithRedirect = async (email, password) => {
+export const authenticateUser = async (email, password) => {
   try {
+    console.log('🔐 Iniciando autenticación para:', email);
+    
+    // Paso 1: Verificar si el usuario existe en nuestra tabla usuarios
+    const { data: userData, error: userError } = await supabase
+      .from('usuarios')
+      .select('*')
+      .eq('email', email)
+      .eq('activo', true)
+      .maybeSingle();
+
+    console.log('👤 Usuario encontrado:', userData);
+    console.log('❌ Error usuario:', userError);
+
+    if (userError) {
+      console.error('Error consultando usuario:', userError);
+      throw new Error('Error al verificar usuario en la base de datos');
+    }
+    
+    if (!userData) {
+      throw new Error('Usuario no encontrado o inactivo');
+    }
+
+    // Paso 2: Intentar autenticación con Supabase Auth
     const { data: authData, error: authError } = await supabase.auth.signInWithPassword({
       email,
       password
     });
 
-    if (authError) throw authError;
-    if (!authData.user) throw new Error('No se encontró información del usuario');
+    console.log('🔑 Resultado autenticación:', authData);
+    console.log('❌ Error autenticación:', authError);
 
-    // Get user role and additional info
-    const { data: userData, error: userError } = await supabase
-      .from('usuarios')
-      .select('tipo_usuario, empresa_id, nombre, apellido')
-      .eq('id', authData.user.id)
-      .maybeSingle();
+    if (authError) {
+      console.error('Error de autenticación:', authError);
+      
+      // Si el usuario no existe en Auth pero sí en nuestra tabla, crearlo
+      if (authError.message?.includes('Invalid login credentials') || 
+          authError.message?.includes('Email not confirmed')) {
+        
+        console.log('🔧 Usuario existe en tabla pero no en Auth, intentando crear...');
+        
+        // Para demo/desarrollo, crear usuario en Auth
+        const { data: signUpData, error: signUpError } = await supabase.auth.signUp({
+          email,
+          password,
+          options: {
+            emailRedirectTo: undefined,
+            data: {
+              nombre: userData.nombre,
+              apellido: userData.apellido,
+              tipo_usuario: userData.tipo_usuario
+            }
+          }
+        });
 
-    if (userError) throw userError;
-    
-    if (!userData) {
-      await supabase.auth.signOut();
-      throw new Error('Usuario no encontrado en la base de datos');
+        if (signUpError) {
+          console.error('Error creando usuario en Auth:', signUpError);
+          throw new Error('Credenciales incorrectas');
+        }
+
+        // Actualizar el ID en nuestra tabla usuarios
+        if (signUpData.user) {
+          await supabase
+            .from('usuarios')
+            .update({ id: signUpData.user.id })
+            .eq('email', email);
+        }
+
+        return {
+          user: {
+            ...signUpData.user,
+            ...userData,
+            id: signUpData.user.id
+          },
+          session: signUpData.session
+        };
+      }
+      
+      throw new Error('Credenciales incorrectas');
     }
 
-    // Determine redirect path based on user type
-    let redirectPath = '/';
-    switch (userData.tipo_usuario) {
-      case 'superadmin':
-        redirectPath = '/superadmin/dashboard';
-        break;
-      case 'administrador':
-        redirectPath = '/admin/dashboard';
-        break;
-      case 'empleado':
-        redirectPath = '/empleado/dashboard';
-        break;
-      case 'colaborador':
-        redirectPath = '/colaborador/dashboard';
-        break;
-      default:
-        await supabase.auth.signOut();
-        throw new Error('Tipo de usuario no válido');
+    if (!authData.user) {
+      throw new Error('No se pudo autenticar el usuario');
     }
+
+    // Paso 3: Combinar datos de Auth con datos de nuestra tabla
+    const userComplete = {
+      ...authData.user,
+      ...userData,
+      id: authData.user.id // Asegurar que usamos el ID de Auth
+    };
+
+    console.log('✅ Usuario autenticado exitosamente:', userComplete);
 
     return {
-      user: {
-        ...authData.user,
-        ...userData
-      },
-      redirectPath
+      user: userComplete,
+      session: authData.session
     };
+
   } catch (error) {
-    console.error('Error en login:', error);
+    console.error('🚨 Error en autenticación:', error);
     throw error;
   }
+};
+
+export const getRoleRedirectPath = (userRole) => {
+  const redirectMap = {
+    'superadmin': '/superadmin/dashboard',
+    'administrador': '/admin/dashboard',
+    'empleado': '/empleado/dashboard',
+    'colaborador': '/colaborador/dashboard'
+  };
+  
+  return redirectMap[userRole] || '/';
 };
 
 export const getCurrentSessionWithRedirect = async () => {

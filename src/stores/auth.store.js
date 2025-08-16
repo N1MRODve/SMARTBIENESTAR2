@@ -14,51 +14,35 @@ export const useAuthStore = defineStore('auth', {
   // Las funciones de negocio deben estar dentro del objeto 'actions'.
   actions: {
     async login(email, password) {
-      // Verificar si es modo demo
-      const demoStore = useDemoStore();
-      if (demoStore.isDemoMode) {
-        this.loading = true;
-        this.error = null;
-        try {
-          await new Promise(resolve => setTimeout(resolve, 1000)); // Simular delay de autenticación
-          const user = await demoStore.loginDemo(email, password);
-          this.user = user;
-          this.session = { user }; // Simular sesión
-          return user;
-        } catch (error) {
-          this.error = error.message;
-          throw error;
-        } finally {
-          this.loading = false;
-        }
-      }
-
       this.loading = true;
       this.error = null;
+      
       try {
-        // Paso 1: Autenticar al usuario con Supabase Auth
-        const { data: authData, error: authError } = await supabase.auth.signInWithPassword({
-          email,
-          password
-        });
-        if (authError) throw authError;
-
-        // Paso 2: Obtener el perfil completo del usuario de la tabla 'usuarios'
-        const { data: profileData, error: profileError } = await supabase
-          .from('usuarios')
-          .select('*') // Seleccionar todas las columnas, incluyendo 'tipo_usuario'
-          .eq('id', authData.user.id)
-          .single(); // Esperamos un único resultado
-
-        if (profileError) throw profileError;
+        console.log('🔐 Iniciando login para:', email);
         
-        // Guardar el perfil completo (con el rol) en el estado
-        this.user = profileData;
-        this.session = authData.session;
+        // Verificar si es modo demo
+        const demoStore = useDemoStore();
+        if (demoStore.isDemoMode && email.includes('demo')) {
+          console.log('🎭 Modo demo detectado');
+          await new Promise(resolve => setTimeout(resolve, 1000));
+          const user = await demoStore.loginDemo(email, password);
+          this.user = user;
+          this.session = { user };
+          return user;
+        }
+
+        // Usar la nueva función de autenticación
+        const { authenticateUser } = await import('@/services/supabase');
+        const { user, session } = await authenticateUser(email, password);
         
-        return profileData; // Devolver el perfil completo
+        this.user = user;
+        this.session = session;
+        
+        console.log('✅ Login exitoso:', user);
+        return user;
 
       } catch (error) {
+        console.error('🚨 Error en login:', error);
         this.error = error.message;
         throw error;
       } finally {
@@ -81,6 +65,7 @@ export const useAuthStore = defineStore('auth', {
 
     async tryInitializeAuth() {
       try {
+        console.log('🔄 Inicializando autenticación...');
         const { data: { session } } = await supabase.auth.getSession()
         
         if (session?.user) {
@@ -93,22 +78,32 @@ export const useAuthStore = defineStore('auth', {
 
           if (profileError) throw profileError
           
-          // Guardamos tanto el perfil completo como la sesión
           this.user = profileData
           this.session = session
           
-          console.log('Auth initialized with user:', profileData)
+          console.log('✅ Auth inicializado con usuario:', profileData)
+        } else {
+          console.log('ℹ️ No hay sesión activa')
         }
       } catch (error) {
-        console.error("Error al inicializar la sesión:", error)
+        console.error("🚨 Error al inicializar la sesión:", error)
         this.user = null
         this.session = null
-        // Limpiar explícitamente cualquier dato de sesión inválido de Supabase
         await supabase.auth.signOut()
       } finally {
-        // Marcamos la inicialización como completada, incluso si falla
         this.isInitialized = true
+        console.log('✅ Inicialización completada')
       }
+    },
+
+    // Getter para verificar autenticación
+    get isAuthenticated() {
+      return !!this.user && !!this.session;
+    },
+
+    // Getter para obtener el rol del usuario
+    get userRole() {
+      return this.user?.tipo_usuario || null;
     }
   }
 })
