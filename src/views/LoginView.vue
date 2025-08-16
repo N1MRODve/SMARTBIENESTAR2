@@ -158,12 +158,23 @@ async function handleSubmit() {
     
     console.log('✅ Login exitoso, usuario:', userProfile);
 
-    // Obtener ruta de redirección basada en el rol
-    const { getRoleRedirectPath } = await import('@/services/supabase');
-    const redirectPath = getRoleRedirectPath(userProfile.tipo_usuario);
+    // Mapa de redirección por rol usando nombres de ruta
+    const roleRedirectMap = {
+      administrador: { name: 'AdminDashboard' },
+      empleado: { name: 'empleado-dashboard' },
+      superadmin: { name: 'superadmin-dashboard' },
+      colaborador: { name: 'colaborador-dashboard' }
+    };
+
+    // Obtener destino de redirección
+    const redirectDestination = roleRedirectMap[userProfile.tipo_usuario];
     
-    console.log('🔄 Redirigiendo a:', redirectPath);
-    router.push(redirectPath);
+    if (!redirectDestination) {
+      throw new Error(`Rol de usuario no reconocido: ${userProfile.tipo_usuario}`);
+    }
+    
+    console.log('🔄 Redirigiendo a:', redirectDestination);
+    router.push(redirectDestination);
 
     toast.add({
       severity: 'success',
@@ -176,7 +187,7 @@ async function handleSubmit() {
     toast.add({
       severity: 'error',
       summary: 'Error',
-      detail: error.message || 'Credenciales incorrectas o usuario inactivo',
+      detail: error.message || 'Credenciales incorrectas. Verifica tu email y contraseña.',
       life: 5000
     });
   } finally {

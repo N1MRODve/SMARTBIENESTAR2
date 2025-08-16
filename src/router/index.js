@@ -105,6 +105,7 @@ router.beforeEach(async (to, from, next) => {
         case 'colaborador':
           return { name: 'colaborador-dashboard' }
         default:
+          console.warn('Rol no reconocido:', user.tipo_usuario)
           return { path: '/login' }
       }
     }
@@ -115,20 +116,24 @@ router.beforeEach(async (to, from, next) => {
 
     // No autenticado y ruta protegida -> login
     if (requiresAuth && !isAuthenticated) {
+      console.log('🔒 Ruta protegida, redirigiendo a login')
       return next({ path: '/login', query: { redirect: to.fullPath } })
     }
 
     // Autenticado y tratando de ir a login -> dashboard por rol
-    if (isAuthenticated && (to.name === 'auth-login' || to.path === '/login')) {
+    if (isAuthenticated && (to.name === 'Login' || to.path === '/login')) {
+      console.log('🏠 Usuario autenticado en login, redirigiendo a dashboard')
       return next(homeByRole(authStore.user))
     }
 
     // Ruta restringida por rol
     if (isAuthenticated && allowedRoles && !allowedRoles.includes(authStore.user?.tipo_usuario)) {
+      console.log('🚫 Acceso denegado por rol, redirigiendo a dashboard apropiado')
       return next(homeByRole(authStore.user))
     }
 
     // 4) Continuar navegación
+    console.log('✅ Navegación permitida a:', to.path)
     return next()
   } catch (err) {
     console.error('Error en guardián de navegación:', err)

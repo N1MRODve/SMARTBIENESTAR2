@@ -31,15 +31,56 @@ export const useAuthStore = defineStore('auth', {
           return user;
         }
 
-        // Usar la nueva función de autenticación
-        const { authenticateUser } = await import('@/services/supabase');
-        const { user, session } = await authenticateUser(email, password);
+        // Paso 1: Autenticar con Supabase Auth
+        const { data: authData, error: authError } = await supabase.auth.signInWithPassword({
+          email,
+          password
+        });
+
+        if (authError) {
+          console.error('❌ Error de autenticación:', authError);
+          throw new Error('Credenciales incorrectas');
+        }
+
+        if (!authData.user) {
+          throw new Error('No se pudo autenticar el usuario');
+        }
+
+        console.log('✅ Autenticación exitosa, obteniendo perfil...');
+
+        // Paso 2: Obtener perfil completo de la tabla usuarios
+        const { data: userProfile, error: profileError } = await supabase
+          .from('usuarios')
+          .select(`
+            *,
+            empresas (
+              id,
+              nombre,
+              dominio_email
+            )
+          `)
+          .eq('id', authData.user.id)
+          .eq('activo', true)
+          .single();
+
+        if (profileError || !userProfile) {
+          console.error('❌ Error obteniendo perfil:', profileError);
+          await supabase.auth.signOut();
+          throw new Error('Usuario no encontrado o inactivo');
+        }
+
+        // Paso 3: Combinar datos de Auth con perfil completo
+        const userComplete = {
+          ...authData.user,
+          ...userProfile,
+          id: authData.user.id // Asegurar que usamos el ID de Auth
+        };
+
+        this.user = userComplete;
+        this.session = authData.session;
         
-        this.user = user;
-        this.session = session;
-        
-        console.log('✅ Login exitoso:', user);
-        return user;
+        console.log('✅ Login exitoso con perfil completo:', userComplete);
+        return userComplete;
 
       } catch (error) {
         console.error('🚨 Error en login:', error);
