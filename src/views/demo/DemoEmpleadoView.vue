@@ -496,44 +496,6 @@
               </div>
             </div>
           </div>
-                    </div>
-                  </div>
-                </div>
-
-                <div class="glass-card rounded-xl overflow-hidden backdrop-blur-sm border border-white/20 hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
-                  <img src="https://images.pexels.com/photos/416778/pexels-photo-416778.jpeg?auto=compress&cs=tinysrgb&w=400" alt="Desafío hidratación" class="w-full h-32 object-cover" />
-                  <div class="p-4">
-                    <h4 class="font-semibold text-gray-900 mb-2">Hidratación Saludable</h4>
-                    <p class="text-sm text-gray-600 mb-3">Bebe 8 vasos de agua diarios por una semana</p>
-                    <div class="flex items-center justify-between">
-                      <span class="bg-yellow-100 text-yellow-800 text-xs px-2 py-1 rounded-full font-medium">
-                        50 puntos
-                      </span>
-                      <Button variant="primary" class="text-xs px-3 py-1">
-                        Unirse
-                      </Button>
-                    </div>
-                  </div>
-                </div>
-
-                <div class="glass-card rounded-xl overflow-hidden backdrop-blur-sm border border-white/20 hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
-                  <img src="https://images.pexels.com/photos/3822622/pexels-photo-3822622.jpeg?auto=compress&cs=tinysrgb&w=400" alt="Desafío meditación" class="w-full h-32 object-cover" />
-                  <div class="p-4">
-                    <h4 class="font-semibold text-gray-900 mb-2">Meditación Diaria</h4>
-                    <p class="text-sm text-gray-600 mb-3">Medita 10 minutos cada día durante un mes</p>
-                    <div class="flex items-center justify-between">
-                      <span class="bg-yellow-100 text-yellow-800 text-xs px-2 py-1 rounded-full font-medium">
-                        200 puntos
-                      </span>
-                      <Button variant="primary" class="text-xs px-3 py-1">
-                        Unirse
-                      </Button>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
 
           <!-- Actividades View -->
           <div v-if="activeView === 'actividades'" class="max-w-7xl mx-auto space-y-8">
