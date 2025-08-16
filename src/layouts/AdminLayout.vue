@@ -14,13 +14,13 @@
     />
     
     <!-- Main content area -->
-    <div class="flex-1 flex flex-col min-h-screen">
+    <div class="flex-1 flex flex-col min-h-screen lg:ml-64">
       <!-- Header -->
       <AppHeader @toggle-sidebar="sidebarOpen = !sidebarOpen" />
       
       <!-- Main content -->
       <main class="flex-1 p-6 md:p-8">
-        <slot />
+        <router-view />
       </main>
     </div>
   </div>
