@@ -1,39 +1,96 @@
 <template>
-  <AdminLayout>
-    <section class="p-6 max-w-5xl mx-auto">
-      <header class="mb-6">
-        <h1 class="text-2xl font-bold text-gray-900 mb-2">Encuestas</h1>
-        <p class="text-sm text-gray-500">Gestiona y analiza las encuestas enviadas a tus empleados.</p>
-      </header>
-      <div class="mb-6 flex gap-2">
-        <Button
-          icon="plus"
-          variant="primary"
-          @click="irCrearEncuesta"
-        >
-          Crear Nueva Encuesta
-        </Button>
-        <Button
-          icon="template"
-          variant="secondary"
-          @click="irCrearDesdePlantilla"
-        >
+  <div class="max-w-7xl mx-auto space-y-8">
+    <!-- Header -->
+    <header class="mb-8">
+      <h1 class="text-3xl font-bold text-gray-900 mb-2">Gestión de Encuestas</h1>
+      <p class="text-gray-600 mb-4">Crea, gestiona y analiza las encuestas de tu empresa.</p>
+      <div class="flex gap-2">
+        <router-link to="/admin/encuestas/crear">
+          <button class="glass-button-primary text-white px-6 py-3 rounded-xl hover:bg-primary/90 transition-all duration-300 font-semibold shadow-lg hover:shadow-xl hover:-translate-y-0.5 backdrop-blur-sm border border-blue-500/30 flex items-center">
+            <Plus class="h-4 w-4 mr-2" />
+            Crear Nueva Encuesta
+          </button>
+        </router-link>
+        <button class="glass-button-secondary text-gray-800 px-6 py-3 rounded-xl hover:bg-gray-200/80 transition-all duration-300 font-semibold shadow-lg hover:shadow-xl hover:-translate-y-0.5 backdrop-blur-sm border border-gray-300/50 flex items-center">
+          <FileText class="h-4 w-4 mr-2" />
           Crear desde Plantilla
-        </Button>
+        </button>
       </div>
-      <div class="glass-container rounded-xl shadow-lg p-6 backdrop-blur-sm border border-white/30">
-        <div class="glass-card rounded-xl overflow-hidden backdrop-blur-sm border border-white/20">
-          <table class="min-w-full">
-            <thead class="bg-white/50 backdrop-blur-sm">
+    </header>
+
+    <!-- Estadísticas de Encuestas -->
+    <div class="grid grid-cols-1 md:grid-cols-4 gap-6">
+      <div class="glass-card p-6 rounded-xl shadow-lg text-center backdrop-blur-sm border border-white/20">
+        <h3 class="text-3xl font-bold text-primary mb-2">{{ stats.totalEncuestas }}</h3>
+        <p class="text-gray-700 font-medium">Total Encuestas</p>
+      </div>
+      <div class="glass-card p-6 rounded-xl shadow-lg text-center backdrop-blur-sm border border-white/20">
+        <h3 class="text-3xl font-bold text-green-600 mb-2">{{ stats.encuestasActivas }}</h3>
+        <p class="text-gray-700 font-medium">Activas</p>
+      </div>
+      <div class="glass-card p-6 rounded-xl shadow-lg text-center backdrop-blur-sm border border-white/20">
+        <h3 class="text-3xl font-bold text-blue-600 mb-2">{{ stats.respuestasRecibidas }}</h3>
+        <p class="text-gray-700 font-medium">Respuestas</p>
+      </div>
+      <div class="glass-card p-6 rounded-xl shadow-lg text-center backdrop-blur-sm border border-white/20">
+        <h3 class="text-3xl font-bold text-yellow-600 mb-2">{{ stats.promedioParticipacion }}%</h3>
+        <p class="text-gray-700 font-medium">Participación</p>
+      </div>
+    </div>
+
+    <!-- Filtros -->
+    <div class="glass-container rounded-xl shadow-lg p-6 backdrop-blur-sm border border-white/30">
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+        <input
+          v-model="busqueda"
+          type="text"
+          class="w-full border border-white/30 rounded-xl px-4 py-3 bg-white/60 backdrop-blur-sm focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary transition-all duration-300"
+          placeholder="Buscar encuestas..."
+        />
+        <select v-model="filtroEstado" class="w-full px-3 py-3 border border-white/30 rounded-xl bg-white/60 backdrop-blur-sm focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary">
+          <option value="">Todos los estados</option>
+          <option value="borrador">Borradores</option>
+          <option value="activa">Activas</option>
+          <option value="finalizada">Finalizadas</option>
+        </select>
+        <button @click="limpiarFiltros" class="glass-button-outline text-gray-700 bg-white/60 hover:bg-gray-50/80 px-4 py-3 rounded-xl transition-all duration-300 font-medium shadow-md hover:shadow-lg hover:-translate-y-0.5 backdrop-blur-sm border border-gray-300/50">
+          Limpiar Filtros
+        </button>
+      </div>
+    </div>
+
+    <!-- Lista de Encuestas -->
+    <div class="glass-container rounded-xl shadow-lg p-6 backdrop-blur-sm border border-white/30">
+      <div v-if="encuestasFiltradas.length === 0" class="glass-card p-12 rounded-xl shadow-lg text-center text-gray-600 backdrop-blur-sm border border-white/20">
+        <ClipboardList class="h-16 w-16 text-gray-400 mx-auto mb-4" />
+        <h3 class="text-lg font-medium text-gray-900 mb-2">Aún no tenemos datos</h3>
+        <p class="text-gray-500 mb-4">No hay encuestas creadas aún</p>
+        <router-link to="/admin/encuestas/crear">
+          <button class="bg-primary text-white px-6 py-2 rounded-lg hover:bg-primary-dark transition-colors font-medium">
+            Crear Primera Encuesta
+          </button>
+        </router-link>
+      </div>
+
+      <div v-else class="glass-card rounded-xl overflow-hidden backdrop-blur-sm border border-white/20">
+        <table class="min-w-full">
+          <thead class="bg-white/50 backdrop-blur-sm">
             <tr>
-              <th class="px-6 py-4 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">Título</th>
+              <th class="px-6 py-4 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">Encuesta</th>
               <th class="px-6 py-4 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">Estado</th>
+              <th class="px-6 py-4 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">Respuestas</th>
+              <th class="px-6 py-4 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">Fecha Límite</th>
               <th class="px-6 py-4 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">Acciones</th>
             </tr>
           </thead>
           <tbody class="divide-y divide-white/20">
             <tr v-for="encuesta in encuestasFiltradas" :key="encuesta.id" class="hover:bg-white/30 transition-colors duration-200">
-              <td class="px-6 py-4 font-medium text-gray-900">{{ encuesta.titulo }}</td>
+              <td class="px-6 py-4">
+                <div>
+                  <p class="font-medium text-gray-900">{{ encuesta.titulo }}</p>
+                  <p class="text-sm text-gray-600">{{ encuesta.descripcion }}</p>
+                </div>
+              </td>
               <td class="px-6 py-4">
                 <span
                   :class="{
@@ -46,173 +103,174 @@
                   {{ encuesta.estado }}
                 </span>
               </td>
-              <td class="px-6 py-4 text-right">
-                <div class="flex gap-2 justify-end">
-                <button
-                  v-if="encuesta.estado === 'borrador'"
-                  class="glass-button-primary text-white px-4 py-2 rounded-lg hover:bg-blue-600/90 transition-all duration-300 font-medium shadow-md hover:shadow-lg hover:-translate-y-0.5 backdrop-blur-sm border border-blue-500/30"
-                  @click="abrirModalEnviar(encuesta.id)"
-                >
-                  Enviar
-                </button>
-                <button
-                  v-if="encuesta.estado === 'borrador'"
-                  class="glass-button-outline text-green-700 bg-white/60 hover:bg-green-50/80 px-4 py-2 rounded-lg transition-all duration-300 font-medium shadow-md hover:shadow-lg hover:-translate-y-0.5 backdrop-blur-sm border border-green-300/50"
-                  @click="adminStore.setEncuestaParaEditar(encuesta)"
-                >
-                  <span>Editar</span>
-                </button>
-                <button
-                  class="glass-button-outline text-red-700 bg-white/60 hover:bg-red-50/80 px-4 py-2 rounded-lg transition-all duration-300 font-medium shadow-md hover:shadow-lg hover:-translate-y-0.5 backdrop-blur-sm border border-red-300/50"
-                  @click="iniciarEliminacion(encuesta.id)"
-                >
-                  <span>Eliminar</span>
-                </button>
+              <td class="px-6 py-4">
+                <div class="flex items-center">
+                  <span class="font-medium text-gray-900">{{ encuesta.respuestas }}/{{ encuesta.invitados }}</span>
+                  <span class="ml-2 text-xs text-gray-500">({{ Math.round((encuesta.respuestas / encuesta.invitados) * 100) }}%)</span>
+                </div>
+              </td>
+              <td class="px-6 py-4 text-sm text-gray-600">
+                {{ encuesta.fecha_fin ? formatDate(encuesta.fecha_fin) : 'Sin límite' }}
+              </td>
+              <td class="px-6 py-4">
+                <div class="flex gap-2">
+                  <button
+                    v-if="encuesta.estado === 'borrador'"
+                    class="glass-button-primary text-white px-4 py-2 rounded-lg hover:bg-primary/90 transition-all duration-300 font-medium shadow-md hover:shadow-lg hover:-translate-y-0.5 backdrop-blur-sm border border-blue-500/30 text-xs"
+                    @click="enviarEncuesta(encuesta.id)"
+                  >
+                    Enviar
+                  </button>
+                  <button
+                    class="glass-button-outline text-blue-700 bg-white/60 hover:bg-blue-50/80 px-4 py-2 rounded-lg transition-all duration-300 font-medium shadow-md hover:shadow-lg hover:-translate-y-0.5 backdrop-blur-sm border border-blue-300/50 text-xs"
+                    @click="editarEncuesta(encuesta)"
+                  >
+                    Editar
+                  </button>
+                  <button
+                    class="text-xs px-3 py-2 rounded-lg text-red-600 border border-red-300/50 hover:bg-red-50/80 transition-all duration-300 font-medium shadow-md hover:shadow-lg hover:-translate-y-0.5 backdrop-blur-sm"
+                    @click="eliminarEncuesta(encuesta.id)"
+                  >
+                    Eliminar
+                  </button>
                 </div>
               </td>
             </tr>
           </tbody>
-          </table>
-        </div>
+        </table>
       </div>
-      <EnviarEncuestaModal
-        v-if="mostrarModalEnviar"
-        :encuestaId="encuestaIdSeleccionada"
-        @close="cerrarModalEnviar"
-      />
-      <ConfirmacionModal
-        v-if="mostrarModalEliminar"
-        titulo="¿Confirmas la eliminación de esta encuesta?"
-        mensaje="Esta acción es permanente y no se puede deshacer. Se borrarán todas las preguntas y respuestas asociadas."
-        @close="mostrarModalEliminar = false"
-        @confirm="handleEliminacionConfirmada"
-      />
-    </section>
-  </AdminLayout>
+    </div>
+  </div>
 </template>
 
 <script setup>
-import { ref, computed, watch } from 'vue'
+import { ref, computed } from 'vue'
 import { useRouter } from 'vue-router'
-import { useAdminStore } from '@/stores/admin'
-import { useAuthStore } from '@/stores/auth.store'
-import AdminLayout from '@/layouts/AdminLayout.vue'
-import Button from '@/components/common/Button.vue'
-import PageLoader from '@/components/common/PageLoader.vue'
-import Modal from '@/components/common/Modal.vue'
-import Dropdown from '@/components/common/Dropdown.vue'
-import DropdownItem from '@/components/common/DropdownItem.vue'
-import { useToast } from '@/composables/useToast'
-import EnviarEncuestaModal from '@/components/admin/EnviarEncuestaModal.vue'
-import ConfirmacionModal from '@/components/common/ConfirmacionModal.vue'
+import { useToast } from 'primevue/usetoast'
+import { ClipboardList, Plus, FileText } from 'lucide-vue-next'
 
 const router = useRouter()
-const adminStore = useAdminStore()
-const authStore = useAuthStore()
 const toast = useToast()
 
+// Estado reactivo
 const busqueda = ref('')
-const mostrarModalPlantilla = ref(false)
-const mostrarModalEnviar = ref(false)
-const encuestaIdEnviar = ref(null)
-const encuestaIdSeleccionada = ref(null)
-const mostrarModalEliminar = ref(false)
-const encuestaAEliminarId = ref(null)
-const plantillas = ref([
-  { id: 1, nombre: 'Clima laboral' },
-  { id: 2, nombre: 'Satisfacción general' },
-  { id: 3, nombre: 'Feedback de actividades' }
-])
+const filtroEstado = ref('')
 
-const empresaId = computed(() => adminStore.empresaId || authStore.user?.id_empresa)
-const encuestasLoading = computed(() => adminStore.encuestasLoading)
-const encuestas = computed(() => adminStore.encuestas)
-const authLoading = computed(() => !authStore.user)
-
-// Solo carga encuestas cuando empresaId esté disponible
-watch(
-  empresaId,
-  async (id) => {
-    // ---- INICIO DEL CAMBIO ----
-    console.log('Intentando cargar encuestas para el empresaId:', id); 
-    // ---- FIN DEL CAMBIO ----
-    if (id) {
-      await adminStore.loadEncuestas(id)
-    }
-  },
-  { immediate: true }
-)
-
-const encuestasFiltradas = computed(() => {
-  if (!encuestas.value) return []
-  if (!busqueda.value) return encuestas.value
-  return encuestas.value.filter(e =>
-    e.titulo?.toLowerCase().includes(busqueda.value.toLowerCase())
-  )
+// Estadísticas
+const stats = ref({
+  totalEncuestas: 8,
+  encuestasActivas: 2,
+  respuestasRecibidas: 156,
+  promedioParticipacion: 78
 })
 
-function irCrearEncuesta() {
-  router.push({ name: 'CrearEncuestaView' })
+// Datos dummy de encuestas
+const encuestas = ref([
+  {
+    id: 1,
+    titulo: 'Evaluación de Clima Laboral Q1',
+    descripcion: 'Encuesta trimestral para evaluar el ambiente de trabajo',
+    estado: 'activa',
+    respuestas: 32,
+    invitados: 45,
+    fecha_fin: '2025-01-30T23:59:59',
+    fecha_creacion: '2025-01-15T10:00:00'
+  },
+  {
+    id: 2,
+    titulo: 'Feedback Actividades de Bienestar',
+    descripcion: 'Evaluación de la satisfacción con las actividades ofrecidas',
+    estado: 'activa',
+    respuestas: 18,
+    invitados: 30,
+    fecha_fin: null,
+    fecha_creacion: '2025-01-18T14:30:00'
+  },
+  {
+    id: 3,
+    titulo: 'Satisfacción General Diciembre',
+    descripcion: 'Encuesta mensual de satisfacción laboral',
+    estado: 'finalizada',
+    respuestas: 42,
+    invitados: 45,
+    fecha_fin: '2025-01-15T23:59:59',
+    fecha_creacion: '2025-01-05T09:00:00'
+  },
+  {
+    id: 4,
+    titulo: 'Evaluación de Liderazgo',
+    descripcion: 'Feedback sobre el liderazgo en la organización',
+    estado: 'borrador',
+    respuestas: 0,
+    invitados: 0,
+    fecha_fin: '2025-02-15T23:59:59',
+    fecha_creacion: '2025-01-20T11:15:00'
+  }
+])
+
+// Computed
+const encuestasFiltradas = computed(() => {
+  let resultado = encuestas.value
+  
+  if (busqueda.value.trim()) {
+    const term = busqueda.value.trim().toLowerCase()
+    resultado = resultado.filter(e =>
+      e.titulo.toLowerCase().includes(term) ||
+      e.descripcion.toLowerCase().includes(term)
+    )
+  }
+  
+  if (filtroEstado.value) {
+    resultado = resultado.filter(e => e.estado === filtroEstado.value)
+  }
+  
+  return resultado
+})
+
+// Métodos
+const formatDate = (dateString) => {
+  return new Date(dateString).toLocaleDateString('es-ES', {
+    day: 'numeric',
+    month: 'short',
+    year: 'numeric'
+  })
 }
 
-function irCrearDesdePlantilla() {
-  router.push({ name: 'PlantillasEncuestaView' }) // Asegúrate que esta ruta exista en tu router
+const limpiarFiltros = () => {
+  busqueda.value = ''
+  filtroEstado.value = ''
 }
 
-function verResultados(id) {
-  router.push({ name: 'ResultadosEncuestaView', params: { id } })
-}
-
-function usarPlantilla(plantilla) {
-  adminStore.setPlantillaParaEditar(plantilla)
-  mostrarModalPlantilla.value = false
-  router.push({ name: 'CrearEncuestaView' })
-}
-
-function formatFecha(fecha) {
-  if (!fecha) return ''
-  return new Date(fecha).toLocaleDateString()
-}
-
-function editarEncuesta(encuesta) {
-  adminStore.setPlantillaParaEditar(encuesta)
-  router.push({ name: 'CrearEncuestaView' })
-}
-
-async function archivarEncuesta(id) {
-  try {
-    await adminStore.archivarEncuesta(id)
-    toast.success('Encuesta archivada correctamente')
-  } catch (err) {
-    toast.error('No se pudo archivar la encuesta')
+const enviarEncuesta = (encuestaId) => {
+  const encuesta = encuestas.value.find(e => e.id === encuestaId)
+  if (encuesta) {
+    encuesta.estado = 'activa'
+    encuesta.invitados = 45
+    toast.add({
+      severity: 'success',
+      summary: 'Encuesta enviada',
+      detail: 'La encuesta ha sido enviada a todos los empleados',
+      life: 3000
+    })
   }
 }
 
-function abrirModalEnviar(id) {
-  encuestaIdSeleccionada.value = id
-  mostrarModalEnviar.value = true
+const editarEncuesta = (encuesta) => {
+  router.push(`/admin/encuestas/${encuesta.id}/editar`)
 }
 
-function cerrarModalEnviar() {
-  mostrarModalEnviar.value = false
-  encuestaIdSeleccionada.value = null
-}
-
-// --- ELIMINACIÓN ---
-function iniciarEliminacion(encuestaId) {
-  encuestaAEliminarId.value = encuestaId
-  mostrarModalEliminar.value = true
-}
-
-async function handleEliminacionConfirmada() {
-  try {
-    await adminStore.eliminarEncuesta(encuestaAEliminarId.value)
-    toast.success('Encuesta eliminada correctamente')
-  } catch (error) {
-    toast.error(error.message || 'Error al eliminar la encuesta')
-  } finally {
-    mostrarModalEliminar.value = false
-    encuestaAEliminarId.value = null
+const eliminarEncuesta = (encuestaId) => {
+  if (confirm('¿Estás seguro de que quieres eliminar esta encuesta?')) {
+    const index = encuestas.value.findIndex(e => e.id === encuestaId)
+    if (index !== -1) {
+      encuestas.value.splice(index, 1)
+      toast.add({
+        severity: 'success',
+        summary: 'Encuesta eliminada',
+        detail: 'La encuesta ha sido eliminada correctamente',
+        life: 3000
+      })
+    }
   }
 }
 </script>

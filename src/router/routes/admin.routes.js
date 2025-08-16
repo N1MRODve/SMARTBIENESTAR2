@@ -91,7 +91,7 @@ export const adminRoutes = [
   {
     path: '/admin/horarios',
     name: 'AdminHorarios',
-    component: () => import('@/views/admin/HorariosView.vue'),
+    component: () => import('../../views/admin/HorariosView.vue'),
     meta: { 
       requiresAuth: true, 
       roles: ['administrador'],
@@ -101,11 +101,21 @@ export const adminRoutes = [
   {
     path: '/admin/desafios/crear',
     name: 'CrearDesafioView',
-    component: () => import('@/views/admin/CrearDesafioView.vue'),
+    component: () => import('../../views/admin/CrearDesafioView.vue'),
     meta: { 
       requiresAuth: true, 
       roles: ['administrador'],
       title: 'Crear Desafío'
+    }
+  },
+  {
+    path: '/admin/encuestas/:id/editar',
+    name: 'EditarEncuestaView',
+    component: () => import('../../views/admin/CrearEncuestaView.vue'),
+    meta: { 
+      requiresAuth: true, 
+      roles: ['administrador'],
+      title: 'Editar Encuesta'
     }
   }
 ]

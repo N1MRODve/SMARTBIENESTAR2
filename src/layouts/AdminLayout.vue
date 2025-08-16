@@ -1,14 +1,18 @@
 <template>
-  <div class="min-h-screen bg-gradient-to-br from-blue-50 via-white to-indigo-50">
+  <div class="min-h-screen bg-gradient-to-br from-blue-50 via-white to-indigo-50 flex">
+    <!-- Sidebar -->
     <TheSidebar 
       :open="sidebarOpen" 
       @update:open="sidebarOpen = $event" 
     />
     
-    <div class="lg:ml-64 flex flex-col min-h-screen">
-      <TheHeader @toggle-sidebar="sidebarOpen = !sidebarOpen" />
+    <!-- Main content area -->
+    <div class="flex-1 flex flex-col min-h-screen">
+      <!-- Header -->
+      <AppHeader @toggle-sidebar="sidebarOpen = !sidebarOpen" />
       
-      <main class="flex-1 p-6">
+      <!-- Main content -->
+      <main class="flex-1 p-6 md:p-8">
         <slot />
       </main>
     </div>
@@ -17,8 +21,8 @@
 
 <script setup>
 import { ref } from 'vue';
-import TheSidebar from '../components/layout/TheSidebar.vue';
-import TheHeader from '../components/layout/TheHeader.vue';
+import TheSidebar from '@/components/layout/TheSidebar.vue';
+import AppHeader from '@/components/layout/AppHeader.vue';
 
 const sidebarOpen = ref(false);
 </script>
