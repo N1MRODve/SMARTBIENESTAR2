@@ -31,6 +31,56 @@ export const useAuthStore = defineStore('auth', {
           return user;
         }
 
+        // Credenciales de prueba para desarrollo
+        const testCredentials = {
+          'admin@innovatech.com': { 
+            password: 'admin123', 
+            user: {
+              id: 'test-admin-1',
+              email: 'admin@innovatech.com',
+              nombre: 'Admin',
+              apellido: 'Demo',
+              tipo_usuario: 'administrador',
+              empresa_id: 'empresa-demo-1',
+              activo: true
+            }
+          },
+          'ana.martinez@innovatech.com': { 
+            password: 'empleado123', 
+            user: {
+              id: 'test-empleado-1',
+              email: 'ana.martinez@innovatech.com',
+              nombre: 'Ana',
+              apellido: 'Martínez',
+              tipo_usuario: 'empleado',
+              empresa_id: 'empresa-demo-1',
+              activo: true
+            }
+          },
+          'elena.vasquez@smartbienestar.com': { 
+            password: 'colaborador123', 
+            user: {
+              id: 'test-colaborador-1',
+              email: 'elena.vasquez@smartbienestar.com',
+              nombre: 'Elena',
+              apellido: 'Vásquez',
+              tipo_usuario: 'colaborador',
+              empresa_id: null,
+              activo: true
+            }
+          }
+        };
+
+        // Verificar credenciales de prueba
+        const testCredential = testCredentials[email];
+        if (testCredential && testCredential.password === password) {
+          console.log('🧪 Usando credenciales de prueba');
+          await new Promise(resolve => setTimeout(resolve, 800));
+          this.user = testCredential.user;
+          this.session = { user: testCredential.user };
+          return testCredential.user;
+        }
+
         // Paso 1: Autenticar con Supabase Auth
         const { data: authData, error: authError } = await supabase.auth.signInWithPassword({
           email,

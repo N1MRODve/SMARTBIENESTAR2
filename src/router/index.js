@@ -30,13 +30,21 @@ const routes = [
     path: '/demo/empleado',
     name: 'DemoEmpleado',
     component: () => import('../views/demo/DemoEmpleadoView.vue'),
-    meta: { isDemo: true }
+    meta: { 
+      isDemo: true,
+      requiresAuth: true,
+      roles: ['empleado']
+    }
   },
   {
     path: '/demo/admin',
     name: 'DemoAdmin',
     component: () => import('../views/demo/DemoAdminView.vue'),
-    meta: { isDemo: true }
+    meta: { 
+      isDemo: true,
+      requiresAuth: true,
+      roles: ['administrador']
+    }
   },
   {
     path: '/acceso-denegado',
