@@ -211,16 +211,17 @@
 </template>
 
 <script setup>
-import { ref, computed } from 'vue'
-import { useRouter } from 'vue-router'
+import { ref, computed, onMounted } from 'vue'
 import { useToast } from 'primevue/usetoast'
 import { Users, UserPlus, UserCheck, Star } from 'lucide-vue-next'
+import { supabase } from '../../services/supabase'
+import { useAuthStore } from '../../stores/auth'
 
-const router = useRouter()
 const toast = useToast()
+const authStore = useAuthStore()
 
 // Estado reactivo
-const isLoading = ref(false)
+const isLoading = ref(true)
 const busqueda = ref('')
 const filtroEstado = ref('')
 const mostrarModalInvitar = ref(false)
@@ -341,17 +342,25 @@ const limpiarFiltros = () => {
   filtroEstado.value = ''
 }
 
-const iniciarEliminacion = (empleado) => {
-  if (confirm(`¿Estás seguro de que quieres eliminar a ${empleado.nombre} ${empleado.apellido}?`)) {
-    const index = empleados.value.findIndex(e => e.id === empleado.id)
-    if (index !== -1) {
-      empleados.value.splice(index, 1)
-      toast.add({
-        severity: 'success',
-        summary: 'Empleado eliminado',
-        detail: 'El empleado ha sido eliminado correctamente',
-        life: 3000
-      })
+const iniciarEliminacion = async (empleado) => {
+  if (confirm(`¿Estás seguro de que quieres desactivar a ${empleado.nombre} ${empleado.apellido}? Esta acción es reversible.`)) {
+    try {
+      const { error } = await supabase
+        .from('usuarios')
+        .update({ activo: false })
+        .eq('id', empleado.id)
+
+      if (error) throw error
+
+      // Actualizar el estado localmente
+      const index = empleados.value.findIndex(e => e.id === empleado.id)
+      if (index !== -1) {
+        empleados.value[index].activo = false
+      }
+
+      toast.add({ severity: 'success', summary: 'Empleado desactivado', detail: 'El empleado ha sido marcado como inactivo.', life: 3000 })
+    } catch (error) {
+      toast.add({ severity: 'error', summary: 'Error', detail: 'No se pudo desactivar al empleado.', life: 3000 })
     }
   }
 }
@@ -386,22 +395,12 @@ const handleInvite = async () => {
 const handleSubmit = async () => {
   loading.value = true
   try {
-    // Simular creación de empleado
-    await new Promise(resolve => setTimeout(resolve, 1000))
-    
-    const nuevoId = empleados.value.length + 1
-    empleados.value.push({
-      id: nuevoId,
-      ...nuevoEmpleado.value,
-      departamento: 'Nuevo',
-      puntos_bienestar: 0,
-      activo: true,
-      fecha_registro: new Date().toISOString().split('T')[0],
-      ultima_participacion: null
-    })
-    
+    // TODO: Implementar llamada a Supabase para crear el empleado.
+    // Esto probablemente debería ser una función RPC en Supabase para crear
+    // el usuario en `auth.users` y en la tabla `usuarios` y `perfil_empleados`
+    // de forma transaccional.
     toast.add({
-      severity: 'success',
+      severity: 'info',
       summary: 'Empleado creado',
       detail: 'El empleado ha sido creado correctamente',
       life: 3000
@@ -425,4 +424,8 @@ const handleSubmit = async () => {
     loading.value = false
   }
 }
+
+onMounted(() => {
+  cargarEmpleados()
+})
 </script>

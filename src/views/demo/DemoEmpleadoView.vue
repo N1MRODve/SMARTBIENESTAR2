@@ -1,8 +1,8 @@
 <template>
-  <EmpleadoLayout>
+  <DemoLayout>
     <div class="space-y-8">
       <!-- Header -->
-      <header class="mb-8">
+      <header id="dashboard" class="mb-8">
         <div class="flex items-center justify-between">
           <div>
             <h1 class="text-3xl font-bold text-gray-900 mb-2">Mi Dashboard</h1>
@@ -63,7 +63,7 @@
       </div>
 
       <!-- Próximas Sesiones -->
-      <div class="glass-container rounded-xl shadow-lg p-8 backdrop-blur-sm border border-white/30">
+      <div id="proximas-sesiones" class="glass-container rounded-xl shadow-lg p-8 backdrop-blur-sm border border-white/30">
         <div class="flex items-center justify-between mb-6">
           <h2 class="text-xl font-semibold text-gray-900 flex items-center">
             <Calendar class="h-5 w-5 mr-2 text-primary" />
@@ -146,7 +146,7 @@
       <!-- Grid de Contenido Principal -->
       <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
         <!-- Encuestas Pendientes -->
-        <div class="glass-container rounded-xl shadow-lg p-8 backdrop-blur-sm border border-white/30">
+        <div id="encuestas" class="glass-container rounded-xl shadow-lg p-8 backdrop-blur-sm border border-white/30">
           <div class="flex items-center justify-between mb-6">
             <h2 class="text-xl font-semibold text-gray-900 flex items-center">
               <ClipboardList class="h-5 w-5 mr-2 text-primary" />
@@ -187,7 +187,7 @@
         </div>
 
         <!-- Desafíos de Bienestar -->
-        <div class="glass-container rounded-xl shadow-lg p-8 backdrop-blur-sm border border-white/30">
+        <div id="desafios" class="glass-container rounded-xl shadow-lg p-8 backdrop-blur-sm border border-white/30">
           <div class="flex items-center justify-between mb-6">
             <h2 class="text-xl font-semibold text-gray-900 flex items-center">
               <Trophy class="h-5 w-5 mr-2 text-yellow-500" />
@@ -259,7 +259,7 @@
       </div>
 
       <!-- Actividades Recomendadas -->
-      <div class="glass-container rounded-xl shadow-lg p-8 backdrop-blur-sm border border-white/30">
+      <div id="actividades" class="glass-container rounded-xl shadow-lg p-8 backdrop-blur-sm border border-white/30">
         <div class="flex items-center justify-between mb-6">
           <h2 class="text-xl font-semibold text-gray-900 flex items-center">
             <Heart class="h-5 w-5 mr-2 text-red-500" />
@@ -372,10 +372,11 @@
         </div>
       </div>
     </div>
-  </EmpleadoLayout>
+  </DemoLayout>
 </template>
 
 <script setup>
+import DemoLayout from '@/layouts/DemoLayout.vue'
 import { 
   ActivitySquare,
   ArrowLeft,

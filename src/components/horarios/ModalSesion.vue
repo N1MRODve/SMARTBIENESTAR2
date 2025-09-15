@@ -317,7 +317,7 @@
 </template>
 
 <script setup>
-import { ref, reactive, computed, watch, onMounted } from 'vue';
+import { ref, reactive, computed, watch } from 'vue';
 import { supabase } from '../../services/supabase';
 import { X, Globe, MapPin } from 'lucide-vue-next';
 
@@ -344,7 +344,7 @@ const servicios = ref([]);
 const colaboradores = ref([]);
 const empresas = ref([]);
 
-const form = reactive({
+const getInitialFormState = () => ({
   titulo: '',
   servicio_id: '',
   colaborador_id: '',
@@ -365,6 +365,8 @@ const form = reactive({
   notas_internas: '',
   indicaciones_previas: ''
 });
+
+const form = reactive(getInitialFormState());
 
 // Computed
 const fechaMinima = computed(() => {
@@ -387,18 +389,14 @@ const cargarDatos = async () => {
     const { data: colaboradoresData } = await supabase
       .from('usuarios')
       .select(`
-        *,
-        perfil_colaboradores(especialidad, estado)
+        id, nombre, apellido,
+        perfil_colaboradores!inner(especialidad)
       `)
       .eq('tipo_usuario', 'colaborador')
-      .eq('activo', true);
+      .eq('activo', true)
+      .eq('perfil_colaboradores.estado', 'verificado');
     
-    colaboradores.value = colaboradoresData?.filter(c => 
-      c.perfil_colaboradores?.estado === 'verificado'
-    ).map(c => ({
-      ...c,
-      especialidad: c.perfil_colaboradores?.especialidad
-    })) || [];
+    colaboradores.value = colaboradoresData?.map(c => ({ ...c, especialidad: c.perfil_colaboradores.especialidad })) || [];
 
     // Cargar empresas
     const { data: empresasData } = await supabase
@@ -483,15 +481,29 @@ const cerrarSiClickFuera = (event) => {
 
 // Watchers
 watch(() => props.visible, (nuevoValor) => {
-  if (nuevoValor) {
-    cargarDatos();
-  }
-});
+  if (!nuevoValor) return;
 
-// Lifecycle
-onMounted(() => {
-  if (props.visible) {
-    cargarDatos();
+  cargarDatos();
+
+  if (props.modo === 'editar' && props.sesion) {
+    // Rellenar formulario con datos de la sesión a editar
+    const inicio = new Date(props.sesion.fecha_inicio);
+    const fin = new Date(props.sesion.fecha_fin);
+
+    form.titulo = props.sesion.titulo;
+    form.servicio_id = props.sesion.servicio_id;
+    form.colaborador_id = props.sesion.colaborador_id;
+    form.empresa_id = props.sesion.empresa_id || '';
+    form.descripcion = props.sesion.descripcion;
+    form.fecha = inicio.toISOString().split('T')[0];
+    form.hora_inicio = inicio.toTimeString().slice(0, 5);
+    form.hora_fin = fin.toTimeString().slice(0, 5);
+    // ... rellenar el resto de los campos ...
+    Object.assign(form, props.sesion);
+
+  } else {
+    // Resetear formulario para nueva sesión
+    Object.assign(form, getInitialFormState());
   }
 });
 </script>
