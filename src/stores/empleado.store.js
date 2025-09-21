@@ -1,249 +1,114 @@
 import { defineStore } from 'pinia'
-import { supabase } from '@/services/supabase'
+import { ref } from 'vue'
+import supabase from '@/utils/supabase'
 import { useAuthStore } from './auth.store'
-import { useDemoStore } from './demoStore'
 
-export const useEmpleadoStore = defineStore('empleado', {
-  state: () => ({
-    dashboardStats: {},
-    proximasSesiones: [],
-    encuestasPendientes: [],
-    actividadesDisponibles: [],
-    misReservas: [],
-    misEncuestas: [],
-    desafios: [],
-    misDesafios: [], // opcional si lo usas en alguna vista
-    loading: {
-      dashboard: false,
-      actividades: false,
-      reservas: false,
-      encuestas: false,
-      desafios: false,
-      misDesafios: false
-    },
-    error: null
-  }),
+export const useEmpleadoStore = defineStore('empleado', () => {
+  // Estado
+  const actividadesDisponibles = ref([])
+  const loading = ref(false) // Simplificado a un solo booleano para el dashboard
+  const error = ref(null);
+  const stats = ref({
+    puntosBienestar: 0,
+    puntosSemana: 0,
+    sesionesAsistidas: 0,
+    desafiosCompletados: 0,
+    nivelActual: 1
+  });
+  const proximasSesiones = ref([]);
+  const encuestasPendientes = ref([]);
+  const desafiosActivos = ref([]);
+  const actividadesRecomendadas = ref([]);
 
-  actions: {
-    async loadDashboardData() {
+  // --- NUEVA FUNCIÓN ORQUESTADORA ---
+  async function fetchDashboardData() {
+    loading.value = true;
+    error.value = null;
+    try {
+      // Usamos Promise.all para ejecutar todas las cargas de datos en paralelo
+      await Promise.all([
+        fetchStats(),
+        fetchProximasSesiones(),
+        // Aquí puedes añadir las funciones para cargar encuestas, desafíos, etc.
+        // Por ahora, las dejamos como arrays vacíos para que la UI se muestre.
+      ]);
+      
+      // Inicializamos los arrays que aún no tienen función de carga
+      encuestasPendientes.value = [];
+      desafiosActivos.value = [];
+      actividadesRecomendadas.value = [];
 
-      const authStore = useAuthStore()
-      if (!authStore.user) return
-      this.loading.dashboard = true
-      this.error = null
-
-      try {
-        // Cargar estadísticas usando función SQL
-        const { data: statsData, error: statsError } = await supabase
-          .rpc('get_employee_dashboard_stats', { usuario_id_param: authStore.user.id })
-        
-        if (statsError) throw statsError
-        this.dashboardStats = statsData?.[0] || {}
-
-        // Cargar próximas sesiones
-        const { data: sesionesData, error: sesionesError } = await supabase
-          .rpc('get_employee_upcoming_sessions', { usuario_id_param: authStore.user.id })
-        
-        if (sesionesError) throw sesionesError
-        this.proximasSesiones = sesionesData || []
-
-        // Cargar encuestas pendientes
-        const { data: encuestasData, error: encuestasError } = await supabase
-          .rpc('get_employee_pending_surveys', { usuario_id_param: authStore.user.id })
-        
-        if (encuestasError) throw encuestasError
-        this.encuestasPendientes = encuestasData || []
-        
-      } catch (err) {
-        console.error('Error cargando dashboard:', err)
-        this.error = err.message
-      } finally {
-        this.loading.dashboard = false
-      }
-    },
-
-    async loadMisReservas() {
-
-      const authStore = useAuthStore()
-      if (!authStore.user) return
-      this.loading.reservas = true
-      this.error = null
-
-      try {
-        const { data, error } = await supabase
-          .from('reservas')
-          .select(`
-            *,
-            sesiones!inner (
-              *,
-              servicios (
-                nombre,
-                tipo
-              ),
-              colaborador:usuarios (
-                nombre,
-                apellido
-              )
-            )
-          `)
-          .eq('usuario_id', authStore.user.id)
-          .order('fecha_reserva', { ascending: false })
-
-        if (error) throw error
-        
-        // Procesar datos para facilitar el acceso
-        this.misReservas = (data || []).map(reserva => ({
-          ...reserva,
-          titulo: reserva.sesiones?.titulo,
-          fecha_inicio: reserva.sesiones?.fecha_inicio,
-          modalidad: reserva.sesiones?.modalidad,
-          ubicacion: reserva.sesiones?.ubicacion,
-          colaborador_nombre: reserva.sesiones?.colaborador ? 
-            `${reserva.sesiones.colaborador.nombre} ${reserva.sesiones.colaborador.apellido}` : 
-            'Sin asignar',
-          servicio_tipo: reserva.sesiones?.servicios?.tipo
-        }))
-        
-      } catch (err) {
-        console.error('Error cargando mis reservas:', err)
-        this.error = err.message
-      } finally {
-        this.loading.reservas = false
-      }
-    },
-
-    async loadMisEncuestas() {
-      // Usar datos demo si está en modo demo
-      const demoStore = useDemoStore();
-      if (demoStore.isDemoMode) {
-        const authStore = useAuthStore();
-        if (!authStore.user) return;
-        
-        this.loading.encuestas = true;
-        this.error = null;
-        
-        try {
-          await new Promise(resolve => setTimeout(resolve, 400)); // Simular delay
-          this.misEncuestas = demoStore.demoData.participantesEncuesta
-            .filter(p => p.usuario_id === authStore.user.id)
-            .map(p => {
-              const encuesta = demoStore.demoData.encuestas.find(e => e.id === p.encuesta_id);
-              return {
-                ...p,
-                encuesta: encuesta
-              };
-            });
-          return;
-        } catch (error) {
-          console.error('Error cargando encuestas demo:', error);
-          this.error = error.message;
-        } finally {
-          this.loading.encuestas = false;
-        }
-        return;
-      }
-
-      const authStore = useAuthStore()
-      if (!authStore.user) return
-      this.loading.encuestas = true
-      this.error = null
-
-      try {
-        const { data, error } = await supabase
-          .from('participantes_encuesta')
-          .select(`
-            *,
-            encuesta:encuestas (
-              id,
-              titulo,
-              descripcion,
-              fecha_fin
-            )
-          `)
-          .eq('usuario_id', authStore.user.id)
-
-        if (error) throw error
-        this.misEncuestas = data || []
-      } catch (err) {
-        console.error('Error cargando mis encuestas:', err)
-        this.error = err.message
-      } finally {
-        this.loading.encuestas = false
-      }
-    },
-
-    // Si manejas participación de desafíos por usuario
-    async loadMisDesafios() {
-      const authStore = useAuthStore()
-      if (!authStore.user) return
-      this.loading.misDesafios = true
-      this.error = null
-
-      try {
-        // CORREGIDO: usar el nombre correcto de la tabla 'desafios_bienestar'
-        const { data, error } = await supabase
-          .from('participacion_desafios')
-          .select(`
-            *,
-            desafios_bienestar (
-              id,
-              titulo,
-              descripcion
-            )
-          `)
-          .eq('usuario_id', authStore.user.id)
-
-        if (error) throw error
-        this.misDesafios = data || []
-      } catch (err) {
-        console.error('Error cargando mis desafíos:', err)
-        this.error = err.message
-      } finally {
-        this.loading.misDesafios = false
-      }
-    },
-
-    async loadDesafios() {
-
-      this.loading.desafios = true
-      this.error = null
-
-      try {
-        const { data, error } = await supabase
-          .from('desafios_bienestar')
-          .select('*')
-          .eq('activo', true)
-          .order('fecha_inicio', { ascending: false })
-
-        if (error) throw error
-        this.desafios = data || []
-      } catch (err) {
-        console.error('Error cargando desafíos:', err)
-        this.error = err.message
-      } finally {
-        this.loading.desafios = false
-      }
-    },
-
-    async loadActividadesDisponibles() {
-
-      const authStore = useAuthStore()
-      if (!authStore.user?.empresa_id) return
-      this.loading.actividades = true
-      this.error = null
-
-      try {
-        const { data, error } = await supabase
-          .rpc('get_available_activities', { usuario_id_param: authStore.user.id })
-
-        if (error) throw error
-        this.actividadesDisponibles = data || []
-      } catch (err) {
-        console.error('Error cargando actividades:', err)
-        this.error = err.message
-      } finally {
-        this.loading.actividades = false
-      }
+    } catch (err) {
+      console.error("Error al cargar los datos del dashboard:", err);
+      error.value = 'No se pudieron cargar los datos del dashboard. Inténtalo de nuevo más tarde.';
+    } finally {
+      loading.value = false;
     }
+  }
+
+  // --- FUNCIONES INDIVIDUALES ---
+  async function fetchStats() {
+    // Lógica para obtener estadísticas del usuario.
+    // Por ahora, lo dejamos con valores por defecto para que la UI funcione.
+    stats.value = {
+      puntosBienestar: 0,
+      puntosSemana: 0,
+      sesionesAsistidas: 0,
+      desafiosCompletados: 0,
+      nivelActual: 1
+    };
+  }
+
+  async function fetchProximasSesiones() {
+    const authStore = useAuthStore();
+    const userId = authStore.user?.id;
+    if (!userId) return;
+
+    const { data, error: fetchError } = await supabase
+      .from('reservas')
+      .select(`
+        sesion_id,
+        estado,
+        sesiones (
+          id,
+          titulo,
+          fecha_inicio,
+          modalidad,
+          ubicacion,
+          colaborador:colaborador_id ( nombre, apellido )
+        )
+      `)
+      .eq('usuario_id', userId)
+      .in('estado', ['confirmada', 'pendiente'])
+      .gt('sesiones.fecha_inicio', new Date().toISOString())
+      .order('fecha_inicio', { foreignTable: 'sesiones', ascending: true })
+      .limit(3);
+
+    if (fetchError) throw fetchError;
+
+    proximasSesiones.value = data.map(reserva => ({
+      id: reserva.sesiones.id,
+      titulo: reserva.sesiones.titulo,
+      fecha: reserva.sesiones.fecha_inicio,
+      modalidad: reserva.sesiones.modalidad,
+      ubicacion: reserva.sesiones.ubicacion,
+      estado: reserva.estado,
+      colaborador: `${reserva.sesiones.colaborador?.nombre || ''} ${reserva.sesiones.colaborador?.apellido || ''}`.trim(),
+      tipo: 'yoga' // Placeholder, deberías obtenerlo de la sesión
+    }));
+  }
+
+  return {
+    actividadesDisponibles,
+    loading,
+    error,
+    stats,
+    proximasSesiones,
+    encuestasPendientes,
+    desafiosActivos,
+    actividadesRecomendadas,
+    fetchDashboardData,
+    fetchStats,
+    fetchProximasSesiones
   }
 })

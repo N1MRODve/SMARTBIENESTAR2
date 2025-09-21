@@ -124,22 +124,6 @@ export const useAdminStore = defineStore('admin', {
 
     // Cargar estadísticas del dashboard
     async loadDashboardStats(empresaId) {
-      // Usar datos demo si está en modo demo
-      const demoStore = useDemoStore();
-      if (demoStore.isDemoMode) {
-        this.loading = true;
-        try {
-          await new Promise(resolve => setTimeout(resolve, 800)); // Simular delay
-          this.dashboardStats = demoStore.getAdminStats(empresaId);
-          return;
-        } catch (error) {
-          console.error('Error en modo demo:', error);
-        } finally {
-          this.loading = false;
-        }
-        return;
-      }
-
       if (!empresaId) {
         console.error('No se puede cargar estadísticas: empresaId no proporcionado')
         return
@@ -202,25 +186,6 @@ export const useAdminStore = defineStore('admin', {
 
     // Cargar empleados de la empresa
     async loadEmpleados() {
-      // Usar datos demo si está en modo demo
-      const demoStore = useDemoStore();
-      if (demoStore.isDemoMode) {
-        const authStore = useAuthStore();
-        const empresaId = authStore.user?.empresa_id;
-        
-        this.empleadosLoading = true;
-        try {
-          await new Promise(resolve => setTimeout(resolve, 600)); // Simular delay
-          this.empleados = demoStore.getEmpleadosByEmpresa(empresaId);
-          return;
-        } catch (error) {
-          console.error('Error cargando empleados demo:', error);
-        } finally {
-          this.empleadosLoading = false;
-        }
-        return;
-      }
-
       const authStore = useAuthStore()
       const currentEmpresaId = authStore.user?.empresa_id
 
@@ -332,25 +297,6 @@ export const useAdminStore = defineStore('admin', {
 
     // Cargar encuestas de la empresa
     async loadEncuestas(empresaId) {
-      // Usar datos demo si está en modo demo
-      const demoStore = useDemoStore();
-      if (demoStore.isDemoMode) {
-        this.encuestasLoading = true;
-        this.encuestasError = null;
-        try {
-          await new Promise(resolve => setTimeout(resolve, 500)); // Simular delay
-          this.encuestas = demoStore.getEncuestasByEmpresa(empresaId);
-          console.log('Encuestas demo cargadas:', this.encuestas);
-          return;
-        } catch (error) {
-          console.error('Error cargando encuestas demo:', error);
-          this.encuestasError = error.message;
-        } finally {
-          this.encuestasLoading = false;
-        }
-        return;
-      }
-
       this.encuestasLoading = true;
       this.encuestasError = null;
       try {
@@ -381,23 +327,6 @@ export const useAdminStore = defineStore('admin', {
 
     // Cargar actividad reciente
     async loadActividadReciente(empresaId, limit = 10) {
-      // Usar datos demo si está en modo demo
-      const demoStore = useDemoStore();
-      if (demoStore.isDemoMode) {
-        this.loading = true;
-        try {
-          await new Promise(resolve => setTimeout(resolve, 400)); // Simular delay
-          this.actividadReciente = demoStore.demoData.actividadReciente.slice(0, limit);
-          this.estadisticasPorDepartamento = demoStore.demoData.estadisticasPorDepartamento;
-          return;
-        } catch (error) {
-          console.error('Error cargando actividad demo:', error);
-        } finally {
-          this.loading = false;
-        }
-        return;
-      }
-
       if (!empresaId) {
         console.error('No se puede cargar actividad reciente: empresaId no proporcionado')
         return
@@ -459,26 +388,6 @@ export const useAdminStore = defineStore('admin', {
 
     // Crear nueva encuesta
     async crearEncuesta(encuestaData) {
-      // Usar datos demo si está en modo demo
-      const demoStore = useDemoStore();
-      if (demoStore.isDemoMode) {
-        const authStore = useAuthStore();
-        const empresaId = authStore.user?.empresa_id;
-        
-        this.loading = true;
-        try {
-          await new Promise(resolve => setTimeout(resolve, 1000)); // Simular delay
-          const nuevaEncuesta = await demoStore.crearEncuesta(encuestaData, empresaId);
-          this.encuestas.unshift(nuevaEncuesta);
-          return nuevaEncuesta;
-        } catch (error) {
-          console.error('Error creando encuesta demo:', error);
-          throw error;
-        } finally {
-          this.loading = false;
-        }
-      }
-
       const authStore = useAuthStore();
       const empresaId = authStore.user?.empresa_id;
 
@@ -543,25 +452,6 @@ export const useAdminStore = defineStore('admin', {
     },
 
     async eliminarEmpleado(empleadoId) {
-      // Usar datos demo si está en modo demo
-      const demoStore = useDemoStore();
-      if (demoStore.isDemoMode) {
-        this.loading = true;
-        try {
-          await new Promise(resolve => setTimeout(resolve, 800)); // Simular delay
-          await demoStore.eliminarEmpleado(empleadoId);
-          // Recargar empleados
-          const authStore = useAuthStore();
-          this.empleados = demoStore.getEmpleadosByEmpresa(authStore.user?.empresa_id);
-          return;
-        } catch (error) {
-          console.error('Error eliminando empleado demo:', error);
-          throw error;
-        } finally {
-          this.loading = false;
-        }
-      }
-
       this.loading = true
       try {
         // Borrado permanente del usuario (ON DELETE CASCADE elimina perfil_empleados)
@@ -881,27 +771,6 @@ export const useAdminStore = defineStore('admin', {
     },
 
     async crearEmpleado(empleadoData) {
-      // Usar datos demo si está en modo demo
-      const demoStore = useDemoStore();
-      if (demoStore.isDemoMode) {
-        const authStore = useAuthStore();
-        const empresaId = authStore.user?.empresa_id;
-        
-        this.loading = true;
-        try {
-          await new Promise(resolve => setTimeout(resolve, 1000)); // Simular delay
-          const nuevoEmpleado = await demoStore.crearEmpleado(empleadoData, empresaId);
-          // Recargar empleados
-          this.empleados = demoStore.getEmpleadosByEmpresa(empresaId);
-          return nuevoEmpleado;
-        } catch (error) {
-          console.error('Error creando empleado demo:', error);
-          throw error;
-        } finally {
-          this.loading = false;
-        }
-      }
-
       this.loading = true
       try {
         // 1. Verificar duplicados por email
@@ -1005,25 +874,6 @@ export const useAdminStore = defineStore('admin', {
     },
 
     async eliminarEncuesta(encuestaId) {
-      // Usar datos demo si está en modo demo
-      const demoStore = useDemoStore();
-      if (demoStore.isDemoMode) {
-        this.loading = true;
-        try {
-          await new Promise(resolve => setTimeout(resolve, 600)); // Simular delay
-          await demoStore.eliminarEncuesta(encuestaId);
-          // Recargar encuestas
-          const authStore = useAuthStore();
-          this.encuestas = demoStore.getEncuestasByEmpresa(authStore.user?.empresa_id);
-          return;
-        } catch (error) {
-          console.error('Error eliminando encuesta demo:', error);
-          throw error;
-        } finally {
-          this.loading = false;
-        }
-      }
-
       this.loading = true
       try {
         // Elimina la encuesta principal (ON DELETE CASCADE se encarga del resto)

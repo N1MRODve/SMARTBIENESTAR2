@@ -211,16 +211,16 @@
 </template>
 
 <script setup>
-import { ref, computed, onMounted } from 'vue'
+import { ref, computed, watchEffect } from 'vue'
 import { useToast } from 'primevue/usetoast'
 import { Users, UserPlus, UserCheck, Star } from 'lucide-vue-next'
-import { supabase } from '../../services/supabase'
-import { useAuthStore } from '../../stores/auth'
+import { supabase } from '@/services/supabase'
+import { useAuthStore } from '@/stores/auth.store'
 
 const toast = useToast()
 const authStore = useAuthStore()
 
-// Estado reactivo
+// --- ESTADO REACTIVO ---
 const isLoading = ref(true)
 const busqueda = ref('')
 const filtroEstado = ref('')
@@ -236,69 +236,66 @@ const nuevoEmpleado = ref({
   cargo: ''
 })
 
-// Datos dummy de empleados
-const empleados = ref([
-  {
-    id: 1,
-    nombre: 'Ana',
-    apellido: 'García',
-    email: 'ana.garcia@innovatech.com',
-    cargo: 'Desarrolladora Senior',
-    departamento: 'Desarrollo',
-    puntos_bienestar: 1250,
-    activo: true,
-    fecha_registro: '2024-03-15',
-    ultima_participacion: '2025-01-20'
-  },
-  {
-    id: 2,
-    nombre: 'Luis',
-    apellido: 'Martínez',
-    email: 'luis.martinez@innovatech.com',
-    cargo: 'Diseñador UX',
-    departamento: 'Diseño',
-    puntos_bienestar: 980,
-    activo: true,
-    fecha_registro: '2024-05-20',
-    ultima_participacion: '2025-01-19'
-  },
-  {
-    id: 3,
-    nombre: 'Sofia',
-    apellido: 'Rodríguez',
-    email: 'sofia.rodriguez@innovatech.com',
-    cargo: 'Gerente de Marketing',
-    departamento: 'Marketing',
-    puntos_bienestar: 875,
-    activo: true,
-    fecha_registro: '2024-02-10',
-    ultima_participacion: '2025-01-18'
-  },
-  {
-    id: 4,
-    nombre: 'Carlos',
-    apellido: 'Mendoza',
-    email: 'carlos.mendoza@innovatech.com',
-    cargo: 'Analista de Datos',
-    departamento: 'Desarrollo',
-    puntos_bienestar: 450,
-    activo: false,
-    fecha_registro: '2024-08-12',
-    ultima_participacion: '2024-12-15'
-  },
-  {
-    id: 5,
-    nombre: 'María',
-    apellido: 'Fernández',
-    email: 'maria.fernandez@innovatech.com',
-    cargo: 'Especialista en RRHH',
-    departamento: 'RRHH',
-    puntos_bienestar: 1100,
-    activo: true,
-    fecha_registro: '2024-01-08',
-    ultima_participacion: '2025-01-20'
+// CORRECCIÓN: Añadir un ref para almacenar la lista de empleados
+const empleados = ref([])
+
+// --- LÓGICA ---
+
+/**
+ * Función que carga los empleados de una empresa específica.
+ * Ahora recibe el ID de la empresa como parámetro.
+ */
+const cargarEmpleados = async (empresaId) => {
+  isLoading.value = true
+  try {
+    // La comprobación ahora es redundante porque solo llamaremos a esta función con un ID válido,
+    // pero es una buena práctica de defensa mantenerla.
+    if (!empresaId) {
+      throw new Error("ID de empresa no proporcionado a cargarEmpleados.")
+    }
+
+    const { data, error } = await supabase
+      .from('usuarios')
+      .select('*')
+      .eq('empresa_id', empresaId)
+      .eq('tipo_usuario', 'empleado')
+
+    if (error) throw error
+
+    empleados.value = data
+    console.log('Empleados cargados:', data)
+
+  } catch (err) {
+    console.error("Error al cargar empleados:", err)
+    toast.add({ severity: 'error', summary: 'Error', detail: 'No se pudieron cargar los empleados.', life: 3000 })
+  } finally {
+    isLoading.value = false
   }
-])
+}
+
+// --- CORRECCIÓN CRÍTICA: REEMPLAZAR onMounted CON watchEffect ---
+watchEffect(() => {
+  // Este bloque se ejecutará cuando el componente se monte y cada vez que
+  // una de sus dependencias reactivas (como authStore.loading) cambie.
+
+  // 1. Esperamos a que el store termine su proceso de carga inicial.
+  if (authStore.loading) {
+    return; // No hacemos nada, esperamos al siguiente ciclo.
+  }
+
+  const empresaId = authStore.empresaId;
+
+  // 2. Una vez que la carga del store ha finalizado, comprobamos si tenemos el ID.
+  if (empresaId) {
+    // ¡Éxito! Ahora sí podemos cargar los empleados de forma segura.
+    cargarEmpleados(empresaId);
+  } else {
+    // La carga terminó, pero NO hay ID. Es un error real.
+    console.error("Error definitivo en EmpleadosView: La carga del store finalizó pero no se encontró empresa_id.");
+    toast.add({ severity: 'error', summary: 'Error de Autenticación', detail: 'No se pudo identificar la empresa para cargar los empleados.', life: 5000 });
+    isLoading.value = false; // Detenemos la carga para no bloquear la UI.
+  }
+});
 
 // Computed
 const empleadosFiltrados = computed(() => {
@@ -424,8 +421,4 @@ const handleSubmit = async () => {
     loading.value = false
   }
 }
-
-onMounted(() => {
-  cargarEmpleados()
-})
 </script>

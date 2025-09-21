@@ -339,7 +339,8 @@ async function guardarEncuesta(esBorrador = false) {
       await adminStore.crearEncuesta(encuestaParaGuardar)
       toast.success(`Encuesta ${esBorrador ? 'guardada como borrador' : 'creada'} correctamente.`)
     }
-    router.push({ name: 'EncuestasView' })
+    router.push({ name: 'admin-encuestas' })
+
   } catch (error) {
     toast.error(error.message || 'Error al guardar la encuesta.')
     console.error(error)

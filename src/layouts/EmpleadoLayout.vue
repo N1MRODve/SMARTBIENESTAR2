@@ -1,28 +1,34 @@
 <template>
-  <div class="min-h-screen bg-gradient-to-br from-blue-50 via-white to-indigo-50 flex">
+  <div class="flex h-screen bg-background">
     <!-- Sidebar -->
-    <TheSidebar 
-      :open="sidebarOpen" 
-      @update:open="sidebarOpen = $event" 
-    />
-    
-    <!-- Main content area -->
-    <div class="flex-1 flex flex-col min-h-screen">
-      <!-- Header -->
-      <AppHeader @toggle-sidebar="sidebarOpen = !sidebarOpen" />
-      
-      <!-- Main content -->
-      <main class="flex-1 p-6 md:p-8">
-        <router-view />
-      </main>
+    <div class="w-64 flex-shrink-0">
+      <EmpleadoSidebar />
     </div>
+
+    <!-- Contenido Principal -->
+    <main class="flex-1 overflow-y-auto">
+      <div class="p-4 md:p-8">
+        <router-view v-slot="{ Component }">
+          <transition name="fade" mode="out-in">
+            <component :is="Component" />
+          </transition>
+        </router-view>
+      </div>
+    </main>
   </div>
 </template>
 
 <script setup>
-import { ref } from 'vue';
-import TheSidebar from '@/components/layout/TheSidebar.vue';
-import AppHeader from '@/components/layout/AppHeader.vue';
-
-const sidebarOpen = ref(false);
+import EmpleadoSidebar from './components/EmpleadoSidebar.vue';
 </script>
+
+<style>
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.2s ease;
+}
+.fade-enter-from,
+.fade-leave-to {
+  opacity: 0;
+}
+</style>

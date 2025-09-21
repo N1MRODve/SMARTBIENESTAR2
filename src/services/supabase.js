@@ -1,18 +1,20 @@
 import { createClient } from '@supabase/supabase-js'
 
-const supabaseUrl =
-  import.meta.env.VITE_SUPABASE_URL || import.meta.env.NEXT_PUBLIC_SUPABASE_URL
-const supabaseAnonKey =
-  import.meta.env.VITE_SUPABASE_KEY || import.meta.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
+const supabaseUrl = import.meta.env.VITE_SUPABASE_URL
+const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY
+
+// --- PRUEBA DE FUEGO ---
+// Este mensaje aparecerá en la consola del NAVEGADOR cuando se cargue la página.
+console.log("Intentando inicializar Supabase...");
+console.log("VITE_SUPABASE_URL:", supabaseUrl ? "CARGADA" : "NO CARGADA (undefined)");
+console.log("VITE_SUPABASE_ANON_KEY:", supabaseAnonKey ? "CARGADA" : "NO CARGADA (undefined)");
+// -----------------------
 
 if (!supabaseUrl || !supabaseAnonKey) {
-  console.error('[Supabase] Variables de entorno faltantes. Revisa tu archivo .env')
-  throw new Error('VITE_SUPABASE_URL y/o VITE_SUPABASE_KEY no están definidas')
+  throw new Error("¡CRÍTICO! Las variables de entorno de Supabase no se cargaron. Revisa tu archivo .env y reinicia el servidor.");
 }
 
-export const supabase = createClient(supabaseUrl, supabaseAnonKey, {
-  auth: { persistSession: true, autoRefreshToken: true }
-})
+export const supabase = createClient(supabaseUrl, supabaseAnonKey)
 
 export const authenticateUser = async (email, password) => {
   try {

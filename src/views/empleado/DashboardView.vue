@@ -1,36 +1,44 @@
 <template>
-  <div class="max-w-7xl mx-auto space-y-8">
+  <!-- Añadimos un estado de carga -->
+  <div v-if="empleadoStore.loading" class="text-center p-10">
+    <p>Cargando tu dashboard...</p>
+  </div>
+  <!-- Añadimos un estado de error -->
+  <div v-else-if="empleadoStore.error" class="bg-red-100 border-l-4 border-red-500 text-red-700 p-4">
+    <p class="font-bold">Ocurrió un error</p>
+    <p>{{ empleadoStore.error }}</p>
+  </div>
+  <!-- El contenido real cuando los datos están listos -->
+  <div v-else class="max-w-7xl mx-auto space-y-8">
     <!-- Header -->
     <header class="mb-8">
       <h1 class="text-3xl font-bold text-gray-900 mb-2">Mi Dashboard</h1>
       <p class="text-gray-600">Bienvenido a tu espacio personal de bienestar, {{ authStore.user?.nombre || 'Usuario' }}</p>
     </header>
     
-    <!-- Sección de Estadísticas -->
+    <!-- Sección de Estadísticas (Ahora usa datos del store) -->
     <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-      <!-- Puntos de Bienestar -->
       <div class="glass-card p-6 rounded-xl shadow-lg text-center backdrop-blur-sm border border-white/20 hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
         <div class="flex items-center justify-center mb-4">
           <div class="w-16 h-16 bg-gradient-to-br from-yellow-400 to-yellow-600 rounded-2xl flex items-center justify-center">
             <Star class="h-8 w-8 text-white" />
           </div>
         </div>
-        <h3 class="text-4xl font-bold text-primary mb-2">{{ stats.puntosBienestar }}</h3>
+        <h3 class="text-4xl font-bold text-primary mb-2">{{ empleadoStore.stats.puntosBienestar }}</h3>
         <p class="text-gray-700 font-medium">Puntos de Bienestar</p>
         <div class="flex items-center justify-center mt-2">
           <TrendingUp class="h-4 w-4 text-green-500 mr-1" />
-          <span class="text-xs text-green-600">+{{ stats.puntosSemana }} esta semana</span>
+          <span class="text-xs text-green-600">+{{ empleadoStore.stats.puntosSemana }} esta semana</span>
         </div>
       </div>
 
-      <!-- Sesiones Asistidas -->
       <div class="glass-card p-6 rounded-xl shadow-lg text-center backdrop-blur-sm border border-white/20 hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
         <div class="flex items-center justify-center mb-4">
           <div class="w-16 h-16 bg-gradient-to-br from-blue-400 to-blue-600 rounded-2xl flex items-center justify-center">
             <Calendar class="h-8 w-8 text-white" />
           </div>
         </div>
-        <h3 class="text-4xl font-bold text-primary mb-2">{{ stats.sesionesAsistidas }}</h3>
+        <h3 class="text-4xl font-bold text-primary mb-2">{{ empleadoStore.stats.sesionesAsistidas }}</h3>
         <p class="text-gray-700 font-medium">Sesiones Asistidas</p>
         <div class="flex items-center justify-center mt-2">
           <Calendar class="h-4 w-4 text-blue-500 mr-1" />
@@ -38,23 +46,22 @@
         </div>
       </div>
 
-      <!-- Desafíos Completados -->
       <div class="glass-card p-6 rounded-xl shadow-lg text-center backdrop-blur-sm border border-white/20 hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
         <div class="flex items-center justify-center mb-4">
           <div class="w-16 h-16 bg-gradient-to-br from-purple-400 to-purple-600 rounded-2xl flex items-center justify-center">
             <Trophy class="h-8 w-8 text-white" />
           </div>
         </div>
-        <h3 class="text-4xl font-bold text-primary mb-2">{{ stats.desafiosCompletados }}</h3>
+        <h3 class="text-4xl font-bold text-primary mb-2">{{ empleadoStore.stats.desafiosCompletados }}</h3>
         <p class="text-gray-700 font-medium">Desafíos Completados</p>
         <div class="flex items-center justify-center mt-2">
           <Trophy class="h-4 w-4 text-yellow-500 mr-1" />
-          <span class="text-xs text-yellow-600">Nivel {{ stats.nivelActual }}</span>
+          <span class="text-xs text-yellow-600">Nivel {{ empleadoStore.stats.nivelActual }}</span>
         </div>
       </div>
     </div>
 
-    <!-- Próximas Sesiones -->
+    <!-- Próximas Sesiones (Ahora usa datos del store) -->
     <div class="glass-container rounded-xl shadow-lg p-8 backdrop-blur-sm border border-white/30">
       <div class="flex items-center justify-between mb-6">
         <h2 class="text-xl font-semibold text-gray-900 flex items-center">
@@ -69,7 +76,7 @@
         </router-link>
       </div>
 
-      <div v-if="proximasSesiones.length === 0" class="glass-card p-8 rounded-xl shadow-lg text-center text-gray-600 backdrop-blur-sm border border-white/20">
+      <div v-if="empleadoStore.proximasSesiones.length === 0" class="glass-card p-8 rounded-xl shadow-lg text-center text-gray-600 backdrop-blur-sm border border-white/20">
         <Calendar class="h-12 w-12 text-gray-400 mx-auto mb-3" />
         <p class="font-medium mb-2">Aún no tenemos datos</p>
         <p class="text-sm text-gray-500 mb-4">No tienes sesiones próximas programadas</p>
@@ -82,7 +89,7 @@
 
       <div v-else class="space-y-4">
         <div 
-          v-for="sesion in proximasSesiones" 
+          v-for="sesion in empleadoStore.proximasSesiones" 
           :key="sesion.id"
           class="glass-card p-6 rounded-xl shadow-md backdrop-blur-sm border border-white/20 hover:shadow-lg transition-all duration-300 hover:-translate-y-0.5"
         >
@@ -143,7 +150,7 @@
           </router-link>
         </div>
 
-        <div v-if="encuestasPendientes.length === 0" class="glass-card p-8 rounded-xl shadow-lg text-center text-gray-600 backdrop-blur-sm border border-white/20">
+        <div v-if="empleadoStore.encuestasPendientes.length === 0" class="glass-card p-8 rounded-xl shadow-lg text-center text-gray-600 backdrop-blur-sm border border-white/20">
           <ClipboardList class="h-12 w-12 text-gray-400 mx-auto mb-3" />
           <p class="font-medium mb-2">Aún no tenemos datos</p>
           <p class="text-sm text-gray-500">No tienes encuestas pendientes</p>
@@ -151,7 +158,7 @@
 
         <div v-else class="space-y-4">
           <div 
-            v-for="encuesta in encuestasPendientes" 
+            v-for="encuesta in empleadoStore.encuestasPendientes" 
             :key="encuesta.id"
             class="glass-card p-6 rounded-xl shadow-md backdrop-blur-sm border border-white/20 hover:shadow-lg transition-all duration-300 hover:-translate-y-0.5"
           >
@@ -186,7 +193,7 @@
           </router-link>
         </div>
 
-        <div v-if="desafiosActivos.length === 0" class="glass-card p-8 rounded-xl shadow-lg text-center text-gray-600 backdrop-blur-sm border border-white/20">
+        <div v-if="empleadoStore.desafiosActivos.length === 0" class="glass-card p-8 rounded-xl shadow-lg text-center text-gray-600 backdrop-blur-sm border border-white/20">
           <Trophy class="h-12 w-12 text-gray-400 mx-auto mb-3" />
           <p class="font-medium mb-2">Aún no tenemos datos</p>
           <p class="text-sm text-gray-500">No hay desafíos activos disponibles</p>
@@ -194,7 +201,7 @@
 
         <div v-else class="space-y-4">
           <div 
-            v-for="desafio in desafiosActivos" 
+            v-for="desafio in empleadoStore.desafiosActivos" 
             :key="desafio.id"
             class="glass-card p-6 rounded-xl shadow-md backdrop-blur-sm border border-white/20 hover:shadow-lg transition-all duration-300 hover:-translate-y-0.5"
           >
@@ -243,7 +250,7 @@
         </router-link>
       </div>
 
-      <div v-if="actividadesRecomendadas.length === 0" class="glass-card p-8 rounded-xl shadow-lg text-center text-gray-600 backdrop-blur-sm border border-white/20">
+      <div v-if="empleadoStore.actividadesRecomendadas.length === 0" class="glass-card p-8 rounded-xl shadow-lg text-center text-gray-600 backdrop-blur-sm border border-white/20">
         <Heart class="h-12 w-12 text-gray-400 mx-auto mb-3" />
         <p class="font-medium mb-2">Aún no tenemos datos</p>
         <p class="text-sm text-gray-500">No hay actividades recomendadas disponibles</p>
@@ -251,7 +258,7 @@
 
       <div v-else class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         <div 
-          v-for="actividad in actividadesRecomendadas" 
+          v-for="actividad in empleadoStore.actividadesRecomendadas" 
           :key="actividad.id"
           class="glass-card rounded-xl overflow-hidden backdrop-blur-sm border border-white/20 hover:shadow-xl transition-all duration-300 hover:-translate-y-1"
         >
@@ -295,7 +302,7 @@
 </template>
 
 <script setup>
-import { ref, computed, onMounted } from 'vue'
+import { onMounted } from 'vue'
 import { useRouter } from 'vue-router'
 import { 
   Star, 
@@ -320,107 +327,6 @@ import { useEmpleadoStore } from '../../stores/empleado.store'
 const router = useRouter()
 const authStore = useAuthStore()
 const empleadoStore = useEmpleadoStore()
-
-// Datos de ejemplo (dummy data) para mostrar la estructura
-const stats = ref({
-  puntosBienestar: 1250,
-  puntosSemana: 85,
-  sesionesAsistidas: 12,
-  desafiosCompletados: 3,
-  nivelActual: 2
-})
-
-const proximasSesiones = ref([
-  {
-    id: 1,
-    titulo: 'Yoga Matutino',
-    fecha: '2025-01-20T08:00:00',
-    colaborador: 'Elena Vásquez',
-    modalidad: 'presencial',
-    ubicacion: 'Sala Zen',
-    tipo: 'yoga',
-    estado: 'confirmada'
-  },
-  {
-    id: 2,
-    titulo: 'Meditación Mindfulness',
-    fecha: '2025-01-22T12:30:00',
-    colaborador: 'Miguel Torres',
-    modalidad: 'online',
-    tipo: 'meditacion',
-    estado: 'confirmada'
-  },
-  {
-    id: 3,
-    titulo: 'Coaching Personal',
-    fecha: '2025-01-25T15:00:00',
-    colaborador: 'Carlos Ruiz',
-    modalidad: 'online',
-    tipo: 'coaching',
-    estado: 'pendiente'
-  }
-])
-
-const encuestasPendientes = ref([
-  {
-    id: 1,
-    titulo: 'Evaluación de Clima Laboral Q1',
-    descripcion: 'Ayúdanos a mejorar el ambiente de trabajo',
-    diasRestantes: 5
-  },
-  {
-    id: 2,
-    titulo: 'Feedback Actividades de Bienestar',
-    descripcion: 'Comparte tu experiencia con nuestras actividades',
-    diasRestantes: null
-  }
-])
-
-const desafiosActivos = ref([
-  {
-    id: 1,
-    titulo: 'Camina 10,000 pasos diarios',
-    descripcion: 'Mantente activo durante 14 días consecutivos',
-    categoria: 'Actividad Física',
-    puntos: 200,
-    fecha_fin: '2025-02-15T23:59:59'
-  },
-  {
-    id: 2,
-    titulo: 'Meditación Diaria',
-    descripcion: 'Medita 10 minutos cada día durante una semana',
-    categoria: 'Mindfulness',
-    puntos: 150,
-    fecha_fin: '2025-02-10T23:59:59'
-  }
-])
-
-const actividadesRecomendadas = ref([
-  {
-    id: 1,
-    titulo: 'Yoga para Principiantes',
-    descripcion: 'Sesión perfecta para comenzar tu práctica de yoga',
-    tipo: 'yoga',
-    fecha: '2025-01-21T18:00:00',
-    plazasDisponibles: 8
-  },
-  {
-    id: 2,
-    titulo: 'Nutrición Saludable',
-    descripcion: 'Aprende a crear menús balanceados y nutritivos',
-    tipo: 'nutricion',
-    fecha: '2025-01-23T16:00:00',
-    plazasDisponibles: 12
-  },
-  {
-    id: 3,
-    titulo: 'Entrenamiento HIIT',
-    descripcion: 'Ejercicios de alta intensidad para quemar calorías',
-    tipo: 'entrenamiento',
-    fecha: '2025-01-24T19:00:00',
-    plazasDisponibles: 5
-  }
-])
 
 // Funciones de utilidad
 const formatDateTime = (dateString) => {
@@ -510,7 +416,7 @@ const getStatusText = (estado) => {
 
 // Lifecycle
 onMounted(() => {
-  // Aquí se cargarían los datos reales cuando estén disponibles
-  console.log('Dashboard del empleado cargado')
+  // Cuando el componente se monta, le pedimos al store que cargue los datos.
+  empleadoStore.fetchDashboardData();
 })
 </script>

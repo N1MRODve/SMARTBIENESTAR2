@@ -1,85 +1,159 @@
-<script setup>
-import { useRoute, RouterLink } from 'vue-router'
-import { computed } from 'vue'
-import { useAuthStore } from '@/stores/auth.store'
-import {
-  Home,
-  Users,
-  ClipboardList,
-  Briefcase,
-  ChevronLeft,
-  ChevronRight
-} from 'lucide-vue-next'
-
-// 1. Corregido el nombre de la prop a 'collapsed'
-const props = defineProps({
-  collapsed: { type: Boolean, default: false }
-})
-const emit = defineEmits(['toggle'])
-
-const authStore = useAuthStore()
-
-// Obtiene el rol del usuario de forma reactiva
-const userRole = computed(() => authStore.user?.tipo_usuario)
-
-// Mapa de enlaces de navegación para cada rol
-const linksPorRol = {
-  administrador: [
-    { name: 'AdminDashboard', text: 'Dashboard', icon: 'LayoutDashboard' },
-    { name: 'AdminEmpleados', text: 'Empleados', icon: 'Users' },
-    { name: 'EncuestasView', text: 'Encuestas', icon: 'ClipboardList' }
-    // Puedes añadir más enlaces de administrador aquí
-  ],
-  empleado: [
-    { name: 'empleado-dashboard', text: 'Mi Dashboard', icon: 'User' },
-    { name: 'ReservarActividad', text: 'Reservar Actividad', icon: 'CalendarPlus' },
-    { name: 'empleado-reservas', text: 'Mis Reservas', icon: 'CalendarCheck' },
-    { name: 'empleado-encuestas', text: 'Mis Encuestas', icon: 'ClipboardList' },
-    { name: 'empleado-desafios', text: 'Mis Desafíos', icon: 'Trophy' }
-  ]
-}
-
-// Propiedad computada que selecciona los enlaces correctos según el rol
-const navLinks = computed(() => {
-  if (!userRole.value) return []
-  return linksPorRol[userRole.value] || []
-})
-</script>
-
 <template>
-  <!-- 2. Añadido position:fixed y anchos fijos (w-64/w-20) -->
   <aside 
-    class="fixed top-0 left-0 h-full flex flex-col transition-all duration-300 z-30
-           bg-gray-900/70 backdrop-blur-lg border-r border-gray-200/20"
-    :class="{ 'w-64': !props.collapsed, 'w-20': props.collapsed }"
+    class="fixed inset-y-0 z-10 flex flex-col h-screen transition-all duration-300 bg-white border-r shadow-sm" 
+    :class="collapsed ? 'w-20' : 'w-64'"
   >
-    <!-- Encabezado del Sidebar -->
-    <div class="p-4 border-b border-gray-200/20 flex items-center" :class="props.collapsed ? 'justify-center' : 'justify-between'">
-      <h1 v-if="!props.collapsed" class="text-xl font-bold text-white">SMART Bienestar</h1>
-      <button @click="$emit('toggle')" class="p-2 rounded-md hover:bg-white/10">
-        <!-- Icono de Menú (Placeholder) -->
-        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7" /></svg>
+    <!-- Logo/Brand -->
+    <div class="flex items-center justify-between h-16 px-4 border-b">
+      <span v-if="!collapsed" class="text-lg font-semibold text-primary">SmartBienestar</span>
+      <button 
+        @click="$emit('toggle')" 
+        class="p-1.5 rounded-lg bg-gray-50 hover:bg-gray-100"
+      >
+        <MenuIcon v-if="collapsed" class="w-5 h-5" />
+        <ChevronLeft v-else class="w-5 h-5" />
       </button>
     </div>
     
-    <!-- Navegación Principal -->
-    <nav class="flex-1 p-2 space-y-1">
-      <RouterLink
-        v-for="link in navLinks"
-        :key="link.name"
-        :to="{ name: link.name }"
-        class="flex items-center gap-3 px-3 py-2 rounded-md text-sm font-medium hover:bg-white/10 transition-colors"
-        active-class="bg-primary text-white font-semibold"
-      >
-        <!-- Icono (Placeholder) -->
-        <span class="w-6 h-6"><!-- Icono aquí --></span>
-        <span v-if="!props.collapsed">{{ link.text }}</span>
-      </RouterLink>
+    <!-- Navigation Items -->
+    <nav class="flex-1 overflow-y-auto">
+      <ul class="p-2 space-y-1">
+        <!-- Dashboard -->
+        <li>
+          <router-link 
+            :to="{ name: 'admin-dashboard' }" 
+            class="flex items-center p-2 rounded-lg transition-colors" 
+            :class="[$route.name === 'admin-dashboard' ? 
+              'bg-primary/10 text-primary font-medium' : 
+              'text-gray-600 hover:bg-gray-100']"
+          >
+            <LayoutDashboard class="w-5 h-5" />
+            <span v-if="!collapsed" class="ml-3">Dashboard</span>
+          </router-link>
+        </li>
+        
+        <!-- Empleados -->
+        <li>
+          <router-link 
+            :to="{ name: 'admin-empleados' }" 
+            class="flex items-center p-2 rounded-lg transition-colors" 
+            :class="[$route.name === 'admin-empleados' ? 
+              'bg-primary/10 text-primary font-medium' : 
+              'text-gray-600 hover:bg-gray-100']"
+          >
+            <Users class="w-5 h-5" />
+            <span v-if="!collapsed" class="ml-3">Empleados</span>
+          </router-link>
+        </li>
+        
+        <!-- Encuestas -->
+        <li>
+          <router-link 
+            :to="{ name: 'admin-encuestas' }" 
+            class="flex items-center p-2 rounded-lg transition-colors" 
+            :class="[$route.name === 'admin-encuestas' ? 
+              'bg-primary/10 text-primary font-medium' : 
+              'text-gray-600 hover:bg-gray-100']"
+          >
+            <ClipboardList class="w-5 h-5" />
+            <span v-if="!collapsed" class="ml-3">Encuestas</span>
+          </router-link>
+        </li>
+        
+        <!-- Estadísticas -->
+        <li>
+          <router-link 
+            :to="{ name: 'admin-estadisticas' }" 
+            class="flex items-center p-2 rounded-lg transition-colors" 
+            :class="[$route.name === 'admin-estadisticas' ? 
+              'bg-primary/10 text-primary font-medium' : 
+              'text-gray-600 hover:bg-gray-100']"
+          >
+            <BarChart class="w-5 h-5" />
+            <span v-if="!collapsed" class="ml-3">Estadísticas</span>
+          </router-link>
+        </li>
+        
+        <!-- Horarios -->
+        <li>
+          <router-link 
+            :to="{ name: 'admin-horarios' }" 
+            class="flex items-center p-2 rounded-lg transition-colors" 
+            :class="[$route.name === 'admin-horarios' ? 
+              'bg-primary/10 text-primary font-medium' : 
+              'text-gray-600 hover:bg-gray-100']"
+          >
+            <Calendar class="w-5 h-5" />
+            <span v-if="!collapsed" class="ml-3">Horarios</span>
+          </router-link>
+        </li>
+        
+        <!-- Analítica -->
+        <li>
+          <router-link 
+            :to="{ name: 'admin-analitica' }" 
+            class="flex items-center p-2 rounded-lg transition-colors" 
+            :class="[$route.name === 'admin-analitica' ? 
+              'bg-primary/10 text-primary font-medium' : 
+              'text-gray-600 hover:bg-gray-100']"
+          >
+            <LineChart class="w-5 h-5" />
+            <span v-if="!collapsed" class="ml-3">Analítica</span>
+          </router-link>
+        </li>
+        
+        <!-- Perfil de Empresa -->
+        <li>
+          <router-link 
+            :to="{ name: 'admin-empresa-perfil' }" 
+            class="flex items-center p-2 rounded-lg transition-colors" 
+            :class="[$route.name === 'admin-empresa-perfil' ? 
+              'bg-primary/10 text-primary font-medium' : 
+              'text-gray-600 hover:bg-gray-100']"
+          >
+            <Building class="w-5 h-5" />
+            <span v-if="!collapsed" class="ml-3">Perfil Empresa</span>
+          </router-link>
+        </li>
+      </ul>
     </nav>
-
-    <!-- Pie del Sidebar (Logout, etc.) -->
-    <div class="p-4 border-t border-gray-200/20">
-      <!-- Contenido del pie del sidebar -->
+    
+    <!-- User Profile Link -->
+    <div class="p-2 border-t">
+      <router-link 
+        to="/admin/perfil" 
+        class="flex items-center p-2 rounded-lg text-gray-600 hover:bg-gray-100 transition-colors"
+      >
+        <User class="w-5 h-5" />
+        <span v-if="!collapsed" class="ml-3">Mi Perfil</span>
+      </router-link>
     </div>
   </aside>
 </template>
+
+<script setup>
+import { 
+  ChevronLeft,
+  Menu as MenuIcon, 
+  LayoutDashboard, 
+  Users, 
+  ClipboardList, 
+  BarChart, 
+  Calendar, 
+  LineChart, 
+  User,
+  Building 
+} from 'lucide-vue-next'
+import { useRoute } from 'vue-router'
+
+const route = useRoute()
+
+defineProps({
+  collapsed: {
+    type: Boolean,
+    default: false
+  }
+})
+
+defineEmits(['toggle'])
+</script>

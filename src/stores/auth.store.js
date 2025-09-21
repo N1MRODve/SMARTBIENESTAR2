@@ -1,200 +1,124 @@
-import { defineStore } from 'pinia';
-import { supabase } from '@/services/supabase'; // Importar la instancia única
-import { useDemoStore } from './demoStore';
+import { defineStore } from 'pinia'
+import { ref, computed } from 'vue'
+import { supabase } from '@/services/supabase'
 
-export const useAuthStore = defineStore('auth', {
-  state: () => ({
-    user: null,
-    session: null,
-    loading: false,
-    error: null,
-    isInitialized: false // Nuevo estado para controlar la inicialización
-  }),
+export const useAuthStore = defineStore('auth', () => {
+  // --- STATE ---
+  const user = ref(null)
+  const session = ref(null)
+  const loading = ref(false)
 
-  // Las funciones de negocio deben estar dentro del objeto 'actions'.
-  actions: {
-    async login(email, password) {
-      this.loading = true;
-      this.error = null;
+  // --- GETTERS ---
+  const isAuthenticated = computed(() => !!session.value && !!user.value)
+  const userRole = computed(() => user.value?.role || null)
+  // CORRECCIÓN: Añadir un getter computado para el ID de la empresa.
+  // Esto asegura que siempre obtengamos el valor más reciente y evita errores si `user` es nulo.
+  const empresaId = computed(() => user.value?.empresa_id || null)
+
+  // --- ACTIONS ---
+
+  /**
+   * Establece los datos del usuario en el store.
+   * @param {object} userData - El objeto de usuario de Supabase.
+   */
+  function setUser(userData) {
+    user.value = userData
+  }
+
+  /**
+   * Establece los datos de la sesión en el store.
+   * @param {object} sessionData - El objeto de sesión de Supabase.
+   */
+  function setSession(sessionData) {
+    session.value = sessionData
+  }
+
+  /**
+   * Obtiene el perfil completo del usuario desde la tabla 'usuarios' y lo guarda en el estado.
+   * @param {string} userId - El ID del usuario de Supabase.
+   */
+  async function fetchUserProfile(userId) {
+    if (!userId) return null
+
+    try {
+      const { data, error } = await supabase
+        .from('usuarios')
+        .select('id, nombre, apellido, email, tipo_usuario, empresa_id')
+        .eq('id', userId)
+        .single()
+
+      if (error) throw error
+
+      // Asigna el 'tipo_usuario' de la DB a la propiedad 'role' para consistencia
+      const userProfile = {
+        ...data,
+        role: data.tipo_usuario
+      }
       
-      try {
-        console.log('🔐 Iniciando login para:', email);
-        
-        // Verificar si es modo demo
-        const demoStore = useDemoStore();
-        if (demoStore.isDemoMode && email.includes('demo')) {
-          console.log('🎭 Modo demo detectado');
-          await new Promise(resolve => setTimeout(resolve, 1000));
-          const user = await demoStore.loginDemo(email, password);
-          this.user = user;
-          this.session = { user };
-          return user;
-        }
+      setUser(userProfile) // Usamos la acción interna para actualizar el estado
+      return userProfile
 
-        // Credenciales de prueba para desarrollo
-        const testCredentials = {
-          'admin@innovatech.com': { 
-            password: 'admin123', 
-            user: {
-              id: 'test-admin-1',
-              email: 'admin@innovatech.com',
-              nombre: 'Admin',
-              apellido: 'Demo',
-              tipo_usuario: 'administrador',
-              empresa_id: 'empresa-demo-1',
-              activo: true
-            }
-          },
-          'ana.martinez@innovatech.com': { 
-            password: 'empleado123', 
-            user: {
-              id: 'test-empleado-1',
-              email: 'ana.martinez@innovatech.com',
-              nombre: 'Ana',
-              apellido: 'Martínez',
-              tipo_usuario: 'empleado',
-              empresa_id: 'empresa-demo-1',
-              activo: true
-            }
-          },
-          'elena.vasquez@smartbienestar.com': { 
-            password: 'colaborador123', 
-            user: {
-              id: 'test-colaborador-1',
-              email: 'elena.vasquez@smartbienestar.com',
-              nombre: 'Elena',
-              apellido: 'Vásquez',
-              tipo_usuario: 'colaborador',
-              empresa_id: null,
-              activo: true
-            }
-          }
-        };
-
-        // Verificar credenciales de prueba
-        const testCredential = testCredentials[email];
-        if (testCredential && testCredential.password === password) {
-          console.log('🧪 Usando credenciales de prueba');
-          await new Promise(resolve => setTimeout(resolve, 800));
-          this.user = testCredential.user;
-          this.session = { user: testCredential.user };
-          return testCredential.user;
-        }
-
-        // Paso 1: Autenticar con Supabase Auth
-        const { data: authData, error: authError } = await supabase.auth.signInWithPassword({
-          email,
-          password
-        });
-
-        if (authError) {
-          console.error('❌ Error de autenticación:', authError);
-          throw new Error('Credenciales incorrectas');
-        }
-
-        if (!authData.user) {
-          throw new Error('No se pudo autenticar el usuario');
-        }
-
-        console.log('✅ Autenticación exitosa, obteniendo perfil...');
-
-        // Paso 2: Obtener perfil completo de la tabla usuarios
-        const { data: userProfile, error: profileError } = await supabase
-          .from('usuarios')
-          .select(`
-            *,
-            empresas (
-              id,
-              nombre,
-              dominio_email
-            )
-          `)
-          .eq('id', authData.user.id)
-          .eq('activo', true)
-          .single();
-
-        if (profileError || !userProfile) {
-          console.error('❌ Error obteniendo perfil:', profileError);
-          await supabase.auth.signOut();
-          throw new Error('Usuario no encontrado o inactivo');
-        }
-
-        // Paso 3: Combinar datos de Auth con perfil completo
-        const userComplete = {
-          ...authData.user,
-          ...userProfile,
-          id: authData.user.id // Asegurar que usamos el ID de Auth
-        };
-
-        this.user = userComplete;
-        this.session = authData.session;
-        
-        console.log('✅ Login exitoso con perfil completo:', userComplete);
-        return userComplete;
-
-      } catch (error) {
-        console.error('🚨 Error en login:', error);
-        this.error = error.message;
-        throw error;
-      } finally {
-        this.loading = false;
-      }
-    },
-
-    async logout() {
-      this.loading = true;
-      try {
-        await supabase.auth.signOut();
-        this.user = null;
-        this.session = null;
-      } catch (error) {
-        this.error = error.message;
-      } finally {
-        this.loading = false;
-      }
-    },
-
-    async tryInitializeAuth() {
-      try {
-        console.log('🔄 Inicializando autenticación...');
-        const { data: { session } } = await supabase.auth.getSession()
-        
-        if (session?.user) {
-          // Si hay una sesión, obtenemos el perfil completo de la tabla 'usuarios'
-          const { data: profileData, error: profileError } = await supabase
-            .from('usuarios')
-            .select('*') // Incluye tipo_usuario, empresa_id, etc.
-            .eq('id', session.user.id)
-            .single()
-
-          if (profileError) throw profileError
-          
-          this.user = profileData
-          this.session = session
-          
-          console.log('✅ Auth inicializado con usuario:', profileData)
-        } else {
-          console.log('ℹ️ No hay sesión activa')
-        }
-      } catch (error) {
-        console.error("🚨 Error al inicializar la sesión:", error)
-        this.user = null
-        this.session = null
-        await supabase.auth.signOut()
-      } finally {
-        this.isInitialized = true
-        console.log('✅ Inicialización completada')
-      }
-    },
-
-    // Getter para verificar autenticación
-    get isAuthenticated() {
-      return !!this.user && !!this.session;
-    },
-
-    // Getter para obtener el rol del usuario
-    get userRole() {
-      return this.user?.tipo_usuario || null;
+    } catch (err) {
+      console.error('Error obteniendo el perfil del usuario:', err)
+      // Limpiar el estado en caso de error para evitar datos inconsistentes
+      user.value = null
+      session.value = null
+      return null
     }
+  }
+
+  /**
+   * Inicializa el store, comprobando si hay una sesión activa y cargando el perfil del usuario.
+   */
+  async function initialize() {
+    loading.value = true
+    try {
+      const { data } = await supabase.auth.getSession()
+      if (data.session) {
+        setSession(data.session)
+        await fetchUserProfile(data.session.user.id)
+      }
+    } catch (err) {
+      console.error('Error al inicializar el auth store:', err)
+    } finally {
+      loading.value = false
+    }
+  }
+
+  /**
+   * Cierra la sesión del usuario, limpia el estado y la sesión de Supabase.
+   */
+  async function signOut() {
+    try {
+      const { error } = await supabase.auth.signOut()
+      if (error) throw error
+
+      // **Paso Crítico:** Limpiar manualmente el estado de Pinia.
+      // supabase.auth.signOut() NO hace esto por ti.
+      user.value = null
+      session.value = null
+
+    } catch (err) {
+      console.error('Error al cerrar sesión:', err)
+      // Incluso si hay un error, forzamos la limpieza del estado local
+      // para evitar que el usuario quede en un estado inconsistente.
+      user.value = null
+      session.value = null
+    }
+  }
+
+  // Exponer el estado, getters y acciones para que puedan ser usados en los componentes
+  return {
+    user,
+    session,
+    loading,
+    isAuthenticated,
+    userRole,
+    empresaId, // <--- CORRECCIÓN: Exponiendo el nuevo getter.
+    setUser,
+    setSession,
+    fetchUserProfile,
+    initialize,
+    signOut // <-- AÑADIR ESTO
   }
 })

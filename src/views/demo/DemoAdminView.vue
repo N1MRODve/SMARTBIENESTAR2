@@ -1,21 +1,19 @@
 <template>
-  <div class="min-h-screen bg-gray-50">
-    <main class="flex-1">
-      <AdminLayout>
-        <div class="space-y-8">
-          <!-- Header -->
-          <header class="mb-8">
-            <div class="flex items-center justify-between">
-              <div>
-                <h1 class="text-3xl font-bold text-gray-900 mb-2">Dashboard Administrador</h1>
-                <p class="text-gray-600">Vista general de tu empresa y actividad de bienestar</p>
-              </div>
-              <div class="bg-blue-100 text-blue-800 px-4 py-2 rounded-lg text-sm font-medium">
-                🎭 Modo Demo
-              </div>
-            </div>
-          </header>
-          
+  <DemoLayout>
+    <div class="space-y-8">
+    <!-- Header -->
+    <header class="mb-8">
+      <div class="flex items-center justify-between">
+        <div>
+          <h1 class="text-3xl font-bold text-gray-900 mb-2">Dashboard Administrador</h1>
+          <p class="text-gray-600">Vista general de tu empresa y actividad de bienestar</p>
+        </div>
+        <div class="bg-blue-100 text-blue-800 px-4 py-2 rounded-lg text-sm font-medium">
+          🎭 Modo Demo
+        </div>
+      </div>
+    </header>
+
           <!-- Estadísticas Principales -->
           <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
             <!-- Total Empleados -->
@@ -25,7 +23,7 @@
                   <Users class="h-8 w-8 text-white" />
                 </div>
               </div>
-              <h3 class="text-4xl font-bold text-primary mb-2">45</h3>
+              <h3 class="text-4xl font-bold text-primary mb-2">{{ stats.total_empleados }}</h3>
               <p class="text-gray-700 font-medium">Total Empleados</p>
               <div class="flex items-center justify-center mt-2">
                 <TrendingUp class="h-4 w-4 text-green-500 mr-1" />
@@ -40,7 +38,7 @@
                   <Calendar class="h-8 w-8 text-white" />
                 </div>
               </div>
-              <h3 class="text-4xl font-bold text-primary mb-2">12</h3>
+              <h3 class="text-4xl font-bold text-primary mb-2">{{ stats.sesiones_proximas }}</h3>
               <p class="text-gray-700 font-medium">Sesiones Esta Semana</p>
               <div class="flex items-center justify-center mt-2">
                 <Calendar class="h-4 w-4 text-blue-500 mr-1" />
@@ -55,7 +53,7 @@
                   <ClipboardList class="h-8 w-8 text-white" />
                 </div>
               </div>
-              <h3 class="text-4xl font-bold text-primary mb-2">2</h3>
+              <h3 class="text-4xl font-bold text-primary mb-2">{{ stats.encuestas_activas }}</h3>
               <p class="text-gray-700 font-medium">Encuestas Activas</p>
               <div class="flex items-center justify-center mt-2">
                 <ClipboardList class="h-4 w-4 text-purple-500 mr-1" />
@@ -70,7 +68,7 @@
                   <Star class="h-8 w-8 text-white" />
                 </div>
               </div>
-              <h3 class="text-4xl font-bold text-primary mb-2">4.2</h3>
+              <h3 class="text-4xl font-bold text-primary mb-2">{{ stats.satisfaccion_promedio }}</h3>
               <p class="text-gray-700 font-medium">Satisfacción General</p>
               <div class="flex items-center justify-center mt-2">
                 <TrendingUp class="h-4 w-4 text-yellow-500 mr-1" />
@@ -471,10 +469,8 @@
               </button>
             </div>
           </div>
-        </div>
-      </AdminLayout>
-    </main>
-  </div>
+    </div>
+  </DemoLayout>
 </template>
 
 <script setup>
@@ -503,9 +499,15 @@ import {
   Briefcase,
   BarChart3
 } from 'lucide-vue-next'
+import { useDemoStore } from '@/stores/demoStore'
+import DemoLayout from '@/layouts/DemoLayout.vue'
 import { useRouter } from 'vue-router'
 
 const router = useRouter()
+const demoStore = useDemoStore()
+
+// Cargar datos de la demo
+const stats = demoStore.adminDashboardStats
 
 const volverADemo = () => {
   router.push('/demo')

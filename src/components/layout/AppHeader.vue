@@ -44,6 +44,14 @@
           <LogOut class="h-4 w-4 mr-2" />
           Cerrar Sesión
         </Button>
+
+        <!-- Este podría ser tu botón en un menú desplegable -->
+        <button 
+          @click="handleLogout" 
+          class="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+        >
+          Cerrar Sesión
+        </button>
       </div>
     </div>
   </header>
@@ -64,6 +72,7 @@ const authStore = useAuthStore();
 defineEmits(['toggle-sidebar']);
 
 const handleLogout = async () => {
+  console.log('Cerrando sesión...');
   try {
     await authStore.logout();
     router.push('/login');

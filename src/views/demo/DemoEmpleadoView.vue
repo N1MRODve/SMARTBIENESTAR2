@@ -1,6 +1,6 @@
 <template>
   <DemoLayout>
-    <div class="space-y-8">
+    <div v-if="!empleadoStore.loading.dashboard" class="space-y-8">
       <!-- Header -->
       <header id="dashboard" class="mb-8">
         <div class="flex items-center justify-between">
@@ -23,7 +23,7 @@
               <Star class="h-8 w-8 text-white" />
             </div>
           </div>
-          <h3 class="text-4xl font-bold text-primary mb-2">1250</h3>
+          <h3 class="text-4xl font-bold text-primary mb-2">{{ stats.puntos_bienestar || 0 }}</h3>
           <p class="text-gray-700 font-medium">Puntos de Bienestar</p>
           <div class="flex items-center justify-center mt-2">
             <TrendingUp class="h-4 w-4 text-green-500 mr-1" />
@@ -38,8 +38,8 @@
               <Calendar class="h-8 w-8 text-white" />
             </div>
           </div>
-          <h3 class="text-4xl font-bold text-primary mb-2">12</h3>
-          <p class="text-gray-700 font-medium">Sesiones Asistidas</p>
+          <h3 class="text-4xl font-bold text-primary mb-2">{{ stats.sesiones_asistidas || 0 }}</h3>
+          <p class="text-gray-700 font-medium">Sesiones Completadas</p>
           <div class="flex items-center justify-center mt-2">
             <Calendar class="h-4 w-4 text-blue-500 mr-1" />
             <span class="text-xs text-blue-600">Este mes</span>
@@ -53,7 +53,7 @@
               <Trophy class="h-8 w-8 text-white" />
             </div>
           </div>
-          <h3 class="text-4xl font-bold text-primary mb-2">3</h3>
+          <h3 class="text-4xl font-bold text-primary mb-2">{{ stats.desafios_completados || 0 }}</h3>
           <p class="text-gray-700 font-medium">Desafíos Completados</p>
           <div class="flex items-center justify-center mt-2">
             <Trophy class="h-4 w-4 text-yellow-500 mr-1" />
@@ -74,16 +74,16 @@
           </span>
         </div>
 
-        <div class="space-y-4">
-          <div class="glass-card p-6 rounded-xl shadow-md backdrop-blur-sm border border-white/20 hover:shadow-lg transition-all duration-300 hover:-translate-y-0.5">
+        <div v-if="proximasSesiones.length > 0" class="space-y-4">
+          <div v-for="sesion in proximasSesiones" :key="sesion.id" class="glass-card p-6 rounded-xl shadow-md backdrop-blur-sm border border-white/20 hover:shadow-lg transition-all duration-300 hover:-translate-y-0.5">
             <div class="flex items-center justify-between mb-3">
               <div class="flex items-center space-x-4">
                 <div class="w-12 h-12 rounded-xl flex items-center justify-center bg-gradient-to-br from-green-400 to-green-600">
                   <Activity class="h-6 w-6 text-white" />
                 </div>
                 <div>
-                  <p class="font-semibold text-gray-900">Yoga Matutino</p>
-                  <p class="text-sm text-gray-600">Elena Vásquez</p>
+                  <p class="font-semibold text-gray-900">{{ sesion.titulo }}</p>
+                  <p class="text-sm text-gray-600">{{ sesion.colaborador_nombre }}</p>
                 </div>
               </div>
               <span class="bg-green-100 text-green-800 px-3 py-1 rounded-full text-xs font-medium">
@@ -95,11 +95,11 @@
               <div class="flex items-center space-x-4 text-sm text-gray-600">
                 <div class="flex items-center">
                   <Clock class="h-4 w-4 mr-1" />
-                  <span>Hoy, 08:00</span>
+                  <span>{{ new Date(sesion.fecha_inicio).toLocaleString() }}</span>
                 </div>
                 <div class="flex items-center">
                   <MapPin class="h-4 w-4 mr-1" />
-                  <span>Sala Zen</span>
+                  <span>{{ sesion.ubicacion || sesion.modalidad }}</span>
                 </div>
               </div>
               <button class="text-primary hover:text-primary-dark text-sm font-medium transition-colors">
@@ -107,39 +107,9 @@
               </button>
             </div>
           </div>
-
-          <div class="glass-card p-6 rounded-xl shadow-md backdrop-blur-sm border border-white/20 hover:shadow-lg transition-all duration-300 hover:-translate-y-0.5">
-            <div class="flex items-center justify-between mb-3">
-              <div class="flex items-center space-x-4">
-                <div class="w-12 h-12 rounded-xl flex items-center justify-center bg-gradient-to-br from-purple-400 to-purple-600">
-                  <Brain class="h-6 w-6 text-white" />
-                </div>
-                <div>
-                  <p class="font-semibold text-gray-900">Meditación Mindfulness</p>
-                  <p class="text-sm text-gray-600">Miguel Torres</p>
-                </div>
-              </div>
-              <span class="bg-green-100 text-green-800 px-3 py-1 rounded-full text-xs font-medium">
-                Confirmada
-              </span>
-            </div>
-            
-            <div class="flex items-center justify-between">
-              <div class="flex items-center space-x-4 text-sm text-gray-600">
-                <div class="flex items-center">
-                  <Clock class="h-4 w-4 mr-1" />
-                  <span>Mañana, 12:30</span>
-                </div>
-                <div class="flex items-center">
-                  <Globe class="h-4 w-4 mr-1" />
-                  <span>Online</span>
-                </div>
-              </div>
-              <button class="text-primary hover:text-primary-dark text-sm font-medium transition-colors">
-                Ver detalles
-              </button>
-            </div>
-          </div>
+        </div>
+        <div v-else class="text-center text-gray-500 py-4">
+          <p>No tienes próximas sesiones.</p>
         </div>
       </div>
 
@@ -157,32 +127,22 @@
             </span>
           </div>
 
-          <div class="space-y-4">
-            <div class="glass-card p-6 rounded-xl shadow-md backdrop-blur-sm border border-white/20 hover:shadow-lg transition-all duration-300 hover:-translate-y-0.5">
+          <div v-if="encuestasPendientes.length > 0" class="space-y-4">
+            <div v-for="encuesta in encuestasPendientes" :key="encuesta.id" class="glass-card p-6 rounded-xl shadow-md backdrop-blur-sm border border-white/20 hover:shadow-lg transition-all duration-300 hover:-translate-y-0.5">
               <div class="flex justify-between items-start mb-3">
                 <div class="flex-1">
-                  <h3 class="font-semibold text-gray-900 mb-2">Evaluación de Clima Laboral Q1</h3>
-                  <p class="text-sm text-gray-600 mb-3">Ayúdanos a mejorar el ambiente de trabajo</p>
-                  <p class="text-xs text-gray-500">Termina en 5 días</p>
+                  <h3 class="font-semibold text-gray-900 mb-2">{{ encuesta.titulo }}</h3>
+                  <p class="text-sm text-gray-600 mb-3">{{ encuesta.descripcion }}</p>
+                  <p class="text-xs text-gray-500">Termina en {{ new Date(encuesta.fecha_fin).toLocaleDateString() }}</p>
                 </div>
               </div>
               <button class="w-full bg-primary text-white px-4 py-2 rounded-lg hover:bg-primary-dark transition-colors font-medium">
                 Completar Encuesta
               </button>
             </div>
-
-            <div class="glass-card p-6 rounded-xl shadow-md backdrop-blur-sm border border-white/20 hover:shadow-lg transition-all duration-300 hover:-translate-y-0.5">
-              <div class="flex justify-between items-start mb-3">
-                <div class="flex-1">
-                  <h3 class="font-semibold text-gray-900 mb-2">Feedback Actividades de Bienestar</h3>
-                  <p class="text-sm text-gray-600 mb-3">Comparte tu experiencia con nuestras actividades</p>
-                  <p class="text-xs text-gray-500">Sin fecha límite</p>
-                </div>
-              </div>
-              <button class="w-full bg-primary text-white px-4 py-2 rounded-lg hover:bg-primary-dark transition-colors font-medium">
-                Completar Encuesta
-              </button>
-            </div>
+          </div>
+           <div v-else class="text-center text-gray-500 py-4">
+            <p>No tienes encuestas pendientes. ¡Buen trabajo!</p>
           </div>
         </div>
 
@@ -198,56 +158,28 @@
             </span>
           </div>
 
-          <div class="space-y-4">
-            <div class="glass-card p-6 rounded-xl shadow-md backdrop-blur-sm border border-white/20 hover:shadow-lg transition-all duration-300 hover:-translate-y-0.5">
+          <div v-if="desafios.length > 0" class="space-y-4">
+            <div v-for="desafio in desafios" :key="desafio.id" class="glass-card p-6 rounded-xl shadow-md backdrop-blur-sm border border-white/20 hover:shadow-lg transition-all duration-300 hover:-translate-y-0.5">
               <div class="flex items-center justify-between mb-3">
                 <div class="flex items-center space-x-3">
                   <div class="w-10 h-10 bg-gradient-to-br from-yellow-400 to-yellow-600 rounded-xl flex items-center justify-center">
                     <Trophy class="h-5 w-5 text-white" />
                   </div>
                   <div>
-                    <h3 class="font-semibold text-gray-900">Camina 10,000 pasos diarios</h3>
-                    <p class="text-sm text-gray-600">Actividad Física</p>
+                    <h3 class="font-semibold text-gray-900">{{ desafio.titulo }}</h3>
+                    <p class="text-sm text-gray-600">{{ desafio.categoria }}</p>
                   </div>
                 </div>
                 <span class="bg-yellow-100 text-yellow-800 text-xs px-2 py-1 rounded-full font-medium">
-                  200 puntos
+                  {{ desafio.puntos }} puntos
                 </span>
               </div>
               
-              <p class="text-sm text-gray-700 mb-4">Mantente activo durante 14 días consecutivos</p>
+              <p class="text-sm text-gray-700 mb-4">{{ desafio.descripcion }}</p>
               
               <div class="flex items-center justify-between">
                 <span class="text-xs text-gray-500">
-                  Termina: 15 Feb
-                </span>
-                <button class="bg-primary text-white px-4 py-2 rounded-lg hover:bg-primary-dark transition-colors font-medium text-sm">
-                  Participar
-                </button>
-              </div>
-            </div>
-
-            <div class="glass-card p-6 rounded-xl shadow-md backdrop-blur-sm border border-white/20 hover:shadow-lg transition-all duration-300 hover:-translate-y-0.5">
-              <div class="flex items-center justify-between mb-3">
-                <div class="flex items-center space-x-3">
-                  <div class="w-10 h-10 bg-gradient-to-br from-yellow-400 to-yellow-600 rounded-xl flex items-center justify-center">
-                    <Trophy class="h-5 w-5 text-white" />
-                  </div>
-                  <div>
-                    <h3 class="font-semibold text-gray-900">Meditación Diaria</h3>
-                    <p class="text-sm text-gray-600">Mindfulness</p>
-                  </div>
-                </div>
-                <span class="bg-yellow-100 text-yellow-800 text-xs px-2 py-1 rounded-full font-medium">
-                  150 puntos
-                </span>
-              </div>
-              
-              <p class="text-sm text-gray-700 mb-4">Medita 10 minutos cada día durante una semana</p>
-              
-              <div class="flex items-center justify-between">
-                <span class="text-xs text-gray-500">
-                  Termina: 10 Feb
+                  Termina: {{ new Date(desafio.fecha_fin).toLocaleDateString() }}
                 </span>
                 <button class="bg-primary text-white px-4 py-2 rounded-lg hover:bg-primary-dark transition-colors font-medium text-sm">
                   Participar
@@ -270,7 +202,7 @@
           </span>
         </div>
 
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div v-if="actividadesDisponibles.length > 0" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           <div class="glass-card rounded-xl overflow-hidden backdrop-blur-sm border border-white/20 hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
             <div class="relative h-32 bg-gradient-to-br from-primary/20 to-secondary/20">
               <div class="absolute inset-0 flex items-center justify-center">
@@ -370,12 +302,21 @@
             </div>
           </div>
         </div>
+        <div v-else class="text-center text-gray-500 py-4">
+          <p>No hay actividades recomendadas por el momento.</p>
+        </div>
       </div>
+    </div>
+    <div v-else class="flex justify-center items-center h-64">
+      <p>Cargando dashboard...</p>
     </div>
   </DemoLayout>
 </template>
 
 <script setup>
+import { onMounted, computed } from 'vue'
+import { useEmpleadoStore } from '@/stores/empleado.store'
+import { useAuthStore } from '@/stores/auth.store'
 import DemoLayout from '@/layouts/DemoLayout.vue'
 import { 
   ActivitySquare,
@@ -400,10 +341,22 @@ import {
   MessageCircle
 } from 'lucide-vue-next'
 import { useRouter } from 'vue-router'
-
 const router = useRouter()
+const empleadoStore = useEmpleadoStore()
+const authStore = useAuthStore()
+
+const stats = computed(() => empleadoStore.dashboardStats)
+const proximasSesiones = computed(() => empleadoStore.proximasSesiones)
+const encuestasPendientes = computed(() => empleadoStore.encuestasPendientes)
+const desafios = computed(() => empleadoStore.desafios)
+const actividadesDisponibles = computed(() => empleadoStore.actividadesDisponibles)
 
 const volverADemo = () => {
   router.push('/demo')
 }
+
+onMounted(() => {
+  empleadoStore.loadDashboardData()
+  empleadoStore.loadActividadesDisponibles()
+})
 </script>

@@ -1,8 +1,8 @@
 <template>
   <div class="p-6 md:p-8">
     <header class="mb-8">
-      <h1 class="text-3xl font-bold text-gray-900">Actividades Disponibles</h1>
-      <p class="text-gray-600 mt-1">Explora las próximas actividades y reserva tu plaza.</p>
+      <h1 class="text-3xl font-bold text-gray-900">Próximas Sesiones</h1>
+      <p class="text-gray-600 mt-1">Explora las próximas sesiones de bienestar y reserva tu plaza.</p>
     </header>
 
     <!-- Filtros -->
@@ -50,7 +50,7 @@
 
     <!-- Loading State -->
     <div v-if="loading" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-      <div v-for="n in 6" :key="n" class="glass-card rounded-xl shadow-lg p-6 animate-pulse backdrop-blur-sm border border-white/20">
+      <div v-for="n in 3" :key="n" class="glass-card rounded-xl shadow-lg p-6 animate-pulse backdrop-blur-sm border border-white/20">
         <div class="h-32 bg-gray-300 rounded-lg mb-4"></div>
         <div class="h-6 bg-gray-300 rounded w-3/4 mb-2"></div>
         <div class="h-4 bg-gray-300 rounded w-1/2 mb-2"></div>
@@ -60,26 +60,26 @@
     </div>
 
     <!-- Empty State -->
-    <div v-else-if="actividadesFiltradas.length === 0" class="glass-card rounded-xl shadow-lg p-12 text-center backdrop-blur-sm border border-white/20">
+    <div v-else-if="paginatedActividades.length === 0" class="glass-card rounded-xl shadow-lg p-12 text-center backdrop-blur-sm border border-white/20">
       <Calendar class="h-16 w-16 text-gray-400 mx-auto mb-4" />
       <h3 class="text-lg font-medium text-gray-900 mb-2">
-        {{ actividades.length === 0 ? 'Aún no tenemos datos' : 'No hay actividades disponibles' }}
+        {{ actividades.length === 0 ? 'No hay sesiones programadas' : 'No hay sesiones disponibles' }}
       </h3>
       <p class="text-gray-500 mb-4">
         {{ actividades.length === 0 
-          ? 'No hay actividades programadas en este momento.' 
-          : 'No se encontraron actividades que coincidan con tus filtros.'
+          ? 'Vuelve a consultar más tarde para ver nuevas sesiones.' 
+          : 'No se encontraron sesiones que coincidan con tus filtros.'
         }}
       </p>
       <button @click="limpiarFiltros" class="bg-primary text-white px-6 py-2 rounded-lg hover:bg-primary-dark transition-colors font-medium">
-        {{ actividades.length === 0 ? 'Actualizar' : 'Ver Todas las Actividades' }}
+        {{ actividades.length === 0 ? 'Actualizar' : 'Ver Todas las Sesiones' }}
       </button>
     </div>
 
     <!-- Actividades Grid -->
     <div v-else class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
       <div 
-        v-for="actividad in actividadesFiltradas" 
+        v-for="actividad in paginatedActividades" 
         :key="actividad.id" 
         class="glass-card rounded-xl overflow-hidden backdrop-blur-sm border border-white/20 hover:shadow-xl transition-all duration-300 hover:-translate-y-1"
       >
@@ -166,11 +166,19 @@
         <!-- Botón de acción -->
         <div class="px-6 py-4 bg-gray-50/50 border-t border-gray-200/50">
           <button 
-            @click="reservarActividad(actividad)"
-            :disabled="actividad.plazasOcupadas >= actividad.capacidad || reservando"
-            class="w-full bg-primary text-white font-bold py-3 px-4 rounded-lg hover:bg-primary-dark transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+            @click="handleReserva(actividad)"
+            :disabled="reservandoId === actividad.id || (!actividad.usuario_reservado && actividad.plazasOcupadas >= actividad.capacidad)"
+            :class="[
+              'w-full font-bold py-3 px-4 rounded-lg transition-colors disabled:opacity-50 disabled:cursor-not-allowed',
+              actividad.usuario_reservado 
+                ? 'bg-red-100 text-red-700 hover:bg-red-200' 
+                : 'bg-primary text-white hover:bg-primary-dark'
+            ]"
           >
-            {{ actividad.plazasOcupadas >= actividad.capacidad ? 'Completo' : reservando ? 'Reservando...' : 'Reservar Plaza' }}
+            <span v-if="reservandoId === actividad.id">Procesando...</span>
+            <span v-else-if="actividad.usuario_reservado">Cancelar Reserva</span>
+            <span v-else-if="actividad.plazasOcupadas >= actividad.capacidad">Completo</span>
+            <span v-else>Reservar Plaza</span>
           </button>
         </div>
       </div>
@@ -202,9 +210,10 @@
 </template>
 
 <script setup>
-import { ref, computed } from 'vue'
+import { ref, computed, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
-import { useToast } from 'primevue/usetoast'
+import { useToast } from 'vue-toastification'
+import { useEmpleadoStore } from '@/stores/empleado.store'
 import { 
   Calendar, 
   User, 
@@ -224,10 +233,9 @@ import {
 
 const router = useRouter()
 const toast = useToast()
+const empleadoStore = useEmpleadoStore()
 
-// Estado reactivo
-const loading = ref(false)
-const reservando = ref(false)
+// Estado reactivo local
 const currentPage = ref(1)
 const itemsPerPage = 12
 
@@ -238,89 +246,11 @@ const filtros = ref({
   fecha: ''
 })
 
-// Datos de ejemplo (dummy data)
-const actividades = ref([
-  {
-    id: 1,
-    titulo: 'Yoga Matutino para Principiantes',
-    descripcion: 'Sesión perfecta para comenzar tu día con energía positiva. Aprenderás posturas básicas y técnicas de respiración.',
-    tipo: 'yoga',
-    fecha: '2025-01-21T08:00:00',
-    colaborador: 'Elena Vásquez',
-    modalidad: 'presencial',
-    ubicacion: 'Sala Zen - Piso 2',
-    capacidad: 15,
-    plazasOcupadas: 8,
-    puntos: 50
-  },
-  {
-    id: 2,
-    titulo: 'Meditación Mindfulness',
-    descripcion: 'Encuentra la calma interior con técnicas de meditación mindfulness. Ideal para reducir el estrés laboral.',
-    tipo: 'meditacion',
-    fecha: '2025-01-21T12:30:00',
-    colaborador: 'Miguel Torres',
-    modalidad: 'online',
-    ubicacion: 'Zoom',
-    capacidad: 20,
-    plazasOcupadas: 12,
-    puntos: 40
-  },
-  {
-    id: 3,
-    titulo: 'Coaching de Productividad',
-    descripcion: 'Sesión personalizada para mejorar tu productividad y gestión del tiempo en el trabajo.',
-    tipo: 'coaching',
-    fecha: '2025-01-22T16:00:00',
-    colaborador: 'Carlos Ruiz',
-    modalidad: 'online',
-    ubicacion: 'Google Meet',
-    capacidad: 10,
-    plazasOcupadas: 6,
-    puntos: 60
-  },
-  {
-    id: 4,
-    titulo: 'Nutrición Saludable en la Oficina',
-    descripcion: 'Aprende a mantener una alimentación balanceada durante tu jornada laboral.',
-    tipo: 'nutricion',
-    fecha: '2025-01-23T14:00:00',
-    colaborador: 'Dr. Ana López',
-    modalidad: 'presencial',
-    ubicacion: 'Sala de Conferencias A',
-    capacidad: 25,
-    plazasOcupadas: 18,
-    puntos: 45
-  },
-  {
-    id: 5,
-    titulo: 'Entrenamiento HIIT Express',
-    descripcion: 'Rutina de ejercicios de alta intensidad en intervalos cortos. Perfecto para el descanso del almuerzo.',
-    tipo: 'entrenamiento',
-    fecha: '2025-01-24T13:00:00',
-    colaborador: 'Roberto Fitness',
-    modalidad: 'presencial',
-    ubicacion: 'Gimnasio Corporativo',
-    capacidad: 12,
-    plazasOcupadas: 12,
-    puntos: 70
-  },
-  {
-    id: 6,
-    titulo: 'Terapia de Relajación',
-    descripcion: 'Sesión de relajación profunda para liberar tensiones y mejorar tu bienestar emocional.',
-    tipo: 'psicoterapia',
-    fecha: '2025-01-25T17:00:00',
-    colaborador: 'Dra. Sofia Mendez',
-    modalidad: 'online',
-    ubicacion: 'Sesión Privada',
-    capacidad: 1,
-    plazasOcupadas: 0,
-    puntos: 80
-  }
-])
+// Computed properties del store
+const loading = computed(() => empleadoStore.loading.actividades)
+const actividades = computed(() => empleadoStore.actividadesDisponibles)
+const reservandoId = computed(() => empleadoStore.reservandoId)
 
-// Computed
 const actividadesFiltradas = computed(() => {
   let resultado = actividades.value
   
@@ -341,6 +271,12 @@ const actividadesFiltradas = computed(() => {
   }
   
   return resultado
+})
+
+const paginatedActividades = computed(() => {
+  const start = (currentPage.value - 1) * itemsPerPage
+  const end = start + itemsPerPage
+  return actividadesFiltradas.value.slice(start, end)
 })
 
 const totalPages = computed(() => {
@@ -399,43 +335,31 @@ const getOccupancyColor = (ocupadas, total) => {
   return 'bg-green-500'
 }
 
-const reservarActividad = async (actividad) => {
-  if (actividad.plazasOcupadas >= actividad.capacidad) {
-    toast.add({
-      severity: 'warn',
-      summary: 'Actividad completa',
-      detail: 'Esta actividad ya no tiene plazas disponibles',
-      life: 3000
-    })
-    return
-  }
-  
-  try {
-    reservando.value = true
-    
-    // Simular reserva (aquí iría la lógica real)
-    await new Promise(resolve => setTimeout(resolve, 1000))
-    
-    // Actualizar plazas ocupadas
-    actividad.plazasOcupadas++
-    
-    toast.add({
-      severity: 'success',
-      summary: '¡Reserva confirmada!',
-      detail: `Tu plaza para "${actividad.titulo}" ha sido reservada`,
-      life: 3000
-    })
-    
-  } catch (error) {
-    console.error('Error making reservation:', error)
-    toast.add({
-      severity: 'error',
-      summary: 'Error',
-      detail: 'No se pudo realizar la reserva',
-      life: 3000
-    })
-  } finally {
-    reservando.value = false
+const handleReserva = async (actividad) => {
+  if (actividad.usuario_reservado) {
+    // Cancelar reserva
+    try {
+      await empleadoStore.cancelarReserva(actividad.id);
+      toast.success(`Tu reserva para "${actividad.titulo}" ha sido cancelada.`);
+    } catch (error) {
+      console.error('Error canceling reservation:', error);
+      toast.error(error.message || 'No se pudo cancelar la reserva');
+    }
+  } else {
+    // Crear reserva
+    if (actividad.plazasOcupadas >= actividad.capacidad) {
+      toast.warning('Esta actividad ya no tiene plazas disponibles', {
+        timeout: 3000
+      });
+      return;
+    }
+    try {
+      await empleadoStore.reservarActividad(actividad.id);
+      toast.success(`¡Reserva confirmada para "${actividad.titulo}"!`);
+    } catch (error) {
+      console.error('Error making reservation:', error);
+      toast.error(error.message || 'No se pudo realizar la reserva');
+    }
   }
 }
 
@@ -450,12 +374,17 @@ const limpiarFiltros = () => {
     fecha: ''
   }
   currentPage.value = 1
+  empleadoStore.loadActividadesDisponibles();
 }
 
 const cambiarPagina = (page) => {
   currentPage.value = page
   window.scrollTo({ top: 0, behavior: 'smooth' })
 }
+
+onMounted(() => {
+  empleadoStore.loadActividadesDisponibles()
+})
 </script>
 
 <style scoped>
@@ -463,6 +392,7 @@ const cambiarPagina = (page) => {
   display: -webkit-box;
   -webkit-line-clamp: 3;
   -webkit-box-orient: vertical;
+  line-clamp: 3;
   overflow: hidden;
 }
 </style>

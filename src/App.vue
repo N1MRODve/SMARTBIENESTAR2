@@ -1,25 +1,18 @@
-<template>
-  <router-view />
-  <Toast />
-</template>
-
 <script setup>
-import { onMounted } from 'vue';
-import { useAuthStore } from '@/stores/auth.store';
-import { useAdminStore } from './stores/admin.js';
-import Toast from 'primevue/toast';
-
-const authStore = useAuthStore();
-const adminStore = useAdminStore();
-
-authStore.tryInitializeAuth().catch((error) => {
-  console.error('Error al inicializar la autenticación:', error);
-});
-
-onMounted(async () => {
-  await adminStore.init();
-});
+// La lógica de inicialización de la sesión y los stores dependientes
+// se ha centralizado en el guardián de navegación de Vue Router (`src/router/index.js`).
+// Esto asegura que la autenticación se verifica antes de cargar cualquier ruta protegida,
+// evitando redundancias y posibles race conditions.
 </script>
+
+<template>
+  <router-view v-slot="{ Component }">
+    <transition name="fade" mode="out-in">
+      <component :is="Component" v-if="Component" />
+      <div v-else class="h-10 w-24 bg-gray-200 rounded animate-pulse"></div>
+    </transition>
+  </router-view>
+</template>
 
 <style>
 .fade-enter-active,

@@ -5,7 +5,8 @@
       <h1 class="text-3xl font-bold text-gray-900 mb-2">Gestión de Encuestas</h1>
       <p class="text-gray-600 mb-4">Crea, gestiona y analiza las encuestas de tu empresa.</p>
       <div class="flex gap-2">
-        <router-link to="/admin/encuestas/crear">
+        <!-- CORRECCIÓN: Usar el nombre de la ruta en lugar de la URL directa -->
+        <router-link :to="{ name: 'admin-crear-encuesta' }">
           <button class="glass-button-primary text-white px-6 py-3 rounded-xl hover:bg-primary/90 transition-all duration-300 font-semibold shadow-lg hover:shadow-xl hover:-translate-y-0.5 backdrop-blur-sm border border-blue-500/30 flex items-center">
             <Plus class="h-4 w-4 mr-2" />
             Crear Nueva Encuesta
@@ -256,7 +257,8 @@ const enviarEncuesta = (encuestaId) => {
 }
 
 const editarEncuesta = (encuesta) => {
-  router.push(`/admin/encuestas/${encuesta.id}/editar`)
+  // CORRECCIÓN: Navegar usando el nombre de la ruta y pasando el ID como parámetro
+  router.push({ name: 'admin-editar-encuesta', params: { id: encuesta.id } })
 }
 
 const eliminarEncuesta = (encuestaId) => {

@@ -55,11 +55,15 @@ export const useDemoStore = defineStore('demo', {
         const sesion = state.demoData.sesiones.find(s => s.id === r.sesion_id);
         return sesion && new Date(sesion.fecha_inicio) > new Date();
       });
+      const sesionesAsistidas = state.demoData.reservas.filter(
+        r => r.usuario_id === usuarioId && r.estado === 'completada'
+      ).length;
       
       return {
         puntos_bienestar: perfil?.puntos_bienestar || 0,
         desafios_completados: perfil?.desafios_completados || 0,
-        proximas_sesiones: proximasReservas.length
+        proximas_sesiones: proximasReservas.length,
+        sesiones_asistidas: sesionesAsistidas
       };
     }
   },
@@ -134,20 +138,65 @@ export const useDemoStore = defineStore('demo', {
     },
 
     // Crear nueva reserva
-    async crearReserva(sesionId, usuarioId) {
+    async crearReserva(reservaData) {
+      // Validar datos necesarios
+      if (!reservaData.sesion_id || !reservaData.usuario_id) {
+        throw new Error('Error: sesion_id y usuario_id son requeridos para crear una reserva');
+      }
+
+      // Buscar la sesión para validar disponibilidad
+      const sesion = this.demoData.sesiones.find(s => s.id === reservaData.sesion_id);
+      if (!sesion) {
+        throw new Error(`Error: No se encontró la sesión con ID: ${reservaData.sesion_id}`);
+      }
+
+      // Verificar si ya existe una reserva
+      const yaReservado = this.demoData.reservas.some(r => r.sesion_id === reservaData.sesion_id && r.usuario_id === reservaData.usuario_id);
+      if (yaReservado) {
+        throw new Error('Ya tienes una reserva para esta sesión.');
+      }
+
+      // Verificar si hay plazas disponibles
+      const reservasCount = this.demoData.reservas.filter(r => r.sesion_id === reservaData.sesion_id).length;
+      if (reservasCount >= sesion.capacidad_maxima) {
+        throw new Error('No hay plazas disponibles para esta sesión');
+      }
+
+      // Generar ID único (timestamp + aleatorio para evitar colisiones)
+      const nuevoId = `reserva-${Date.now()}-${Math.floor(Math.random() * 1000)}`;
+
+      // Crear el objeto de la nueva reserva
       const nuevaReserva = {
-        id: `reserva-${Date.now()}`,
-        sesion_id: sesionId,
-        usuario_id: usuarioId,
-        estado: 'confirmada',
+        id: nuevoId,
+        sesion_id: reservaData.sesion_id,
+        usuario_id: reservaData.usuario_id,
+        estado: reservaData.estado || 'confirmada',
         fecha_reserva: new Date().toISOString(),
         asistio: null,
         calificacion: null,
         comentario: null
       };
 
+      // Añadir la reserva al array
       this.demoData.reservas.push(nuevaReserva);
-      return nuevaReserva;
+
+      return true;
+    },
+
+    // Cancelar reserva existente
+    async cancelarReserva(reservaId) {
+      // Buscar el índice de la reserva
+      const reservaIndex = this.demoData.reservas.findIndex(r => r.id === reservaId);
+      
+      // Validar que la reserva existe
+      if (reservaIndex === -1) {
+        throw new Error(`Error: No se encontró la reserva con ID: ${reservaId}`);
+      }
+      
+      // Eliminar la reserva
+      this.demoData.reservas.splice(reservaIndex, 1);
+      
+      return true;
     },
 
     // Crear nuevo empleado
@@ -226,6 +275,28 @@ export const useDemoStore = defineStore('demo', {
       this.demoData.participantesEncuesta = this.demoData.participantesEncuesta.filter(
         p => p.encuesta_id !== encuestaId
       );
+    },
+
+    // Completar desafío
+    async completarDesafio(desafioId) {
+      const desafio = this.demoData.desafios?.find(d => d.id === desafioId);
+      if (!desafio) {
+        throw new Error(`No se encontró el desafío con ID: ${desafioId}`);
+      }
+      desafio.estado = 'completado';
+      return true;
+    },
+
+    // Responder encuesta
+    async responderEncuesta(encuestaId, respuestas) {
+      const encuesta = this.demoData.encuestas?.find(e => e.id === encuestaId);
+      if (!encuesta) {
+        throw new Error(`No se encontró la encuesta con ID: ${encuestaId}`);
+      }
+      encuesta.estado = 'respondida';
+      // Opcional: guardar las respuestas en la encuesta
+      encuesta.respuestas = respuestas;
+      return true;
     }
   }
 });

@@ -1,83 +1,112 @@
 <template>
-  <div class="space-y-8">
+  <div v-if="loading" class="flex justify-center items-center h-screen">
+    <div class="animate-spin rounded-full h-16 w-16 border-b-2 border-primary"></div>
+  </div>
+  <div v-else-if="error" class="text-center p-8">
+    <p class="text-red-500">Error al cargar el dashboard: {{ error }}</p>
+  </div>
+  <div v-else-if="estadisticas" class="space-y-8">
     <!-- Header -->
     <header class="mb-8">
       <h1 class="text-3xl font-bold text-gray-900 mb-2">Dashboard Administrador</h1>
       <p class="text-gray-600">Vista general de tu empresa y actividad de bienestar</p>
     </header>
+
+    <!-- Acciones Rápidas -->
+    <div class="mb-8">
+      <h2 class="text-xl font-semibold text-gray-800 mb-4">Acciones Rápidas</h2>
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+        <!-- Invitar Empleados -->
+        <router-link :to="{ name: 'admin-empleados' }" class="bg-slate-100 hover:bg-slate-200 p-4 rounded-xl shadow hover:shadow-lg transition-all duration-200 flex flex-col items-center justify-center gap-2 text-slate-700 font-medium">
+          <UserPlus class="w-8 h-8 text-indigo-500" />
+          <span>Invitar Empleados</span>
+        </router-link>
+        <!-- Crear Encuestas -->
+        <router-link :to="{ name: 'admin-encuestas' }" class="bg-slate-100 hover:bg-slate-200 p-4 rounded-xl shadow hover:shadow-lg transition-all duration-200 flex flex-col items-center justify-center gap-2 text-slate-700 font-medium">
+          <ClipboardPlus class="w-8 h-8 text-teal-500" />
+          <span>Crear Encuestas</span>
+        </router-link>
+        <!-- Análisis de Uso -->
+        <router-link :to="{ name: 'admin-estadisticas' }" class="bg-slate-100 hover:bg-slate-200 p-4 rounded-xl shadow hover:shadow-lg transition-all duration-200 flex flex-col items-center justify-center gap-2 text-slate-700 font-medium">
+          <BarChart3 class="w-8 h-8 text-amber-500" />
+          <span>Análisis de Uso</span>
+        </router-link>
+        <!-- Perfil de Empresa -->
+        <router-link :to="{ name: 'admin-empresa-perfil' }" class="bg-slate-100 hover:bg-slate-200 p-4 rounded-xl shadow hover:shadow-lg transition-all duration-200 flex flex-col items-center justify-center gap-2 text-slate-700 font-medium">
+          <Building class="w-8 h-8 text-rose-500" />
+          <span>Perfil de Empresa</span>
+        </router-link>
+      </div>
+    </div>
     
+    <!-- Mensaje de Error -->
+    <div v-if="error" class="text-center p-4 bg-red-100 text-red-700 rounded-lg">
+      <p>Error al cargar el dashboard: {{ error }}</p>
+    </div>
+
     <!-- Estadísticas Principales -->
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
       <!-- Total Empleados -->
-      <div class="glass-card p-6 rounded-xl shadow-lg text-center backdrop-blur-sm border border-white/20 hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
+      <div class="glass-card p-6 rounded-xl shadow-lg text-center backdrop-blur-sm border border-white/20">
         <div class="flex items-center justify-center mb-4">
           <div class="w-16 h-16 bg-gradient-to-br from-blue-400 to-blue-600 rounded-2xl flex items-center justify-center">
             <Users class="h-8 w-8 text-white" />
           </div>
         </div>
-        <h3 class="text-4xl font-bold text-primary mb-2">{{ stats.totalEmpleados }}</h3>
+        <div v-if="loading" class="h-10 bg-gray-200 rounded animate-pulse w-24 mx-auto mb-2"></div>
+        <h3 v-else class="text-4xl font-bold text-primary mb-2">{{ estadisticas.total_empleados }}</h3>
         <p class="text-gray-700 font-medium">Total Empleados</p>
-        <div class="flex items-center justify-center mt-2">
-          <TrendingUp class="h-4 w-4 text-green-500 mr-1" />
-          <span class="text-xs text-green-600">{{ stats.participacionPorcentaje }}% participación</span>
-        </div>
+        <p v-if="!loading && estadisticas.total_empleados === 0" class="text-xs text-gray-500 mt-1">Aún no has invitado a ningún empleado.</p>
       </div>
 
-      <!-- Sesiones Esta Semana -->
-      <div class="glass-card p-6 rounded-xl shadow-lg text-center backdrop-blur-sm border border-white/20 hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
+      <!-- Total de Reservas (Adaptado de Sesiones) -->
+      <div class="glass-card p-6 rounded-xl shadow-lg text-center backdrop-blur-sm border border-white/20">
         <div class="flex items-center justify-center mb-4">
           <div class="w-16 h-16 bg-gradient-to-br from-green-400 to-green-600 rounded-2xl flex items-center justify-center">
             <Calendar class="h-8 w-8 text-white" />
           </div>
         </div>
-        <h3 class="text-4xl font-bold text-primary mb-2">{{ stats.sesionesEstaSemana }}</h3>
-        <p class="text-gray-700 font-medium">Sesiones Esta Semana</p>
-        <div class="flex items-center justify-center mt-2">
-          <Calendar class="h-4 w-4 text-blue-500 mr-1" />
-          <span class="text-xs text-blue-600">+2 vs semana anterior</span>
-        </div>
+        <div v-if="loading" class="h-10 bg-gray-200 rounded animate-pulse w-24 mx-auto mb-2"></div>
+        <h3 v-else class="text-4xl font-bold text-primary mb-2">{{ estadisticas.total_reservas || 0 }}</h3>
+        <p class="text-gray-700 font-medium">Total de Reservas</p>
+        <p v-if="!loading && (estadisticas.total_reservas || 0) === 0" class="text-xs text-gray-500 mt-1">Tus empleados aún no han hecho reservas.</p>
       </div>
 
-      <!-- Encuestas Activas -->
-      <div class="glass-card p-6 rounded-xl shadow-lg text-center backdrop-blur-sm border border-white/20 hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
+      <!-- Desafíos Completados (Adaptado de Encuestas) -->
+      <div class="glass-card p-6 rounded-xl shadow-lg text-center backdrop-blur-sm border border-white/20">
         <div class="flex items-center justify-center mb-4">
           <div class="w-16 h-16 bg-gradient-to-br from-purple-400 to-purple-600 rounded-2xl flex items-center justify-center">
-            <ClipboardList class="h-8 w-8 text-white" />
+            <Trophy class="h-8 w-8 text-white" />
           </div>
         </div>
-        <h3 class="text-4xl font-bold text-primary mb-2">{{ stats.encuestasActivas }}</h3>
-        <p class="text-gray-700 font-medium">Encuestas Activas</p>
-        <div class="flex items-center justify-center mt-2">
-          <ClipboardList class="h-4 w-4 text-purple-500 mr-1" />
-          <span class="text-xs text-purple-600">{{ surveyResponseRate }}% respuestas</span>
-        </div>
+        <div v-if="loading" class="h-10 bg-gray-200 rounded animate-pulse w-24 mx-auto mb-2"></div>
+        <h3 v-else class="text-4xl font-bold text-primary mb-2">{{ estadisticas.total_desafios_completados || 0 }}</h3>
+        <p class="text-gray-700 font-medium">Desafíos Completados</p>
+        <p v-if="!loading && (estadisticas.total_desafios_completados || 0) === 0" class="text-xs text-gray-500 mt-1">Anima a tus empleados a completar desafíos.</p>
       </div>
 
-      <!-- Satisfacción General -->
-      <div class="glass-card p-6 rounded-xl shadow-lg text-center backdrop-blur-sm border border-white/20 hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
+      <!-- Tasa de Participación -->
+      <div class="glass-card p-6 rounded-xl shadow-lg text-center backdrop-blur-sm border border-white/20">
         <div class="flex items-center justify-center mb-4">
           <div class="w-16 h-16 bg-gradient-to-br from-yellow-400 to-yellow-600 rounded-2xl flex items-center justify-center">
-            <Star class="h-8 w-8 text-white" />
+            <TrendingUp class="h-8 w-8 text-white" />
           </div>
         </div>
-        <h3 class="text-4xl font-bold text-primary mb-2">{{ stats.satisfaccionGeneral }}</h3>
-        <p class="text-gray-700 font-medium">Satisfacción General</p>
-        <div class="flex items-center justify-center mt-2">
-          <TrendingUp class="h-4 w-4 text-yellow-500 mr-1" />
-          <span class="text-xs text-yellow-600">+0.3 vs mes anterior</span>
-        </div>
+        <div v-if="loading" class="h-10 bg-gray-200 rounded animate-pulse w-24 mx-auto mb-2"></div>
+        <h3 v-else class="text-4xl font-bold text-primary mb-2">{{ estadisticas.tasa_participacion_general }}<span class="text-2xl">%</span></h3>
+        <p class="text-gray-700 font-medium">Tasa de Participación</p>
       </div>
     </div>
 
     <!-- Alertas Críticas -->
-    <div v-if="alertasCriticas.length > 0" class="glass-container rounded-xl shadow-lg p-8 backdrop-blur-sm border border-white/30">
+    <div v-if="estadisticas.alertas_criticas?.length > 0" class="glass-container rounded-xl shadow-lg p-8 backdrop-blur-sm border border-white/30">
       <h2 class="text-xl font-semibold mb-6 flex items-center">
         <Bell class="h-5 w-5 mr-2 text-orange-500" />
         Centro de Alertas
       </h2>
       <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
         <div 
-          v-for="alerta in alertasCriticas.slice(0, 2)" 
+          v-for="alerta in estadisticas.alertas_criticas.slice(0, 2)" 
           :key="alerta.id"
           :class="[
             'p-4 rounded-lg backdrop-blur-sm border',
@@ -113,7 +142,7 @@
       <div class="glass-container rounded-xl shadow-lg p-8 backdrop-blur-sm border border-white/30">
         <h2 class="text-xl font-semibold text-gray-900 mb-6">Participación por Departamento</h2>
         
-        <div v-if="departamentos.length === 0" class="glass-card p-8 rounded-xl shadow-lg text-center text-gray-600 backdrop-blur-sm border border-white/20">
+        <div v-if="!estadisticas.participacion_por_departamento || estadisticas.participacion_por_departamento.length === 0" class="glass-card p-8 rounded-xl shadow-lg text-center text-gray-600 backdrop-blur-sm border border-white/20">
           <BarChart3 class="h-12 w-12 text-gray-400 mx-auto mb-3" />
           <p class="font-medium mb-2">Aún no tenemos datos</p>
           <p class="text-sm text-gray-500">No hay datos de participación por departamento</p>
@@ -121,7 +150,7 @@
 
         <div v-else class="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div 
-            v-for="dept in departamentos" 
+            v-for="dept in estadisticas.participacion_por_departamento" 
             :key="dept.departamento"
             class="text-center p-4 rounded-xl backdrop-blur-sm border"
             :class="getDepartmentCardClass(dept.participacion_porcentaje)"
@@ -153,7 +182,7 @@
           Actividad Reciente
         </h2>
         
-        <div v-if="actividadReciente.length === 0" class="glass-card p-8 rounded-xl shadow-lg text-center text-gray-600 backdrop-blur-sm border border-white/20">
+        <div v-if="!estadisticas.actividad_reciente || estadisticas.actividad_reciente.length === 0" class="glass-card p-8 rounded-xl shadow-lg text-center text-gray-600 backdrop-blur-sm border border-white/20">
           <Clock class="h-12 w-12 text-gray-400 mx-auto mb-3" />
           <p class="font-medium mb-2">Aún no tenemos datos</p>
           <p class="text-sm text-gray-500">No hay actividad reciente registrada</p>
@@ -161,7 +190,7 @@
 
         <div v-else class="space-y-4">
           <div 
-            v-for="actividad in actividadReciente" 
+            v-for="actividad in estadisticas.actividad_reciente" 
             :key="actividad.fecha_actividad"
             class="flex items-center space-x-4"
           >
@@ -169,7 +198,7 @@
               'w-10 h-10 rounded-xl flex items-center justify-center',
               getActivityIconClass(actividad.tipo_actividad)
             ]">
-              <component :is="actividad.icono" class="h-5 w-5 text-white" />
+              <component :is="getActivityIcon(actividad.tipo_actividad)" class="h-5 w-5 text-white" />
             </div>
             <div class="flex-1">
               <p class="text-sm font-medium text-gray-900">{{ actividad.descripcion }}</p>
@@ -197,7 +226,7 @@
           </router-link>
         </div>
 
-        <div v-if="proximasSesiones.length === 0" class="glass-card p-8 rounded-xl shadow-lg text-center text-gray-600 backdrop-blur-sm border border-white/20">
+        <div v-if="!estadisticas.proximas_sesiones || estadisticas.proximas_sesiones.length === 0" class="glass-card p-8 rounded-xl shadow-lg text-center text-gray-600 backdrop-blur-sm border border-white/20">
           <Calendar class="h-12 w-12 text-gray-400 mx-auto mb-3" />
           <p class="font-medium mb-2">Aún no tenemos datos</p>
           <p class="text-sm text-gray-500 mb-4">No hay sesiones programadas próximamente</p>
@@ -210,7 +239,7 @@
 
         <div v-else class="space-y-4">
           <div 
-            v-for="sesion in proximasSesiones" 
+            v-for="sesion in estadisticas.proximas_sesiones" 
             :key="sesion.sesion_id"
             class="glass-card p-4 rounded-xl shadow-md backdrop-blur-sm border border-white/20 hover:shadow-lg transition-all duration-300 hover:-translate-y-0.5"
           >
@@ -236,7 +265,7 @@
           Servicios Más Populares
         </h2>
         
-        <div v-if="serviciosPopulares.length === 0" class="glass-card p-8 rounded-xl shadow-lg text-center text-gray-600 backdrop-blur-sm border border-white/20">
+        <div v-if="!estadisticas.servicios_populares || estadisticas.servicios_populares.length === 0" class="glass-card p-8 rounded-xl shadow-lg text-center text-gray-600 backdrop-blur-sm border border-white/20">
           <Star class="h-12 w-12 text-gray-400 mx-auto mb-3" />
           <p class="font-medium mb-2">Aún no tenemos datos</p>
           <p class="text-sm text-gray-500">No hay datos de servicios populares</p>
@@ -244,13 +273,13 @@
 
         <div v-else class="space-y-4">
           <div 
-            v-for="(servicio, index) in serviciosPopulares" 
+            v-for="(servicio, index) in estadisticas.servicios_populares" 
             :key="servicio.servicio_tipo"
             class="flex items-center justify-between p-3 rounded-lg backdrop-blur-sm border"
             :class="getServiceCardClass(index)"
           >
             <div class="flex items-center space-x-3">
-              <component :is="servicio.icono" :class="[
+              <component :is="getActivityIcon(servicio.servicio_tipo)" :class="[
                 'h-5 w-5',
                 getServiceIconColor(index)
               ]" />
@@ -279,7 +308,7 @@
           Empleados Destacados
         </h2>
         
-        <div v-if="topPerformers.length === 0" class="glass-card p-8 rounded-xl shadow-lg text-center text-gray-600 backdrop-blur-sm border border-white/20">
+        <div v-if="!estadisticas.top_performers || estadisticas.top_performers.length === 0" class="glass-card p-8 rounded-xl shadow-lg text-center text-gray-600 backdrop-blur-sm border border-white/20">
           <Trophy class="h-12 w-12 text-gray-400 mx-auto mb-3" />
           <p class="font-medium mb-2">Aún no tenemos datos</p>
           <p class="text-sm text-gray-500">No hay datos de empleados destacados</p>
@@ -287,7 +316,7 @@
 
         <div v-else class="space-y-4">
           <div 
-            v-for="(empleado, index) in topPerformers" 
+            v-for="(empleado, index) in estadisticas.top_performers" 
             :key="empleado.usuario_id"
             class="flex items-center space-x-4 p-3 rounded-lg backdrop-blur-sm border"
             :class="getPerformerCardClass(index)"
@@ -323,7 +352,7 @@
           </router-link>
         </div>
         
-        <div v-if="encuestasActivas.length === 0" class="glass-card p-8 rounded-xl shadow-lg text-center text-gray-600 backdrop-blur-sm border border-white/20">
+        <div v-if="!estadisticas.encuestas_activas || estadisticas.encuestas_activas.length === 0" class="glass-card p-8 rounded-xl shadow-lg text-center text-gray-600 backdrop-blur-sm border border-white/20">
           <ClipboardList class="h-12 w-12 text-gray-400 mx-auto mb-3" />
           <p class="font-medium mb-2">Aún no tenemos datos</p>
           <p class="text-sm text-gray-500 mb-4">No hay encuestas activas</p>
@@ -336,7 +365,7 @@
 
         <div v-else class="space-y-3">
           <div 
-            v-for="encuesta in encuestasActivas" 
+            v-for="encuesta in estadisticas.encuestas_activas" 
             :key="encuesta.encuesta_id"
             class="glass-card p-4 rounded-xl backdrop-blur-sm border border-white/20"
           >
@@ -407,8 +436,10 @@
 </template>
 
 <script setup>
-import { ref, computed, onMounted } from 'vue'
-import { useRouter } from 'vue-router'
+import { ref, computed, onMounted, watchEffect } from 'vue'
+import { supabase } from '@/services/supabase'
+import { useAuthStore } from '@/stores/auth.store'
+import { useToast } from 'primevue/usetoast'
 import { 
   Users, 
   Calendar, 
@@ -428,212 +459,98 @@ import {
   Apple,
   Heart,
   Code,
-  DollarSign
+  DollarSign,
+  ClipboardPlus,
+  Building
 } from 'lucide-vue-next'
-import { useAdminStore } from '@/stores/admin'
-import { useAuthStore } from '@/stores/auth.store'
 
-const router = useRouter()
-const adminStore = useAdminStore()
 const authStore = useAuthStore()
+const toast = useToast()
 
-// Estado reactivo con datos dummy
-const stats = ref({
-  totalEmpleados: 45,
-  participacionPorcentaje: 78,
-  sesionesEstaSemana: 12,
-  encuestasActivas: 2,
-  satisfaccionGeneral: 4.2
+const isLoading = ref(true)
+const dashboardData = ref({ /* ... tu estructura de datos ... */ })
+
+const cargarDashboardData = async (empresaId) => {
+  // ... (la lógica para cargar los datos del dashboard que ya tienes) ...
+  // Esta función ahora recibe 'empresaId' como argumento.
+  console.log(`Cargando datos del dashboard para la empresa: ${empresaId}`);
+  // ... el resto de tu lógica con Promise.all, etc.
+};
+
+// --- ESTA ES LA CORRECCIÓN CRÍTICA ---
+watchEffect(() => {
+  // Si el usuario ya no está autenticado (porque acaba de cerrar sesión),
+  // no hacemos nada. Simplemente esperamos a que el router nos redirija.
+  if (!authStore.isAuthenticated) {
+    isLoading.value = false; // Opcional: detener la carga visualmente.
+    return;
+  }
+
+  // Si el store todavía está en su proceso de carga inicial, esperamos.
+  if (authStore.loading) {
+    return;
+  }
+
+  const empresaId = authStore.empresaId;
+
+  if (empresaId) {
+    // ¡Éxito! Cargar los datos.
+    cargarDashboardData(empresaId);
+  } else {
+    // Ahora este error solo se mostrará si el usuario ESTÁ autenticado
+    // pero por alguna razón no tiene un empresaId asociado.
+    console.error("Error crítico: Usuario autenticado sin empresa_id.");
+    toast.add({ severity: 'error', summary: 'Error de Cuenta', detail: 'Tu cuenta no está asociada a ninguna empresa.', life: 5000 });
+    isLoading.value = false;
+  }
+});
+
+const estadisticas = ref({ /* valores por defecto */ })
+const loading = ref(true)
+const error = ref(null)
+
+// Obtener ID de empresa del usuario autenticado
+const empresaId = computed(() => authStore.empresaId)
+
+// Lifecycle Hook para cargar datos
+onMounted(async () => {
+  if (!empresaId.value) {
+    console.error("Error: empresa_id no encontrado en el store.")
+    error.value = "No se pudo identificar la empresa del administrador."
+    loading.value = false
+    return
+  }
+
+  console.log(`🔍 Cargando datos para empresa ID: ${empresaId.value}`)
+
+  try {
+    const { data, error: rpcError } = await supabase.rpc('obtener_estadisticas_empresa', {
+      id_empresa: empresaId.value
+    })
+
+    if (rpcError) throw rpcError
+
+    // Procesar los datos
+    if (data && data.length > 0) {
+      estadisticas.value = data[0]
+      console.log('✅ Estadísticas cargadas:', estadisticas.value)
+    } else {
+      throw new Error("No se recibieron datos de estadísticas.")
+    }
+
+  } catch (err) {
+    error.value = err.message
+    console.error("Error al obtener estadísticas:", err)
+  } finally {
+    loading.value = false
+  }
 })
-
-const proximasSesiones = ref([
-  {
-    sesion_id: 1,
-    titulo: 'Yoga Matutino',
-    fecha_inicio: '2025-01-22T08:00:00',
-    colaborador_nombre: 'Elena Vásquez',
-    modalidad: 'presencial',
-    ubicacion: 'Sala Zen',
-    reservas_confirmadas: 12,
-    capacidad_maxima: 15
-  },
-  {
-    sesion_id: 2,
-    titulo: 'Meditación Mindfulness',
-    fecha_inicio: '2025-01-22T12:30:00',
-    colaborador_nombre: 'Miguel Torres',
-    modalidad: 'online',
-    ubicacion: 'Zoom',
-    reservas_confirmadas: 8,
-    capacidad_maxima: 20
-  },
-  {
-    sesion_id: 3,
-    titulo: 'Coaching de Productividad',
-    fecha_inicio: '2025-01-23T16:00:00',
-    colaborador_nombre: 'Carlos Ruiz',
-    modalidad: 'online',
-    ubicacion: 'Google Meet',
-    reservas_confirmadas: 6,
-    capacidad_maxima: 10
-  }
-])
-
-const serviciosPopulares = ref([
-  {
-    servicio_tipo: 'yoga',
-    servicio_nombre: 'Yoga',
-    total_participaciones: 156,
-    satisfaccion_promedio: 4.8,
-    icono: Activity
-  },
-  {
-    servicio_tipo: 'coaching',
-    servicio_nombre: 'Coaching',
-    total_participaciones: 89,
-    satisfaccion_promedio: 4.6,
-    icono: MessageCircle
-  },
-  {
-    servicio_tipo: 'nutricion',
-    servicio_nombre: 'Nutrición',
-    total_participaciones: 67,
-    satisfaccion_promedio: 4.4,
-    icono: Apple
-  },
-  {
-    servicio_tipo: 'meditacion',
-    servicio_nombre: 'Meditación',
-    total_participaciones: 45,
-    satisfaccion_promedio: 4.7,
-    icono: Heart
-  }
-])
-
-const topPerformers = ref([
-  {
-    usuario_id: 1,
-    nombre_completo: 'Ana García',
-    puntos_totales: 1250,
-    nivel_actual: 3,
-    racha_dias: 14
-  },
-  {
-    usuario_id: 2,
-    nombre_completo: 'Luis Martínez',
-    puntos_totales: 980,
-    nivel_actual: 2,
-    racha_dias: 7
-  },
-  {
-    usuario_id: 3,
-    nombre_completo: 'Sofia Rodríguez',
-    puntos_totales: 875,
-    nivel_actual: 2,
-    racha_dias: 12
-  }
-])
-
-const encuestasActivas = ref([
-  {
-    encuesta_id: 1,
-    titulo: 'Clima Laboral Q1',
-    respuestas_recibidas: 32,
-    total_invitados: 45,
-    porcentaje_respuesta: 71,
-    dias_restantes: 5
-  },
-  {
-    encuesta_id: 2,
-    titulo: 'Feedback Actividades',
-    respuestas_recibidas: 18,
-    total_invitados: 30,
-    porcentaje_respuesta: 60,
-    dias_restantes: null
-  }
-])
-
-const departamentos = ref([
-  {
-    departamento: 'Desarrollo',
-    total_empleados: 15,
-    participacion_porcentaje: 85
-  },
-  {
-    departamento: 'Marketing',
-    total_empleados: 12,
-    participacion_porcentaje: 92
-  },
-  {
-    departamento: 'Ventas',
-    total_empleados: 10,
-    participacion_porcentaje: 70
-  },
-  {
-    departamento: 'RRHH',
-    total_empleados: 8,
-    participacion_porcentaje: 95
-  }
-])
-
-const actividadReciente = ref([
-  {
-    fecha_actividad: '2025-01-20T14:30:00',
-    descripcion: 'Ana García completó sesión de Yoga Matutino',
-    tipo_actividad: 'reserva',
-    puntos_otorgados: 50,
-    icono: Activity
-  },
-  {
-    fecha_actividad: '2025-01-20T11:15:00',
-    descripcion: 'Luis Martínez se inscribió en desafío "10,000 pasos"',
-    tipo_actividad: 'desafio',
-    puntos_otorgados: null,
-    icono: Trophy
-  },
-  {
-    fecha_actividad: '2025-01-20T09:45:00',
-    descripcion: 'Sofia Rodríguez completó encuesta de satisfacción',
-    tipo_actividad: 'encuesta',
-    puntos_otorgados: 25,
-    icono: ClipboardList
-  },
-  {
-    fecha_actividad: '2025-01-19T16:20:00',
-    descripcion: 'Carlos Mendoza reservó sesión de Coaching',
-    tipo_actividad: 'reserva',
-    puntos_otorgados: null,
-    icono: MessageCircle
-  },
-  {
-    fecha_actividad: '2025-01-19T13:10:00',
-    descripcion: 'María Fernández alcanzó 1000 puntos de bienestar',
-    tipo_actividad: 'logro',
-    puntos_otorgados: 100,
-    icono: Star
-  }
-])
-
-const alertasCriticas = ref([
-  {
-    id: 1,
-    titulo: 'Baja Participación en Desarrollo',
-    descripcion: 'El departamento de Desarrollo tiene solo 70% de participación',
-    nivel_criticidad: 'medio'
-  },
-  {
-    id: 2,
-    titulo: 'Encuesta con Pocas Respuestas',
-    descripcion: 'La encuesta de clima laboral necesita más participación',
-    nivel_criticidad: 'bajo'
-  }
-])
 
 // Computed
 const surveyResponseRate = computed(() => {
-  if (encuestasActivas.value.length === 0) return 0
-  const totalRespuestas = encuestasActivas.value.reduce((acc, enc) => acc + enc.respuestas_recibidas, 0)
-  const totalInvitados = encuestasActivas.value.reduce((acc, enc) => acc + enc.total_invitados, 0)
+  if (!estadisticas.value?.encuestas_activas || estadisticas.value.encuestas_activas.length === 0) return 0
+  const totalRespuestas = estadisticas.value.encuestas_activas.reduce((acc, enc) => acc + enc.respuestas_recibidas, 0)
+  const totalInvitados = estadisticas.value.encuestas_activas.reduce((acc, enc) => acc + enc.total_invitados, 0)
   return totalInvitados > 0 ? Math.round((totalRespuestas / totalInvitados) * 100) : 0
 })
 
@@ -679,6 +596,21 @@ const getDepartmentIcon = (departamento) => {
     'Sin departamento': Users
   }
   return iconMap[departamento] || Users
+}
+
+const getActivityIcon = (tipo) => {
+  const iconMap = {
+    'reserva': Activity,
+    'desafio': Trophy,
+    'encuesta': ClipboardList,
+    'logro': Star,
+    'coaching': MessageCircle,
+    'nutricion': Apple,
+    'yoga': Activity,
+    'meditacion': Heart,
+    'sistema': Brain
+  }
+  return iconMap[tipo] || Brain
 }
 
 const getDepartmentCardClass = (participacion) => {
@@ -778,9 +710,4 @@ const revisarAlerta = (alertaId) => {
 const crearDesafio = () => {
   router.push('/admin/desafios/crear')
 }
-
-// Lifecycle
-onMounted(() => {
-  console.log('Dashboard de administrador cargado')
-})
 </script>
